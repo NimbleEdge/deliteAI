@@ -45,7 +45,11 @@ We welcome contributions from the community! Whether you're interested in:
 - Improving documentation
 - Reporting bugs or suggesting features
 
-Please check our contribution guidelines for more information.
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information about:
+- Our development workflow
+- How to submit pull requests
+- Developer Certificate of Origin (DCO) requirements
+- Code quality standards
 
 ## 📄 License
 
