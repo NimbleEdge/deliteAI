@@ -1,12 +1,14 @@
 # DeliteAI
 
-DeliteAI is a powerful on-device AI platform that enables developers to build secure, privacy-aware, and high-performance AI native applications across multiple platforms and devices.
+DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
+to deliver secure, privacy-aware, and high-performance AI native experiences and applications
+across multiple platforms and devices.
 
-## 🚀 Key Features
+## Key Features
 
 ### Developer Productivity
-- Unified and simplified APIs for seamless AI integration in Android/iOS applications
-- Python interface for orchestrating complex AI/ML workflows
+- Unified and simplified APIs for seamless AI agents integration in Android/iOS applications
+- Python interface for orchestrating complex AI agentic workflows via tool calling, memory and LLMs on-device
 - Streamlined development process for both new and existing applications
 
 ### Portability & Small Form Factor
@@ -17,48 +19,30 @@ DeliteAI is a powerful on-device AI platform that enables developers to build se
 
 ### Security & Privacy
 - Privacy-first approach with on-device processing
-- Secure by design
-- No compromise on performance while maintaining security
 - Hardware-accelerated model execution
 
 ### Extensibility
-- Open-source ecosystem for community contributions
-- Easy integration of custom Python library operators
-- Flexible runtime support
-- Hardware-optimized kernel support
-- Customizable for specific use cases
+- Easy integration of custom Python operators
+- Flexible runtime support (ONNX or ExecuTorch)
 
-## 🛠️ Getting Started
+## Getting Started
 
 [Coming Soon]
 
-## 📚 Documentation
+## Documentation
 
 [Coming Soon]
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from the community! Whether you're interested in:
-- Adding new Python library operators
+- Adding new Python operators
 - Enhancing runtime support
-- Optimizing hardware kernels
 - Improving documentation
 - Reporting bugs or suggesting features
 
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information about:
-- Our development workflow
-- How to submit pull requests
-- Developer Certificate of Origin (DCO) requirements
-- Code quality standards
+Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
 
-## 📄 License
+## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## 🌟 Star Us
-
-If you find DeliteAI useful, please consider giving us a star on GitHub!
-
----
-
-Built with ❤️ by the DeliteAI Team
