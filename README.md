@@ -15,7 +15,7 @@ across multiple platforms and devices.
 - Cross-platform compatibility across operating systems
 - Support for various compute platforms and runtimes
 - Abstracted development layer for the fragmented device landscape
-- Optimized for resource-constrained environments
+- Optimized for resource-constrained environments with efficient CPU/memory usage
 
 ### Security & Privacy
 - Privacy-first approach with on-device processing
