@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea to improve deliteAI
+about: Suggest an idea to improve DeliteAI
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''
