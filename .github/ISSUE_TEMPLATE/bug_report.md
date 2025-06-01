@@ -14,7 +14,7 @@ A clear and concise description of what you expected to happen.
 
 **Environment:**
  - OS and version: [e.g. iOS 18, Android 14, Linux 21]
- - DeliteAI Version: [e.g. 0.1]
+ - DeliteAI version: [e.g. 0.1]
  - Device: [e.g. iPhone 6, Desktop]
 
 **Additional Information**
