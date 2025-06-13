@@ -48,7 +48,7 @@ def get_output_from_llm(message):
 @concurrent
 def summarize_single_notification(notification):
     """
-    Step 1: Produce a two-line summary for a single notification.
+    Step 1: Produce a single-line summary for a single notification.
     """
     raw_text = "Title: " + notification['title'] + "\nBody: " + notification['body']
     if len(raw_text) > MAX_CHARS_PER_NOTIFICATION:
@@ -63,7 +63,7 @@ def summarize_single_notification(notification):
         "Now summarize this:\n" + \
         "Title: \"" + notification['title'] + "\"\n" + \
         "Body: \"" + notification['body'] + "\"\n" + \
-        "Respond with only a two-line summary:"
+        "Respond with only a single-line summary:"
     return get_output_from_llm(message)
 
 @concurrent

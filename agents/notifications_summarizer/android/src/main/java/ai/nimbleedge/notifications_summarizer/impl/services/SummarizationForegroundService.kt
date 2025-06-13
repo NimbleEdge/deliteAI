@@ -35,6 +35,7 @@ class SummarizationForegroundService : Service() {
         notificationManager = dependencyContainer.getNotificationManager()
         notificationSummaryDao = dependencyContainer.getNotificationSummaryDao()
         config = dependencyContainer.getConfig()
+        llmManager = dependencyContainer.getLlmManager()
 
         //we need only one notification for multiple services
         val foregroundNotificationId = 746353

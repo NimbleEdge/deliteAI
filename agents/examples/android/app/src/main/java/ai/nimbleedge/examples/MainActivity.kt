@@ -1,11 +1,7 @@
 package ai.nimbleedge.examples
 
-import ai.nimbleedge.NimbleNet
-import ai.nimbleedge.datamodels.NimbleNetConfig
 import ai.nimbleedge.examples.ui.theme.ExamplesTheme
 import ai.nimbleedge.notifications_summarizer.api.NotificationsSummarizerAgent
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
-import ai.nimbleedge.utils.NIMBLENET_VARIANTS
 import android.Manifest
 import android.app.AlarmManager
 import android.app.Application
@@ -16,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -28,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -48,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -182,19 +175,6 @@ class MainActivity : ComponentActivity() {
             ) {
                 Button(
                     onClick = {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            resultText = initializeAgent(application)
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(40.dp)
-                ) {
-                    Text(text = "Initialize", fontSize = 11.sp)
-                }
-
-                Button(
-                    onClick = {
                         coroutineScope.launch {
                             resultText = scheduleNotificationJob()
                         }
@@ -221,7 +201,7 @@ class MainActivity : ComponentActivity() {
                         .weight(1f)
                         .height(40.dp)
                 ) {
-                    Text(text = "Current", fontSize = 11.sp)
+                    Text(text = "Summarize Current", fontSize = 11.sp)
                 }
 
                 Button(
@@ -272,41 +252,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private suspend fun initializeAgent(application: Application): String {
-    return runCatching {
-        val config = NotificationSummarizerConfig(
-            onScheduledSummaryReady = { notificationSummary ->
-                Log.i(HOST_TAG, "initializeAgent: $notificationSummary")
-            }
-        )
-        
-        copyEspeakDataIfNeeded(application, "espeak-ng-data")
-        
-        val nimbleConfig = NimbleNetConfig(
-            clientId = "d-ai-sample",
-            host = "https://api.delite.ai",
-            deviceId = "test-device",
-            clientSecret = "secret_value",
-            debug = true,
-            compatibilityTag = "agent_notification_summarizer",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC
-        )
-        
-        val res = NimbleNet.initialize(application, nimbleConfig)
-        check(res.status)
-        
-        while (!NimbleNet.isReady().status) delay(1000)
-        
-        NotificationsSummarizerAgent.initialize(application, config)
-        "initialize succeeded"
-    }.getOrElse {
-        "initialize failed: ${it.message}"
-    }
-}
-
+//will schedule a job that will go off in the next 10 seconds for demo
 private suspend fun scheduleNotificationJob(): String {
     return runCatching {
-        val timeInMillis = System.currentTimeMillis() + 5_000L
+        val timeInMillis = System.currentTimeMillis() + 10_000L
         NotificationsSummarizerAgent.scheduleNotificationSummaryJob(timeInMillis)
         "scheduleNotificationSummaryJob returned"
     }.getOrElse {
