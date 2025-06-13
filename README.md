@@ -1,5 +1,7 @@
 # DeliteAI
 
+[![Join us on Discord](https://img.shields.io/badge/Join%20us-Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/CxzDDffR)
+
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
 across multiple platforms and devices.
@@ -32,6 +34,10 @@ across multiple platforms and devices.
 ## Documentation
 
 [Coming Soon]
+
+## Community engagement
+We welcome any feedback or suggestions - please join our
+[Discord](https://discord.gg/CxzDDffR) to engage with the community.
 
 ## Contributing
 
