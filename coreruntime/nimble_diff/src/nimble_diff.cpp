@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025-Present DeliteAI Authors
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
  *
  * SPDX-License-Identifier: Apache-2.0
  */
