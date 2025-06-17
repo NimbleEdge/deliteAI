@@ -12,20 +12,44 @@
 
 namespace ne {
 
+/**
+ * @brief A simple string wrapper that manages dynamic memory allocation
+ *
+ * This class provides RAII-style memory management for formatted strings.
+ * It automatically allocates memory on construction and deallocates on destruction.
+ */
 struct FmtString {
   char* str = nullptr;
 
+  /**
+   * @brief Constructs a FmtString with the specified size
+   * @param size The size of the string buffer to allocate
+   */
   FmtString(std::size_t size) { str = new char[size]; }
 
+  /**
+   * @brief Destructor that frees the allocated memory
+   */
   ~FmtString() { delete[] str; }
 };
 
+/**
+ * @brief Macro for handling variadic formatting
+ * @param format The format string
+ */
 #define NE_VARIADIC_FMT(format)      \
   va_list args;                      \
   va_start(args, format);            \
   auto buf = ne::vfmt(format, args); \
   va_end(args)
 
+/**
+ * @brief Formats a string using a va_list
+ * @param format The format string
+ * @param args The va_list containing the arguments
+ * @return FmtString containing the formatted result
+ * @throw std::runtime_error if formatting fails
+ */
 static inline FmtString vfmt(const char* format, va_list args) {
   // va_start(args) has already been called
   va_list args2;
@@ -44,6 +68,12 @@ static inline FmtString vfmt(const char* format, va_list args) {
   return fmtStr;
 }
 
+/**
+ * @brief Formats a string using variadic arguments
+ * @param format The format string
+ * @param ... Variable arguments to be formatted
+ * @return FmtString containing the formatted result
+ */
 static inline FmtString fmt(const char* format, ...) {
   va_list args;
 
@@ -53,6 +83,13 @@ static inline FmtString fmt(const char* format, ...) {
   return ret;
 }
 
+/**
+ * @brief Formats a string and returns a raw char pointer
+ * @param format The format string
+ * @param ... Variable arguments to be formatted
+ * @return char* containing the formatted result (must be freed by caller)
+ * @throw std::runtime_error if formatting fails
+ */
 static inline char* fmt_to_raw(const char* format, ...) {
   va_list args, args2;
   va_start(args, format);
@@ -76,6 +113,11 @@ static inline char* fmt_to_raw(const char* format, ...) {
 
 }  // namespace ne
 
+/**
+ * @brief Macro for throwing formatted runtime errors
+ * @param format The format string
+ * @param ... Variable arguments to be formatted
+ */
 #define THROW(format, ...)                                   \
   do {                                                       \
     auto throwBuffer = ne::fmt(format, ##__VA_ARGS__);       \

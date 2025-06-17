@@ -11,6 +11,8 @@ namespace util {
 std::string get_md5(const std::string& input) { return MD5()(input); }
 
 int calculate_shard_number(const std::string& deviceId) {
+  // Implementation uses last 8 bytes of MD5 hash to determine shard number
+  // This provides a good distribution while being computationally efficient
   std::string hash = get_md5(deviceId);
   if (hash.size() != 32) {
     THROW("MD5 hash of deviceId %s expected to be 32 characters, found %d instead",
