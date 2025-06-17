@@ -47,10 +47,10 @@ class NullableAtomicPtr {
 
  public:
   /**
-   *@brief Constructs a NullableAtomicPtr with the given arguments
+   * @brief Constructs a NullableAtomicPtr with the given arguments
    *
-   *@tparam Args Variadic template parameter pack for constructor arguments
-   *@param args Arguments to forward to T's constructor
+   * @tparam Args Variadic template parameter pack for constructor arguments
+   * @param args Arguments to forward to T's constructor
    */
   template <typename... Args>
   NullableAtomicPtr(Args&&... args)
@@ -102,7 +102,7 @@ class AtomicPtr : public NullableAtomicPtr<T> {
   AtomicPtr(Args&&... args) : NullableAtomicPtr<T>(std::forward<Args>(args)...) {}
 
   /**
-   *@brief Default constructor that creates a default-constructed object
+   * @brief Default constructor that creates a default-constructed object
    *
    * Unlike NullableAtomicPtr, this ensures the pointer is never null by
    * default-constructing the managed object.
