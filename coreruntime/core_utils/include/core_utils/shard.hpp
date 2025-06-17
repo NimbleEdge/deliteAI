@@ -24,6 +24,7 @@ namespace util {
 
 /**
  * @brief Calculates MD5 hash of the input string
+ * 
  * @param input The input string to calculate MD5 hash for
  * @return std::string The MD5 hash of the input string
  */
@@ -31,6 +32,7 @@ std::string get_md5(const std::string& input);
 
 /**
  * @brief Calculates the shard number for a given device ID
+ * 
  * @param deviceId The device ID to calculate shard number for
  * @return int The shard number (0 to TOTAL_SHARDS-1)
  */

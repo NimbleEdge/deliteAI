@@ -18,9 +18,9 @@
 namespace ne {
 
 /**
- *@brief A wrapper class for std::shared_ptr that provides atomic operations
+ * @brief A wrapper class for std::shared_ptr that provides atomic operations
  *
- *@tparam T The type of object to be managed by the shared pointer
+ * @tparam T The type of object to be managed by the shared pointer
  *
  * This class provides atomic load and store operations for a shared pointer,
  * while allowing the pointer to be null. It is designed to be used as a base
@@ -32,16 +32,16 @@ class NullableAtomicPtr {
 
  protected:
   /**
-   *@brief Internal constructor type for default construction
+   * @brief Internal constructor type for default construction
    *
    * It is only used by AtomicPtr child class to do default construction
    */
   enum class ConstructorType { Default };
 
   /**
-   *@brief Protected constructor that creates a default-constructed object
+   * @brief Protected constructor that creates a default-constructed object
    *
-   *@param type Constructor type indicator
+   * @param type Constructor type indicator
    */
   NullableAtomicPtr(ConstructorType) : _sharedPtr(std::make_shared<T>()) {}
 
@@ -57,21 +57,21 @@ class NullableAtomicPtr {
       : _sharedPtr(std::make_shared<T>(std::forward<Args>(args)...)) {}
 
   /**
-   *@brief Default constructor that initializes with a null pointer
+   * @brief Default constructor that initializes with a null pointer
    */
   NullableAtomicPtr() = default;
 
   /**
-   *@brief Atomically loads the shared pointer
+   * @brief Atomically loads the shared pointer
    *
-   *@return std::shared_ptr<T> The atomically loaded shared pointer
+   * @return std::shared_ptr<T> The atomically loaded shared pointer
    */
   auto load() const noexcept { return std::atomic_load(&_sharedPtr); }
 
   /**
-   *@brief Atomically stores a new shared pointer
+   * @brief Atomically stores a new shared pointer
    *
-   *@param sharedPtr_ The new shared pointer to store
+   * @param sharedPtr_ The new shared pointer to store
    */
   void store(std::shared_ptr<T> sharedPtr_) noexcept { std::atomic_store(&_sharedPtr, sharedPtr_); }
 
@@ -81,9 +81,9 @@ class NullableAtomicPtr {
 };
 
 /**
- *@brief A wrapper class for std::shared_ptr that provides atomic operations and non-null guarantees
+ * @brief A wrapper class for std::shared_ptr that provides atomic operations and non-null guarantees
  *
- *@tparam T The type of object to be managed by the shared pointer
+ * @tparam T The type of object to be managed by the shared pointer
  *
  * This class extends NullableAtomicPtr to ensure the shared pointer is never null.
  * It provides the same atomic operations as NullableAtomicPtr but with the additional
@@ -93,10 +93,10 @@ template <typename T>
 class AtomicPtr : public NullableAtomicPtr<T> {
  public:
   /**
-   *@brief Constructs an AtomicPtr with the given arguments
+   * @brief Constructs an AtomicPtr with the given arguments
    *
-   *@tparam Args Variadic template parameter pack for constructor arguments
-   *@param args Arguments to forward to T's constructor
+   * @tparam Args Variadic template parameter pack for constructor arguments
+   * @param args Arguments to forward to T's constructor
    */
   template <typename... Args>
   AtomicPtr(Args&&... args) : NullableAtomicPtr<T>(std::forward<Args>(args)...) {}

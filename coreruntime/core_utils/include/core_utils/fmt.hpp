@@ -35,6 +35,7 @@ struct FmtString {
 
 /**
  * @brief Macro for handling variadic formatting
+ * 
  * @param format The format string
  */
 #define NE_VARIADIC_FMT(format)      \
@@ -45,6 +46,7 @@ struct FmtString {
 
 /**
  * @brief Formats a string using a va_list
+ * 
  * @param format The format string
  * @param args The va_list containing the arguments
  * @return FmtString containing the formatted result
@@ -70,6 +72,7 @@ static inline FmtString vfmt(const char* format, va_list args) {
 
 /**
  * @brief Formats a string using variadic arguments
+ * 
  * @param format The format string
  * @param ... Variable arguments to be formatted
  * @return FmtString containing the formatted result
@@ -85,6 +88,7 @@ static inline FmtString fmt(const char* format, ...) {
 
 /**
  * @brief Formats a string and returns a raw char pointer
+ * 
  * @param format The format string
  * @param ... Variable arguments to be formatted
  * @return char* containing the formatted result (must be freed by caller)
@@ -115,6 +119,7 @@ static inline char* fmt_to_raw(const char* format, ...) {
 
 /**
  * @brief Macro for throwing formatted runtime errors
+ * 
  * @param format The format string
  * @param ... Variable arguments to be formatted
  */
