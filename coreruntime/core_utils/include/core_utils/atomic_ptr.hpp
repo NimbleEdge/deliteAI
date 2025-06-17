@@ -10,6 +10,8 @@
  * accessing the shared_ptr
  */
 
+#pragma once
+
 #include <atomic>
 #include <memory>
 
