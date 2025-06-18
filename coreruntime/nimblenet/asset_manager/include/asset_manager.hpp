@@ -44,13 +44,14 @@ struct Location {
  * @brief Enum representing supported asset types.
  */
 enum class AssetType {
-  MODEL,  /**< Machine learning model asset. */
-  SCRIPT, /**< Script asset. */
+  MODEL,  /**< Traditional Machine Learning model asset, currently onnx format is supported. */
+  SCRIPT, /**< Workflow python script which will run on device. */
 #ifdef GENAI
-  RETRIEVER, /**< Retriever asset. */
-  DOCUMENT,  /**< Document asset. */
-  LLM,       /**< Large Language Model asset. */
-#endif       // GENAI
+  RETRIEVER, /**< Retriever asset to denote RAG. Supported by providing embedding model, embedding
+                store model and document as its arguments.*/
+  DOCUMENT,  /**< Json document asset. */
+  LLM,  /**< Large Language Model asset. Currently supports onnx, executorch and gemini formats.*/
+#endif  // GENAI
 };
 
 /**
