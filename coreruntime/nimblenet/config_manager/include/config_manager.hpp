@@ -18,38 +18,97 @@ using json = nlohmann::json;
 
 class CommandCenter;
 
+/**
+ * @class Config
+ * @brief Holds configuration settings for the application passed on in initialize API. This
+ * including device identity, client credentials, database settings, model information, and runtime
+ * flags.
+ */
 class Config {
   // if adding new members here, remember to add in the copy constructor
+
+  /** Mutex to protect access to modelIds. */
   mutable std::mutex _configMutex;
+
+  /** List of model identifiers. */
   std::vector<std::string> modelIds;
+
+  /**
+   * @brief Initializes the configuration from a JSON object.
+   *
+   * @param j JSON object containing configuration fields.
+   */
   void init(const nlohmann::json& j);
 
  public:
+  /** Raw JSON string representing the configuration. */
   std::string configJsonString;
+
+  /** Tag representing the compatibility version of the configuration. */
   std::string compatibilityTag;
+
+  /** Unique device identifier passed on by caller. */
   std::string deviceId;
+
+  /** Unique client identifier. */
   std::string clientId;
+
+  /** Host address for server communication. */
   std::string host;
+
+  /** Client secret for authentication. */
   std::string clientSecret;
+
+  /** Internal device identifier added by the SDK. */
   std::string internalDeviceId;
+
+  /** Table metadata for use in on-device DB. */
   std::vector<json> tableInfos;
+
+  /** Debug flag to enable verbose logging or diagnostic behavior. */
   bool debug = false;
+
+  /**
+   * @brief Maximum number of inputs to persist.
+   *
+   * @note To be deprecated.
+   */
   int maxInputsToSave = 0;
+
+  /** Maximum size of the database in kilobytes. */
   float maxDBSizeKBs = dbconstants::MaxDBSizeKBs;
+
+  /** Maximum size of event logs in kilobytes. */
   float maxEventsSizeKBs = loggerconstants::MaxEventsSizeKBs;
+
+  /** List of cohort identifiers where this configuration will be used. */
   nlohmann::json cohortIds = nlohmann::json::array();
+
 #ifdef SIMULATION_MODE
-  // By default simulator to be run in offline mode
+  /**
+   * @brief Indicates if the simulator runs in online mode.
+   * Defaults to false in simulation mode.
+   */
   bool online = false;
-  // Be default simulator to require TIMESTAMP for user events
+
+  /**
+   * @brief Flag indicating whether time is simulated.
+   * Defaults to true in simulation mode.
+   */
   bool isTimeSimulated = true;
 #else
-  // For non-simulation mode, offline mode is not allowed, assets are always fetched from cloud
+  /** Online mode is always enabled outside of simulation. */
   bool online = true;
-  // For non-simulation mode, time simulation is not allowed
+
+  /** Time simulation is disabled outside of simulation. */
   bool isTimeSimulated = false;
 #endif
 
+  /**
+   * @brief Returns a C-style string representing the current configuration state.
+   *
+   * @return A dynamically allocated char* string (must be freed by the caller).
+   */
   char* c_str() {
     std::string tables = "[";
     for (const auto& it : tableInfos) {
@@ -76,14 +135,30 @@ class Config {
     return ret;
   }
 
+  /**
+   * @brief Checks if the configuration is in debug mode.
+   *
+   * @return True if debug is enabled, false otherwise.
+   */
   bool isDebug() const { return debug; }
 
+  /**
+   * @brief Retrieves a thread-safe copy of the list of model IDs.
+   *
+   * @return Vector of model ID strings.
+   */
   std::vector<std::string> get_modelIds() const {
     std::lock_guard<std::mutex> lck(_configMutex);
     auto models = modelIds;
     return models;
   }
 
+  /**
+   * @brief Adds a new model ID to the list if it's not already present.
+   *
+   * @param modelId The model identifier to add.
+   * @return True if the model ID was added, false if it already existed.
+   */
   bool add_model(const std::string& modelId) {
     std::lock_guard<std::mutex> lck(_configMutex);
     auto it = std::find(modelIds.begin(), modelIds.end(), modelId);
@@ -94,15 +169,37 @@ class Config {
     return false;
   }
 
+  /**
+   * @brief Constructs the configuration from a JSON string.
+   *
+   * @param configJsonString Raw JSON string containing configuration.
+   */
   Config(const std::string& configJsonString);
+
+  /**
+   * @brief Constructs the configuration from a JSON object.
+   *
+   * @param json JSON object containing configuration.
+   */
   Config(const nlohmann::json& json);
 
+  /** Default constructor is deleted. */
   Config() = delete;
+
+  /** Copy constructor is deleted. */
   Config(const Config&) = delete;
 
+  /** Grant access to private members for CommandCenter. */
   friend class CommandCenter;
 };
 
+/**
+ * @brief Serializes selected Config fields to a JSON object. These fields are exposed in the
+ * workflow script.
+ *
+ * @param j JSON object to populate.
+ * @param config Configuration object to serialize.
+ */
 inline const void to_json(nlohmann::json& j, const Config& config) {
   j = nlohmann::json{{"compatibilityTag", config.compatibilityTag},
                      {"cohortIds", config.cohortIds}};

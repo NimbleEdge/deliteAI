@@ -16,10 +16,13 @@
 #include "time_manager.hpp"
 #include "util.hpp"
 
+/**
+ * @brief Structure holding user event data.
+ */
 struct UserEventsData {
-  NimbleNetStatus* status;
-  std::string updatedEventName;
-  OpReturnType updatedEventDataVariable;
+  NimbleNetStatus* status;      /**< Status pointer indicating the result of event handling. */
+  std::string updatedEventName; /**< Name of the updated event. */
+  OpReturnType updatedEventDataVariable; /**< Data associated with the updated event. */
 
   UserEventsData(NimbleNetStatus* status_) { status = status_; }
 
@@ -32,16 +35,22 @@ struct UserEventsData {
   UserEventsData() = delete;
 };
 
+/**
+ * @brief Structure holding inference timing statistics.
+ */
 struct InferenceTime {
-  long long int minInferenceTime;
-  long long int maxInferenceTime;
-  long long int totalInferenceTime;
+  long long int minInferenceTime;   /**< Minimum inference time recorded. */
+  long long int maxInferenceTime;   /**< Maximum inference time recorded. */
+  long long int totalInferenceTime; /**< Cumulative inference time. */
 };
 
+/**
+ * @brief Configuration required for minimal initialization of the SDK.
+ */
 struct MinimalInitializationConfig {
-  std::shared_ptr<Config> deviceConfig = nullptr;
-  LoggerConfig externalLoggerConfig;
-  LoggerConfig nimbleLoggerConfig;
+  std::shared_ptr<Config> deviceConfig = nullptr; /**< Shared pointer to device configuration. */
+  LoggerConfig externalLoggerConfig;              /**< Logger config for external logs. */
+  LoggerConfig nimbleLoggerConfig;                /**< Logger config for internal logs. */
 
   MinimalInitializationConfig(std::shared_ptr<Config> deviceConfig_,
                               const LoggerConfig& externalLoggerConfig_,
@@ -54,12 +63,24 @@ struct MinimalInitializationConfig {
   MinimalInitializationConfig(){};
 };
 
+/**
+ * @brief Serializes a MinimalInitializationConfig to JSON.
+ *
+ * @param j The JSON object to populate.
+ * @param wm The minimal config to serialize.
+ */
 static inline const void to_json(json& j, const MinimalInitializationConfig& wm) {
   j = nlohmann::json{{"deviceConfig", wm.deviceConfig->configJsonString},
                      {"externalLoggerConfig", wm.externalLoggerConfig},
                      {"nimbleLoggerConfig", wm.nimbleLoggerConfig}};
 };
 
+/**
+ * @brief Deserializes a MinimalInitializationConfig from JSON.
+ *
+ * @param j The JSON object.
+ * @param wm The MinimalInitializationConfig to populate.
+ */
 static inline const void from_json(const json& j, MinimalInitializationConfig& wm) {
   if (j.find("deviceConfig") != j.end()) {
     std::string st = j.at("deviceConfig");
@@ -73,13 +94,16 @@ static inline const void from_json(const json& j, MinimalInitializationConfig& w
   }
 };
 
+/**
+ * @brief Aggregated metrics for a specific resource run.
+ */
 struct ResourceRunAggregates {
-  int inferenceCount;
-  InferenceTime totalTime;
-  std::string resourceVersion;
-  std::string resourceName;
-  std::string resourceType;
-  int deploymentId = -1;
+  int inferenceCount;          /**< Number of inference runs. */
+  InferenceTime totalTime;     /**< Aggregated inference timing info. */
+  std::string resourceVersion; /**< Version of the resource used. */
+  std::string resourceName;    /**< Name of the resource. */
+  std::string resourceType;    /**< Type of resource (e.g., model/script). */
+  int deploymentId = -1;       /**< Deployment ID associated with the resource. */
 
   std::string to_json_string() {
     nlohmann::json abc;
@@ -115,27 +139,57 @@ struct ResourceRunAggregates {
   }
 };
 
+/**
+ * @brief Collects and logs metrics during SDK runtime.
+ */
 struct MetricsAgent {
-  nlohmann::json metricsCollection;
-  std::shared_ptr<Logger> metricsLogger = std::make_shared<Logger>();
-  std::chrono::time_point<std::chrono::high_resolution_clock> lastMetricTime;
-  int _inferenceCount = 0;
-  std::mutex _inferenceLogMutex;
-  std::map<std::string, ResourceRunAggregates> _inferenceAggregates;
-  std::map<std::string, ResourceRunAggregates> _scriptRunAggregates;
+  nlohmann::json metricsCollection; /**< Stores various metrics as JSON. */
+  std::shared_ptr<Logger> metricsLogger =
+      std::make_shared<Logger>(); /**< Logger for metric logs. */
+  std::chrono::time_point<std::chrono::high_resolution_clock>
+      lastMetricTime;            /**< Timestamp of last metric flush. */
+  int _inferenceCount = 0;       /**< Tracks total inferences since last flush. */
+  std::mutex _inferenceLogMutex; /**< Guards access to metric maps. */
+  std::map<std::string, ResourceRunAggregates>
+      _inferenceAggregates; /**< Aggregated inference metrics by model ID. */
+  std::map<std::string, ResourceRunAggregates>
+      _scriptRunAggregates; /**< Aggregated script execution metrics. */
 
+  /**
+   * @brief Constructs a MetricsAgent and initializes the last metric time to an earlier timestamp
+   * to ensure first flush is not skipped.
+   */
   MetricsAgent() {
     lastMetricTime = Time::get_high_resolution_clock_time() -
                      std::chrono::seconds(2 * loggerconstants::MetricsCollectionIntervalSecs);
   }
 
+  /**
+   * @brief Initializes the metrics logger.
+   *
+   * @param logger Shared pointer to a Logger instance to be used.
+   */
   void initialize(std::shared_ptr<Logger> logger) { metricsLogger = logger; }
 
+  /**
+   * @brief Logs a custom metric as a JSON string using the logger.
+   *
+   * @param metricType String identifier for the type of metric.
+   * @param metricJson JSON object containing the metric data.
+   */
   void log_metrics(const char* metricType, const nlohmann::json& metricJson) {
     std::string jsonDump = metricJson.dump();
     metricsLogger->LOGMETRICS(metricType, jsonDump.c_str());
   }
 
+  /**
+   * @brief Records inference timing for a specific model.
+   *
+   * @param modelString Identifier for the model (e.g., name or path).
+   * @param modelVersion Version string of the model.
+   * @param deploymentId Deployment ID associated with the model.
+   * @param androidTime Inference execution time in microseconds.
+   */
   void write_inference_metric(const char* modelString, const std::string& modelVersion,
                               int deploymentId, long long androidTime) {
     std::string modelId = std::string(modelString);
@@ -148,6 +202,14 @@ struct MetricsAgent {
     _inferenceAggregates.at(modelId).update_time(androidTime);
   }
 
+  /**
+   * @brief Records execution timing for a script method.
+   *
+   * @param methodString Name of the method or script.
+   * @param scriptVersion Version string of the script.
+   * @param deploymentId Deployment ID associated with the script.
+   * @param androidTime Execution time in microseconds.
+   */
   void write_run_method_metric(const char* methodString, const std::string& scriptVersion,
                                int deploymentId, long long androidTime) {
     std::string methodName = std::string(methodString);
@@ -160,6 +222,11 @@ struct MetricsAgent {
     _scriptRunAggregates.at(methodName).update_time(androidTime);
   }
 
+  /**
+   * @brief Flushes collected inference and script metrics if the count exceeds the threshold.
+   *
+   * @param inferenceMetricLogInterval Threshold after which metrics should be logged and reset.
+   */
   void flush_inference_metrics(int inferenceMetricLogInterval) {
     std::lock_guard<std::mutex> locker(_inferenceLogMutex);
     if (_inferenceCount >= inferenceMetricLogInterval) {
@@ -177,6 +244,12 @@ struct MetricsAgent {
     }
   }
 
+  /**
+   * @brief Adds or updates metric data under a given metric type.
+   *
+   * @param metricType Identifier for the metric category.
+   * @param metricJson JSON data to store under the category.
+   */
   void save_metrics(const std::string metricType, const nlohmann::json& metricJson) {
     if (metricsCollection.contains(metricType)) {
       for (auto& metricKey : metricJson.items()) {
@@ -195,12 +268,14 @@ struct MetricsAgent {
   ~MetricsAgent() { flush_inference_metrics(1); }
 };
 
-// TODO: Move this someplace else which actually will do the logging
+/**
+ * @brief A job responsible for logging metrics via a specified logger.
+ */
 struct LogJob : public Job<void> {
-  int deploymentId;
-  std::string type;
-  nlohmann::json data;
-  std::shared_ptr<Logger> _loggerToUse;
+  int deploymentId;                     /**< ID of the deployment the log is associated with. */
+  std::string type;                     /**< Type/category of the log. */
+  nlohmann::json data;                  /**< JSON-formatted log data. */
+  std::shared_ptr<Logger> _loggerToUse; /**< Logger instance to write the logs. */
 
   LogJob(int deploymentId, std::string&& type, nlohmann::json&& data,
          std::shared_ptr<Logger> loggerToUse)
@@ -222,6 +297,9 @@ struct LogJob : public Job<void> {
 
 namespace util {
 
+/**
+ * @brief Renames the current deployment file to the old deployment file.
+ */
 static inline void rename_deployment_to_old_deployment(std::shared_ptr<Config> config) noexcept {
   auto cloudConfigFileName = nativeinterface::get_full_file_path_common(
       config->compatibilityTag + coresdkconstants::DeploymentFileName);
@@ -230,6 +308,9 @@ static inline void rename_deployment_to_old_deployment(std::shared_ptr<Config> c
   rename(cloudConfigFileName.c_str(), oldCloudConfigFileName.c_str());
 }
 
+/**
+ * @brief Saves the deployment information to device storage.
+ */
 static inline bool save_deployment_on_device(const Deployment& deployment,
                                              const std::string& compatibilityTag) {
   return nativeinterface::save_file_on_device_common(
@@ -237,6 +318,9 @@ static inline bool save_deployment_on_device(const Deployment& deployment,
              compatibilityTag + coresdkconstants::DeploymentFileName) != "";
 }
 
+/**
+ * @brief Reads stored session metrics and logs them using the provided MetricsAgent.
+ */
 static inline void read_session_metrics(const std::string& sessionFilePath,
                                         MetricsAgent* metricsAgent) {
   long long int sessionLength = 0;
@@ -250,6 +334,14 @@ static inline void read_session_metrics(const std::string& sessionFilePath,
   }
 }
 
+/**
+ * @brief Sleeps the current thread and updates the session duration metric.
+ *
+ * @param start Time point representing the start of a session.
+ * @param threadSleepTimeUSecs Duration to sleep in microseconds.
+ * @param sessionLength Previously recorded session duration.
+ * @return Updated session duration.
+ */
 static inline int64_t sleep_flush_and_update_session_time(
     const std::chrono::time_point<std::chrono::high_resolution_clock> start,
     const int64_t threadSleepTimeUSecs, const int64_t& sessionLength) {
