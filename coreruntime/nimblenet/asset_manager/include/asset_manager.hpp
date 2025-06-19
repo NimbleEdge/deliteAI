@@ -45,7 +45,7 @@ struct Location {
  */
 enum class AssetType {
   MODEL,  /**< Traditional Machine Learning model asset, currently onnx format is supported. */
-  SCRIPT, /**< Workflow python script which will run on device. */
+  SCRIPT, /**< DelitePy python script which will run on device. */
 #ifdef GENAI
   RETRIEVER, /**< Retriever asset to denote RAG. Supported by providing embedding model, embedding
                 store model and document as its arguments.*/
@@ -66,7 +66,7 @@ struct AssetId {
    * @brief Compares this AssetId to another for ordering.
    *
    * @param other The other AssetId to compare with.
-   * @return True if this is less than other.
+   * @return true if this is less than other.
    */
   bool operator<(const AssetId& other) const;
 };
