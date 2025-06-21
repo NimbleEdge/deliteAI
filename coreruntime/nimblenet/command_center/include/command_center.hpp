@@ -257,7 +257,7 @@ class CommandCenter {
   int get_deployment_id() { return _deployment.Id; }
 
   /**
-   * @brief Placeholder for model reloading with endpoint config.
+   * @brief Placeholder for model reloading with execution provider config.
    *
    * @note Currently not implemented.
    */
