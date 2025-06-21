@@ -17,7 +17,10 @@
 #include "util.hpp"
 
 /**
- * @brief Structure holding user event data.
+ * @brief Structure holding user event data for internal processing.
+ * The Json/MapDataVariable event from frontend layers after processing using the delitepy script is
+ * converted to this struct. Once populated, based on the status response is returned to frontend
+ * via CUserEventsData.
  */
 struct UserEventsData {
   NimbleNetStatus* status;      /**< Status pointer indicating the result of event handling. */

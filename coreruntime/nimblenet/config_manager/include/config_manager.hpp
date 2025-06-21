@@ -20,13 +20,11 @@ class CommandCenter;
 
 /**
  * @class Config
- * @brief Holds configuration settings for the application passed on in initialize API. This
- * including device identity, client credentials, database settings, model information, and runtime
+ * @brief Holds configuration settings for the application passed in initialize API. This
+ * includes device identity, client credentials, database settings, model information, and runtime
  * flags.
  */
 class Config {
-  // if adding new members here, remember to add in the copy constructor
-
   /** Mutex to protect access to modelIds. */
   mutable std::mutex _configMutex;
 
@@ -50,13 +48,17 @@ class Config {
   /** Unique device identifier passed on by caller. */
   std::string deviceId;
 
-  /** Unique client identifier. */
+  /**
+   * Unique client identifier.
+   * Used for identifying the client when connecting to a secure SaaS
+   * platform.
+   */
   std::string clientId;
 
-  /** Host address for server communication. */
+  /** Host address for server communication to the SaaS platform. */
   std::string host;
 
-  /** Client secret for authentication. */
+  /** Client secret for authentication. Used along with clientId for secure SaaS platform access. */
   std::string clientSecret;
 
   /** Internal device identifier added by the SDK. */
