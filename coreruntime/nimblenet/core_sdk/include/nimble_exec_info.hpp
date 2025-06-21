@@ -7,6 +7,7 @@
 #include <csignal>
 
 namespace ne {
+
 /**
  * @brief Handles crash signal from Android/Ios.
  */

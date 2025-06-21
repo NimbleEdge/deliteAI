@@ -176,4 +176,4 @@ bool CoreSDK::validateUserEvent(nlohmann::json& userEventJson) {
   return true;
 }
 
-#endif
+#endif  // SIMULATION_MODE

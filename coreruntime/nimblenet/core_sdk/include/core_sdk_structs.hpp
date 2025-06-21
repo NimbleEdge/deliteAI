@@ -6,6 +6,16 @@
 
 #pragma once
 
+#include <cstdint>
+
+#include <algorithm>
+#include <chrono>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <utility>
+
 #include "config_manager.hpp"
 #include "core_sdk_constants.hpp"
 #include "job.hpp"
@@ -18,6 +28,7 @@
 
 /**
  * @brief Structure holding user event data for internal processing.
+ *
  * The Json/MapDataVariable event from frontend layers after processing using the delitepy script is
  * converted to this struct. Once populated, based on the status response is returned to frontend
  * via CUserEventsData.
@@ -63,7 +74,7 @@ struct MinimalInitializationConfig {
     nimbleLoggerConfig = nimbleLoggerConfig_;
   };
 
-  MinimalInitializationConfig(){};
+  MinimalInitializationConfig() {}
 };
 
 /**
@@ -72,7 +83,7 @@ struct MinimalInitializationConfig {
  * @param j The JSON object to populate.
  * @param wm The minimal config to serialize.
  */
-static inline const void to_json(json& j, const MinimalInitializationConfig& wm) {
+static inline void to_json(json& j, const MinimalInitializationConfig& wm) {
   j = nlohmann::json{{"deviceConfig", wm.deviceConfig->configJsonString},
                      {"externalLoggerConfig", wm.externalLoggerConfig},
                      {"nimbleLoggerConfig", wm.nimbleLoggerConfig}};
@@ -84,7 +95,7 @@ static inline const void to_json(json& j, const MinimalInitializationConfig& wm)
  * @param j The JSON object.
  * @param wm The MinimalInitializationConfig to populate.
  */
-static inline const void from_json(const json& j, MinimalInitializationConfig& wm) {
+static inline void from_json(const json& j, MinimalInitializationConfig& wm) {
   if (j.find("deviceConfig") != j.end()) {
     std::string st = j.at("deviceConfig");
     wm.deviceConfig = std::make_shared<Config>(st);
@@ -253,7 +264,7 @@ struct MetricsAgent {
    * @param metricType Identifier for the metric category.
    * @param metricJson JSON data to store under the category.
    */
-  void save_metrics(const std::string metricType, const nlohmann::json& metricJson) {
+  void save_metrics(const std::string& metricType, const nlohmann::json& metricJson) {
     if (metricsCollection.contains(metricType)) {
       for (auto& metricKey : metricJson.items()) {
         metricsCollection[metricType][metricKey.key()] = metricJson[metricKey.key()];
@@ -361,4 +372,5 @@ static inline int64_t sleep_flush_and_update_session_time(
 
   return updatedSessionLength;
 }
+
 }  // namespace util

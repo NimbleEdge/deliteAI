@@ -94,7 +94,7 @@ unsigned long get_base_address() {
 // stub for apple since we don't have link.h available, atleast till a suitable replacement is found
 unsigned long get_base_address() { return 0; }
 
-#endif  // __APPLE
+#endif  // __APPLE__
 
 static bool receivedSignal = false;
 

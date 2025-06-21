@@ -37,15 +37,15 @@ class UserEventsManager;
 class Config;
 
 /**
- * @brief CoreSDK is the main interface for managing SDK lifecycle across deployments. It has the
- * following main functions:
- * 1. During SDK initialization CoreSDK makes sure that the correct
- * deployment from disk/SaaS platform is loaded and corresponding CommandCenter created.
-
+ * @brief CoreSDK is the main interface for managing SDK lifecycle across deployments.
+ *
+ * It has the following main functions:
+ * 1. During SDK initialization, CoreSDK makes sure that the correct
+ *    deployment from disk/SaaS platform is loaded and corresponding CommandCenter is created.
  * 2. CoreSDK also starts a background thread which makes all the network calls for downloading
- * assets or sending logs.
+ *    assets or sending logs.
  * 3. Acts as an interface between nimblenet.cpp and commandCenter. All the public APIs exposed via
- * nimblenet.hpp are routed to the correct commandCenter via CoreSDK.
+ *    nimblenet.hpp are routed to the correct commandCenter via CoreSDK.
  */
 class CoreSDK {
   std::shared_ptr<CommandCenter> _atomicCommandCenter =
