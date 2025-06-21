@@ -11,6 +11,11 @@
 #include "job.hpp"
 #include "ne_fwd.hpp"
 
+/**
+ * @brief A job responsible for loading a delitepy script asset.
+ *
+ * It inherits from `Job<void>` as it does not produce a result value.
+ */
 class ScriptLoadJob : public Job<void> {
   CommandCenter* _commandCenter;
   std::shared_ptr<Asset> _scriptAsset;

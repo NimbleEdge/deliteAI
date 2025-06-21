@@ -11,48 +11,79 @@
 #include <string>
 
 /**
- * Jobs form a tree, with parent-child relationship indicating dependency
- * A parent Job can only be scheduled once all its children Jobs are completed
- * Each job maintains a count of number of pending child jobs as well as a pointer
- * to parent job
+ * @brief Jobs form a tree, with parent-child relationships indicating dependencies.
  *
- * NOTE: We might want to make Job's tree into a DAG in the future. In that case,
- * every job will just hold a vector of its parent jobs
+ * A parent job can only be scheduled once all its child jobs have completed.
+ * Each job maintains a count of pending child jobs and an optional pointer to its parent.
+ *
+ * @note In the future, the job structure could be extended into a DAG (directed acyclic graph),
+ *       in which case a job may hold multiple parent references.
  */
 
 class BaseJob {
  public:
-  enum class Status { COMPLETE, RETRY, RETRY_WHEN_ONLINE };
+  /**
+   * @brief Status codes returned after processing a job.
+   */
+  enum class Status {
+    COMPLETE,         /**< Job successfully completed. */
+    RETRY,            /**< Job failed and should be retried. */
+    RETRY_WHEN_ONLINE /**< Retry only when network or online state is restored. */
+  };
 
-  /*
-   * Job has a state, in which certain operations are allowed or disallowed:
-   * - PENDING: Job is not scheduled. Can add dependencies at this time
-   * - WAITING_FOR_DEPENDENCIES_TO_FINISH: Job added to the scheduler, but not queued as it is
-   *   waiting for child jobs to finish. More dependencies cannot be added
-   * - SCHEDULED: Job added to scheduler queue, no pending dependencies. More dependencies
-   *   cannot be added
-   * - FINISHED: Job is finished, i.e. it returned COMPLETE status on a run() call
+  /**
+   * @brief States a job can be in throughout its lifecycle.
+   *
+   * - PENDING: Not yet scheduled; can add dependencies.
+   * - WAITING_FOR_DEPENDENCIES_TO_FINISH: Scheduled but waiting for child jobs.
+   * - SCHEDULED: Ready to execute; all dependencies resolved.
+   * - FINISHED: Execution complete (status COMPLETE).
    */
   enum class State { PENDING, WAITING_FOR_DEPENDENCIES_TO_FINISH, SCHEDULED, FINISHED };
 
  private:
-  std::mutex _mutex;  // Protect job state variables
-  State _state = State::PENDING;
-  int _numPendingChildJobs = 0;
-  std::shared_ptr<BaseJob> _parentJob;
-  const std::string _name;
+  std::mutex _mutex;                   /**< Mutex to protect internal state transitions. */
+  State _state = State::PENDING;       /**< Current state of the job. */
+  int _numPendingChildJobs = 0;        /**< Counter for unfinished child jobs. */
+  std::shared_ptr<BaseJob> _parentJob; /**< Pointer to the parent job (if any). */
+  const std::string _name;             /**< Job name for identification/debugging. */
 
-  friend class JobScheduler;
+  friend class JobScheduler; /**< Grants scheduler internal access to state. */
 
  protected:
-  // Inheriting classes should ensure this is always constructed as a shared_ptr
+  /**
+   * @brief Constructor to be called by derived classes.
+   *
+   * @param name Name of the job for tracking and debugging.
+   *
+   * @note Must always be constructed as a `shared_ptr` to function correctly.
+   */
   BaseJob(const std::string& name);
+
+  /**
+   * @brief Returns a shared pointer to the current job instance.
+   *
+   * @return shared_ptr of the job (typically `shared_from_this()`).
+   */
   [[nodiscard]] virtual std::shared_ptr<BaseJob> get_shared_ptr() = 0;
 
  public:
+  /**
+   * @brief Processes the job logic. Called by the scheduler.
+   *
+   * @return Job status after execution.
+   */
   [[nodiscard]] virtual Status process_base_job() = 0;
 
+  /**
+   * @brief Virtual destructor for safe cleanup of derived types.
+   */
   virtual ~BaseJob() = 0;
 
+  /**
+   * @brief Registers another job as a child/dependent of this job.
+   *
+   * @param job The dependent job to be added.
+   */
   void add_child_job(std::shared_ptr<BaseJob> job);
 };

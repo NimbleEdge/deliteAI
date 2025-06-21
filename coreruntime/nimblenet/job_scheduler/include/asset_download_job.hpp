@@ -11,6 +11,16 @@
 #include "internet_job.hpp"
 #include "ne_fwd.hpp"
 
+/**
+ * @brief Job responsible for downloading an asset, with offline fallback and retry support.
+ *
+ * This class wraps the logic to download an `Asset` and return its `Location`.
+ * It inherits from `InternetJob<Location>`, enabling it to:
+ *  - Attempt offline resolution of the asset first.
+ *  - Download the asset from the internet with automatic retries
+ *
+ * The result of the job is a `Location` object representing where the asset is stored on disk.
+ */
 class AssetDownloadJob : public InternetJob<Location> {
   CommandCenter* _commandCenter;
   std::shared_ptr<Asset> _asset;
