@@ -50,14 +50,7 @@ BaseModel::BaseModel(const ModelInfo& modelInfo, const std::string& plan,
     : TaskBaseModel(plan, version, modelId, executionProviderConfig, epConfigVersion,
                     commandCenter) {
   std::lock_guard<std::mutex> locker(_modelMutex);
-  // super(plan, version, modelId, executionProviderConfig, epConfigVersion, commandCenter);
-  // _modelBuffer = plan;
-  // _epConfig = executionProviderConfig;
-  // _epConfigVersion = epConfigVersion;
-  // _commandCenter = commandCenter;
   _info = modelInfo;
-  // _version = version;
-  // _modelId = modelId;
 }
 
 // Memory allocated here must be freed by the consumer (android/ios). The
