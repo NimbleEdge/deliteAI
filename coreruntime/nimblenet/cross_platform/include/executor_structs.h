@@ -9,70 +9,102 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @brief Represents the status of the model whether it is loaded or not.
+ */
 typedef struct ModelStatus {
-  bool isModelReady;
-  char* version;
+  bool isModelReady; /**< Flag indicating if the model is ready for inference. */
+  char* version;     /**< String representing the version of the model. */
 } ModelStatus;
 
+/**
+ * @brief Represents a single input for inference.
+ */
 typedef struct CUserInput {
-  void* data;
-  int length;
-  char* name;
-  int dataType;
+  void* data;   /**< Pointer to the raw input data. */
+  int length;   /**< Length of the input data. */
+  char* name;   /**< Name of the input tensor. */
+  int dataType; /**< Data type of the input. */
 } CUserInput;
 
+/**
+ * @brief Represents an inference request containing one or more inputs.
+ */
 typedef struct InferenceRequest {
-  int numInputs;
-  CUserInput* inputs;
+  int numInputs;      /**< Number of input tensors. */
+  CUserInput* inputs; /**< Pointer to the array of input tensors. */
 } InferenceRequest;
 
+/**
+ * @brief Represents the output returned by an inference operation.
+ */
 typedef struct InferenceReturn {
-  void** outputs;
-  int** outputShapes;
-  int* outputLengths;
-  int* outputShapeLengths;
-  char** outputNames;
-  int* outputTypes;
-  int numOutputs;
+  void** outputs;          /**< Array of pointers to output data. */
+  int** outputShapes;      /**< Array of output shapes corresponding to outputs. */
+  int* outputLengths;      /**< Array of output data lengths. */
+  int* outputShapeLengths; /**< Array of lengths of each output shape. */
+  char** outputNames;      /**< Array of names corresponding to output tensors. */
+  int* outputTypes;        /**< Array of data types for the outputs. */
+  int numOutputs;          /**< Number of outputs returned. */
 } InferenceReturn;
 
+/**
+ * @brief Represents a single tensor with its metadata.
+ *
+ * @note Use this struct to send data to run_method function only if C interop is present for e.g.
+ * in iOS. For Android and nimblenet_py directly use MapDataVariable.
+ */
 typedef struct CTensor {
-  char* name;
-  void* data;
-  int dataType;
-  int64_t* shape;
-  int shapeLength;
+  char* name;      /**< Name of the tensor. */
+  void* data;      /**< Pointer to the tensor data. */
+  int dataType;    /**< Data type of the tensor. */
+  int64_t* shape;  /**< Pointer to the tensor's shape dimensions. */
+  int shapeLength; /**< Number of dimensions in the shape. */
 } CTensor;
 
+/**
+ * @brief Status structure used to indicate success or failure in all SDK APIs.
+ */
 typedef struct NimbleNetStatus {
-  char* message;
-  int code;
+  char* message; /**< Message describing the status. */
+  int code;      /**< Integer status code. */
 } NimbleNetStatus;
 
+/**
+ * @brief Structure used to represent user-defined event data.
+ */
 typedef struct CUserEventsData {
-  char* eventType;
-  char* eventJsonString;
+  char* eventType;       /**< Type of the event. */
+  char* eventJsonString; /**< JSON string containing event data. */
 } CUserEventsData;
 
+/**
+ * @brief Wrapper around an array of tensors.
+ */
 typedef struct CTensors {
-  CTensor* tensors;
-  int numTensors;
-  int outputIndex;
+  CTensor* tensors; /**< Pointer to an array of tensors. */
+  int numTensors;   /**< Number of tensors in the array. */
+  int outputIndex;  /**< In case this is an output tensor then index is used to deallocate
+                       memory later. */
 } CTensors;
 
+/**
+ * @brief Represents JSON structured output exposed via C APIs in iOS.
+ */
 typedef struct JsonOutput {
-  int dataType;
-  const char* key;  // If the datatype is array the key will be nullptr
-  bool isEnd;       // Denotes that we have reached the end of json array/object iteration and
-                    // there is no need to call get_next() again
+  int dataType;    /**< Data type of the value (int, double, bool, string, object). */
+  const char* key; /**< Key associated with the value. */
+  bool isEnd;      /**< Flag indicating end of array/object iteration. */
 
+  /**
+   * @brief Union holding actual data depending on the data type.
+   */
   union {
-    int64_t i;      // Will store the int data present at key in json
-    double d;       // Will store the double data present at key in json
-    bool b;         // Will store the boolean data present at key in json
-    const char* s;  // Will store the string data present at key in json
-    const void*
-        obj;  // Will store JsonIterator* for the json array or object present at key in json
+    int64_t i;       /**< Integer value. */
+    double d;        /**< Double (floating point) value. */
+    bool b;          /**< Boolean value. */
+    const char* s;   /**< String value. */
+    const void* obj; /**< Pointer to JSON iterator object. */
   } value;
 
 } JsonOutput;
@@ -80,6 +112,12 @@ typedef struct JsonOutput {
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @brief Frees the memory allocated for an InferenceReturn object.
+ *
+ * @param ret Pointer to the InferenceReturn to be deallocated.
+ */
 __attribute__((visibility("default"))) static inline void deallocate_output_memory(
     InferenceReturn* ret) {
   for (int i = 0; i < ret->numOutputs; i++) {
@@ -94,6 +132,11 @@ __attribute__((visibility("default"))) static inline void deallocate_output_memo
   free(ret->outputShapeLengths);
 }
 
+/**
+ * @brief Frees the memory allocated for a NimbleNetStatus object.
+ *
+ * @param status Pointer to the NimbleNetStatus to be deallocated.
+ */
 __attribute__((visibility("default"))) static inline void deallocate_nimblenet_status(
     NimbleNetStatus* status) {
   if (status != NULL) {
@@ -103,6 +146,11 @@ __attribute__((visibility("default"))) static inline void deallocate_nimblenet_s
   return;
 }
 
+/**
+ * @brief Frees the memory allocated for CUserEventsData.
+ *
+ * @param userEventsData Pointer to the CUserEventsData to be deallocated.
+ */
 __attribute__((visibility("default"))) static inline void deallocate_c_userevents_data(
     CUserEventsData* userEventsData) {
   free(userEventsData->eventType);
@@ -113,5 +161,14 @@ __attribute__((visibility("default"))) static inline void deallocate_c_userevent
 }
 #endif
 
+/**
+ * @brief Function pointer type for invoking a frontend function as a callback from delitepy script.
+ *
+ * @param context Pointer to user-defined context.
+ * @param input Struct containing input tensors.
+ * @param output Pointer to struct where output tensors will be stored.
+ *
+ * @return NimbleNetStatus* Status pointer indicating the result of event handling.
+ */
 typedef NimbleNetStatus* (*FrontendFunctionPtr)(void* context, const CTensors input,
                                                 CTensors* output);

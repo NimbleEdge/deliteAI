@@ -73,7 +73,7 @@ bool Database::add_event_in_db(const string& tableName, OpReturnType eventMapTab
   }
 
   if (!check_tableName_in_eventsType_Table(tableName)) {
-    // NEED to comment it out since with cloud relay user events flowing this would be the case most
+    // Commented out since with cloud relay user events flowing, this would be the case most
     // of the time, thus overwhelming our debug logs
     // LOG_TO_DEBUG("TableName=%s not found in %s
     // table, event won't be added to database.",

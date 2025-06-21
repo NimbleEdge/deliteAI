@@ -6,6 +6,9 @@
 
 #pragma once
 
+/**
+ * @brief Enum representing various status codes for API and internal operations.
+ */
 enum STATUS {
   // SUCCESS
   SUCCESS = 200,
@@ -39,8 +42,11 @@ enum STATUS {
   JNI_ERROR_CODE = 8000
 };
 
-// Custom data type enum for nimbleSDK since that is compatible with ONNX enums for data type. For
-// all other executors they will need to maintain a map from this to their own data type
+/**
+ * @brief Enum representing custom data types used in delitepy.
+ *
+ * @note These map to ONNX-compatible data types where applicable.
+ */
 enum DATATYPE {
   NONE = 667,
   EMPTY = 668,  // added only for printing
@@ -75,6 +81,10 @@ enum DATATYPE {
   FE_OBJ = 700,
 };
 
+/**
+ * @brief Enum representing the current status of a file download. Used by Job scheduler to know
+ * whether the file has downloaded or not and start further processing.
+ */
 enum FileDownloadStatus {
   DOWNLOAD_RUNNING = 10001,
   DOWNLOAD_SUCCESS = 10002,
@@ -84,6 +94,9 @@ enum FileDownloadStatus {
   DOWNLOAD_UNKNOWN = 10006,
 };
 
+/**
+ * @brief Defines various metric types.
+ */
 #define MODELDOWNLOADMETRIC "modelDownload"
 #define PINGMETRIC "pingTime"
 #define INFERENCEMETRIC "inference"
@@ -96,26 +109,45 @@ enum FileDownloadStatus {
 #define SCRIPTTYPE "script"
 #define INTERNALSTORAGEMETRICS "internalStorage"
 
+/**
+ * @brief Represents a network response object with status and content.
+ */
 struct CNetworkResponse {
-  int statusCode;
-  char* headers;
-  char* body;
-  int bodyLength;
+  int statusCode; /**< HTTP-like status code of the response. */
+  char* headers;  /**< Response headers as a string. */
+  char* body;     /**< Response body content. */
+  int bodyLength; /**< Length of the response body. */
 };
 
+/**
+ * @brief Contains detailed information about a file download request.
+ */
 struct FileDownloadInfo {
-  long requestId;
-  enum FileDownloadStatus prevStatus;
-  enum FileDownloadStatus currentStatus;
-  long timeElapsedInMicro;
-  int currentStatusReasonCode;
+  long requestId;                        /**< Unique identifier for the download request. */
+  enum FileDownloadStatus prevStatus;    /**< Previous status of the download. */
+  enum FileDownloadStatus currentStatus; /**< Current status of the download. */
+  long timeElapsedInMicro;               /**< Time elapsed since the start, in microseconds. */
+  int currentStatusReasonCode;           /**< Reason code explaining the current status. */
 };
 
 typedef struct CNetworkResponse CNetworkResponse;
 
-typedef enum { IOS_PROTO_OBJECT, IOS_MAP, IOS_ARRAY, IOS_ANY_OBJECT } IosObjectType;
+/**
+ * @brief Enum defining types of complex iOS-compatible objects.
+ *
+ * @note These over and above the DATAYPE enum defined earlier.
+ */
+typedef enum {
+  IOS_PROTO_OBJECT, /**< Protobuf-style object. */
+  IOS_MAP,          /**< Key-value map. */
+  IOS_ARRAY,        /**< Ordered array. */
+  IOS_ANY_OBJECT    /**< Any object type (generic). */
+} IosObjectType;
 
+/**
+ * @brief Represents a generic iOS object and its type.
+ */
 typedef struct {
-  const void* obj;
-  IosObjectType type;
+  const void* obj;    /**< Pointer to the actual object. */
+  IosObjectType type; /**< Type of the object. */
 } IosObject;
