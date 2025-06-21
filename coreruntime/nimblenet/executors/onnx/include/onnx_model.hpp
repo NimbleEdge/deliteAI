@@ -8,7 +8,10 @@
 #include "base_model.hpp"
 #include "onnx_operators.hpp"
 
-// To be removed when InferenceRequest and InferenceReturn will not be used anymore
+/**
+ * @brief Legacy APIs for running model in onnx. These APIs are deprecated and should not be
+ * used/enhanced. Instead use task_onnx_model.hpp.
+ */
 class ONNXModel : public BaseModel {
  private:
   OrtAllocator* _allocator = nullptr;

@@ -14,7 +14,6 @@ void from_json(const json& j, TensorInfo& tensorInfo) {
     tensorInfo.toPreprocess = false;
   } else {
     tensorInfo.toPreprocess = true;
-    //    j.at("processor").get_to(tensorInfo.preprocessorJson);
     tensorInfo.preprocessorJson = j.at("processor");
   }
   j.at("shape").get_to(tensorInfo.shape);

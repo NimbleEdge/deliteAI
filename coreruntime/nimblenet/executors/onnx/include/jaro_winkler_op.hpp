@@ -6,6 +6,16 @@
 
 #include "onnx.hpp"
 
+/**
+ * @brief Computes the Jaro similarity between two strings.
+ *
+ * Jaro similarity is a metric for measuring the similarity between two strings,
+ * based on matches and transpositions within a specified character distance.
+ *
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @return Jaro similarity score between 0.0 (no similarity) and 1.0 (identical).
+ */
 static double jaro(const std::string& s1, const std::string& s2) {
   int s1_len = s1.size();
   int s2_len = s2.size();
@@ -22,6 +32,7 @@ static double jaro(const std::string& s1, const std::string& s2) {
   int matches = 0;
   int transpositions = 0;
 
+  // Count matching characters within allowed distance
   for (int i = 0; i < s1_len; ++i) {
     int start = std::max(0, i - match_distance);
     int end = std::min(i + match_distance + 1, s2_len);
@@ -40,6 +51,7 @@ static double jaro(const std::string& s1, const std::string& s2) {
     return 0.0;
   }
 
+  // Count transpositions
   int k = 0;
   for (int i = 0; i < s1_len; ++i) {
     if (!s1_matches[i]) continue;
@@ -52,6 +64,15 @@ static double jaro(const std::string& s1, const std::string& s2) {
   return ((m / s1_len) + (m / s2_len) + ((m - transpositions / 2.0) / m)) / 3.0;
 }
 
+/**
+ * @brief Computes the Jaro-Winkler similarity between two strings.
+ *
+ * Extends the Jaro similarity by giving more weight to common prefixes.
+ *
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @return Jaro-Winkler similarity score between 0.0 and 1.0.
+ */
 static float jaro_winkler(const std::string& s1, const std::string& s2) {
   double j = jaro(s1, s2);
 
@@ -66,66 +87,33 @@ static float jaro_winkler(const std::string& s1, const std::string& s2) {
   return j + (prefix * 0.1 * (1 - j));
 }
 
-// static void compute_distance(const std::string& str, const std::vector<std::string>& vec,
-//                              float* jarowinklerArray) {
-//   int i = 0;
-//   for (const auto& s : vec) {
-//     auto distance = jaro_winkler(str, s);
-//     jarowinklerArray[i] = distance;
-//     i++;
-//   }
-// }
-
-/* Newer Method to Write Custom Operator for ONNX Runtime
-
-struct JaroWinklerOp {
-  JaroWinklerOp(const OrtApi* ort_api, const OrtKernelInfo* info) {}
-
-  // a "Compute" member function is required to be present
-  void Compute(const Ort::Custom::Tensor<std::string>& strings_in,
-               const Ort::Custom::Tensor<std::string>& vocabulary_in,
-               // const Ort::Custom::Tensor<std::string>& strings_in3,
-               Ort::Custom::Tensor<float>& distance_out) {
-    auto jaroDataArray =
-        distance_out.Allocate({static_cast<int64_t>(vocabulary_in.NumberOfElement())});
-    compute_distance(strings_in.Data()[0], vocabulary_in.Data(), jaroDataArray);
-
-    // strings_out->SetStringOutput(string_pool, {static_cast<int64_t>(string_pool.size())});
-  }
-};
-
-void ElementWiseAddCompute(const OrtKernelContext* context) {
-  Ort::CustomOpApi ort;
-  // OrtKernelContext* context = reinterpret_cast<OrtKernelContext*>(op_kernel_context);
-
-  const OrtValue* input_X = ort.KernelContext_GetInput(context, 0);
-  const OrtValue* input_Y = ort.KernelContext_GetInput(context, 1);
-
-  OrtTensorDimensions dimensions(ort, input_X);
-  OrtValue* output = ort.KernelContext_GetOutput(context, 0, dimensions.data(),
-  dimensions.size());
-
-  float* X = ort.GetTensorMutableData<float>(input_X);
-  float* Y = ort.GetTensorMutableData<float>(input_Y);
-  float* Z = ort.GetTensorMutableData<float>(output);
-
-  size_t len = dimensions.Size();
-  for (size_t i = 0; i < len; ++i) {
-    Z[i] = X[i] + Y[i];
-  }
-}
-*/
-
+/**
+ * @brief Kernel implementation for the JaroWinkler ONNX custom operator.
+ *
+ * Computes the Jaro-Winkler similarity between an input string and each entry in a vocabulary
+ * tensor.
+ */
 struct JaroWinklerOpKernel {
+  /**
+   * @brief Perform the similarity computation.
+   *
+   * Takes a single input string and a list of vocabulary strings, and fills the output tensor
+   * with Jaro-Winkler similarity scores.
+   *
+   * @param context ONNX runtime kernel context.
+   */
   void Compute(OrtKernelContext* context) {
     Ort::KernelContext ctx(context);
     auto inputString = ctx.GetInput(0);
     auto vocabTensor = ctx.GetInput(1);
+
     const std::string& string_in = inputString.GetStringTensorElement(0);
+
     auto dimensions = vocabTensor.GetTensorTypeAndShapeInfo().GetShape();
     auto length = vocabTensor.GetTensorTypeAndShapeInfo().GetElementCount();
     auto distances_out_tensor = ctx.GetOutput(0, dimensions);
     float* distances_out = distances_out_tensor.GetTensorMutableData<float>();
+
     for (int i = 0; i < length; i++) {
       std::string vocab_string = vocabTensor.GetStringTensorElement(i);
       distances_out[i] = jaro_winkler(string_in, vocab_string);
@@ -133,24 +121,65 @@ struct JaroWinklerOpKernel {
   }
 };
 
-// legacy custom op registration
+/**
+ * @brief Registers the JaroWinkler ONNX custom operator.
+ *
+ * Provides information about inputs, outputs, name, and execution provider.
+ */
 struct JaroWinklerOp : Ort::CustomOpBase<JaroWinklerOp, JaroWinklerOpKernel> {
+  /**
+   * @brief Creates the kernel instance.
+   *
+   * @return Pointer to the created kernel.
+   */
   void* CreateKernel(const OrtApi& /* api */, const OrtKernelInfo* /* info */) const {
     return std::make_unique<JaroWinklerOpKernel>().release();
   };
 
+  /**
+   * @brief Returns the name of the custom operator.
+   *
+   * @return Operator name as C-string.
+   */
   const char* GetName() const { return "JaroWinkler"; };
 
+  /**
+   * @brief Specifies the execution provider.
+   *
+   * @return "CPUExecutionProvider".
+   */
   const char* GetExecutionProviderType() const { return "CPUExecutionProvider"; };
 
+  /**
+   * @brief Returns the number of input tensors.
+   *
+   * @return Number of inputs (2).
+   */
   size_t GetInputTypeCount() const { return 2; };
 
+  /**
+   * @brief Returns the type of input tensor at the specified index.
+   *
+   * @param index Index of the input tensor.
+   * @return ONNX tensor element type (string).
+   */
   ONNXTensorElementDataType GetInputType(size_t index /*index*/) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING;
   };
 
+  /**
+   * @brief Returns the number of output tensors.
+   *
+   * @return Number of outputs (1).
+   */
   size_t GetOutputTypeCount() const { return 1; };
 
+  /**
+   * @brief Returns the type of output tensor at the specified index.
+   *
+   * @param index Index of the output tensor.
+   * @return ONNX tensor element type (float).
+   */
   ONNXTensorElementDataType GetOutputType(size_t index /*index*/) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT;
   };
