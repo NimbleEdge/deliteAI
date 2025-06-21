@@ -26,43 +26,38 @@ class ExecutorchLLMExecutor : public BaseLLMExecutor {
   using Queue = rigtorp::SPSCQueue<char>;
 
 #ifdef EXECUTORCH_EXECUTOR
-  /// Pointer to the Executorch LLM runner instance.
-  std::unique_ptr<::executorch::extension::llm::IRunner> _runner;
-#endif  // EXECUTORCH_EXECUTOR
+  std::unique_ptr<::executorch::extension::llm::IRunner>
+      _runner; /**< Pointer to the Executorch LLM runner instance. */
+#endif         // EXECUTORCH_EXECUTOR
 
-  /// Stream to hold generated character output.
-  std::shared_ptr<CharStream> _charStream;
+  std::shared_ptr<CharStream> _charStream; /**< Stream to hold generated character output. */
 
-  /// Internal single-producer single-consumer queue used for inference communication.
-  std::shared_ptr<Queue> _internalQueue;
+  std::shared_ptr<Queue> _internalQueue; /**< Internal single-producer single-consumer queue used
+                                            for inference communication. */
 
-  /// Thread responsible for performing inference in the background.
-  std::unique_ptr<std::thread> _inferenceThread;
+  std::unique_ptr<std::thread>
+      _inferenceThread; /**< Thread responsible for performing inference in the background. */
 
-  /// Flag to control the lifetime of the inference thread.
-  std::atomic<bool> _runInferenceThread = true;
+  std::atomic<bool> _runInferenceThread =
+      true; /**< Flag to control the lifetime of the inference thread. */
 
-  /// Mutex used to guard shared state during prompt execution.
-  std::mutex _mutex;
+  std::mutex _mutex; /**< Mutex used to guard shared state during prompt execution. */
 
-  /// Token indicating the end of a conversational turn.
-  std::string _endOfTurnToken;
+  std::string _endOfTurnToken; /**< Token indicating the end of a conversational turn. */
 
-  /// Maximum number of tokens to generate during inference.
-  int _maxTokensToGenerate;
+  int _maxTokensToGenerate; /**< Maximum number of tokens to generate during inference. */
 
-  /// Temperature for sampling (higher = more random)
-  float _temperature;
+  float _temperature; /**< Temperature for sampling (higher = more random) */
 
-  /// Task object to associate with inference jobs and character stream filling.
-  std::shared_ptr<Task> _task = nullptr;
+  std::shared_ptr<Task> _task =
+      nullptr; /**< Task object to associate with inference jobs and character stream filling. */
 
-  /// Keeps track of the position from which generate function should start
-  /// It is modified by prefill_prompt function internally
-  int64_t _start_pos = 0;
+  int64_t _start_pos = 0; /**< Keeps track of the position from which generate function should
+                             start. It is modified by prefill_prompt function internally*/
 
   /**
    * @brief Runs the inference engine with a given prompt.
+   *
    * @param prompt The input prompt to run inference on.
    */
   void run_inference(const std::string& prompt);
@@ -73,7 +68,8 @@ class ExecutorchLLMExecutor : public BaseLLMExecutor {
   void stop_inference_thread();
 
   /**
-   * @brief Marks the end of the output stream to signal completion of LLM output generation.
+   * @brief Marks the end of the output stream to signal completion of LLM output generation or an
+   * error from the executor.
    */
   void mark_end_of_stream();
 
@@ -98,25 +94,28 @@ class ExecutorchLLMExecutor : public BaseLLMExecutor {
 
   /**
    * @brief Executes a prompt and returns a character stream with generated output.
+   *
    * @param prompt The prompt to be executed.
    * @return Shared pointer to a CharStream containing the response.
    */
   std::shared_ptr<CharStream> run_prompt(const std::string& prompt) override;
 
   /**
-   * @brief Adds a prompt for streaming execution (used in conversational flows).
-   * @param prompt The prompt to add.
+   * @brief Add a prompt to the inference pipeline.
+   *
+   * @param prompt Input prompt string.
    */
   void add_prompt(const std::string& prompt) override;
 
   /**
-   * @brief Cancels the current running inference process.
+   * @brief Cancel any ongoing inference operation.
    */
   void cancel() override;
 
   /**
-   * @brief Clears the current context or conversation state.
-   * @return Shared pointer to a NoneVariable object indicating cleared state.
+   * @brief Clears model context i.e. reset _start_pos.
+   *
+   * @return Shared pointer to a NoneVariable indicating reset completion.
    */
   std::shared_ptr<NoneVariable> clear_context() override;
 };
