@@ -7,6 +7,9 @@
 #pragma once
 
 #include <shared_mutex>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 #include "command_center.hpp"
 #include "data_variable.hpp"
@@ -65,58 +68,62 @@ class TaskBaseModel {
     throw std::runtime_error("Get output tensor data buffer function not implemented.");
   }
 
-  /** @brief Create input tensor and set data pointer.
+  /**
+   * @brief Create input tensor and set data pointer.
    *
-   *  @param index Tensor index.
-   *  @param dataPtr Pointer to data buffer.
-   *  @return Status code.
+   * @param index Tensor index.
+   * @param dataPtr Pointer to data buffer.
+   * @return Status code.
    */
   virtual int create_input_tensor_and_set_data_ptr(const int index, void* dataPtr) = 0;
 
 #ifdef ONNX_EXECUTOR
-  /** @brief Create ONNX input tensor and assign data pointer.
+  /**
+   * @brief Create ONNX input tensor and assign data pointer.
    *
-   *  @param req Input structure.
-   *  @param modelInputIndex Index in the model input list.
-   *  @param returnedInputTensor ONNX tensor value.
-   *  @return Status code.
+   * @param req Input structure.
+   * @param modelInputIndex Index in the model input list.
+   * @param returnedInputTensor ONNX tensor value.
+   * @return Status code.
    */
   virtual int create_input_tensor_and_set_data_ptr(const OpReturnType req, int modelInputIndex,
                                                    Ort::Value&& returnedInputTensor) = 0;
 
-  /** @brief Perform ONNX inference.
+  /**
+   * @brief Perform ONNX inference.
    *
-   *  @param ret Output structure.
-   *  @param inputTensors List of input ONNX tensors.
-   *  @return Status code.
+   * @param ret Output structure.
+   * @param inputTensors List of input ONNX tensors.
+   * @return Status code.
    */
   virtual int invoke_inference(OpReturnType& ret, const std::vector<Ort::Value>& inputTensors) = 0;
 #endif  // ONNX_EXECUTOR
 
-  /** @brief Create output tensor and set data pointer.
+  /**
+   * @brief Create output tensor and set data pointer.
    *
-   *  @param index Tensor index.
-   *  @param dataPtr Pointer to data buffer.
-   *  @return Status code.
+   * @param index Tensor index.
+   * @param dataPtr Pointer to data buffer.
+   * @return Status code.
    */
   virtual int create_output_tensor_and_set_data_ptr(const int index, void* dataPtr) = 0;
 
   /**
-   *  @brief Load model from serialized buffer.
+   * @brief Load model from serialized buffer.
    */
   virtual void load_model_from_buffer() = 0;
 
   /**
-   *  @brief Legacy API to invoke inference using internal model representation.
+   * @brief Legacy API to invoke inference using internal model representation.
    *
-   *  @param ret Output result.
-   *  @return Status code.
+   * @param ret Output result.
+   * @return Status code.
    */
   virtual int invoke_inference(InferenceReturn* ret) = 0;
 
   /**
    * @brief Run dummy inference. This is done during model load so that memory is pre-allocated when
-   * the actual inference happens this reducing latency.
+   * the actual inference happens; thus, reducing latency.
    */
   virtual void run_dummy_inference() = 0;
 
@@ -133,7 +140,7 @@ class TaskBaseModel {
    * @param runDummyInference Whether to run a dummy inference on load.
    */
   TaskBaseModel(const std::string& plan, const std::string& version, const std::string& modelId,
-                const nlohmann::json& epConfig, const int epConfigVersion,
+                const nlohmann::json& epConfig, int epConfigVersion,
                 CommandCenter* commandCenter, bool runDummyInference = true);
 
   /**
@@ -155,15 +162,17 @@ class TaskBaseModel {
         "Get inference function with InferenceRequest struct in V1 model not implemented.");
   }
 
-  /** @brief Get the model version.
+  /**
+   * @brief Get the model version.
    *
-   *  @return Plan version string.
+   * @return Plan version string.
    */
   const std::string get_plan_version() const { return _version; }
 
-  /** @brief Get execution provider config version.
+  /**
+   * @brief Get execution provider config version.
    *
-   *  @return Config version integer.
+   * @return Config version integer.
    */
   const int get_ep_config_version() const { return _epConfigVersion; }
 

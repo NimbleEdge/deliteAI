@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#pragma once
+
 #include "onnx.hpp"
 
 /**
@@ -97,28 +99,28 @@ struct JaccardSimilarityOp : Ort::CustomOpBase<JaccardSimilarityOp, JaccardSimil
    */
   void* CreateKernel(const OrtApi& /* api */, const OrtKernelInfo* /* info */) const {
     return std::make_unique<JaccardSimilarityOpKernel>().release();
-  };
+  }
 
   /**
    * @brief Get the name of the operator.
    *
    * @return Operator name as a C-string.
    */
-  const char* GetName() const { return "JaccardSimilarity"; };
+  const char* GetName() const { return "JaccardSimilarity"; }
 
   /**
    * @brief Get the execution provider type.
    *
    * @return "CPUExecutionProvider".
    */
-  const char* GetExecutionProviderType() const { return "CPUExecutionProvider"; };
+  const char* GetExecutionProviderType() const { return "CPUExecutionProvider"; }
 
   /**
    * @brief Get the number of input tensors expected.
    *
    * @return Number of input tensors.
    */
-  size_t GetInputTypeCount() const { return 2; };
+  size_t GetInputTypeCount() const { return 2; }
 
   /**
    * @brief Get the data type of a specific input.
@@ -126,16 +128,16 @@ struct JaccardSimilarityOp : Ort::CustomOpBase<JaccardSimilarityOp, JaccardSimil
    * @param index Index of the input tensor.
    * @return Data type (string).
    */
-  ONNXTensorElementDataType GetInputType(size_t index /*index*/) const {
+  ONNXTensorElementDataType GetInputType(size_t index) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING;
-  };
+  }
 
   /**
    * @brief Get the number of output tensors produced.
    *
    * @return Number of output tensors.
    */
-  size_t GetOutputTypeCount() const { return 1; };
+  size_t GetOutputTypeCount() const { return 1; }
 
   /**
    * @brief Get the data type of a specific output.
@@ -143,7 +145,7 @@ struct JaccardSimilarityOp : Ort::CustomOpBase<JaccardSimilarityOp, JaccardSimil
    * @param index Index of the output tensor.
    * @return Data type (float).
    */
-  ONNXTensorElementDataType GetOutputType(size_t index /*index*/) const {
+  ONNXTensorElementDataType GetOutputType(size_t index) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT;
-  };
+  }
 };

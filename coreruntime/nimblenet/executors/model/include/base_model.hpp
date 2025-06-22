@@ -16,7 +16,8 @@ class CommandCenter;
 class BasePreProcessor;
 
 /**
- * @brief Legacy APIs to orchestrate model execution with onnx executor.
+ * @brief Legacy APIs to orchestrate model execution with the ONNX executor.
+ *
  * These APIs are deprecated and should not be used/enhanced. Instead use TaskBaseModel.
  */
 class BaseModel : public TaskBaseModel {

@@ -17,7 +17,7 @@
 #ifdef CUSTOM_STRING_OPS
 #include "jaccard_similarity_op.hpp"
 #include "jaro_winkler_op.hpp"
-#endif
+#endif  // CUSTOM_STRING_OPS
 
 /**
  * @brief Registers custom ONNX operators with the given domain.
@@ -35,5 +35,5 @@ static inline void register_custom_onnx_operators(Ort::CustomOpDomain& domain) {
   static const JaccardSimilarityOp c_jacardSimilarityOp; /**< Custom Jaccard Similarity operator */
   domain.Add(&c_jaroWinklerOp);
   domain.Add(&c_jacardSimilarityOp);
-#endif
+#endif  // CUSTOM_STRING_OPS
 }

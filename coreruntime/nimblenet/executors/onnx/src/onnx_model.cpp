@@ -7,6 +7,7 @@
 #include "onnx_model.hpp"
 
 #include "log_sender.hpp"
+
 Ort::Env ONNXModel::_myEnv =
     Ort::Env(OrtLoggingLevel::ORT_LOGGING_LEVEL_FATAL, "ONNX  Inference Environment");
 
@@ -18,7 +19,6 @@ int ONNXModel::create_input_tensor_and_set_data_ptr(const int index, void* dataP
                                    _info.inputs[index].size, ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING);
       _inputTensors[index].FillStringTensor(static_cast<const char**>(dataPtr),
                                             _info.inputs[index].size);
-
     } else {
       int fieldSize = util::get_field_size_from_data_type(_info.inputs[index].dataType);
       _inputTensors[index] = Ort::Value::CreateTensor(
@@ -26,7 +26,6 @@ int ONNXModel::create_input_tensor_and_set_data_ptr(const int index, void* dataP
           _info.inputs[index].shape.data(), _info.inputs[index].shape.size(),
           (ONNXTensorElementDataType)_info.inputs[index].dataType);
     }
-
   } catch (Ort::Exception& e) {
     LOG_TO_CLIENT_ERROR(
         "Exception in set_input_tensor_and_set_data_ptr:%s with errorCode:%d, for modelId=%s",
@@ -48,7 +47,6 @@ int ONNXModel::create_output_tensor_and_set_data_ptr(const int index, void* data
                                    _info.outputs[index].size, ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING);
       _outputTensors[index].FillStringTensor(static_cast<const char**>(dataPtr),
                                              _info.outputs[index].size);
-
     } else {
       int fieldSize = util::get_field_size_from_data_type(_info.outputs[index].dataType);
       _outputTensors[index] = Ort::Value::CreateTensor(
@@ -99,7 +97,7 @@ void* ONNXModel::get_data_buff_input_tensor(const int index) {
       const auto& stringdata = _inputTensors[index].GetStringTensorElement(i);
       asprintf(&data[i], "%s", stringdata.c_str());
     }
-#endif
+#endif  // IOS
 
     return static_cast<void*>(data);
   }
@@ -118,7 +116,7 @@ void* ONNXModel::get_data_buff_output_tensor(const int index) {
       const auto& stringdata = _inputTensors[index].GetStringTensorElement(i);
       asprintf(&data[i], "%s", stringdata.c_str());
     }
-#endif
+#endif  // IOS
 
     return static_cast<void*>(data);
   }

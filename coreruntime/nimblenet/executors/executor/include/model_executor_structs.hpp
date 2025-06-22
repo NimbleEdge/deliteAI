@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "nlohmann_json.hpp"

@@ -4,6 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#pragma once
+
+#include <algorithm>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "onnx.hpp"
 
 /**
@@ -134,28 +141,28 @@ struct JaroWinklerOp : Ort::CustomOpBase<JaroWinklerOp, JaroWinklerOpKernel> {
    */
   void* CreateKernel(const OrtApi& /* api */, const OrtKernelInfo* /* info */) const {
     return std::make_unique<JaroWinklerOpKernel>().release();
-  };
+  }
 
   /**
    * @brief Returns the name of the custom operator.
    *
    * @return Operator name as C-string.
    */
-  const char* GetName() const { return "JaroWinkler"; };
+  const char* GetName() const { return "JaroWinkler"; }
 
   /**
    * @brief Specifies the execution provider.
    *
    * @return "CPUExecutionProvider".
    */
-  const char* GetExecutionProviderType() const { return "CPUExecutionProvider"; };
+  const char* GetExecutionProviderType() const { return "CPUExecutionProvider"; }
 
   /**
    * @brief Returns the number of input tensors.
    *
    * @return Number of inputs (2).
    */
-  size_t GetInputTypeCount() const { return 2; };
+  size_t GetInputTypeCount() const { return 2; }
 
   /**
    * @brief Returns the type of input tensor at the specified index.
@@ -163,16 +170,16 @@ struct JaroWinklerOp : Ort::CustomOpBase<JaroWinklerOp, JaroWinklerOpKernel> {
    * @param index Index of the input tensor.
    * @return ONNX tensor element type (string).
    */
-  ONNXTensorElementDataType GetInputType(size_t index /*index*/) const {
+  ONNXTensorElementDataType GetInputType(size_t index) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING;
-  };
+  }
 
   /**
    * @brief Returns the number of output tensors.
    *
    * @return Number of outputs (1).
    */
-  size_t GetOutputTypeCount() const { return 1; };
+  size_t GetOutputTypeCount() const { return 1; }
 
   /**
    * @brief Returns the type of output tensor at the specified index.
@@ -180,7 +187,7 @@ struct JaroWinklerOp : Ort::CustomOpBase<JaroWinklerOp, JaroWinklerOpKernel> {
    * @param index Index of the output tensor.
    * @return ONNX tensor element type (float).
    */
-  ONNXTensorElementDataType GetOutputType(size_t index /*index*/) const {
+  ONNXTensorElementDataType GetOutputType(size_t index) const {
     return ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT;
-  };
+  }
 };

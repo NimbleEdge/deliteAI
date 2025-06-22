@@ -151,7 +151,7 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
 #ifdef ORT_EXTENSIONS
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif  // __cplusplus
 
 OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
 
@@ -159,14 +159,14 @@ int ORT_API_CALL GetActiveOrtAPIVersion();
 
 #ifdef __cplusplus
 }
-#endif
-#endif
+#endif  // __cplusplus
+#endif  // ORT_EXTENSIONS
 
 void add_common_session_options(Ort::SessionOptions& sessionOptions) {
   sessionOptions.AddConfigEntry("session.use_ort_model_bytes_directly", "1");
 #ifdef ORT_EXTENSIONS
   Ort::ThrowOnError(RegisterCustomOps((OrtSessionOptions*)sessionOptions, OrtGetApiBase()));
-#endif
+#endif  // ORT_EXTENSIONS
 }
 
 void TaskONNXModel::load_model_from_buffer() {

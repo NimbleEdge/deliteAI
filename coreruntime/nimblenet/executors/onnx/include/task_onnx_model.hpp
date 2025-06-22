@@ -32,7 +32,7 @@ class TaskONNXModel : public TaskBaseModel {
   void load_model_meta_data();
 
   /**
-   *  @brief Loads the model from the internal buffer.
+   * @brief Loads the model from the internal buffer.
    */
   void load_model_from_buffer() override final;
 
@@ -109,7 +109,7 @@ class TaskONNXModel : public TaskBaseModel {
                 CommandCenter* commandCenter, bool runDummyInference);
 
   /**
-   *  @brief Returns input tensor names from the ONNX model.
+   * @brief Returns input tensor names from the ONNX model.
    */
   std::vector<const char*> get_input_names() override { return _inputNames; }
 
