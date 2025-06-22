@@ -51,8 +51,8 @@ typedef struct InferenceReturn {
 /**
  * @brief Represents a single tensor with its metadata.
  *
- * @note Use this struct to send data to run_method function only if C interop is present for e.g.
- * in iOS. For Android and nimblenet_py directly use MapDataVariable.
+ * @note Use this struct to send data to run_method function only if C interop is present,
+ * e.g., in iOS. For Android and nimblenet_py, directly use MapDataVariable.
  */
 typedef struct CTensor {
   char* name;      /**< Name of the tensor. */
@@ -106,12 +106,11 @@ typedef struct JsonOutput {
     const char* s;   /**< String value. */
     const void* obj; /**< Pointer to JSON iterator object. */
   } value;
-
 } JsonOutput;
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif  // __cplusplus
 
 /**
  * @brief Frees the memory allocated for an InferenceReturn object.
@@ -159,7 +158,7 @@ __attribute__((visibility("default"))) static inline void deallocate_c_userevent
 
 #ifdef __cplusplus
 }
-#endif
+#endif  // __cplusplus
 
 /**
  * @brief Function pointer type for invoking a frontend function as a callback from delitepy script.

@@ -27,12 +27,12 @@ class Database {
   mutable std::mutex _mutex;
 
 #ifdef SIMULATION_MODE
-  /** @brief Flag indicating if the database operation is triggered from nimblenet_py.. */
+  /** @brief Flag indicating if the database operation is triggered from nimblenet_py. */
   bool _isSimulation = true;
 #else
   /** @brief Flag indicating if the database operation is triggered from nimblenet_py. */
   bool _isSimulation = false;
-#endif
+#endif  // SIMULATION_MODE
 
   /** @brief Pointer to a MetricsAgent used for logging database related metrics. */
   MetricsAgent* _metricsAgent = nullptr;
@@ -144,5 +144,5 @@ class Database {
    * @return Number of entries with the specified event type.
    */
   int get_count_from_eventsTable(const std::string& eventType) const;
-#endif
+#endif  // TESTING
 };

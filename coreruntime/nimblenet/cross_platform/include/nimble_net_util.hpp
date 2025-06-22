@@ -95,8 +95,10 @@ enum FileDownloadStatus {
 };
 
 /**
- * @brief Defines various metric types.
+ * @name Metric types
+ * Macros defining various metric types.
  */
+///@{
 #define MODELDOWNLOADMETRIC "modelDownload"
 #define PINGMETRIC "pingTime"
 #define INFERENCEMETRIC "inference"
@@ -108,6 +110,7 @@ enum FileDownloadStatus {
 #define MODELTYPE "model"
 #define SCRIPTTYPE "script"
 #define INTERNALSTORAGEMETRICS "internalStorage"
+///@}
 
 /**
  * @brief Represents a network response object with status and content.
@@ -135,7 +138,7 @@ typedef struct CNetworkResponse CNetworkResponse;
 /**
  * @brief Enum defining types of complex iOS-compatible objects.
  *
- * @note These over and above the DATAYPE enum defined earlier.
+ * @note These are over and above the DATAYPE enum defined earlier.
  */
 typedef enum {
   IOS_PROTO_OBJECT, /**< Protobuf-style object. */
