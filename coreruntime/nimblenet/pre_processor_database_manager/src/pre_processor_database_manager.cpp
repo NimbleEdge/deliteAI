@@ -158,34 +158,6 @@ void Database::database_open() {
   LOG_TO_INFO("Opened database=%s successfully", DEFAULT_SQLITE_DB_NAME);
 }
 
-bool Database::database_processor(const std::string& tableName,
-                                  std::map<std::string, TableStore>& tableStoreMap) {
-  if (this->_isSimulation) {
-    return true;
-  }
-
-  char* zErrMsg = 0;
-  // SELECT * from Events WHERE eventType='%s' ORDER BY TIMESTAMP;
-  const char* selectCommand = "SELECT * from %s WHERE %s='%s' ORDER BY %s;";
-  char* sqlQueryCommand;
-  asprintf(&sqlQueryCommand, selectCommand, dbconstants::EventsTableName.c_str(),
-           dbconstants::EventTypeColumnName.c_str(), tableName.c_str(),
-           dbconstants::TimeStampColumnName.c_str());
-
-  CallBackData callBackData;
-  callBackData.tableName = tableName;
-  int rc = sqlite3_exec(_db, sqlQueryCommand, get_rows, &callBackData, &zErrMsg);
-  free(sqlQueryCommand);
-  if (rc != SQLITE_OK) {
-    LOG_TO_ERROR("Error in fetching events from table=%s for eventType=%s with error %s",
-                 dbconstants::EventsTableName.c_str(), tableName.c_str(), zErrMsg);
-    sqlite3_free(zErrMsg);
-    return false;
-  }
-
-  return true;
-}
-
 std::vector<nlohmann::json> Database::get_events_from_db(const std::string& tableName) {
   if (this->_isSimulation) {
     return {};
