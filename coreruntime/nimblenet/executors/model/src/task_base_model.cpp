@@ -21,7 +21,13 @@ TaskBaseModel::TaskBaseModel(const std::string& modelFileName, const std::string
                              const std::string& modelId,
                              const nlohmann::json& executionProviderConfig,
                              const int epConfigVersion, CommandCenter* commandCenter,
-                             bool runDummyInference) {
+                             bool runDummyInference)
+    : _epConfig(executionProviderConfig),
+      _epConfigVersion(epConfigVersion),
+      _commandCenter(commandCenter),
+      _version(version),
+      _modelId(modelId),
+      _runDummyInference(runDummyInference) {
   std::lock_guard<std::mutex> locker(_modelMutex);
   const auto modelBufferOpt =
       nativeinterface::read_potentially_compressed_file(modelFileName, false);
@@ -30,12 +36,6 @@ TaskBaseModel::TaskBaseModel(const std::string& modelFileName, const std::string
     THROW("Model file=%s not present", modelFileName.c_str());
   }
   _modelBuffer = std::move(modelBufferOpt.second);
-  _epConfig = executionProviderConfig;
-  _epConfigVersion = epConfigVersion;
-  _commandCenter = commandCenter;
-  _version = version;
-  _modelId = modelId;
-  _runDummyInference = runDummyInference;
 }
 
 int TaskBaseModel::get_inference(const std::string& inferId, const std::vector<OpReturnType>& req,

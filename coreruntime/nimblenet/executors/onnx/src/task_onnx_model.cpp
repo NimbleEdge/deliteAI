@@ -170,8 +170,8 @@ void add_common_session_options(Ort::SessionOptions& sessionOptions) {
 }
 
 void TaskONNXModel::load_model_from_buffer() {
-  Ort::CustomOpDomain nimbleedge_operator_domain{"com.nimbleedge"};
-  register_custom_onnx_operators(nimbleedge_operator_domain);
+  Ort::CustomOpDomain deliteai_operator_domain{"dev.deliteai"};
+  register_custom_onnx_operators(deliteai_operator_domain);
   nlohmann::json epConfigListToCheck = nlohmann::json::array();
 #if defined(__ANDROID__)
   if (_epConfig.contains("android")) {
@@ -204,7 +204,7 @@ void TaskONNXModel::load_model_from_buffer() {
       }
       _sessionOptions = get_session_options_from_json(epConfig);
       add_common_session_options(_sessionOptions);
-      _sessionOptions.Add(nimbleedge_operator_domain);
+      _sessionOptions.Add(deliteai_operator_domain);
       _session =
           new Ort::Session(_myEnv, _modelBuffer.c_str(), _modelBuffer.length(), _sessionOptions);
       LOG_TO_DEBUG("Created ONNX Model for model=%s, version=%s, with epConfig=%s",
@@ -221,7 +221,7 @@ void TaskONNXModel::load_model_from_buffer() {
   Ort::SessionOptions newSessionOptions;
   newSessionOptions.SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_ALL);
   _sessionOptions = std::move(newSessionOptions);
-  _sessionOptions.Add(nimbleedge_operator_domain);
+  _sessionOptions.Add(deliteai_operator_domain);
   add_common_session_options(_sessionOptions);
   _session = new Ort::Session(_myEnv, _modelBuffer.c_str(), _modelBuffer.length(), _sessionOptions);
   //_modelBuffer is used directly by ONNX so we have to maintain it as long as the session exists
