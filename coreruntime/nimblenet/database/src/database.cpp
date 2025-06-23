@@ -67,7 +67,7 @@ bool Database::add_event_in_db(const string& tableName, OpReturnType eventMapTab
     return true;
   }
   if (_full) {
-    LOG_TO_ERROR("%s", "Event not added db is full");
+    LOG_TO_ERROR("%s", "Event not added, db is full");
     return false;
   }
 
@@ -130,4 +130,4 @@ int Database::get_count_from_eventsTable(const std::string& eventType) const {
   return _eventsStore.get_num_events(eventType.c_str());
 }
 
-#endif
+#endif  // TESTING
