@@ -11,10 +11,12 @@
  */
 enum STATUS {
   // SUCCESS
-  SUCCESS = 200,
+  SUCCESS = 200, /**< Status code used to denote inference success. */
   REG_ACCEPT = 201,
 
-  UNMODIFIED = 304,
+  UNMODIFIED = 304, /**< Status code used check if the cloudConfig present in SaaS platform is
+                       unmodified and the deployment present on disk is the latest. This is done by
+                       sending the eTag in request. */
 
   // ERRORS
   BAD_REQUEST_ERR = 400,
@@ -32,7 +34,8 @@ enum STATUS {
   // INTERNAL NON-RETRYABLE ERRORS
   JSON_PARSE_ERR = 5000,
   EXECUTOR_LOAD_MODEL_ERR = 5001,
-  TERMINAL_ERROR = 5002,
+  TERMINAL_ERROR = 5002, /**< Status code returned when there is an error while running inference or
+                            during nimblenet initialize. */
   // INTERNAL RETRYABLE ERRORS
   RETRYABLE_ERROR = -1,
   EMPTY_ERROR_CODE = 900,

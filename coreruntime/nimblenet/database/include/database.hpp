@@ -18,8 +18,8 @@ class MetricsAgent;
 
 /**
  * @brief Class responsible for managing database operations such as storing,
- * retrieving, and managing event-related data. The data is stored in custom file format using
- * _eventsStore.
+ * retrieving, and managing event-related data. The data is stored on-disk in custom file format
+ * using _eventsStore.
  */
 class Database {
  private:
@@ -129,7 +129,7 @@ class Database {
   bool delete_old_entries_from_eventsType_Table();
 
   /**
-   * @brief Retrieves the current database size in kilobytes.
+   * @brief Retrieves the current database size in bytes.
    *
    * @param dbSize Output parameter to store the database size.
    * @return 0 on success, non-zero on failure.

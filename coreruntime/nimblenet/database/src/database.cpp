@@ -28,7 +28,6 @@ void Database::database_open() {
   _eventsStore.init(nativeinterface::HOMEDIR + "/events/");
   _currentEventTypes = _eventsStore.get_all_types();
   nlohmann::json j;
-  int dbSize;
   j["dbSize"] = _eventsStore.size_in_bytes();
   j["numEvents"] = _eventsStore.get_num_events();
   _metricsAgent->save_metrics("DATABASEMETRIC", j);
