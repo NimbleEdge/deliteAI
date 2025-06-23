@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 pluginManagement {
     repositories {
         google {
@@ -16,6 +22,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven(url = "s3://nimblesdk-aar-test.s3.ap-south-1.amazonaws.com") {
+            credentials(AwsCredentials::class) {
+                accessKey = "AKIATVLEHMTQA6G557EQ"
+                secretKey = "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"
+            }
+        }
     }
 }
 
