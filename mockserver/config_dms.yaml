@@ -1,0 +1,99 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+env: "local"
+log-level: trace
+superuser: ""
+runmode: "dms"
+
+http:
+  host: 0.0.0.0
+  port: 8080
+  protocol: "http"
+
+cloud_provider: "azure"
+
+gcp:
+  project_id: ""
+
+azure:
+  service_url: ""
+  public_service_url: ""
+  vault_url: ""
+  managed_identity_client_id: ""
+
+aws:
+  access_key: ""
+  secret_key: ""
+  region: "ap-south-1"
+
+request_cache:
+  enable: false
+
+storage:
+  model_bucket: ""
+
+library:
+  bucket: ""
+  sas_expiry_time: 168 #hours
+
+database:
+  migrate: true
+  host: "postgres"
+  port: 5432
+  credentials:
+    name: "admin"
+    version: "admin"
+  name: "mds"
+  ssl_mode: "disable"
+  timeout-in-sec: 2
+  username: "admin"
+  password: "password"
+  max_conns: 4
+
+artifacts:
+  file_size: 1048576 #bytes
+
+tempstorage:
+  dir: '/tmp/mds/cache/'
+
+jwt_auth:
+  secret_key:
+    name: "jwtsecret"
+    version: "1"
+  enable_auth: false
+  ttl: 720 # hours
+
+trace:
+  endpoint: 0.0.0.0
+  url_path: ""
+
+cdn:
+  default_ttl: 600 #seconds
+  enable_auth: false
+  secret_key:
+    name: "cdnSignKey"
+    version: ""
+
+cognito:
+  oauth_enabled: false
+  client_id: ""
+  client_secret:
+    name: ""
+    version: ""
+  issuer_url: ""
+
+google_sso:
+  oauth_enabled: false
+  client_id: ""
+  client_secret:
+    name: ""
+    version: ""
+
+cms:
+  endpoint: "http://localhost:8081/cms/api"
+  asset_sync_enabled: false
+  access_token:
+    name: "cmsAccessToken"
+    version: ""

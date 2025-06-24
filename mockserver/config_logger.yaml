@@ -1,0 +1,121 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+data_dir: /tmp/logger/data
+log_schema:
+  timestamp_key: .@timestamp
+timezone: UTC
+sources:
+  http_source:
+    type: http_server
+    address: 0.0.0.0:8080
+    headers:
+    - clientId
+    - deviceID
+    - ddtags
+    - ddsource
+    - service
+    - Secret-Key
+    - internalDeviceID
+    - compatibilityTag
+    path: /v2
+    method: POST
+    framing:
+      method: newline_delimited
+sinks:
+  azure_out:
+    inputs:
+    - clean_events
+    - route_dropped
+    - route_unauthenticated
+    compression: none
+    path: '/tmp/logger/{{ .outFile }}'
+    encoding:
+      codec: json
+      except_fields:
+      - outFile
+    framing:
+      method: newline_delimited
+    healthcheck:
+      enabled: true
+    type: file
+transforms:
+  authentication:
+    inputs:
+    - http_source
+    type: route
+    reroute_unmatched: true
+    route:
+      authenticated: ."Secret-Key" == "${API_KEY:?api_key is empty}"
+  grok_parsing:
+    inputs:
+    - "authentication.authenticated"
+    type: remap
+    source: |2
+          . |= parse_groks!(
+              .message,
+              patterns: [
+                  "%{WORD:logPrefix}::: %{TIMESTAMP_ISO8601:timestamp} ::: %{WORD:category} ::: %{GREEDYDATA:json_data}",
+                  "%{WORD:logPrefix}::: %{TIMESTAMP_ISO8601:timestamp} ::: %{GREEDYDATA:logMessage}"
+              ]
+          )
+    drop_on_error: true
+    reroute_dropped: true
+  log_filtering:
+    inputs:
+    - grok_parsing
+    type: filter
+    condition: '!(.logPrefix != "METRICS" && contains(string!(.logMessage), "Log File Upload"))'
+  add_metadata:
+    inputs:
+    - log_filtering
+    type: remap
+    source: |2
+          if .logPrefix == "METRICS" {
+              .outFile = "metrics.log"
+          } else {
+              .outFile = "logs.log"
+          }
+    drop_on_error: true
+    reroute_dropped: true
+  metrics_parsing:
+    inputs:
+    - add_metadata
+    type: remap
+    source: |2
+          if exists(.json_data) {
+              .parsed_json = object!(parse_json!(.json_data))
+          }
+    drop_on_error: true
+    reroute_dropped: true
+  clean_events:
+    inputs:
+    - metrics_parsing
+    type: remap
+    source: |2
+          del(.source_type)
+          del(.path)
+          del(.json_data)
+          del(.message)
+          del(."Secret-Key")
+    drop_on_error: true
+    reroute_dropped: true
+  route_dropped:
+    inputs:
+    - "clean_events.dropped"
+    - "metrics_parsing.dropped"
+    - "add_metadata.dropped"
+    - "grok_parsing.dropped"
+    type: remap
+    source: |2
+          .outFile = "dropped.log"
+  route_unauthenticated:
+    inputs:
+    - "authentication._unmatched"
+    type: remap
+    source: |2
+          .outFile = "unauthenticated.log"

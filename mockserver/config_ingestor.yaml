@@ -1,0 +1,116 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+api:
+  address: 0.0.0.0:8686
+  enabled: true
+data_dir: /tmp/ingestor/data
+log_schema:
+  timestamp_key: '@timestamp'
+sinks:
+  s3_out:
+    compression: none
+    path: '/tmp/ingestor/{{ .outFile }}'
+    encoding:
+      codec: json
+      except_fields:
+      - outFile
+    framing:
+      method: newline_delimited
+    healthcheck:
+      enabled: true
+    inputs:
+    - clean_events
+    - route_dropped
+    - route_unauthenticated
+    type: file
+sources:
+  http_source:
+    address: 0.0.0.0:8080
+    framing:
+      method: newline_delimited
+    headers:
+    - clientId
+    - deviceID
+    - Secret-Key
+    - compatibilityTag
+    method: POST
+    path: /v1/ingest
+    strict_path: false
+    type: http_server
+timezone: UTC
+transforms:
+  add_metadata:
+    drop_on_error: true
+    reroute_dropped: true
+    inputs:
+    - grok_parsing
+    source: |
+      if .logPrefix == "EVENTS" {
+        .sessionId = .identifier
+        .outFile = "events.log"
+      } else if .logPrefix == "SCRIPTLOGS" {
+        .deploymentId = .identifier
+        .outFile = "scriptlogs.log"
+      } else {
+      assert!(false, "received unknown log type")
+      }
+    type: remap
+  authentication:
+    route:
+      authenticated: ."Secret-Key" == "${API_KEY:?api_key is empty}"
+    inputs:
+    - http_source
+    type: route
+    reroute_unmatched: true
+  clean_events:
+    inputs:
+    - metrics_parsing
+    source: |
+      del(.source_type)
+      del(.path)
+      del(.json_data)
+      del(.message)
+      del(.logPrefix)
+      del(."Secret-Key")
+      del(.identifier)
+    type: remap
+    drop_on_error: true
+    reroute_dropped: true
+  grok_parsing:
+    drop_on_error: true
+    reroute_dropped: true
+    inputs:
+    - "authentication.authenticated"
+    source: |
+      . |= parse_grok!(
+        .message,
+        "%{WORD:logPrefix}\\s*:::\\s*%{TIMESTAMP_ISO8601:timestamp}\\s*:::\\s*%{WORD:identifier}\\s*:::\\s*%{WORD:category}\\s*:::\\s*%{GREEDYDATA:json_data}"
+      )
+    type: remap
+  metrics_parsing:
+    inputs:
+    - add_metadata
+    source: |
+      if exists(.json_data) {
+        .event_json = object!(parse_json!(.json_data))
+      }
+    type: remap
+    drop_on_error: true
+    reroute_dropped: true
+  route_unauthenticated:
+    inputs:
+    - "authentication._unmatched"
+    type: remap
+    source: |2
+          .outFile = "unauthenticated.log"
+  route_dropped:
+    inputs:
+    - "clean_events.dropped"
+    - "metrics_parsing.dropped"
+    - "add_metadata.dropped"
+    - "grok_parsing.dropped"
+    type: remap
+    source: |2
+          .outFile = "dropped.log"
