@@ -16,7 +16,7 @@
     ```
 
 **Points to note**
-* The above command runs an instance of Postgres, MDS, DMS, Ingestion service and mock proxy server.
+* The above command runs an instance of Postgres, Mock Model Distribution Service (MDS), Mock Dashboard Management Services (DMS), Ingestion service and mock proxy server.
 * Mock server runs on http://localhost:8080 by default.
 * Ingestion service runs on http://localhost:8081 by default. Update the API_KEY environment variable in docker-compose file to change the authentication key for ingestion service.
 * Logger service runs on http://localhost:8082 by default. Update the API_KEY environment variable in docker-compose file to change the authentication key for logger service.
