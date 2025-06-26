@@ -19,24 +19,75 @@
 #include "ne_type_traits.hpp"
 #include "nlohmann/json_fwd.hpp"
 
+/**
+ * @brief Abstract base class for streaming and parsing JSON values.
+ *
+ * Provides an interface for parsing, serializing, and accessing JSON values from a character stream.
+ */
 class JSONValueStream {
  public:
-  // Returns true when done parsing, else returns false
+  /**
+   * @brief Parse the value from the stream.
+   *
+   * @return True if parsing is complete, false otherwise.
+   */
   virtual bool parse() = 0;
+
+  /**
+   * @brief Serialize the value to a JSON string.
+   *
+   * @param nesting Indentation level for pretty printing.
+   * @return JSON string representation.
+   */
   virtual std::string to_json_string(int nesting = 0) const = 0;
+
+  /**
+   * @brief Convert the value to a nlohmann::json object.
+   *
+   * @return JSON object representation.
+   */
   virtual nlohmann::json to_json() const = 0;
+
+  /**
+   * @brief Check if parsing is finished.
+   *
+   * @return True if finished, false otherwise.
+   */
   virtual bool finished() const = 0;
+
+  /**
+   * @brief Get the underlying character stream.
+   *
+   * @return Shared pointer to the CharStream.
+   */
   virtual std::shared_ptr<CharStream> char_stream() = 0;
+
   static constexpr const char* TAB_STRING = "    ";
 
-  // Wrapper function for when we want to pass the stream directly as a subscriber to CharStream
+  /**
+   * @brief Wrapper function to parse ahead, useful as a CharStream subscriber.
+   */
   void parse_ahead() { parse(); }
 
-  // Determine value type by peeking into the char stream, return nullptr if stream exhausted
+  /**
+   * @brief Factory function to create a JSONValueStream for the next value in the stream.
+   *
+   * @param charStream The character stream to parse from.
+   * @return Shared pointer to a JSONValueStream, or nullptr if stream exhausted.
+   */
   static std::shared_ptr<JSONValueStream> get_value_stream(std::shared_ptr<CharStream> charStream);
+
+  /**
+   * @brief Virtual destructor.
+   */
   virtual ~JSONValueStream() = default;
 };
 
+/**
+ * @brief Stream parser for JSON objects (dictionaries).
+ *
+ * Parses and provides access to key-value pairs in a JSON object from a character stream.
+ */
 class JSONStream : public JSONValueStream {
  private:
   enum class ParserState {
@@ -49,101 +100,248 @@ class JSONStream : public JSONValueStream {
     FINISH
   };
 
- private:
-  std::unordered_map<std::string, std::shared_ptr<JSONValueStream>> _map;
+  std::unordered_map<std::string, std::shared_ptr<JSONValueStream>> _map; /**< Map of parsed key-value pairs. */
+  std::shared_ptr<JSONValueStream> _currentStream; /**< Current key/value stream being parsed. */
+  ParserState _parserState = ParserState::START;   /**< Current parser state. */
+  std::shared_ptr<CharStream> _charStream;         /**< Underlying character stream. */
 
-  std::shared_ptr<JSONValueStream> _currentStream;
-  ParserState _parserState = ParserState::START;
-  std::shared_ptr<CharStream> _charStream;
-
- private:
   std::shared_ptr<CharStream> char_stream() override { return _charStream; }
 
  public:
+  /**
+   * @brief Construct a JSONStream from a character stream.
+   *
+   * @param charStream The character stream to parse.
+   */
   JSONStream(std::shared_ptr<CharStream> charStream) : _charStream(charStream) {}
 
-  // Accessing the JSON key-values
+  /**
+   * @brief Get the value stream for a given key.
+   *
+   * @param key The key to look up.
+   * @return Shared pointer to the value stream, or nullptr if not found.
+   */
   std::shared_ptr<JSONValueStream> get_value(const std::string& key);
+
+  /**
+   * @brief Check if parsing is finished.
+   *
+   * @return True if finished, false otherwise.
+   */
   bool finished() const override;
 
+  /**
+   * @brief Parse the JSON object from the stream.
+   *
+   * @return True if parsing is complete, false otherwise.
+   */
   bool parse() override;
+
+  /**
+   * @brief Serialize the object to a JSON string.
+   *
+   * @param nesting Indentation level for pretty printing.
+   * @return JSON string representation.
+   */
   std::string to_json_string(int nesting = 0) const override;
+
+  /**
+   * @brief Convert the object to a nlohmann::json object.
+   *
+   * @return JSON object representation.
+   */
   nlohmann::json to_json() const override;
 };
 
+/**
+ * @brief Stream parser for JSON strings.
+ *
+ * Parses and provides access to a JSON string value from a character stream.
+ */
 class JSONStringStream : public JSONValueStream {
-  std::optional<int> _startIdx;  // for when we haven't found the starting quote
-  std::optional<int> _endIdx;    // for when we haven't found the ending quote
-  std::shared_ptr<CharStream> _charStream;
+  std::optional<int> _startIdx;              /**< Index of the starting quote, if found. */
+  std::optional<int> _endIdx;                /**< Index of the ending quote, if found. */
+  std::shared_ptr<CharStream> _charStream;   /**< Underlying character stream. */
 
  private:
   std::shared_ptr<CharStream> char_stream() override { return _charStream; }
 
  public:
+  /**
+   * @brief Construct a JSONStringStream from a character stream.
+   *
+   * @param charStream The character stream to parse.
+   */
   JSONStringStream(std::shared_ptr<CharStream> charStream) : _charStream(charStream) {}
 
   JSONStringStream(JSONStringStream&) = delete;
   JSONStringStream(JSONStringStream&&) = delete;
 
-  // Called when new data is inserted into the character stream
+  /**
+   * @brief Parse the JSON string from the stream.
+   *
+   * @return True if parsing is complete, false otherwise.
+   */
   bool parse() override;
+
+  /**
+   * @brief Check if parsing is finished.
+   *
+   * @return True if finished, false otherwise.
+   */
   bool finished() const override;
 
-  // returns empty string if no string has been parsed, else constructs a string out of everything
-  // in [_startIdx, _endIdx]
+  /**
+   * @brief Get the parsed string value.
+   *
+   * @return The parsed string, or empty string if not parsed.
+   */
   std::string to_string() const;
+
+  /**
+   * @brief Serialize the string to a JSON string.
+   *
+   * @param nesting Indentation level for pretty printing.
+   * @return JSON string representation.
+   */
   std::string to_json_string(int nesting = 0) const override;
+
+  /**
+   * @brief Convert the string to a nlohmann::json object.
+   *
+   * @return JSON string value.
+   */
   nlohmann::json to_json() const override;
 };
 
+/**
+ * @brief Stream parser for JSON arrays.
+ *
+ * Parses and provides access to array elements from a character stream.
+ */
 class JSONArrayStream : public JSONValueStream {
  private:
   enum class ParserState { START, CREATE_VALUE_STREAM, PARSING_VALUE, PARSED_VALUE, FINISH };
 
- private:
-  std::shared_ptr<CharStream> _charStream;
-  ParserState _parserState = ParserState::START;
-  std::vector<std::shared_ptr<JSONValueStream>> _values;
+  std::shared_ptr<CharStream> _charStream;   /**< Underlying character stream. */
+  ParserState _parserState = ParserState::START; /**< Current parser state. */
+  std::vector<std::shared_ptr<JSONValueStream>> _values; /**< Parsed value streams for array elements. */
 
- private:
   std::shared_ptr<CharStream> char_stream() override { return _charStream; }
 
  public:
+  /**
+   * @brief Construct a JSONArrayStream from a character stream.
+   *
+   * @param charStream The character stream to parse.
+   */
   JSONArrayStream(std::shared_ptr<CharStream> charStream) : _charStream(charStream) {}
 
+  /**
+   * @brief Parse the JSON array from the stream.
+   *
+   * @return True if parsing is complete, false otherwise.
+   */
   bool parse() override;
+
+  /**
+   * @brief Check if parsing is finished.
+   *
+   * @return True if finished, false otherwise.
+   */
   bool finished() const override;
+
+  /**
+   * @brief Serialize the array to a JSON string.
+   *
+   * @param nesting Indentation level for pretty printing.
+   * @return JSON string representation.
+   */
   std::string to_json_string(int nesting = 0) const override;
+
+  /**
+   * @brief Convert the array to a nlohmann::json object.
+   *
+   * @return JSON array representation.
+   */
   nlohmann::json to_json() const override;
 
-  // Accessing array
+  /**
+   * @brief Get the number of elements in the array.
+   *
+   * @return Number of elements.
+   */
   int size() const noexcept;
+
+  /**
+   * @brief Get the value stream at a given index.
+   *
+   * @param idx Index of the element.
+   * @return Shared pointer to the value stream at idx.
+   */
   std::shared_ptr<JSONValueStream> get_idx(int idx) const;
 };
 
+/**
+ * @brief Stream parser for JSON numbers.
+ *
+ * Parses and provides access to a JSON number value from a character stream.
+ */
 class JSONNumberStream : public JSONValueStream {
  private:
-  std::shared_ptr<CharStream> _charStream;
-  std::optional<int> _startIdx;  // for when we haven't found the starting of the number
-  std::optional<int> _endIdx;    // for when we haven't found the ending of the number
+  std::shared_ptr<CharStream> _charStream;   /**< Underlying character stream. */
+  std::optional<int> _startIdx;              /**< Index of the start of the number, if found. */
+  std::optional<int> _endIdx;                /**< Index of the end of the number, if found. */
 
- private:
   std::shared_ptr<CharStream> char_stream() override { return _charStream; }
 
  public:
+  /**
+   * @brief Construct a JSONNumberStream from a character stream.
+   *
+   * @param charStream The character stream to parse.
+   */
   JSONNumberStream(std::shared_ptr<CharStream> charStream) : _charStream(charStream) {}
 
+  /**
+   * @brief Parse the JSON number from the stream.
+   *
+   * @return True if parsing is complete, false otherwise.
+   */
   bool parse() override;
+
+  /**
+   * @brief Check if parsing is finished.
+   *
+   * @return True if finished, false otherwise.
+   */
   bool finished() const override;
+
+  /**
+   * @brief Serialize the number to a JSON string.
+   *
+   * @param nesting Indentation level for pretty printing.
+   * @return JSON string representation.
+   */
   std::string to_json_string(int nesting = 0) const override;
+
+  /**
+   * @brief Convert the number to a nlohmann::json object.
+   *
+   * @return JSON number value.
+   */
   nlohmann::json to_json() const override;
 
-  // Getting the number
+  /**
+   * @brief Get the parsed number as a value of type T.
+   *
+   * @tparam T The numeric type to parse as.
+   * @return The parsed number as type T.
+   */
   template <typename T>
   T get_number() const;
 };
 
-/************************** Template function impls **************************************/
 template <typename T>
 T JSONNumberStream::get_number() const {
   if (!_startIdx) {

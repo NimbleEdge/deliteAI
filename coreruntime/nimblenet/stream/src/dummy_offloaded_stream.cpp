@@ -21,7 +21,6 @@ void DummyOffloadedStream::ProducerThread::operator()(const std::atomic<bool>& k
     std::this_thread::sleep_for(std::chrono::microseconds(_sleepAfterCharMicros));
 
     _internalQueue->push(_sourceString[_nextIdx]);
-    // LOG_TO_CLIENT_INFO("Pushing %c", _sourceString[_nextIdx]);
     _nextIdx++;
   }
 

@@ -13,8 +13,6 @@
 #include "core_utils/fmt.hpp"
 #include "nlohmann/json.hpp"
 
-/**************************JSONValueStream*******************************/
-
 std::shared_ptr<JSONValueStream> JSONValueStream::get_value_stream(
     std::shared_ptr<CharStream> charStream) {
   std::optional<char> optChar = charStream->pop_ws_and_peek();
@@ -39,8 +37,6 @@ std::shared_ptr<JSONValueStream> JSONValueStream::get_value_stream(
   }
   THROW("Unkown value type that begins with character %c", c);
 }
-
-/****************************JSONStream**********************************/
 
 std::shared_ptr<JSONValueStream> JSONStream::get_value(const std::string& key) {
   auto it = _map.find(key);
@@ -154,13 +150,9 @@ nlohmann::json JSONStream::to_json() const {
   return obj;
 }
 
-/************************JSONStringStream**********************************/
-
 bool JSONStringStream::finished() const { return _endIdx.has_value() || _charStream->closed(); }
 
 bool JSONStringStream::parse() {
-  // TODO: JSON strings can have escape characters as well:
-  // \" \b \\ \/ \b \f \n \r \t \u0000 (any 4 hex digits: unicode escape)
   if (!_startIdx) {
     // Looking for the starting quote
     while (!_charStream->empty()) {
@@ -214,8 +206,6 @@ nlohmann::json JSONStringStream::to_json() const {
   nlohmann::json::string_t jsonStr = to_string();
   return jsonStr;
 }
-
-/**************************************JSONArrayStream**************************************/
 
 bool JSONArrayStream::parse() {
   if (_parserState == ParserState::FINISH) return true;
@@ -295,8 +285,6 @@ nlohmann::json JSONArrayStream::to_json() const {
 int JSONArrayStream::size() const noexcept { return _values.size(); }
 
 std::shared_ptr<JSONValueStream> JSONArrayStream::get_idx(int idx) const { return _values.at(idx); }
-
-/*********************************JSONNumberStream*******************************************/
 
 bool JSONNumberStream::parse() {
   if (!_startIdx) {
