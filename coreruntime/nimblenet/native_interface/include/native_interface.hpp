@@ -47,11 +47,11 @@ const std::shared_ptr<NetworkResponse> send_request(const std::string& body,
  *
  * @param url       URL of the file
  * @param headers   HTTP headers
- * @param fileName  File path relative to HOMEDIR
+ * @param filePath  File path, relative to HOMEDIR
  * @return          FileDownloadInfo structure with task metadata
  */
 FileDownloadInfo download_to_file_async(const std::string& url, const std::string& headers,
-                                        const std::string& relativeFilePath);
+                                        const std::string& filePath);
 
 /**
  * @brief Reads the contents of a local log file.
