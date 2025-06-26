@@ -47,11 +47,11 @@ const std::shared_ptr<NetworkResponse> send_request(const std::string& body,
  *
  * @param url       URL of the file
  * @param headers   HTTP headers
- * @param fileName  Name of the local file to save to
+ * @param fileName  File path relative to HOMEDIR
  * @return          FileDownloadInfo structure with task metadata
  */
 FileDownloadInfo download_to_file_async(const std::string& url, const std::string& headers,
-                                        const std::string& fileName);
+                                        const std::string& relativeFilePath);
 
 /**
  * @brief Reads the contents of a local log file.
@@ -85,7 +85,7 @@ bool get_file_from_device_common(const std::string& fileName, std::string& resul
                                  bool filePathProvided = false);
 
 /**
- * @brief Similar to get_file_from_device_common, but skips any decryption step.
+ * @brief Similar to get_file_from_device_common, this method assumes that the file being read is not encrypted.
  */
 bool get_unencrypted_file_from_device_common(const std::string& fileName, std::string& result,
                                              bool filePathProvided = false);
@@ -162,7 +162,7 @@ bool write_compressed_data_on_file(const std::string&& content, const std::strin
  * @brief Writes raw content to a file.
  */
 void write_data_to_file(const std::string&& content, const std::string& fileName,
-                        bool write_data_on_file = true);
+                        bool filePathProvided = true);
 
 /**
  * @brief Deletes a file.
