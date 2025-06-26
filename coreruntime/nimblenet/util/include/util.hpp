@@ -158,7 +158,7 @@ int get_primitive_dType(int dataType);
 int get_array_dataType(int dataType);
 
 /**
- * @brief Get the container typeå for a given data type.
+ * @brief Get the container type for a given data type.
  *
  * @param dataType Integer representing the data type.
  * @return Integer enum value for the container type.
