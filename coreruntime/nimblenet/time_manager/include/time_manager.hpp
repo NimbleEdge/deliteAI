@@ -287,7 +287,7 @@ class DeviceTime {
 
 /**
  * @brief Alias for Duration representing time since epoch.
- */å
+ */
 using EpochTime = Duration;
 
 /**
