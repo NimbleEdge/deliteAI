@@ -14,10 +14,17 @@
 #include "ne_fwd.hpp"
 #include "util.hpp"
 
+/**
+ * @brief Base class for tensor data variables with shape and element count management
+ *
+ * This class provides the fundamental tensor functionality including shape management,
+ * element counting, and basic tensor operations. It serves as the base for all
+ * typed tensor implementations.
+ */
 class BaseTensorVariable : public DataVariable {
  protected:
-  std::vector<int64_t> shape;
-  int numElements = 0;
+  std::vector<int64_t> shape; /**< Tensor dimensions/shape */
+  int numElements = 0;        /**< Total number of elements in the tensor */
 
   void* get_raw_ptr() override = 0;
 
@@ -37,15 +44,26 @@ class BaseTensorVariable : public DataVariable {
   }
 };
 
+/**
+ * @brief Typed tensor variable with data type-specific operations
+ *
+ * This class extends BaseTensorVariable with type-specific functionality including
+ * element size management, subscript operations, and tensor manipulation methods.
+ * It provides a unified interface for different numeric data types.
+ */
 class BaseTypedTensorVariable : public BaseTensorVariable {
  protected:
-  const DATATYPE _dataType;
-  const int _elemSize;
+  const DATATYPE _dataType; /**< The data type of tensor elements */
+  const int _elemSize;      /**< Size of each element in bytes */
 
  protected:
   int get_dataType_enum() const final { return _dataType; }
 
-  // Helper function to get size in bytes corresponding to data type
+  /**
+   * @brief Helper function to get size in bytes corresponding to data type
+   * @param dataType The data type enum value
+   * @return Size in bytes for the given data type
+   */
   static int get_elem_size(DATATYPE dataType);
 
   BaseTypedTensorVariable(DATATYPE dataType)
@@ -86,9 +104,16 @@ class BaseTypedTensorVariable : public BaseTensorVariable {
   }
 };
 
+/**
+ * @brief Slice view of a typed tensor variable
+ *
+ * This class provides a view into a portion of an existing tensor without copying data.
+ * It maintains a reference to the original tensor and provides access to a slice
+ * starting from a specified index.
+ */
 class SliceVariable : public BaseTypedTensorVariable {
-  std::shared_ptr<BaseTypedTensorVariable> origTensor = nullptr;
-  int startIndex = 0;
+  std::shared_ptr<BaseTypedTensorVariable> origTensor = nullptr; /**< Reference to original tensor */
+  int startIndex = 0;                                            /**< Starting index of the slice */
 
   int get_containerType() const final { return CONTAINERTYPE::VECTOR; }
 
@@ -99,8 +124,15 @@ class SliceVariable : public BaseTypedTensorVariable {
                 const std::vector<int64_t>& shape_, int startIndex_, int size_);
 };
 
+/**
+ * @brief Concrete tensor variable with memory management
+ *
+ * This class represents a complete tensor with its own memory allocation.
+ * It handles memory management through construction and destruction, supporting
+ * both copy and move semantics for data initialization.
+ */
 class TensorVariable : public BaseTypedTensorVariable {
-  void* variable = nullptr;
+  void* variable = nullptr; /**< Raw pointer to tensor data */
 
  public:
   void* get_raw_ptr() final { return variable; }
@@ -128,12 +160,19 @@ class TensorVariable : public BaseTypedTensorVariable {
   virtual ~TensorVariable() { free(variable); }
 };
 
+/**
+ * @brief Specialized tensor variable for string data
+ *
+ * This class handles string tensors with specialized operations for string manipulation,
+ * sorting, and indexing. It maintains both the string data and shape information
+ * for multi-dimensional string arrays.
+ */
 class StringTensorVariable : public DataVariable {
  protected:
-  std::vector<std::string> _data;
-  std::vector<int64_t> _shape;
-  int _numElements = 0;
-  std::vector<char*> stringPtrs;
+  std::vector<std::string> _data;     /**< Vector containing string elements */
+  std::vector<int64_t> _shape;        /**< Tensor dimensions */
+  int _numElements = 0;               /**< Total number of string elements */
+  std::vector<char*> stringPtrs;      /**< Pointers to string data for C interface */
 
   void* get_raw_ptr() override { return (void*)_data.data(); }
 
@@ -200,9 +239,15 @@ class StringTensorVariable : public DataVariable {
   virtual ~StringTensorVariable() { _data.clear(); }
 };
 
+/**
+ * @brief Slice view of a string tensor variable
+ *
+ * Similar to SliceVariable but specialized for string tensors, providing
+ * a view into a portion of a string tensor without copying the string data.
+ */
 class StringSliceVariable final : public StringTensorVariable {
-  OpReturnType origTensor = nullptr;
-  int startIndex = 0;
+  OpReturnType origTensor = nullptr; /**< Reference to original string tensor */
+  int startIndex = 0;                /**< Starting index of the slice */
 
   int get_dataType_enum() const final { return DATATYPE::STRING; }
 
@@ -215,9 +260,16 @@ class StringSliceVariable final : public StringTensorVariable {
                       int startIndex_, int size_);
 };
 
+/**
+ * @brief Empty tensor variable representing zero-sized tensors
+ *
+ * This class represents empty tensors of any data type. It provides
+ * consistent behavior for empty tensor operations while maintaining
+ * type information for the intended data type.
+ */
 class EmptyTensorVariable final : public DataVariable {
-  const int dataType;
-  std::vector<int64_t> shape;
+  const int dataType;           /**< The intended data type for this empty tensor */
+  std::vector<int64_t> shape;   /**< Shape with zero elements */
 
   int get_containerType() const final { return CONTAINERTYPE::VECTOR; }
 

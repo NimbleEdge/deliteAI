@@ -12,16 +12,27 @@ class CommandCenter;
 class BasePreProcessor;
 class TableStore;
 
+/**
+ * @brief Data variable for managing NimbleNet pre-processor operations
+ *
+ * This class provides a data variable interface for configuring and executing
+ * pre-processing operations on data before it's fed into machine learning models.
+ * It supports rolling window operations, group-by functionality, and custom
+ * computations that can be applied to the data.
+ *
+ * The pre-processor must be configured with rolling window parameters, group-by
+ * columns, and computations before it can be created and used for data processing.
+ */
 class PreProcessorNimbleNetVariable final : public DataVariable {
-  CommandCenter* _commandCenter;
-  DATATYPE _dataType;
-  OpReturnType _rollingWindow;
-  OpReturnType _groupByColumns;
+  CommandCenter* _commandCenter; /**< Pointer to the command center for system operations */
+  DATATYPE _dataType; /**< The data type this pre-processor operates on */
+  OpReturnType _rollingWindow; /**< Rolling window configuration parameters */
+  OpReturnType _groupByColumns; /**< Columns to group by for processing */
   // Stores vector of tuples, where each tuple will have columnName, operator and default value
-  std::vector<OpReturnType> _computations;
-  bool _isPreProcessorCreated = false;
-  BasePreProcessor* _processor = nullptr;
-  std::shared_ptr<TableStore> _tableStore = nullptr;
+  std::vector<OpReturnType> _computations; /**< Vector of computation configurations as tuples */
+  bool _isPreProcessorCreated = false; /**< Flag indicating if the pre-processor has been created */
+  BasePreProcessor* _processor = nullptr; /**< Pointer to the actual pre-processor instance */
+  std::shared_ptr<TableStore> _tableStore = nullptr; /**< Shared pointer to the table store */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
@@ -51,6 +62,12 @@ class PreProcessorNimbleNetVariable final : public DataVariable {
   BasePreProcessor* create_processor(std::vector<double> defaultVector, DATATYPE dataType);
 
  public:
+  /**
+   * @brief Constructs a new PreProcessorNimbleNetVariable
+   * @param commandCenter Pointer to the command center for system operations
+   * @param tableStore Shared pointer to the table store for data access
+   * @param dataType The data type this pre-processor will operate on
+   */
   PreProcessorNimbleNetVariable(CommandCenter* commandCenter,
                                 std::shared_ptr<TableStore> tableStore, const DATATYPE dataType);
 };

@@ -17,6 +17,14 @@
 
 class Task;
 
+/**
+ * @brief Base class for stream-based data variables
+ *
+ * StreamDataVariable provides the foundation for handling streaming data
+ * in the NimbleNet system. It implements a template method pattern where
+ * derived classes override execute_member_function to provide specific
+ * streaming behavior while the base class handles common function calling logic.
+ */
 class StreamDataVariable : public DataVariable {
   OpReturnType call_function(int memberFuncIndex, const std::vector<OpReturnType>& arguments,
                              CallStack& stack) final;
@@ -25,9 +33,16 @@ class StreamDataVariable : public DataVariable {
                                                CallStack& stack) = 0;
 };
 
+/**
+ * @brief Iterator for character streams with JSON parsing capabilities
+ *
+ * CharStreamIterDataVariable provides iteration over character streams with
+ * support for extracting JSON data. It maintains a position index and can
+ * skip text to find JSON content, making it useful for parsing mixed text/JSON streams.
+ */
 class CharStreamIterDataVariable : public StreamDataVariable {
-  std::shared_ptr<CharStream> _charStream;
-  int _nextIdx = 0;
+  std::shared_ptr<CharStream> _charStream; /**< The underlying character stream to iterate over */
+  int _nextIdx = 0;                        /**< Current position index in the stream */
 
  private:
   // TODO: Maybe we should create CONTAINERTYPE::STREAM?
@@ -55,16 +70,24 @@ class CharStreamIterDataVariable : public StreamDataVariable {
   void wait_for_completion(CallStack& stack, std::unique_lock<std::mutex>& streamPushLock);
 };
 
+/**
+ * @brief Data variable for JSON value streams with type-specific behavior
+ *
+ * JSONValueStreamDataVariable handles different types of JSON streams (objects,
+ * arrays, strings, numbers) and provides appropriate access patterns for each.
+ * It supports both blocking and non-blocking operations and can extract nested
+ * values from JSON object streams.
+ */
 class JSONValueStreamDataVariable : public StreamDataVariable {
   enum class Type {
-    OBJECT,
-    ARRAY,
-    STRING,
-    NUMBER,
+    OBJECT,  /**< JSON object stream type */
+    ARRAY,   /**< JSON array stream type */
+    STRING,  /**< JSON string stream type */
+    NUMBER,  /**< JSON number stream type */
   };
 
-  std::shared_ptr<JSONValueStream> _jsonValueStream;
-  Type _valueType;
+  std::shared_ptr<JSONValueStream> _jsonValueStream; /**< The underlying JSON value stream */
+  Type _valueType;                                   /**< The specific type of JSON stream */
 
  private:
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
@@ -101,9 +124,16 @@ class JSONValueStreamDataVariable : public StreamDataVariable {
   JSONValueStreamDataVariable(std::shared_ptr<JSONValueStream> valueStream);
 };
 
+/**
+ * @brief Iterator for JSON array streams
+ *
+ * JSONArrayIterDataVariable provides iteration over JSON array streams,
+ * allowing sequential access to array elements. It supports both blocking
+ * and non-blocking iteration patterns and can check for element availability.
+ */
 class JSONArrayIterDataVariable : public StreamDataVariable {
-  std::shared_ptr<JSONArrayStream> _arrayStream;
-  int _nextIdx = 0;
+  std::shared_ptr<JSONArrayStream> _arrayStream; /**< The underlying JSON array stream */
+  int _nextIdx = 0;                              /**< Current position index in the array */
 
  private:
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }

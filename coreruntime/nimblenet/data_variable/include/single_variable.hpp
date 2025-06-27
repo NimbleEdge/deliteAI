@@ -11,6 +11,12 @@
 
 #include "data_variable.hpp"
 
+/**
+ * @brief Base class for single value variables
+ *
+ * Provides common functionality for all single value data variables.
+ * All single variables have a size of 1 and container type SINGLE.
+ */
 class BaseSingleVariable : public DataVariable {
   int get_containerType() const final { return CONTAINERTYPE::SINGLE; }
 
@@ -21,7 +27,7 @@ class BaseSingleVariable : public DataVariable {
 template <class T,
           typename = std::enable_if_t<ne::is_not_same_v<ne::remove_cvref_t<T>, nlohmann::json>>>
 class SingleVariable final : public BaseSingleVariable {
-  T val;
+  T val; /**< The stored value of type T */
 
  public:
   SingleVariable(T v) { val = v; }
@@ -63,14 +69,28 @@ class SingleVariable final : public BaseSingleVariable {
   void* get_raw_ptr() override { return (void*)&val; }
 };
 
+/**
+ * @brief Specialization for string variables with Unicode support
+ *
+ * Provides advanced string operations including Unicode character counting,
+ * byte-to-character mapping, and slice operations. This specialization handles
+ * multi-byte characters correctly by maintaining a character-to-byte mapping
+ * for O(1) lookups.
+ */
 template <>
 class SingleVariable<std::string> final : public BaseSingleVariable {
-  std::string val;
-  std::vector<char*> strPtr;
-  int cached_char_count;  // Character count
-  std::vector<int> char_to_byte_map;
+  std::string val; /**< The stored string value */
+  std::vector<char*> strPtr; /**< Vector of string pointers for compatibility */
+  int cached_char_count; /**< Cached Unicode character count for performance */
+  std::vector<int> char_to_byte_map; /**< Mapping from character index to byte position */
 
-  // Build the character-to-byte mapping
+  /**
+   * @brief Builds the character-to-byte mapping for Unicode support
+   *
+   * This method analyzes the string and creates a mapping that allows O(1)
+   * conversion from character indices to byte positions, essential for
+   * proper Unicode string slicing and indexing.
+   */
   void build_char_to_byte_map();
 
  public:
@@ -111,7 +131,11 @@ class SingleVariable<std::string> final : public BaseSingleVariable {
   // Get the number of Unicode characters
   int get_char_count() const { return cached_char_count; }
 
-  // O(1) lookup from character index to byte position
+  /**
+   * @brief Converts character index to byte position in O(1) time
+   * @param char_idx The Unicode character index
+   * @return The corresponding byte position in the string
+   */
   int char_idx_to_byte_pos(int char_idx) const;
 
   OpReturnType get_int_subscript(int argument) override;
@@ -122,7 +146,14 @@ class SingleVariable<std::string> final : public BaseSingleVariable {
   // Override get_subscript to handle both integer indices and slice objects
   OpReturnType get_subscript(const OpReturnType& subscriptVal) override;
 
-  // Method to handle slice objects with Unicode awareness
+  /**
+   * @brief Handles slice operations with Unicode awareness
+   * @param sliceObj The slice object containing start, stop, and step parameters
+   * @return A new SingleVariable containing the sliced substring
+   *
+   * This method properly handles Unicode strings by using character indices
+   * rather than byte indices for slicing operations.
+   */
   OpReturnType get_slice_subscript(const OpReturnType& sliceObj);
 
   bool in(const OpReturnType& str) override {
@@ -132,8 +163,8 @@ class SingleVariable<std::string> final : public BaseSingleVariable {
 
 template <>
 class SingleVariable<std::wstring> final : public BaseSingleVariable {
-  std::wstring _val;
-  std::wstring_convert<std::codecvt_utf8<wchar_t>> _utf8_converter;
+  std::wstring _val; /**< The stored wide string value */
+  std::wstring_convert<std::codecvt_utf8<wchar_t>> _utf8_converter; /**< UTF-8 converter for wide strings */
 
  public:
   SingleVariable(const std::wstring& v) { _val = v; }
@@ -153,10 +184,19 @@ class SingleVariable<std::wstring> final : public BaseSingleVariable {
   int get_size() override { return _val.size(); }
 };
 
+/**
+ * @brief Specialized class for JSON single variables
+ *
+ * Provides JSON-specific operations including key-value access, array operations,
+ * and type-safe JSON manipulation. This class handles both JSON objects and arrays
+ * with proper type checking and conversion.
+ *
+ * @tparam JSONType The JSON type (nlohmann::json or const nlohmann::json)
+ */
 template <typename JSONType,
           typename = std::enable_if_t<std::is_same_v<ne::remove_cvref_t<JSONType>, nlohmann::json>>>
 class JSONSingleVariable final : public BaseSingleVariable {
-  JSONType _val;
+  JSONType _val; /**< The stored JSON value */
 
  public:
   JSONSingleVariable(const std::remove_reference_t<JSONType>& v) : _val(v) {}
@@ -191,6 +231,15 @@ class JSONSingleVariable final : public BaseSingleVariable {
     THROW("Could not find key=%s in json", key.c_str());
   }
 
+  /**
+   * @brief Sets a value in the JSON object or array
+   * @param subscriptVal The key (for objects) or index (for arrays)
+   * @param d The value to set
+   *
+   * This method handles setting values in both JSON objects and arrays.
+   * For objects, it uses the string key. For arrays, it converts the key to an integer.
+   * Supports setting single values, vectors, and nested JSON structures.
+   */
   void set_subscript(const OpReturnType& subscriptVal, const OpReturnType& d) override {
     if constexpr (std::is_const_v<std::remove_reference_t<JSONType>>) {
       THROW_UNSUPPORTED("set_subscript");
@@ -233,6 +282,16 @@ class JSONSingleVariable final : public BaseSingleVariable {
     }
   }
 
+  /**
+   * @brief Searches for a value in a JSON array
+   * @tparam T The type of value to search for
+   * @param j The JSON array to search in
+   * @param val The value to find
+   * @return true if the value is found, false otherwise
+   *
+   * This template method provides type-safe searching in JSON arrays
+   * by iterating through the array elements and comparing them with the target value.
+   */
   template <typename T>
   static inline bool find_in_json_array(const nlohmann::json& j, T val) {
     for (const auto& x : j) {
@@ -241,6 +300,15 @@ class JSONSingleVariable final : public BaseSingleVariable {
     return false;
   }
 
+  /**
+   * @brief Checks if an element exists in the JSON object or array
+   * @param elem The element to search for
+   * @return true if the element is found, false otherwise
+   *
+   * For JSON objects, this checks if the element's string representation
+   * exists as a key. For JSON arrays, it searches for the element value
+   * within the array using type-specific comparison.
+   */
   bool in(const OpReturnType& elem) override {
     if (elem->get_containerType() != CONTAINERTYPE::SINGLE) {
       THROW("%s",
