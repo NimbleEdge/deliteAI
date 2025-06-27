@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "map_data_variable.hpp"
 
 #include "list_data_variable.hpp"

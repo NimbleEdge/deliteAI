@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "raw_event_store_data_variable.hpp"
 
 RawEventStoreDataVariable::RawEventStoreDataVariable(CommandCenter* commandCenter,

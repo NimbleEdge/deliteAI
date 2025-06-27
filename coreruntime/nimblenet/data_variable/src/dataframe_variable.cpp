@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "dataframe_variable.hpp"
 
 #include "command_center.hpp"
