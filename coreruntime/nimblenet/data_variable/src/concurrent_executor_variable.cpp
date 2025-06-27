@@ -10,12 +10,23 @@
 
 std::unique_ptr<ThreadPool> ConcurrentExecutorVariable::_threadpool = nullptr;
 
+/**
+ * @brief Calculate default number of threads for the thread pool
+ * @return Number of threads (max of hardware_concurrency-1 and 2)
+ * @details Uses hardware_concurrency() to determine optimal thread count,
+ *          subtracting 1 to leave one core for the main thread, with a minimum of 2
+ */
 static inline int default_num_threads() {
   return std::max(int(std::thread::hardware_concurrency() - 1), 2);
 }
 
 int ConcurrentExecutorVariable::_numThreads = default_num_threads();
 
+/**
+ * @brief Initialize the thread pool
+ * @return Always returns true
+ * @details Creates a new ThreadPool instance with the configured number of threads
+ */
 bool ConcurrentExecutorVariable::init_threadpool() {
   // run once to init Threadpool
   _threadpool = std::make_unique<ThreadPool>(_numThreads);
