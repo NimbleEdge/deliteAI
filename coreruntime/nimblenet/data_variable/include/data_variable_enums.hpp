@@ -6,7 +6,22 @@
 
 #pragma once
 
+/**
+ * @file data_variable_enums.hpp
+ * @brief Enumeration definitions for data variable container types and member function types
+ *
+ * This file defines the core enumeration types used throughout the data variable system
+ * for identifying container types and member function operations.
+ */
+
 // when adding a new containerType it should also be put in the get_containerType_string
+/**
+ * @brief Enumeration defining the different container types supported by the data variable system
+ *
+ * This enum represents the various data structures and container types that can be
+ * handled by the DataVariable class hierarchy. Each type corresponds to a specific
+ * data organization pattern.
+ */
 enum CONTAINERTYPE {
   SINGLE = 1,
   VECTOR = 2,
@@ -21,6 +36,14 @@ enum CONTAINERTYPE {
 
 // when adding a new member function it should be placed in _memberFuncMap,_inverseMemberFuncMap for
 // appropriate calling
+/**
+ * @brief Enumeration defining all member function types supported by data variables
+ *
+ * This enum defines the complete set of operations that can be performed on data variables.
+ * Each enum value corresponds to a specific member function that can be called on
+ * DataVariable instances. The enum values are used for function dispatch and mapping
+ * between string function names and their corresponding implementations.
+ */
 enum MemberFuncType {
   LOADMODEL,
   RUNMODEL,
