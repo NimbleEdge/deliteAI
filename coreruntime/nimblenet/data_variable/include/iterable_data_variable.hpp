@@ -7,12 +7,18 @@
 #pragma once
 #include "data_variable.hpp"
 
-// Abstract base class for all iterable data types
+/**
+ * @brief Abstract base class for all iterable data types
+ *
+ * IterableDataVariable provides a unified interface for iterating over
+ * different types of data structures. It maintains iteration state including
+ * current position and exhaustion status, and provides methods to reset
+ * iteration and check if iteration is complete.
+ */
 class IterableDataVariable : public DataVariable {
  protected:
-  // Current position in the iteration
-  int _iterPosition = 0;
-  bool _iterExhausted = false;
+  int _iterPosition = 0;    /**< Current position in the iteration */
+  bool _iterExhausted = false; /**< Flag indicating if iteration has been exhausted */
 
  public:
   // Reset the iterator to start from the beginning
@@ -34,10 +40,23 @@ class IterableDataVariable : public DataVariable {
   bool is_exhausted() const { return _iterExhausted; }
 };
 
+/**
+ * @brief Iterator wrapper for scriptable data containers
+ *
+ * IterableOverScriptable provides iteration capabilities over scriptable
+ * data types such as lists, tuples, and ranges. It acts as a proxy that
+ * delegates iteration operations to the underlying data container while
+ * maintaining the iteration state.
+ */
 class IterableOverScriptable : public IterableDataVariable {
-  OpReturnType _data = nullptr;
+  OpReturnType _data = nullptr; /**< Reference to the underlying data container */
 
  public:
+  /**
+   * @brief Constructs an iterator over a scriptable data container
+   * @param data The data container to iterate over (must be LIST, TUPLE, or RANGE)
+   * @throws Exception if data is not a supported container type
+   */
   IterableOverScriptable(OpReturnType data) {
     if (data->get_containerType() != CONTAINERTYPE::LIST &&
         data->get_containerType() != CONTAINERTYPE::TUPLE &&
@@ -58,6 +77,11 @@ class IterableOverScriptable : public IterableDataVariable {
     return _data->get_int_subscript(_iterPosition++);
   }
 
+  /**
+   * @brief Sets the data container to iterate over
+   * @param data The data container (must be LIST, TUPLE, RANGE, or single STRING)
+   * @throws Exception if data is not a supported container type
+   */
   void set_data(OpReturnType data) {
     if (data->get_containerType() == CONTAINERTYPE::SINGLE &&
         data->get_dataType_enum() == DATATYPE::STRING) {

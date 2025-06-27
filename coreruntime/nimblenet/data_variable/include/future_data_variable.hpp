@@ -34,11 +34,11 @@ class FutureDataVariable : public DataVariable {
   nlohmann::json to_json() const override { return ne::fmt("Future[%s]", _name.c_str()).str; }
 
  private:
-  std::future<OpReturnType> _future;
-  std::string _name;
-  OpReturnType _val;
-  std::shared_ptr<BaseJob> _dependentJob;
-  bool _savedToTask = false;
+  std::future<OpReturnType> _future; /**< The wrapped future containing the operation result */
+  std::string _name;                 /**< Name identifier for this future variable */
+  OpReturnType _val;                 /**< Cached value once future is resolved */
+  std::shared_ptr<BaseJob> _dependentJob; /**< Job that produced this future */
+  bool _savedToTask = false;         /**< Flag indicating if this future has been saved to a task */
 
  public:
   FutureDataVariable(std::future<OpReturnType>&& future, const std::string& name,

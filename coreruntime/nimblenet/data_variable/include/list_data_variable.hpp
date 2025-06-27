@@ -30,8 +30,26 @@ T get_element(OpReturnType d, const std::vector<int64_t>& shape, int index, int 
   return elem->get<T>();
 }
 
+/**
+ * @brief Static utility class for list-to-tensor conversion operations
+ *
+ * ListOperators provides static methods to convert ListDataVariable objects
+ * into tensor representations. It handles different data types including
+ * numeric types and strings, with specialized handling for string tensors.
+ * The class uses template specialization to efficiently extract elements
+ * from nested list structures and create appropriately typed tensors.
+ */
 class ListOperators {
  public:
+  /**
+   * @brief Converts a list to a tensor of the specified type
+   * @tparam T The target data type for the tensor
+   * @param list The list to convert
+   * @param shape The shape of the resulting tensor
+   * @param size Total number of elements in the tensor
+   * @return OpReturnType containing the created tensor
+   * @note Uses move semantics for the shape parameter to avoid copying
+   */
   template <class T>
   static OpReturnType operate(OpReturnType list, std::vector<int64_t>&& shape, int size) {
     T* data = (T*)malloc(size * sizeof(T));
@@ -49,8 +67,8 @@ class ListOperators {
 class ListDataVariable : public DataVariable {
   int get_containerType() const override { return CONTAINERTYPE::LIST; }
 
-  std::vector<OpReturnType> _members;
-  std::vector<int64_t> _shape;
+  std::vector<OpReturnType> _members; /**< Vector containing the list elements */
+  std::vector<int64_t> _shape;        /**< Shape information for the list */
 
   int get_dataType_enum() const override { return DATATYPE::EMPTY; }
 
@@ -85,7 +103,17 @@ class ListDataVariable : public DataVariable {
     return get_int_subscript(subscriptVal->get_int32());
   }
 
-  // New method to handle slice objects
+  /**
+   * @brief Handles slice operations on the list
+   * @param sliceObj The slice object containing start, stop, and step parameters
+   * @return OpReturnType containing a new list with the sliced elements
+   * @details This method implements Python-style slicing with support for:
+   *          - Negative indices (counting from the end)
+   *          - Positive and negative step values
+   *          - Automatic bounds checking and clamping
+   *          - Efficient memory allocation using reserve()
+   *          - Move semantics to avoid unnecessary copying
+   */
   OpReturnType get_slice_subscript(const OpReturnType& sliceObj) {
     // Cast to SliceVariable to use direct member access
     const ListSliceVariable* slice = static_cast<const ListSliceVariable*>(sliceObj.get());
