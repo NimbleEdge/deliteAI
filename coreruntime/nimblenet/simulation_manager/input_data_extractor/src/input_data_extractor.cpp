@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* Source file for managing the input data extraction from json file
- */
 #include <fstream>
 
 #include "input_structs.hpp"
