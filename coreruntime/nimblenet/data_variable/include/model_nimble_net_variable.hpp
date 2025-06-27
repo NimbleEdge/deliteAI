@@ -27,10 +27,17 @@ class Model:
     """
 DELITEPY_DOC_BLOCK_END
 */
+/**
+ * @brief Represents a model variable in the NimbleNet system for AI/ML model interactions
+ *
+ * This class provides functionality to load, manage, and execute AI/ML models within the DeliteAI SDK.
+ * It inherits from DataVariable and implements model-specific operations like inference execution
+ * and status checking.
+ */
 class ModelNimbleNetVariable final : public DataVariable {
-  CommandCenter* _commandCenter;
-  std::string _modelName;
-  std::shared_ptr<TaskBaseModel> _model;
+  CommandCenter* _commandCenter; /**< Pointer to the command center for SDK operations */
+  std::string _modelName; /**< Name identifier of the loaded model */
+  std::shared_ptr<TaskBaseModel> _model; /**< Shared pointer to the underlying model implementation */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
@@ -58,6 +65,16 @@ class ModelNimbleNetVariable final : public DataVariable {
         pass
   DELITEPY_DOC_BLOCK_END
   */
+  /**
+   * @brief Executes the model inference with provided input arguments
+   *
+   * Validates input arguments against model requirements, performs inference,
+   * records timing metrics, and handles errors gracefully.
+   *
+   * @param arguments Vector of input tensors for model inference
+   * @return OpReturnType containing the model output or NoneVariable on failure
+   * @throws std::exception if input count doesn't match model requirements
+   */
   OpReturnType run_model(const std::vector<OpReturnType>& arguments);
 
   /*
@@ -117,6 +134,16 @@ class ModelNimbleNetVariable final : public DataVariable {
     _model = model;
   }
 
+  /**
+   * @brief Asynchronously loads a model by name
+   *
+   * Creates a future data variable that will contain the loaded model once
+   * the asset loading job completes.
+   *
+   * @param modelName Name of the model to load
+   * @param commandCenter Pointer to the command center for deployment access
+   * @return std::shared_ptr<FutureDataVariable> Future containing the model once loaded
+   */
   static std::shared_ptr<FutureDataVariable> load_async(const std::string& modelName,
                                                         CommandCenter* commandCenter);
 

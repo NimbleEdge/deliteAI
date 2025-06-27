@@ -24,8 +24,27 @@
 
 class CommandCenter;
 
+/**
+ * @brief Main data variable class for NimbleNet operations
+ *
+ * NimbleNetDataVariable serves as the primary interface for all NimbleNet-specific
+ * operations in the data variable system. It provides functionality for creating
+ * tensors, loading models and LLMs, mathematical operations, data management,
+ * and system configuration access.
+ *
+ * The class implements a comprehensive set of operations including:
+ * - Tensor creation and manipulation
+ * - Model and LLM loading with async support
+ * - Mathematical functions (exp, pow, min, max, sum, mean, log)
+ * - Data storage and retrieval (raw events, dataframes)
+ * - System utilities (time, configuration access)
+ * - Concurrent execution support
+ *
+ * All operations are dispatched through the call_function method using
+ * member function indices, providing a unified interface for script execution.
+ */
 class NimbleNetDataVariable final : public DataVariable {
-  CommandCenter* _commandCenter = nullptr;
+  CommandCenter* _commandCenter = nullptr; /**< Pointer to the command center for system operations */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
