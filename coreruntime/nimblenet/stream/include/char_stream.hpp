@@ -18,7 +18,7 @@ class CharStreamView;
 class JSONNumberStream;
 
 /**
- * @brief CharStream is a stream of characters, and more.
+ * @brief CharStream manages lifecycle of a character stream.
  *
  * It handles asynchronous production of characters and aids in parsing the generated stream
  * into an organised data structure. Data can be pushed explicitly or produced asynchronously.
@@ -164,7 +164,7 @@ class CharStream : public std::enable_shared_from_this<CharStream> {
 };
 
 /**
- * @brief Denotes a potentially open-ended interval over the stream.
+ * @brief Creates a string view over the character stream.
  *
  * This class generates a new string for each view to avoid invalidation issues from stream mutation.
  */
