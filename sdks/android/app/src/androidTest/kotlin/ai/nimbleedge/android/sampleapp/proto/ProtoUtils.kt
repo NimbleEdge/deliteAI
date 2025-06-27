@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ai.nimbleedge.android.sampleapp.proto
 
 import ai.nimbleedge.datamodels.NimbleNetConfig
@@ -15,13 +21,13 @@ import generated.EmailAddress
 import java.util.UUID
 
 val config = NimbleNetConfig(
-    clientId = "testclient",
-    host = "https://apiv3.nimbleedge-staging.com",
-    deviceId = "proto-integration-test",
-    clientSecret = "samplekey123",
+    clientId = "test",
+    host = "test",
+    deviceId = "test",
+    clientSecret = "test",
     debug = true,
     initTimeOutInMs = 20000,
-    compatibilityTag = "proto-test",
+    compatibilityTag = "test",
     libraryVariant = NIMBLENET_VARIANTS.STATIC
 )
 

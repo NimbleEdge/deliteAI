@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+
+# SPDX-License-Identifier: Apache-2.0
+
 # NOTE:
 # 1. Go to the build tab in android studio and click on Build APK(s)
 # 2. Install the required python dependency from requirements.txt

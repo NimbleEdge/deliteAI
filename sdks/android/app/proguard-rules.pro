@@ -1,4 +1,3 @@
-# The proguard configuration file for the following section is C:\Users\varun\AndroidStudioProjects\Edge-SDK-android\nimblenet-android\build\intermediates\default_proguard_files\global\proguard-android-optimize.txt-7.4.2
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
 #

@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ai.nimbleedge.android.sampleapp
 
 import ai.nimbleedge.NimbleNet
@@ -80,8 +86,6 @@ fun Homepage() {
         outputText.value = "initializing..."
         coroutineScope.launch(Dispatchers.Default) {
             initNimbleEdge(applicationContext, outputText, coroutineScope)
-            testFn()
-//            testProto(applicationContext)
         }
     }
 
@@ -94,63 +98,6 @@ fun Homepage() {
         OutputBox(outputText, scroll)
         ActionButtonGrid(outputText)
     }
-}
-
-suspend fun testFn() {
-    delay(1000)
-    val jsonObject = JSONObject(
-        mapOf("hello" to "world")
-    )
-
-    val jsonArray = JSONArray(
-        listOf(1, 2, 3, 4, 5)
-    )
-
-    val input1 = hashMapOf(
-        "input" to NimbleNetTensor(
-            data = jsonObject,
-            datatype = DATATYPE.JSON_ARRAY,
-            shape = intArrayOf()
-        )
-    )
-
-    val input2 = hashMapOf(
-        "input" to NimbleNetTensor(
-            data = jsonObject,
-            datatype = DATATYPE.JSON,
-            shape = intArrayOf(1)
-        )
-    )
-
-    val input3 = hashMapOf(
-        "input" to NimbleNetTensor(
-            data = 43,
-            datatype = DATATYPE.INT32,
-            shape = intArrayOf(1)
-        )
-    )
-
-    val input4 = hashMapOf(
-        "input" to NimbleNetTensor(
-            data = 43f,
-            datatype = DATATYPE.INT32,
-            shape = intArrayOf(1)
-        )
-    )
-
-    val input5 = hashMapOf(
-        "input" to NimbleNetTensor(
-            data = intArrayOf(4),
-            datatype = DATATYPE.INT32,
-            shape = intArrayOf()
-        )
-    )
-
-    Log.i("NEXA", NimbleNet.runMethod("complex_json", input1).error?.message.toString())
-    Log.i("NEXA", NimbleNet.runMethod("complex_json", input2).error?.message.toString())
-    Log.i("NEXA", NimbleNet.runMethod("complex_json", input3).error?.message.toString())
-    Log.i("NEXA", NimbleNet.runMethod("complex_json", input4).error?.message.toString())
-    Log.i("NEXA", NimbleNet.runMethod("complex_json", input5).error?.message.toString())
 }
 
 @Composable
@@ -210,11 +157,8 @@ fun initNimbleEdge(
     outputText: MutableState<String>,
     coroutineScope: CoroutineScope
 ) {
-//    coroutineScope.launchh(Dispatchers.IO) {
-        val nimbleNetResult = NimbleNet.initialize(applicationContext, nimblenetConfig)
-        outputText.value = nimbleNetResult.toString()
-
-//    }stringify
+    val nimbleNetResult = NimbleNet.initialize(applicationContext, nimblenetConfig)
+    outputText.value = nimbleNetResult.toString()
 }
 
 fun addEvent() = NimbleNet.addEvent(
@@ -241,12 +185,12 @@ fun getDummyPreprocessorList() = List(30) {
 
 // Config
 private val nimblenetConfig = NimbleNetConfig(
-    clientId = "testclient",
-    host = "https://apiv3.nimbleedge-staging.com",
-    deviceId = "nimon_rulezzz",
-    clientSecret = "samplekey123",
+    clientId = "test",
+    host = "test",
+    deviceId = "test",
+    clientSecret = "test",
     debug = true,
     initTimeOutInMs = 1000000000,
-    compatibilityTag = "android-output-verification",
+    compatibilityTag = "test",
     libraryVariant = NIMBLENET_VARIANTS.STATIC
 )

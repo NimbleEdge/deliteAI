@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ai.nimbleedge.android.sampleapp.ui.theme
 
 import androidx.compose.ui.graphics.Color

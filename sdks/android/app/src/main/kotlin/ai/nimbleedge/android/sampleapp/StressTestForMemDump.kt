@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package ai.nimbleedge.android.sampleapp
 
 import ai.nimbleedge.NimbleNet
@@ -35,13 +41,13 @@ fun StressTestForMemDump() {
 
     suspend fun initialize() {
         val nimblenetConfig = NimbleNetConfig(
-            clientId = "mobile-test-client",
-            host = "https://apiv2.nimbleedge-staging.com",
-            deviceId = "nimon_rulezzz",
-            clientSecret = "samplekey123",
+            clientId = "test",
+            host = "test",
+            deviceId = "test",
+            clientSecret = "test",
             debug = false,
             initTimeOutInMs = 1000000000,
-            compatibilityTag = "DEFAULT-TAG",
+            compatibilityTag = "test",
             libraryVariant = NIMBLENET_VARIANTS.STATIC
         )
 

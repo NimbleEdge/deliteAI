@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
@@ -15,11 +21,10 @@ if (propertiesFile.exists()) {
 android {
     signingConfigs {
         externalRelease {
-            //TODO: uncomment when release apk is required
-//            storeFile file(localProperties.getProperty('storeFile'))
-//            storePassword localProperties.getProperty('storePassword')
-//            keyPassword localProperties.getProperty('keyPassword')
-//            keyAlias localProperties.getProperty('keyAlias')
+            storeFile file(localProperties.getProperty('storeFile'))
+            storePassword localProperties.getProperty('storePassword')
+            keyPassword localProperties.getProperty('keyPassword')
+            keyAlias localProperties.getProperty('keyAlias')
         }
     }
 
@@ -43,8 +48,8 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.externalRelease
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -88,9 +93,6 @@ android {
         }
         exclude 'META-INF/*'
     }
-
-
-//    dynamicFeatures = [':appDynamicFeature']
 }
 
 dependencies {
@@ -121,7 +123,6 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(UtilityLibs.okhttp)
-
 
     implementation("com.google.protobuf:protobuf-java:3.25.2")
     implementation("com.google.protobuf:protobuf-java-util:3.25.2")
