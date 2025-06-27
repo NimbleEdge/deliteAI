@@ -4,6 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * @file data_variable_templates.ipp
+ * @brief Template specializations for data variable type traits and accessors
+ *
+ * This file contains template specializations for type trait functions and
+ * template member functions used by the DataVariable class hierarchy.
+ * These specializations provide compile-time type information and type-safe
+ * access to data variable values.
+ */
+
 template <>
 constexpr inline bool is_numeric<float>() {
   return true;
