@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.android.sampleapp
+package dev.deliteai.android.sampleapp
 
 import android.app.Application
 

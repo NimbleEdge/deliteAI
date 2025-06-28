@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.android.sampleapp.ui.theme
+package dev.deliteai.android.sampleapp.ui.theme
 
 import android.app.Activity
 import android.os.Build

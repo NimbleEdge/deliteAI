@@ -21,7 +21,7 @@ APK_RELATIVE_PATH = "../../app/build/outputs/apk/external/debug/app-external-deb
 APK_FILE = os.path.abspath(os.path.join(SCRIPT_DIR, APK_RELATIVE_PATH))
 print(f"Resolved APK Path: {APK_FILE}")
 
-PACKAGE_NAME = "ai.nimbleedge.android.sampleapp.debug"
+PACKAGE_NAME = "dev.deliteai.android.sampleapp.debug"
 MEMORY_COMMAND = f"adb shell dumpsys meminfo {PACKAGE_NAME}"
 CHECK_PROCESS_COMMAND = f"adb shell pidof {PACKAGE_NAME}"
 

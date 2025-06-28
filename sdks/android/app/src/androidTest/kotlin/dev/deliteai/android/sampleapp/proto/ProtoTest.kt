@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.android.sampleapp.proto
+package dev.deliteai.android.sampleapp.proto
 
-import ai.nimbleedge.NimbleNet
-import ai.nimbleedge.datamodels.NimbleNetTensor
-import ai.nimbleedge.impl.delitePy.proto.ProtoMemberExtender
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoObjectWrapper
-import ai.nimbleedge.impl.common.DATATYPE
+import dev.deliteai.NimbleNet
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
+import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
+import dev.deliteai.impl.common.DATATYPE
 import android.app.Application
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.Dispatchers

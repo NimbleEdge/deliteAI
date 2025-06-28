@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.android.sampleapp.e2e
+package dev.deliteai.android.sampleapp.e2e
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
