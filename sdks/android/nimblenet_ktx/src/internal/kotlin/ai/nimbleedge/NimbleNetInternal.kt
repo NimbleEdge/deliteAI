@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import ai.nimbleedge.controllers.InternalTaskController
 import ai.nimbleedge.datamodels.NimbleNetResult
 import ai.nimbleedge.impl.DependencyContainer
