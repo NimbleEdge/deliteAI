@@ -7,7 +7,7 @@
 package dev.deliteai.android.sampleapp
 
 import dev.deliteai.NimbleNet
-import dev.deliteai.android.sampleapp.ui.theme.NimbleEdgeTheme
+import dev.deliteai.android.sampleapp.ui.theme.DeliteAiTheme
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.impl.common.DATATYPE
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
         val sampleAppMode = 0
 
         setContent {
-            NimbleEdgeTheme {
+            DeliteAiTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Homepage() {
-    val outputText = remember { mutableStateOf("NimbleEdge Android Test App") }
+    val outputText = remember { mutableStateOf("DeliteAi Android Test App") }
     val scroll = rememberScrollState(0)
     val coroutineScope = rememberCoroutineScope()
     val applicationContext = LocalContext.current.applicationContext as Application
@@ -85,7 +85,7 @@ fun Homepage() {
     LaunchedEffect(Unit) {
         outputText.value = "initializing..."
         coroutineScope.launch(Dispatchers.Default) {
-            initNimbleEdge(applicationContext, outputText, coroutineScope)
+            initDeliteAi(applicationContext, outputText, coroutineScope)
         }
     }
 
@@ -152,7 +152,7 @@ fun ActionButton(text: String, onClick: () -> Unit) {
     }
 }
 
-fun initNimbleEdge(
+fun initDeliteAi(
     applicationContext: Application,
     outputText: MutableState<String>,
     coroutineScope: CoroutineScope
