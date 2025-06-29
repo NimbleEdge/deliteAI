@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2bd68e99-6dfe-4da1-a581-df1898e9eba7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/retriever/include/retriever.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/retriever/src/retriever.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/include/server_api.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/include/server_api_constants.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/include/server_api_structs.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/src/server_api.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/server_api/src/server_api_structs.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/simulation_manager/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/simulation_manager/input_data_extractor/include/input_structs.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/simulation_manager/input_data_extractor/include/task_input_structs.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/simulation_manager/input_data_extractor/src/c_tensors_data_extractor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/simulation_manager/input_data_extractor/src/input_data_extractor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/include/char_stream.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/include/dummy_offloaded_stream.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/include/json_stream.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/include/stream_producer.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/src/char_stream.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/src/dummy_offloaded_stream.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../coreruntime/nimblenet/stream/src/json_stream.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/androidTest/kotlin/dev/deliteai/android/sampleapp/e2e/E2ENetworkingAndroidTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/androidTest/kotlin/dev/deliteai/android/sampleapp/e2e/MockServerHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/androidTest/kotlin/dev/deliteai/android/sampleapp/proto/ProtoAddEventTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/androidTest/kotlin/dev/deliteai/android/sampleapp/proto/ProtoTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/androidTest/kotlin/dev/deliteai/android/sampleapp/proto/ProtoUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/MainApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/StressTestForMemDump.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/ui/theme/Color.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/ui/theme/Theme.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/kotlin/dev/deliteai/android/sampleapp/ui/theme/Type.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/android/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/android/app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/android/app/src/main/res/mipmap-xxxhdpi/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/res/mipmap-xxxhdpi/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/android/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/android/app/src/main/res/navigation/nav_graph.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/android/benchmarking/jniMemoryDumper/jni_memory_dumper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/android/benchmarking/jniMemoryDumper/jni_memory_dumper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../sdks/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../sdks/config.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/voidmemories/.android/avd/Pixel_5_API_34.avd)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Object" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2xzhbUkzwRm2z8QYM221fgFZ9Sp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "PROJECT_TRUSTED_KEY": "true",
+    "ResourceManagerPrefKey.ResourceType": "DRAWABLE",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "Merging naman/create__nimblenet__ktx",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/voidmemories/dev/deliteAI/agents/examples/android/app/src/main/assets",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2182285",
+    "show.migrate.to.gradle.popup": "false"
+  },
+  "keyToStringList": {
+    "com.android.tools.idea.sqlite.queryhistory": [
+      "select * from notification_summary",
+      "SELECT * FROM notification_summary WHERE date = 'LocalDate.now()'",
+      "SELECT * FROM notification_summary WHERE id = '0'"
+    ]
+  }
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notifications_summarizer/src/main/java/ai/nimbleedge/notifications_summarizer/impl" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="ai.nimbleedge.notifications_summarizer.api.dataModels" />
+      <recent name="ai.nimbleedge.notifications_summarizer.impl.notification.dataModels" />
+      <recent name="ai.nimbleedge.notifications_summarizer.impl.notification" />
+      <recent name="ai.nimbleedge.notifications_summarizer.impl.broadcast" />
+      <recent name="ai.nimbleedge.notifications_summarizer.impl.services" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="ai.nimbleedge.notifications_summarizer.impl.broadcast" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Examples.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2bd68e99-6dfe-4da1-a581-df1898e9eba7" name="Changes" comment="" />
+      <created>1748946881096</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1748946881096</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/../../notifications_summarizer/android/src/main/java/ai/nimbleedge/notifications_summarizer/impl/Controller.kt</url>
+          <line>36</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/../../notifications_summarizer/android/src/main/java/ai/nimbleedge/notifications_summarizer/impl/Controller.kt</url>
+          <line>31</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/../../notifications_summarizer/android/src/main/java/ai/nimbleedge/notifications_summarizer/impl/Controller.kt</url>
+          <line>44</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
