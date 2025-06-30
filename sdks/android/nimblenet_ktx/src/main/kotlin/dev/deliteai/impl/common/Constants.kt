@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.common
+package dev.deliteai.impl.common
 
 internal object SDK_CONSTANTS {
     const val LOG_TAG = "NIMBLE-SDK"
@@ -15,7 +15,7 @@ internal object SDK_CONSTANTS {
     const val NIMBLE_SDK_LIBS_FOLDER_NAME = "nimbleSDKLibs"
     const val NUM_THREADS_FOR_PRIMARY_COROUTINE_SCOPE = 1
     const val NUM_THREADS_FOR_SECONDARY_COROUTINE_SCOPE = 1
-    const val LIBS_DOWNLOAD_STATUS_LOGGER_URL = "https://logsv2.nimbleedgehq.ai/v2/"
+    const val LIBS_DOWNLOAD_STATUS_LOGGER_URL = "https://logsv2.deliteaihq.ai/v2/"
 }
 
 internal object STATUS_CODES {

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.common.utils
+package dev.deliteai.impl.common.utils
 
-import ai.nimbleedge.impl.DependencyContainer
+import dev.deliteai.impl.DependencyContainer
 import okhttp3.Headers
 import org.json.JSONArray
 import org.json.JSONObject
