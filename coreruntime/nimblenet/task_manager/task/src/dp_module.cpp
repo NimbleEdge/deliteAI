@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "dp_module.hpp"
 
 DpModule::DpModule(CommandCenter* commandCenter, const std::string& name, int index,

@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "unary_operators.hpp"
 
 std::map<std::string, UnaryOpFuncPtr> UnaryOperators::_unaryOpMap = {

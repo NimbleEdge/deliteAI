@@ -1,9 +1,23 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #pragma once
 #include "data_variable.hpp"
 #include "single_variable.hpp"
 
 typedef OpReturnType (*BoolFuncPtr)(OpReturnType, OpReturnType);
 
+/**
+ * @brief Template class for boolean operations
+ *
+ * Provides a generic framework for implementing boolean operations
+ * between two DataVariable objects.
+ *
+ * @tparam Oper The boolean operator class (e.g., AndOp, OrOp)
+ */
 template <class Oper>
 class BoolOp {
  public:

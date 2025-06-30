@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 target_compile_definitions(nimblenet PUBLIC -DSCRIPTING)
 
 target_sources(nimblenet ${VISIBILITY}

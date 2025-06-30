@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #pragma once
 
 #include "data_variable.hpp"
@@ -142,18 +148,25 @@ class Body {
   }
 };
 
+/**
+ * @brief Represents a function definition in the AST
+ *
+ * FunctionDef encapsulates a Python function definition, including its body,
+ * arguments, decorators, and execution context. It manages the function's
+ * scope, argument locations, and provides the interface for function calls.
+ */
 class FunctionDef : public Statement, public std::enable_shared_from_this<FunctionDef> {
-  int _moduleIndex;
-  int _index;  // unique index assigned to each function in the Task
-  Body* _body = nullptr;
-  bool _static = false;
-  std::string _functionName;
-  std::vector<StackLocation> _argumentLocations;
-  std::shared_ptr<int> _numVariablesStack;
-  std::vector<ASTNode*> _decorators;
-  StackLocation _functionLocation = StackLocation::null;
+  int _moduleIndex;  /**< Index of the module containing this function */
+  int _index;        /**< Unique index assigned to each function in the Task */
+  Body* _body = nullptr;  /**< The function's body containing all statements */
+  bool _static = false;   /**< Whether this function is static */
+  std::string _functionName;  /**< Name of the function */
+  std::vector<StackLocation> _argumentLocations;  /**< Stack locations of function arguments */
+  std::shared_ptr<int> _numVariablesStack;  /**< Shared counter for variables in function's stack frame */
+  std::vector<ASTNode*> _decorators;  /**< Function decorators */
+  StackLocation _functionLocation = StackLocation::null;  /**< Location of the function in the stack */
   // ^This is  maintained by VariableScope, we just use it here on execution
-  StackLocation _stackLocation{StackLocation::null};
+  StackLocation _stackLocation{StackLocation::null};  /**< Stack location for the function itself */
 
   void set_static() { _static = true; }
 
@@ -176,9 +189,16 @@ class FunctionDef : public Statement, public std::enable_shared_from_this<Functi
   virtual ~FunctionDef() { delete _body; }
 };
 
+/**
+ * @brief RAII wrapper for managing call stack locks during function execution
+ *
+ * CallStackLockGuard ensures proper lock management when executing functions
+ * by temporarily transferring the lock from the original stack to a copy stack
+ * and restoring it when the guard goes out of scope.
+ */
 class CallStackLockGuard {
-  CallStack& _originalStack;
-  CallStack _copyStack;
+  CallStack& _originalStack;  /**< Reference to the original call stack */
+  CallStack _copyStack;       /**< Copy of the call stack for function execution */
 
  public:
   CallStackLockGuard(CallStack& originalStack, CallStack& functionStack)
@@ -191,9 +211,16 @@ class CallStackLockGuard {
   ~CallStackLockGuard() { _originalStack.lock = std::move(_copyStack.lock); }
 };
 
+/**
+ * @brief Data variable representing a function object
+ *
+ * FunctionDataVariable wraps a FunctionDef and provides the interface for
+ * calling functions. It manages the execution context and ensures proper
+ * lock handling during function calls.
+ */
 class FunctionDataVariable final : public DataVariable {
-  std::shared_ptr<FunctionDef> _def;
-  CallStack _stack;
+  std::shared_ptr<FunctionDef> _def;  /**< The function definition */
+  CallStack _stack;                   /**< Call stack for function execution */
 
   int get_dataType_enum() const final { return DATATYPE::FUNCTION; }
 
@@ -234,12 +261,12 @@ class ImportStatement : public Statement {
   // module = moduleA
   // name = get_A
   struct ImportObject {
-    std::string module;
-    std::string name;
-    StackLocation loc;
+    std::string module;  /**< Name of the module being imported from */
+    std::string name;    /**< Name of the object being imported */
+    StackLocation loc;   /**< Stack location where the imported object is stored */
   };
 
-  std::vector<ImportObject> _imports;
+  std::vector<ImportObject> _imports;  /**< List of import objects */
 
  public:
   ImportStatement(VariableScope* scope, const json& line) : Statement(line) {
@@ -261,9 +288,9 @@ class ImportStatement : public Statement {
 };
 
 class ForStatement : public Statement {
-  Body* _body = nullptr;
-  ASTNode* _iterator = nullptr;
-  ASTNode* _newVar = nullptr;
+  Body* _body = nullptr;      /**< Body of the for loop */
+  ASTNode* _iterator = nullptr;  /**< The iterable being looped over */
+  ASTNode* _newVar = nullptr;    /**< Target variable for assignment */
 
  public:
   ForStatement(VariableScope* scope, const json& line);
@@ -274,8 +301,8 @@ class ForStatement : public Statement {
 };
 
 class WhileStatement : public Statement {
-  Body* _body = nullptr;
-  ASTNode* _testNode = nullptr;
+  Body* _body = nullptr;     /**< Body of the while loop */
+  ASTNode* _testNode = nullptr;  /**< Condition expression for the loop */
 
  public:
   WhileStatement(VariableScope* scope, const json& line);
@@ -286,9 +313,9 @@ class WhileStatement : public Statement {
 };
 
 class IfStatement : public Statement {
-  Body* _trueBody = nullptr;
-  Body* _elseBody = nullptr;
-  ASTNode* _testNode = nullptr;
+  Body* _trueBody = nullptr;   /**< Body executed when condition is true */
+  Body* _elseBody = nullptr;   /**< Body executed when condition is false */
+  ASTNode* _testNode = nullptr;  /**< Condition expression */
 
  public:
   IfStatement(VariableScope* scope, const json& line);
@@ -299,8 +326,8 @@ class IfStatement : public Statement {
 };
 
 class AssertStatement : public Statement {
-  ASTNode* _testNode = nullptr;
-  ASTNode* _msgNode = nullptr;
+  ASTNode* _testNode = nullptr;  /**< Expression to assert */
+  ASTNode* _msgNode = nullptr;   /**< Optional error message */
 
  public:
   AssertStatement(VariableScope* scope, const json& line);
@@ -311,7 +338,7 @@ class AssertStatement : public Statement {
 };
 
 class RaiseStatement : public Statement {
-  ASTNode* _throwNode = nullptr;
+  ASTNode* _throwNode = nullptr;  /**< Exception object to raise */
 
  public:
   RaiseStatement(VariableScope* scope, const json& line);
@@ -322,9 +349,9 @@ class RaiseStatement : public Statement {
 };
 
 class Handler : public Statement {
-  Body* _body = nullptr;
-  std::optional<std::string> _exceptionType;
-  StackLocation _exceptionVariableLocation = StackLocation::null;
+  Body* _body = nullptr;  /**< Body of the exception handler */
+  std::optional<std::string> _exceptionType;  /**< Type of exception to catch */
+  StackLocation _exceptionVariableLocation = StackLocation::null;  /**< Location to store the exception */
 
  public:
   Handler(VariableScope* scope, const json& line);
@@ -362,10 +389,17 @@ class InbuiltFunctionsStatement : public Statement {
   StatRetType* execute(CallStack& stack) override;
 };
 
+/**
+ * @brief Represents a class definition in the AST
+ *
+ * ClassDef encapsulates a Python class definition, including its body,
+ * member variables, and methods. It manages the class's scope and provides
+ * the interface for class instantiation and member access.
+ */
 class ClassDef : public Statement, public std::enable_shared_from_this<ClassDef> {
-  StackLocation _classLocation = StackLocation::null;
-  std::map<int, StackLocation> _memberIndex2LocationMap;
-  std::vector<Statement*> _codeLines;
+  StackLocation _classLocation = StackLocation::null;  /**< Location of the class in the stack */
+  std::map<int, StackLocation> _memberIndex2LocationMap;  /**< Maps member indices to their stack locations */
+  std::vector<Statement*> _codeLines;  /**< Statements in the class body */
 
  public:
   ClassDef(VariableScope* scope, const json& line);
@@ -375,9 +409,16 @@ class ClassDef : public Statement, public std::enable_shared_from_this<ClassDef>
   virtual ~ClassDef() {}
 };
 
+/**
+ * @brief Data variable representing a class object
+ *
+ * ClassDataVariable represents the class itself (not an instance) and
+ * provides access to class methods and static members. It serves as a
+ * template for creating class instances.
+ */
 class ClassDataVariable final : public DataVariable {
   // map from member index to datavariable
-  std::map<int, OpReturnType> _membersMap;
+  std::map<int, OpReturnType> _membersMap;  /**< Map of member indices to their values */
 
   int get_dataType_enum() const final { return DATATYPE::NONE; }
 
@@ -403,10 +444,17 @@ class ClassDataVariable final : public DataVariable {
   void set_member(int memberIndex, OpReturnType d) override;
 };
 
+/**
+ * @brief Data variable representing a class instance
+ *
+ * ObjectDataVariable represents an instance of a class and provides
+ * access to instance methods and member variables. Each instance has
+ * its own copy of member variables.
+ */
 class ObjectDataVariable final : public DataVariable {
-  OpReturnType _classDataVariable;
+  OpReturnType _classDataVariable;  /**< Reference to the class definition */
   // map from member index to datavariable
-  std::map<int, OpReturnType> _membersMap;
+  std::map<int, OpReturnType> _membersMap;  /**< Map of member indices to their values */
 
   int get_dataType_enum() const final { return DATATYPE::NONE; }
 
@@ -434,7 +482,7 @@ class ObjectDataVariable final : public DataVariable {
  * helps in having first class function support
  */
 class RuntimeClassDef : public Statement {
-  std::shared_ptr<ClassDef> _classDef;
+  std::shared_ptr<ClassDef> _classDef;  /**< The class definition to execute */
 
  public:
   RuntimeClassDef(VariableScope* scope, const json& line) : Statement(line) {
@@ -444,8 +492,15 @@ class RuntimeClassDef : public Statement {
   StatRetType* execute(CallStack& stack) override { return _classDef->execute(stack); }
 };
 
+/**
+ * @brief Helper statement for runtime function definition
+ *
+ * RuntimeFunctionDef is a wrapper around FunctionDef that handles the
+ * creation and insertion of function variables into the stack at runtime.
+ * This enables first-class function support in the language.
+ */
 class RuntimeFunctionDef : public Statement {
-  std::shared_ptr<FunctionDef> _functionDef;
+  std::shared_ptr<FunctionDef> _functionDef;  /**< The function definition to execute */
 
   RuntimeFunctionDef(VariableScope* scope, const json& line, StackLocation&& functionLocation)
       : Statement(line) {

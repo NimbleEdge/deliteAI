@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #pragma once
 
 #include <shared_mutex>
@@ -15,12 +21,17 @@ class VariableScope;
 class CallStack;
 class Task;
 
-// index into the Runtime stack. It is a class so we don't get confused whether something
-// indexes into the runtime stack or the compile time scope
+/**
+ * @brief Represents a location in the runtime stack for variable access
+ *
+ * This class encapsulates the three-part index needed to locate a variable
+ * in the runtime stack: module index, function index, and variable index.
+ * It prevents confusion between runtime stack indices and compile-time scope indices.
+ */
 class StackLocation {
-  int _moduleIndex;
-  int _functionIndex;
-  int _varIndex;
+  int _moduleIndex;    /**< Index of the module in the task */
+  int _functionIndex;  /**< Index of the function within the module */
+  int _varIndex;       /**< Index of the variable within the function's stack frame */
 
   constexpr StackLocation(int moduleIndex, int functionIndex, int varIndex)
       : _moduleIndex(moduleIndex), _functionIndex(functionIndex), _varIndex(varIndex) {}
@@ -44,14 +55,21 @@ inline constexpr StackLocation StackLocation::null = {-1, -1, 0};
 
 class CallStack;
 
+/**
+ * @brief Represents a single stack frame for function execution
+ *
+ * Each stack frame contains the local variables for a function call,
+ * along with metadata about the module and function being executed.
+ * Thread-safe access to variable values is provided through mutex protection.
+ */
 class StackFrame {
   using StackFramePtr = std::shared_ptr<StackFrame>;
 
-  std::vector<OpReturnType> _varValues;
+  std::vector<OpReturnType> _varValues;  /**< Storage for variable values in this frame */
   // StackFramePtr _parentFrame;
-  int _moduleIndex;
-  int _functionIndex;
-  std::mutex mutex;
+  int _moduleIndex;    /**< Index of the module this frame belongs to */
+  int _functionIndex;  /**< Index of the function this frame represents */
+  std::mutex mutex;    /**< Mutex for thread-safe access to variable values */
 
  public:
   int get_module_index() const { return _moduleIndex; }
@@ -74,9 +92,15 @@ class StackFrame {
   }
 };
 
+/**
+ * @brief RAII wrapper for acquiring a shared mutex lock
+ *
+ * Automatically acquires the lock if not already held and releases it
+ * when the object goes out of scope.
+ */
 class ScopedLock {
-  std::unique_lock<std::shared_mutex>& lock;
-  bool lockedByMe = false;
+  std::unique_lock<std::shared_mutex>& lock;  /**< Reference to the lock to manage */
+  bool lockedByMe = false;                    /**< Whether this object acquired the lock */
 
  public:
   ScopedLock(std::unique_lock<std::shared_mutex>& l) : lock(l) {
@@ -98,9 +122,15 @@ class ScopedLock {
   }
 };
 
+/**
+ * @brief RAII wrapper for temporarily releasing a shared mutex lock
+ *
+ * Temporarily unlocks the mutex if it's currently held and re-acquires it
+ * when the object goes out of scope.
+ */
 class ScopedUnlock {
-  std::unique_lock<std::shared_mutex>& lock;
-  bool unlockedByMe = false;
+  std::unique_lock<std::shared_mutex>& lock;  /**< Reference to the lock to manage */
+  bool unlockedByMe = false;                  /**< Whether this object released the lock */
 
  public:
   ScopedUnlock(std::unique_lock<std::shared_mutex>& l) : lock(l) {
@@ -122,16 +152,24 @@ class ScopedUnlock {
   }
 };
 
+/**
+ * @brief Manages the runtime call stack for task execution
+ *
+ * The CallStack maintains the execution context for a task, including
+ * all active function calls and their local variables. It provides
+ * thread-safe access to variables through stack locations and manages
+ * the lifecycle of stack frames.
+ */
 class CallStack {
   // copy and copy assignment is overriden for this class, if any other change made to
   // this class, make sure to update copy assignment operator
 
   using StackFramePtr = std::shared_ptr<StackFrame>;
 
-  std::vector<StackFramePtr> _functionsStack;
-  std::vector<std::vector<std::vector<StackFramePtr>>> _moduleToStackFrameMap;
+  std::vector<StackFramePtr> _functionsStack;  /**< Current call stack of active functions */
+  std::vector<std::vector<std::vector<StackFramePtr>>> _moduleToStackFrameMap;  /**< 3D map: module -> function -> stack frames */
 
-  CommandCenter* _commandCenter = nullptr;
+  CommandCenter* _commandCenter = nullptr;  /**< Reference to the command center for task access */
 
   auto command_center() noexcept { return _commandCenter; }
   friend class ImportStatement;
@@ -142,7 +180,7 @@ class CallStack {
   friend class LLMDataVariable;
 #endif  // GENAI
   CallStack(const CallStack& other);
-  std::unique_lock<std::shared_mutex> lock;
+  std::unique_lock<std::shared_mutex> lock;  /**< Shared mutex for thread-safe operations */
 
  public:
   CallStack(CommandCenter* commandCenter) : _commandCenter(commandCenter) {}
@@ -170,23 +208,31 @@ class CallStack {
   std::shared_ptr<Task> task() noexcept;
 };
 
+/**
+ * @brief Manages variable scoping and lifetime during compilation and execution
+ *
+ * VariableScope tracks variable declarations and their stack locations during
+ * the compilation phase. It maintains a hierarchical structure of scopes
+ * (global, function, local) and provides mapping from variable names to
+ * their runtime stack locations.
+ */
 class VariableScope {
-  CommandCenter* _commandCenter = nullptr;
-  int _moduleIndex;
-  std::vector<VariableScope*> _childrenScopes;
-  VariableScope* _parentScope = nullptr;
+  CommandCenter* _commandCenter = nullptr;  /**< Reference to the command center */
+  int _moduleIndex;                         /**< Index of the module this scope belongs to */
+  std::vector<VariableScope*> _childrenScopes;  /**< Child scopes created from this scope */
+  VariableScope* _parentScope = nullptr;        /**< Parent scope in the hierarchy */
   // std::vector<OpReturnType> _variableValues;
-  std::map<std::string, int> _variableNamesIdxMap;
+  std::map<std::string, int> _variableNamesIdxMap;  /**< Maps variable names to their indices in this scope */
 
   // Index to assign to the next function encountered
-  std::shared_ptr<int> _nextFunctionIndex;
+  std::shared_ptr<int> _nextFunctionIndex;  /**< Shared counter for assigning unique function indices */
   // Index of the function defined in the nearest parent scope
-  int _currentFunctionIndex;
+  int _currentFunctionIndex;  /**< Index of the function this scope belongs to */
 
   // A scope belongs to a stack frame, but a stack frame can have multiple scopes. This
   // is shared across the multiple scopes of a stack and is used to keep count
   // of the number of variables a stack frame has and assign indices appropriately
-  std::shared_ptr<int> _numVariablesStack;
+  std::shared_ptr<int> _numVariablesStack;  /**< Shared counter for variables in the stack frame */
 
   VariableScope(VariableScope* p, bool isNewFunction);
 

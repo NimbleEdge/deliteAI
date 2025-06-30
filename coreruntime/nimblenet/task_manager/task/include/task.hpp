@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #pragma once
 
 #include <cstdlib>
@@ -26,10 +32,16 @@ class MapDataVariable;
 typedef std::shared_ptr<MapDataVariable> MapVariablePtr;
 class FutureDataVariable;
 
+/**
+ * @brief Job for filling character streams with data
+ *
+ * This job is responsible for populating character streams with data
+ * from an internal queue, typically used for streaming operations.
+ */
 class FillCharStreamJob : public Job<void> {
   using Queue = rigtorp::SPSCQueue<char>;
-  std::weak_ptr<CharStream> _charStream;
-  std::shared_ptr<Queue> _internalQueue;
+  std::weak_ptr<CharStream> _charStream;  /**< Weak reference to the target character stream */
+  std::shared_ptr<Queue> _internalQueue;  /**< Internal queue containing data to stream */
 
  public:
   FillCharStreamJob(std::weak_ptr<CharStream> charStream, std::shared_ptr<Queue> queue)
@@ -41,33 +53,42 @@ class FillCharStreamJob : public Job<void> {
   Job::Status process() override;
 };
 
+/**
+ * @brief Main execution unit for Python-like task execution
+ *
+ * Task represents a complete executable unit containing modules, functions,
+ * and their execution context. It manages the lifecycle of modules, provides
+ * thread-safe execution, and handles streaming operations for AI/ML workloads.
+ * The task maintains a call stack, manages character streams, and coordinates
+ * background jobs for streaming operations.
+ */
 class Task {
  public:
   constexpr static inline const char* EXIT_STATUS_KEY = "__NIMBLE_EXIT_STATUS";
 
   // NOTE: Due to presence of this, CharStreams cannot be created from concurrent functions
-  std::vector<std::weak_ptr<CharStream>> _charStreams;
+  std::vector<std::weak_ptr<CharStream>> _charStreams;  /**< Active character streams for streaming operations */
 
  private:
   static inline const std::string MAIN_MODULE = "main";
 
-  CommandCenter* _commandCenter = nullptr;
-  std::string _version;
-  std::vector<std::weak_ptr<FutureDataVariable>> _pendingFutures;
+  CommandCenter* _commandCenter = nullptr;  /**< Reference to the command center for system access */
+  std::string _version;                     /**< Version identifier for this task */
+  std::vector<std::weak_ptr<FutureDataVariable>> _pendingFutures;  /**< Pending future variables awaiting completion */
 
-  json _astJson;
-  std::unique_ptr<DpModule> _mainModule;
-  std::unordered_map<std::string, std::shared_ptr<DpModule>> _modules;
+  json _astJson;  /**< Abstract Syntax Tree representation of the task */
+  std::unique_ptr<DpModule> _mainModule;  /**< The main module containing the entry point */
+  std::unordered_map<std::string, std::shared_ptr<DpModule>> _modules;  /**< All modules in this task */
 
-  std::shared_mutex _taskMutex;
+  std::shared_mutex _taskMutex;  /**< Mutex for thread-safe task operations */
 #ifdef GENAI
-  std::mutex _streamPushMutex;
-  std::condition_variable _streamPushThreadCondition;
-  std::thread _streamPushThread;
-  std::atomic<bool> _threadCleanupInitiated = false;
-  std::shared_ptr<BaseJob> _streamPushJob;
+  std::mutex _streamPushMutex;  /**< Mutex for stream push operations */
+  std::condition_variable _streamPushThreadCondition;  /**< Condition variable for stream push thread synchronization */
+  std::thread _streamPushThread;  /**< Background thread for stream push operations */
+  std::atomic<bool> _threadCleanupInitiated = false;  /**< Flag indicating thread cleanup has started */
+  std::shared_ptr<BaseJob> _streamPushJob;  /**< Job for stream push operations */
 #endif
-  CallStack _callStack;
+  CallStack _callStack;  /**< Call stack for function execution */
 
  private:
 #ifdef GENAI

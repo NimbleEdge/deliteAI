@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #pragma once
 
 #include "binary_operators.hpp"
@@ -12,11 +18,19 @@
 #include "unary_operators.hpp"
 #include "variable_scope.hpp"
 
+/**
+ * @brief Base class for all Abstract Syntax Tree nodes
+ *
+ * ASTNode represents a node in the Abstract Syntax Tree during execution.
+ * It provides the interface for evaluating expressions and managing variable
+ * access. Each node type implements specific behavior for different Python
+ * language constructs.
+ */
 class ASTNode {
  protected:
-  VariableScope* _scope = nullptr;
-  int _lineNo = -1;
-  std::string _id;
+  VariableScope* _scope = nullptr;  /**< Variable scope for this node */
+  int _lineNo = -1;                 /**< Line number in source code for error reporting */
+  std::string _id;                  /**< Unique identifier for this node */
 
  public:
   static ASTNode* create_node(VariableScope* scope, const json& j);
@@ -72,7 +86,7 @@ class NullNode : public ASTNode {
 };
 
 class ConstantNode : public ASTNode {
-  OpReturnType _d = nullptr;
+  OpReturnType _d = nullptr;  /**< The constant value stored in this node */
 
  public:
   ConstantNode(VariableScope* scope, const json& constJson);
@@ -82,9 +96,9 @@ class ConstantNode : public ASTNode {
 
 class BinNode : public ASTNode {
  protected:
-  ASTNode* _left = nullptr;
-  ASTNode* _right = nullptr;
-  std::string _opType;
+  ASTNode* _left = nullptr;   /**< Left operand of the binary operation */
+  ASTNode* _right = nullptr;  /**< Right operand of the binary operation */
+  std::string _opType;        /**< Type of binary operation (e.g., "+", "-", "*") */
 
  public:
   BinNode(VariableScope* scope, const json& binOpJson);
@@ -98,9 +112,9 @@ class BinNode : public ASTNode {
 
 class UnaryNode : public ASTNode {
  protected:
-  ASTNode* _operand = nullptr;
-  UnaryOpFuncPtr _func = nullptr;
-  std::string _opType;
+  ASTNode* _operand = nullptr;     /**< The operand for the unary operation */
+  UnaryOpFuncPtr _func = nullptr;  /**< Function pointer to the unary operation */
+  std::string _opType;             /**< Type of unary operation (e.g., "not", "-") */
 
  public:
   UnaryNode(VariableScope* scope, const json& unaryOpJson);
@@ -111,10 +125,10 @@ class UnaryNode : public ASTNode {
 
 class CompareNode : public ASTNode {
  protected:
-  std::vector<ASTNode*> _comparators;
-  std::vector<CompareFuncPtr> _compareFuncs;
-  ASTNode* _left = nullptr;
-  std::vector<std::string> _opTypes;
+  std::vector<ASTNode*> _comparators;      /**< Right-hand side operands for comparison */
+  std::vector<CompareFuncPtr> _compareFuncs;  /**< Functions for each comparison operation */
+  ASTNode* _left = nullptr;                /**< Left-hand side operand for comparison */
+  std::vector<std::string> _opTypes;       /**< Types of comparison operations */
 
  public:
   CompareNode(VariableScope* scope, const json& compareOpJson);
@@ -129,9 +143,9 @@ class CompareNode : public ASTNode {
 };
 
 class BoolNode : public ASTNode {
-  BoolFuncPtr _func;
-  std::string _opType;
-  std::vector<ASTNode*> _comparators;
+  BoolFuncPtr _func;              /**< Boolean operation function */
+  std::string _opType;            /**< Type of boolean operation ("and", "or") */
+  std::vector<ASTNode*> _comparators;  /**< Operands for the boolean operation */
 
  public:
   BoolNode(VariableScope* scope, const json& boolOpJson);
@@ -145,8 +159,8 @@ class BoolNode : public ASTNode {
 };
 
 class CallNode : public ASTNode {
-  std::vector<ASTNode*> _arguments;
-  ASTNode* _functionNode = nullptr;
+  std::vector<ASTNode*> _arguments;  /**< Arguments to the function call */
+  ASTNode* _functionNode = nullptr;  /**< The function being called */
 
  public:
   CallNode(VariableScope* scope, const json& callFuncJson);
@@ -161,7 +175,7 @@ class CallNode : public ASTNode {
 };
 
 class ListNode : public ASTNode {
-  std::vector<ASTNode*> _membersInList;
+  std::vector<ASTNode*> _membersInList;  /**< Elements of the list */
 
  public:
   ListNode(VariableScope* scope, const json& listNodeJson) : ASTNode(scope, listNodeJson) {
@@ -187,8 +201,8 @@ class ListNode : public ASTNode {
 };
 
 class TupleNode : public ASTNode {
-  std::vector<ASTNode*> _membersInTuple;
-  bool _store = false;
+  std::vector<ASTNode*> _membersInTuple;  /**< Elements of the tuple */
+  bool _store = false;                    /**< Whether this tuple is used for assignment */
 
  public:
   TupleNode(VariableScope* scope, const json& tupleNodeJson) : ASTNode(scope, tupleNodeJson) {
@@ -237,11 +251,18 @@ class TupleNode : public ASTNode {
   }
 };
 
+/**
+ * @brief AST node for variable access (e.g., x, y, z)
+ *
+ * NameNode handles accessing and setting variables.
+ * It maintains a stack location for efficient variable access and supports
+ * both get and set operations on variables.
+ */
 class NameNode : public ASTNode {
-  StackLocation _stackLocation = StackLocation::null;
-  enum class Type { STORE, LOAD };
-  Type _type = Type::LOAD;
-  std::string _variableName;
+  StackLocation _stackLocation = StackLocation::null;  /**< Location of the variable in the call stack */
+  enum class Type { STORE, LOAD };                     /**< Whether this node is for storing or loading a variable */
+  Type _type = Type::LOAD;                             /**< Current operation type */
+  std::string _variableName;                           /**< Name of the variable being accessed */
 
  public:
   NameNode(VariableScope* scope, const json& nameOpJson);
@@ -256,10 +277,17 @@ class NameNode : public ASTNode {
   OpReturnType call(const std::vector<OpReturnType>& args, CallStack& stack) override;
 };
 
+/**
+ * @brief AST node for attribute access (e.g., obj.attribute)
+ *
+ * AttributeNode handles accessing and setting attributes of objects.
+ * It maintains a member index for efficient attribute access and supports
+ * both get and set operations on object attributes.
+ */
 class AttributeNode : public ASTNode {
-  int _memberIndex = -1;
+  int _memberIndex = -1;  /**< Index of the member/attribute in the object */
   // this mainNode is the variable whose attribute is called or accessed.
-  ASTNode* _mainNode = nullptr;
+  ASTNode* _mainNode = nullptr;  /**< The object whose attribute is being accessed */
 
  public:
   AttributeNode(VariableScope* scope, const json& nameOpJson);
@@ -403,16 +431,24 @@ class DictNode : public ASTNode {
   OpReturnType get_value(CallStack& stack) override;
 };
 
+/**
+ * @brief AST node for a single generator in a comprehension expression
+ *
+ * SingleGeneratorNode handles one level of iteration in a comprehension
+ * (e.g., "for x in range(5)" in [x for x in range(5)]). It manages the
+ * iteration state, target variable assignment, and optional conditions.
+ * Multiple generators can be chained together for nested comprehensions.
+ */
 class SingleGeneratorNode : public ASTNode {
  private:
-  VariableScope* _generatorScope = nullptr;
-  ASTNode* _iterableNode = nullptr;
-  ASTNode* _targetNode = nullptr;
-  std::vector<ASTNode*> _elementNodes;
-  std::vector<ASTNode*> _conditionNodes;
-  SingleGeneratorNode* _nextGenerator = nullptr;
-  IterableOverScriptable* _iterable = nullptr;
-  OpReturnType _cachedItem = nullptr;
+  VariableScope* _generatorScope = nullptr;  /**< Scope for generator variables */
+  ASTNode* _iterableNode = nullptr;          /**< The iterable being looped over */
+  ASTNode* _targetNode = nullptr;            /**< Target variable(s) for assignment */
+  std::vector<ASTNode*> _elementNodes;       /**< Element expressions to evaluate */
+  std::vector<ASTNode*> _conditionNodes;     /**< Optional conditions (if clauses) */
+  SingleGeneratorNode* _nextGenerator = nullptr;  /**< Next generator in the chain */
+  IterableOverScriptable* _iterable = nullptr;    /**< Iterator for the iterable */
+  OpReturnType _cachedItem = nullptr;             /**< Currently cached item from iteration */
 
  public:
   SingleGeneratorNode(VariableScope* generatorScope, const json& genJson)
@@ -539,9 +575,16 @@ class SingleGeneratorNode : public ASTNode {
   }
 };
 
+/**
+ * @brief Base class for comprehension expressions (list, dict, generator)
+ *
+ * ComprehensionNode manages a chain of generators for nested comprehensions.
+ * It handles the creation and linking of multiple SingleGeneratorNode instances
+ * to support complex expressions like [x*y for x in range(3) for y in range(3)].
+ */
 class ComprehensionNode : public ASTNode {
  protected:
-  std::vector<SingleGeneratorNode*> _chainGenerators;  // Chain of generator data variables
+  std::vector<SingleGeneratorNode*> _chainGenerators;  /**< Chain of generator nodes for nested comprehensions */
 
  public:
   // Constructor that handles all generators in the chain
@@ -583,12 +626,11 @@ class ComprehensionNode : public ASTNode {
     return nullptr;
   }
 
-  // Process this generator chain, returning the first generator
   OpReturnType get_value(CallStack& stack) override { return _chainGenerators[0]->get(stack); }
 
   ~ComprehensionNode() {
-    for (auto gen : _chainGenerators) {
-      delete gen;
+    for (auto& generator : _chainGenerators) {
+      delete generator;
     }
   }
 };
