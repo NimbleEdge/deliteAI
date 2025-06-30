@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge
+package dev.deliteai
 
-import ai.nimbleedge.datamodels.NimbleNetConfig
-import ai.nimbleedge.datamodels.NimbleNetResult
-import ai.nimbleedge.datamodels.NimbleNetTensor
-import ai.nimbleedge.datamodels.UserEventData
-import ai.nimbleedge.impl.DependencyContainer
-import ai.nimbleedge.impl.common.MESSAGES
-import ai.nimbleedge.impl.common.toNimbleNetResult
-import ai.nimbleedge.impl.controllers.NimbleNetController
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoObjectWrapper
-import ai.nimbleedge.impl.loggers.LocalLogger
+import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.datamodels.NimbleNetResult
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.datamodels.UserEventData
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.MESSAGES
+import dev.deliteai.impl.common.toNimbleNetResult
+import dev.deliteai.impl.controllers.NimbleNetController
+import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
+import dev.deliteai.impl.loggers.LocalLogger
 import android.app.Application
 import org.json.JSONObject
 

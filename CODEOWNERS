@@ -2,3 +2,4 @@
 
 coreruntime/**                         @NimbleEdge/deliteai-coreruntime-maintainers
 third_party/**                         @NimbleEdge/deliteai-coreruntime-maintainers
+sdks/android/**                        @NimbleEdge/deliteai-android-maintainers
