@@ -15,7 +15,7 @@ import dev.deliteai.impl.common.DATATYPE
 import dev.deliteai.impl.common.HardwareInfo
 import dev.deliteai.impl.common.MESSAGES
 import dev.deliteai.impl.common.METRIC_TYPE
-import dev.deliteai.impl.coroutine.NimbleEdgeScope
+import dev.deliteai.impl.coroutine.DeliteAiScope
 import dev.deliteai.impl.loggers.RemoteLogger
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
@@ -65,7 +65,7 @@ class NimbleNetControllerTest {
         nimbleNetController =
             NimbleNetController(
                 application = applicationMocked,
-                nimbleEdgeScope = NimbleEdgeScope(),
+                deliteAiScope = DeliteAiScope(),
                 fileUtils = fileUtilsMocked,
                 hardwareInfo = hardwareInfoMocked,
                 moduleInstaller = moduleInstaller,

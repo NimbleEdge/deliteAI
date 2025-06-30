@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.scriptWrappers
+package dev.deliteai.scriptWrappers
 
-import ai.nimbleedge.impl.DependencyContainer
-import ai.nimbleedge.impl.common.STATUS_CODES
-import ai.nimbleedge.impl.loggers.LocalLogger
-import ai.nimbleedge.impl.nativeBridge.CoreRuntime
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.STATUS_CODES
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.impl.nativeBridge.CoreRuntime
 import android.content.Context
 import com.google.ai.edge.aicore.GenerativeAIException
 import com.google.ai.edge.aicore.GenerativeModel
