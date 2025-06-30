@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.common
+package dev.deliteai.impl.common
 
-import ai.nimbleedge.datamodels.NimbleNetError
-import ai.nimbleedge.datamodels.NimbleNetResult
+import dev.deliteai.datamodels.NimbleNetError
+import dev.deliteai.datamodels.NimbleNetResult
 
 internal fun <T> Throwable.toNimbleNetResult(): NimbleNetResult<T> {
     val error = NimbleNetError(code = -1, message = this.message ?: "")
