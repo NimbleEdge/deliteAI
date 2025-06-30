@@ -18,7 +18,7 @@ void TableStore::add_row(const TableRow& r) {
   e.timestamp = r.timestamp;
   e.row = std::vector<OpReturnType>(_tableData->columns.size(), OpReturnType(new NoneVariable()));
   for (auto& requiredColumn : _tableData->columns) {
-    // Row might have extra fields which are not required by  TableEvent
+    // Row might have extra fields which are not required by TableEvent
     auto it = r.row.find(requiredColumn);
     if (it == r.row.end()) {
       LOG_TO_CLIENT_ERROR("Event Not added to dataframe as column=%s is missing",

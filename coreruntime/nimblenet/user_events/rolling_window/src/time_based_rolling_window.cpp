@@ -18,7 +18,7 @@ TimeBasedRollingWindow::TimeBasedRollingWindow(int preprocessorId, const PreProc
 void TimeBasedRollingWindow::add_event(const std::vector<TableEvent>& allEvents,
                                        int newEventIndex) {
   const auto& event = allEvents[newEventIndex];
-  if (Time::get_time() - event.timestamp > _windowTime) {  // TO CHANGE THE TIME FUNC
+  if (Time::get_time() - event.timestamp > _windowTime) {
     return;
   }
   if (_oldestIndex == -1) {
@@ -33,7 +33,7 @@ void TimeBasedRollingWindow::add_event(const std::vector<TableEvent>& allEvents,
 void TimeBasedRollingWindow::update_window(const std::vector<TableEvent>& allEvents) {
   if (_oldestIndex == -1) return;
   for (int i = _oldestIndex; i < allEvents.size(); i++) {
-    if (Time::get_time() - allEvents[i].timestamp > _windowTime) {  // change the time func
+    if (Time::get_time() - allEvents[i].timestamp > _windowTime) {
       _oldestIndex++;
     }
   }

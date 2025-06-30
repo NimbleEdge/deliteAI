@@ -32,7 +32,6 @@ PreProcessor::PreProcessor(int id, const PreProcessorInfo& info, const std::vect
 string PreProcessor::get_group_from_event(const TableEvent& e) {
   string group = "";
   for (auto groupId : _groupIds) {
-    // magic way to create group
     group += e.row[groupId]->print() + "+";
   }
   return group;
@@ -47,7 +46,6 @@ bool PreProcessor::get_group_from_row(const std::vector<std::string>& row,
       LOG_TO_CLIENT_ERROR("Could not form group for entity, groupId=%d is missing", groupId);
       return false;
     }
-    // magic way to create group
     group += row[groupId] + "+";
   }
   retGroup = std::move(group);
