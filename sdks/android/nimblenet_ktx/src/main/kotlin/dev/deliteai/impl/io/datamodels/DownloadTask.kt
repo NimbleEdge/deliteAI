@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.io.datamodels
+package dev.deliteai.impl.io.datamodels
 
 import org.json.JSONObject
 

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.io.datamodels
+package dev.deliteai.impl.io.datamodels
 
-import ai.nimbleedge.impl.common.STATUS_CODES
+import dev.deliteai.impl.common.STATUS_CODES
 import okhttp3.Response
 import org.json.JSONObject
 
