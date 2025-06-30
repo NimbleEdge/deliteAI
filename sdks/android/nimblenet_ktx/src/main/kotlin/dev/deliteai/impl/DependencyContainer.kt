@@ -4,28 +4,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl
+package dev.deliteai.impl
 
-import ai.nimbleedge.datamodels.NimbleNetConfig
-import ai.nimbleedge.impl.common.HardwareInfo
-import ai.nimbleedge.impl.common.NIMBLENET_VARIANTS
-import ai.nimbleedge.impl.common.SHARED_PREFERENCES
-import ai.nimbleedge.impl.controllers.InternalTaskController
-import ai.nimbleedge.impl.controllers.NimbleNetController
-import ai.nimbleedge.impl.coroutine.NimbleEdgeScope
-import ai.nimbleedge.impl.io.AppPreferencesStore
-import ai.nimbleedge.impl.io.ChunkDownloadManager
-import ai.nimbleedge.impl.io.FileUtils
-import ai.nimbleedge.impl.io.Networking
-import ai.nimbleedge.impl.loggers.LocalLogger
-import ai.nimbleedge.impl.loggers.RemoteLogger
-import ai.nimbleedge.impl.loggers.workManager.LogsUploadScheduler
-import ai.nimbleedge.impl.moduleInstallers.ModuleInstaller
-import ai.nimbleedge.impl.moduleInstallers.impl.GoogleDynamicModuleInstaller
-import ai.nimbleedge.impl.moduleInstallers.impl.InHouseDynamicModuleInstaller
-import ai.nimbleedge.impl.moduleInstallers.impl.StaticModuleInstaller
-import ai.nimbleedge.impl.nativeBridge.CoreRuntime
-import ai.nimbleedge.impl.nativeBridge.impl.CoreRuntimeImpl
+import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.impl.common.HardwareInfo
+import dev.deliteai.impl.common.NIMBLENET_VARIANTS
+import dev.deliteai.impl.common.SHARED_PREFERENCES
+import dev.deliteai.impl.controllers.InternalTaskController
+import dev.deliteai.impl.controllers.NimbleNetController
+import dev.deliteai.impl.coroutine.DeliteAiScope
+import dev.deliteai.impl.io.AppPreferencesStore
+import dev.deliteai.impl.io.ChunkDownloadManager
+import dev.deliteai.impl.io.FileUtils
+import dev.deliteai.impl.io.Networking
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.impl.loggers.RemoteLogger
+import dev.deliteai.impl.loggers.workManager.LogsUploadScheduler
+import dev.deliteai.impl.moduleInstallers.ModuleInstaller
+import dev.deliteai.impl.moduleInstallers.impl.GoogleDynamicModuleInstaller
+import dev.deliteai.impl.moduleInstallers.impl.InHouseDynamicModuleInstaller
+import dev.deliteai.impl.moduleInstallers.impl.StaticModuleInstaller
+import dev.deliteai.impl.nativeBridge.CoreRuntime
+import dev.deliteai.impl.nativeBridge.impl.CoreRuntimeImpl
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
@@ -46,7 +46,7 @@ private constructor(
         application.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     // singletons
-    private val nimbleEdgeScopeSingleton: NimbleEdgeScope by lazy { NimbleEdgeScope() }
+    private val deliteAiScopeSingleton: DeliteAiScope by lazy { DeliteAiScope() }
 
     private val localLoggerSingleton: LocalLogger by lazy { LocalLogger() }
 
@@ -115,7 +115,7 @@ private constructor(
     private val nimbleNetControllerSingleton: NimbleNetController by lazy {
         NimbleNetController(
             application,
-            nimbleEdgeScopeSingleton,
+            deliteAiScopeSingleton,
             fileUtilitySingleton,
             hardwareInfoSingleton,
             moduleInstallerSingleton,

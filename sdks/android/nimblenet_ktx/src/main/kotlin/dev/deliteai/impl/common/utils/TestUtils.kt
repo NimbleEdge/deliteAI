@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.common.utils
+package dev.deliteai.impl.common.utils
 
 import android.os.Environment
 import java.io.File
