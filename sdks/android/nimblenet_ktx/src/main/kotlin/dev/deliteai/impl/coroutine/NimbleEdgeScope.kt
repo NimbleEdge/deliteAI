@@ -4,21 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.coroutine
+package dev.deliteai.impl.coroutine
 
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import androidx.annotation.VisibleForTesting
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 
-internal class NimbleEdgeScope {
+internal class DeliteAiScope {
     val primary =
-        getScope("primaryNimbleEdgeScope", SDK_CONSTANTS.NUM_THREADS_FOR_PRIMARY_COROUTINE_SCOPE)
+        getScope("primaryDeliteAiScope", SDK_CONSTANTS.NUM_THREADS_FOR_PRIMARY_COROUTINE_SCOPE)
     val secondary =
         getScope(
-            "secondaryNimbleEdgeScope",
+            "secondaryDeliteAiScope",
             SDK_CONSTANTS.NUM_THREADS_FOR_SECONDARY_COROUTINE_SCOPE,
         )
 
