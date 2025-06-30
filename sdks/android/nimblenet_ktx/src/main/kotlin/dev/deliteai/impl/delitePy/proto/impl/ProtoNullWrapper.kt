@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.delitePy.proto.impl
+package dev.deliteai.impl.delitePy.proto.impl
 
-import ai.nimbleedge.impl.common.DATATYPE
-import ai.nimbleedge.impl.delitePy.proto.ProtoMemberExtender
-import ai.nimbleedge.impl.delitePy.proto.ProtoObject
+import dev.deliteai.impl.common.DATATYPE
+import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
+import dev.deliteai.impl.delitePy.proto.ProtoObject
 
 class ProtoNullWrapper : ProtoMemberExtender {
     override var modified: Boolean = false

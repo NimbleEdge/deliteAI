@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.delitePy.proto
+package dev.deliteai.impl.delitePy.proto
 
-import ai.nimbleedge.impl.common.DATATYPE
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoAnyWrapper
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoListWrapper
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoMapWrapper
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoNullWrapper
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoObjectWrapper
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoPrimitiveWrapper
+import dev.deliteai.impl.common.DATATYPE
+import dev.deliteai.impl.delitePy.proto.impl.ProtoAnyWrapper
+import dev.deliteai.impl.delitePy.proto.impl.ProtoListWrapper
+import dev.deliteai.impl.delitePy.proto.impl.ProtoMapWrapper
+import dev.deliteai.impl.delitePy.proto.impl.ProtoNullWrapper
+import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
+import dev.deliteai.impl.delitePy.proto.impl.ProtoPrimitiveWrapper
 import com.google.protobuf.Descriptors
 import com.google.protobuf.MessageOrBuilder
 import com.google.protobuf.util.JsonFormat.TypeRegistry
