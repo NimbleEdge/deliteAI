@@ -37,7 +37,7 @@ across multiple platforms and devices.
 
 ## Community engagement
 We welcome any feedback or suggestions - please join our
-[Discord](https://discord.gg/CxzDDffR) to engage with the community.
+[Discord](https://discord.gg/y8WkMncstk) to engage with the community.
 
 ## Contributing
 
