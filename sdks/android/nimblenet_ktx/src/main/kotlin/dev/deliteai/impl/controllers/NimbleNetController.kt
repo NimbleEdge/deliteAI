@@ -4,23 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.controllers
+package dev.deliteai.impl.controllers
 
-import ai.nimbleedge.datamodels.NimbleNetConfig
-import ai.nimbleedge.datamodels.NimbleNetResult
-import ai.nimbleedge.datamodels.NimbleNetTensor
-import ai.nimbleedge.datamodels.UserEventData
-import ai.nimbleedge.impl.common.DATATYPE
-import ai.nimbleedge.impl.common.HardwareInfo
-import ai.nimbleedge.impl.common.MESSAGES
-import ai.nimbleedge.impl.common.METRIC_TYPE
-import ai.nimbleedge.impl.coroutine.NimbleEdgeScope
-import ai.nimbleedge.impl.delitePy.proto.ProtoMemberExtender
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoObjectWrapper
-import ai.nimbleedge.impl.io.FileUtils
-import ai.nimbleedge.impl.loggers.RemoteLogger
-import ai.nimbleedge.impl.moduleInstallers.ModuleInstaller
-import ai.nimbleedge.impl.nativeBridge.CoreRuntime
+import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.datamodels.NimbleNetResult
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.datamodels.UserEventData
+import dev.deliteai.impl.common.DATATYPE
+import dev.deliteai.impl.common.HardwareInfo
+import dev.deliteai.impl.common.MESSAGES
+import dev.deliteai.impl.common.METRIC_TYPE
+import dev.deliteai.impl.coroutine.DeliteAiScope
+import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
+import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
+import dev.deliteai.impl.io.FileUtils
+import dev.deliteai.impl.loggers.RemoteLogger
+import dev.deliteai.impl.moduleInstallers.ModuleInstaller
+import dev.deliteai.impl.nativeBridge.CoreRuntime
 import android.app.Application
 import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
@@ -31,7 +31,7 @@ import org.json.JSONObject
 
 internal class NimbleNetController(
     private val application: Application,
-    private val nimbleEdgeScope: NimbleEdgeScope,
+    private val deliteAiScope: DeliteAiScope,
     private val fileUtils: FileUtils,
     private val hardwareInfo: HardwareInfo,
     private val moduleInstaller: ModuleInstaller,
@@ -44,7 +44,7 @@ internal class NimbleNetController(
 
     @Synchronized
     fun initialize(config: NimbleNetConfig): NimbleNetResult<Unit> =
-        runBlocking(nimbleEdgeScope.secondary.coroutineContext) {
+        runBlocking(deliteAiScope.secondary.coroutineContext) {
             val result = NimbleNetResult<Unit>(payload = null)
             val storageInfo = fileUtils.getInternalStorageFolderSizes()
 
@@ -69,7 +69,7 @@ internal class NimbleNetController(
         methodName: String,
         inputs: HashMap<String, NimbleNetTensor>?,
     ): NimbleNetResult<HashMap<String, NimbleNetTensor>> =
-        runBlocking(nimbleEdgeScope.primary.coroutineContext) {
+        runBlocking(deliteAiScope.primary.coroutineContext) {
             val startTime = SystemClock.elapsedRealtimeNanos()
             inputs?.let { verifyUserInputs(it) }
 
@@ -91,7 +91,7 @@ internal class NimbleNetController(
         }
 
     fun addEvent(eventMapJson: String, tableName: String): NimbleNetResult<UserEventData> =
-        runBlocking(nimbleEdgeScope.secondary.coroutineContext) {
+        runBlocking(deliteAiScope.secondary.coroutineContext) {
             val result = NimbleNetResult(payload = UserEventData())
             coreRuntime.addEvent(eventMapJson, tableName, nimbleNetResult = result)
             result
@@ -101,21 +101,21 @@ internal class NimbleNetController(
         protoEvent: ProtoObjectWrapper,
         eventType: String,
     ): NimbleNetResult<UserEventData> =
-        runBlocking(nimbleEdgeScope.secondary.coroutineContext) {
+        runBlocking(deliteAiScope.secondary.coroutineContext) {
             val result = NimbleNetResult(payload = UserEventData())
             coreRuntime.addEventProto(protoEvent, eventType, result)
             result
         }
 
     fun isReady(): NimbleNetResult<Unit> =
-        runBlocking(nimbleEdgeScope.secondary.coroutineContext) {
+        runBlocking(deliteAiScope.secondary.coroutineContext) {
             val result = NimbleNetResult<Unit>(payload = null)
             coreRuntime.isReady(result)
             result
         }
 
     fun restartSession(sessionId: String) =
-        runBlocking(nimbleEdgeScope.secondary.coroutineContext) {
+        runBlocking(deliteAiScope.secondary.coroutineContext) {
             coreRuntime.restartSession(sessionId)
         }
 
@@ -161,7 +161,7 @@ internal class NimbleNetController(
             fun isDerivedFromProtoMemberExtender(obj: Any): Boolean {
                 return try {
                     val clazz =
-                        Class.forName("ai.nimbleedge.impl.scriptWrappers.proto.ProtoMemberExtender")
+                        Class.forName("dev.deliteai.impl.scriptWrappers.proto.ProtoMemberExtender")
                     clazz.isAssignableFrom(obj::class.java)
                 } catch (e: ClassNotFoundException) {
                     false
