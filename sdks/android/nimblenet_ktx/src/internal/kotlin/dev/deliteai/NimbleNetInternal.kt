@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import ai.nimbleedge.controllers.InternalTaskController
-import ai.nimbleedge.datamodels.NimbleNetResult
-import ai.nimbleedge.impl.DependencyContainer
+import dev.deliteai.controllers.InternalTaskController
+import dev.deliteai.datamodels.NimbleNetResult
+import dev.deliteai.impl.DependencyContainer
 import android.app.Application
 
 object NimbleNetInternal {
