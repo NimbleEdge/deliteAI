@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.datamodels
+package dev.deliteai.datamodels
 
-import ai.nimbleedge.impl.common.ERROR_CODES
+import dev.deliteai.impl.common.ERROR_CODES
 
 class NimbleNetError(var code: Int = ERROR_CODES.KOTLIN_ERROR, var message: String = "") {
     private fun populateErrorObject(code: Int, message: String) {
