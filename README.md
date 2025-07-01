@@ -1,7 +1,7 @@
 # DeliteAI
 
-<div align="center">
-  <img src="docs/static/images/delite-ai-blue-logo.png" alt="Logo" width="200">
+<div align="left">
+  <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo">
 </div>
 
 [![Join us on Discord](https://img.shields.io/badge/Join%20us-Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/y8WkMncstk)
