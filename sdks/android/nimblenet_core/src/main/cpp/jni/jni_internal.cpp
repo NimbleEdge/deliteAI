@@ -11,19 +11,19 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_ai_nimbleedge_impl_nativeBridge_impl_CoreRuntimeImpl_reset(JNIEnv *env, jobject thiz) {
+Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_reset(JNIEnv *env, jobject thiz) {
     nimblenetInternal::reset();
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_ai_nimbleedge_impl_nativeBridge_impl_CoreRuntimeImpl_deleteDatabase(JNIEnv *env, jobject thiz) {
+Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_deleteDatabase(JNIEnv *env, jobject thiz) {
     nimblenetInternal::delete_database();
 }
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_ai_nimbleedge_impl_nativeBridge_impl_CoreRuntimeImpl_reloadModelWithEpConfig(
+Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_reloadModelWithEpConfig(
         JNIEnv *env, jobject thiz, jstring jmodel_name, jstring jep_config) {
     const char *model_name = env->GetStringUTFChars(jmodel_name, nullptr);
     const char *ep_config = env->GetStringUTFChars(jep_config, nullptr);
@@ -38,7 +38,7 @@ Java_ai_nimbleedge_impl_nativeBridge_impl_CoreRuntimeImpl_reloadModelWithEpConfi
 
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_ai_nimbleedge_impl_nativeBridge_impl_CoreRuntimeImpl_loadModelFromFile(JNIEnv *env, jobject thiz,
+Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_loadModelFromFile(JNIEnv *env, jobject thiz,
                                                                  jstring jmodel_file_path,
                                                                  jstring jinference_config_file_path,
                                                                  jstring jmodel_id, jstring jepConfigJsonChar) {

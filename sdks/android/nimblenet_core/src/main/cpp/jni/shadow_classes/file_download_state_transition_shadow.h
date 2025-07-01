@@ -29,9 +29,9 @@ public:
     static bool init(JNIEnv* env) {
         if (env == nullptr) return false;
 
-        jclass localClass = env->FindClass("ai/nimbleedge/impl/io/datamodels/FileDownloadStateTransition");
+        jclass localClass = env->FindClass("ai/deliteai/impl/io/datamodels/FileDownloadStateTransition");
         if (localClass == nullptr) {
-            LOGE("Class ai.nimbleedge.datamodels.FileDownloadStateTransition not found.\n");
+            LOGE("Class dev.deliteai.datamodels.FileDownloadStateTransition not found.\n");
             return  false;
         }
         fileDownloadStateTransitionClass = static_cast<jclass>(env->NewGlobalRef(localClass));

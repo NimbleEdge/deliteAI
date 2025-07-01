@@ -31,9 +31,9 @@ public:
         if (env == nullptr) return;
 
         // Find the TypeCaster class
-        jclass localClass = env->FindClass("ai/nimbleedge/impl/common/utils/TypeCaster");
+        jclass localClass = env->FindClass("ai/deliteai/impl/common/utils/TypeCaster");
         if (localClass == nullptr) {
-            LOGD("Class ai.nimbleedge.utils.TypeCaster not found.\n");
+            LOGD("Class dev.deliteai.utils.TypeCaster not found.\n");
             return;
         }
         typeCasterClass = (jclass)env->NewGlobalRef(localClass);

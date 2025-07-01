@@ -27,9 +27,9 @@ public:
  NimbleNetResultShadow(JNIEnv *env) {
         if (env == nullptr) return;
 
-        jclass localClass = env->FindClass("ai/nimbleedge/datamodels/NimbleNetResult");
+        jclass localClass = env->FindClass("ai/deliteai/datamodels/NimbleNetResult");
         if (localClass == nullptr) {
-            LOGE("Class ai.nimbleedge.datamodels.NimbleNetResult not found.\n");
+            LOGE("Class dev.deliteai.datamodels.NimbleNetResult not found.\n");
             return;
         }
         resultClass = (jclass)env->NewGlobalRef(localClass);
@@ -39,7 +39,7 @@ public:
             return;
         }
 
-        constructorMethodId = env->GetMethodID(resultClass, "<init>", "(ZLjava/lang/Object;Lai/nimbleedge/datamodels/NimbleNetError;)V");
+        constructorMethodId = env->GetMethodID(resultClass, "<init>", "(ZLjava/lang/Object;Lai/deliteai/datamodels/NimbleNetError;)V");
         if (constructorMethodId == nullptr) {
             LOGE("Constructor for NimbleNetResult not found.\n");
         }
@@ -54,7 +54,7 @@ public:
             LOGE("Field 'data' not found in NimbleNetResult class.\n");
         }
 
-        errorFieldId = env->GetFieldID(resultClass, "error", "Lai/nimbleedge/datamodels/NimbleNetError;");
+        errorFieldId = env->GetFieldID(resultClass, "error", "Lai/deliteai/datamodels/NimbleNetError;");
         if (errorFieldId == nullptr) {
             LOGE("Field 'error' not found in NimbleNetResult class.\n");
         }
