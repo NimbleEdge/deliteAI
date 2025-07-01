@@ -190,13 +190,14 @@ class Duration {
   constexpr int64_t microseconds() const noexcept;
 
   /**
+   * @name Operators
    * Supports addition, subtraction, multiplication, division, and all standard comparisons between durations.
    *
    * - operator+ / operator- : Add or subtract two durations.
    * - operator* / operator*= / operator/: Multiply or divide a duration by a factor.
    * - operator<, operator<=, operator>, operator>=, operator== : Compare durations.
    */
-  
+  ///@{
   constexpr Duration operator+(const Duration& other) const noexcept;
   constexpr Duration operator-(const Duration& other) const noexcept;
   constexpr Duration operator/(uint32_t factor) const noexcept;
@@ -207,6 +208,7 @@ class Duration {
   constexpr bool operator<=(Duration other) const noexcept;
   constexpr bool operator>=(Duration other) const noexcept;
   constexpr bool operator==(Duration other) const noexcept;
+  ///@}
 };
 
 /**
@@ -247,7 +249,7 @@ class DeviceTime {
    * @return Duration representing d1 - d2 in microseconds.
    */
   static Duration get_time_diff(DeviceTime d1, DeviceTime d2) noexcept;
-  å
+
   /**
    * @brief Add a duration to this DeviceTime.
    *
