@@ -1,7 +1,7 @@
 # DeliteAI
 
 <div align="center">
-  <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="1500">
+  <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="150">
 </div>
 
 <div align="center">
