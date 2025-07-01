@@ -13,9 +13,9 @@
 GeminiNanoHandlerShadow::GeminiNanoHandlerShadow(JNIEnv *env) {
 	if (env == nullptr) return;
 
-	jclass localClass = env->FindClass("ai/nimbleedge/scriptWrappers/GeminiNanoHandler");
+	jclass localClass = env->FindClass("dev/deliteai/scriptWrappers/GeminiNanoHandler");
 	if (localClass == nullptr) {
-		LOGE("Class ai.nimbleedge.scriptWrappers.GeminiNanoHandler not found.\n");
+		LOGE("Class dev.deliteai.scriptWrappers.GeminiNanoHandler not found.\n");
 		return;
 	}
 

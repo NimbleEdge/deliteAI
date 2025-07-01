@@ -11,9 +11,9 @@
 
 void HardwareInfoShadow::init(JNIEnv* env) {
   if (!env) return;
-  jclass localClass = env->FindClass("ai/nimbleedge/impl/common/HardwareInfo");
+  jclass localClass = env->FindClass("dev/deliteai/impl/common/HardwareInfo");
   if (!localClass) {
-    LOGE("Class ai.nimbleedge.io.HardwareInfo not found.\n");
+    LOGE("Class dev.deliteai.io.HardwareInfo not found.\n");
     return;
   }
   hardwareInfoClass = static_cast<jclass>(env->NewGlobalRef(localClass));

@@ -12,9 +12,9 @@
 void NetworkingShadow::init(JNIEnv* env) {
   if (!env) return;
 
-  jclass localClass = env->FindClass("ai/nimbleedge/impl/io/Networking");
+  jclass localClass = env->FindClass("dev/deliteai/impl/io/Networking");
   if (!localClass) {
-    LOGE("Class ai.nimbleedge.io.Networking not found.\n");
+    LOGE("Class dev.deliteai.io.Networking not found.\n");
     return;
   }
 
@@ -28,14 +28,14 @@ void NetworkingShadow::init(JNIEnv* env) {
 
   sendRequestMethodId =
       env->GetMethodID(networkingClass, "sendRequest",
-                       "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[BLjava/lang/String;I)Lai/nimbleedge/impl/io/datamodels/NetworkResponse;");
+                       "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[BLjava/lang/String;I)Ldev/deliteai/impl/io/datamodels/NetworkResponse;");
   if (!sendRequestMethodId) {
     LOGE("Method sendRequest not found.\n");
   }
 
   downloadFileMethodId =
       env->GetMethodID(networkingClass, "downloadFileThroughDownloadManager",
-                       "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lai/nimbleedge/impl/io/datamodels/FileDownloadStateTransition;");
+                       "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ldev/deliteai/impl/io/datamodels/FileDownloadStateTransition;");
   if (!downloadFileMethodId) {
     LOGE("Method downloadFileThroughDownloadManager not found.\n");
   }

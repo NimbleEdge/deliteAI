@@ -11,9 +11,9 @@
 void LogsUploadSchedulerShadow::init(JNIEnv* env) {
   if (env == nullptr) return;
 
-  jclass localCls = env->FindClass("ai/nimbleedge/impl/loggers/workManager/LogsUploadScheduler");
+  jclass localCls = env->FindClass("dev/deliteai/impl/loggers/workManager/LogsUploadScheduler");
   if (localCls == nullptr) {
-    LOGE("Class ai.nimbleedge.schedulers.LogsUploadScheduler not found.\n");
+    LOGE("Class dev.deliteai.schedulers.LogsUploadScheduler not found.\n");
     return;
   }
 

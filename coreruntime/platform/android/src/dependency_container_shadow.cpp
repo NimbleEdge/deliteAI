@@ -12,14 +12,14 @@
 void DependencyContainerShadow::setMethodIds(JNIEnv *env) {
   getInstanceMethodId =
       env->GetStaticMethodID(dependencyContainerClass, "getInstance",
-                             "(Landroid/app/Application;Lai/nimbleedge/datamodels/"
-                             "NimbleNetConfig;)Lai/nimbleedge/impl/DependencyContainer;");
+                             "(Landroid/app/Application;Ldev/deliteai/datamodels/"
+                             "NimbleNetConfig;)Ldev/deliteai/impl/DependencyContainer;");
   getNetworkingMethodId = env->GetMethodID(dependencyContainerClass, "getNetworking",
-                                           "()Lai/nimbleedge/impl/io/Networking;");
+                                           "()Ldev/deliteai/impl/io/Networking;");
   getHardwareInfoMethodId = env->GetMethodID(dependencyContainerClass, "getHardwareInfo",
-                                             "()Lai/nimbleedge/impl/common/HardwareInfo;");
+                                             "()Ldev/deliteai/impl/common/HardwareInfo;");
   getLogsUploadSchedulerMethodId = env->GetMethodID(dependencyContainerClass, "getLogsUploadScheduler",
-                                                 "()Lai/nimbleedge/impl/loggers/workManager/LogsUploadScheduler;");
+                                                 "()Ldev/deliteai/impl/loggers/workManager/LogsUploadScheduler;");
 }
 
 void DependencyContainerShadow::setDependencyContainerInstance(JNIEnv *env) {
@@ -34,9 +34,9 @@ void DependencyContainerShadow::setDependencyContainerInstance(JNIEnv *env) {
 
 void DependencyContainerShadow::init(JNIEnv *env) {
   if (!env) return;
-  jclass localClass = env->FindClass("ai/nimbleedge/impl/DependencyContainer");
+  jclass localClass = env->FindClass("dev/deliteai/impl/DependencyContainer");
   if (!localClass) {
-    LOGE("Class ai.nimbleedge.scriptWrappers.GeminiNanoHandler not found.\n");
+    LOGE("Class dev.deliteai.scriptWrappers.GeminiNanoHandler not found.\n");
     return;
   }
   dependencyContainerClass = static_cast<jclass>(env->NewGlobalRef(localClass));
