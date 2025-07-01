@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.common
+package dev.deliteai.impl.common
 
-import ai.nimbleedge.impl.common.utils.EnvironmentDelegate
-import ai.nimbleedge.impl.loggers.LocalLogger
+import dev.deliteai.impl.common.utils.EnvironmentDelegate
+import dev.deliteai.impl.loggers.LocalLogger
 import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.app.ActivityManager

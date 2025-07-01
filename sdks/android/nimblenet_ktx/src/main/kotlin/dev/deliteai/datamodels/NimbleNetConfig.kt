@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.datamodels
+package dev.deliteai.datamodels
 
-import ai.nimbleedge.impl.common.NIMBLENET_VARIANTS
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.common.NIMBLENET_VARIANTS
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import org.json.JSONObject
 
 class NimbleNetConfig(

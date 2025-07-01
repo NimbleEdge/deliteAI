@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.delitePy.proto.impl
+package dev.deliteai.impl.delitePy.proto.impl
 
-import ai.nimbleedge.impl.delitePy.proto.ProtoMemberExtender
-import ai.nimbleedge.impl.delitePy.proto.ProtoObject
+import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
+import dev.deliteai.impl.delitePy.proto.ProtoObject
 import com.google.protobuf.Descriptors
 import com.google.protobuf.Descriptors.FieldDescriptor
 import com.google.protobuf.MessageOrBuilder

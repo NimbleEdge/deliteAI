@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.datamodels
+package dev.deliteai.datamodels
 
-import ai.nimbleedge.impl.common.DATATYPE
+import dev.deliteai.impl.common.DATATYPE
 
 class NimbleNetTensor {
     // NOTE: data is nullable only for outputs, inputs cannot be null

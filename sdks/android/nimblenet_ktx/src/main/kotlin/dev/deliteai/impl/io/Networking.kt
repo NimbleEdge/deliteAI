@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.io
+package dev.deliteai.impl.io
 
-import ai.nimbleedge.impl.common.STATUS_CODES
-import ai.nimbleedge.impl.common.utils.jsonStringToHeaders
-import ai.nimbleedge.impl.io.datamodels.FileDownloadStateTransition
-import ai.nimbleedge.impl.io.datamodels.NetworkResponse
-import ai.nimbleedge.impl.io.datamodels.emptyNetworkResponse
-import ai.nimbleedge.impl.io.datamodels.toNetworkResponse
-import ai.nimbleedge.impl.loggers.LocalLogger
+import dev.deliteai.impl.common.STATUS_CODES
+import dev.deliteai.impl.common.utils.jsonStringToHeaders
+import dev.deliteai.impl.io.datamodels.FileDownloadStateTransition
+import dev.deliteai.impl.io.datamodels.NetworkResponse
+import dev.deliteai.impl.io.datamodels.emptyNetworkResponse
+import dev.deliteai.impl.io.datamodels.toNetworkResponse
+import dev.deliteai.impl.loggers.LocalLogger
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import java.util.concurrent.TimeUnit

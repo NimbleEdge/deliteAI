@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.io
+package dev.deliteai.impl.io
 
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
-import ai.nimbleedge.impl.loggers.LocalLogger
+import dev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.loggers.LocalLogger
 import android.app.Application
 import java.io.File
 import org.json.JSONObject

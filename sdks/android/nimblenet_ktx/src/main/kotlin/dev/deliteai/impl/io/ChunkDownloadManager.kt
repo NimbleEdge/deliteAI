@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.io
+package dev.deliteai.impl.io
 
-import ai.nimbleedge.impl.common.ERROR_CODES.DM_UNABLE_TO_CREATE_REQUEST
-import ai.nimbleedge.impl.common.STATUS_CODES
-import ai.nimbleedge.impl.common.utils.jsonStringToHeaders
-import ai.nimbleedge.impl.io.datamodels.DownloadManagerCursor
-import ai.nimbleedge.impl.io.datamodels.DownloadTask
-import ai.nimbleedge.impl.io.datamodels.FileDownloadStateTransition
-import ai.nimbleedge.impl.loggers.LocalLogger
+import dev.deliteai.impl.common.ERROR_CODES.DM_UNABLE_TO_CREATE_REQUEST
+import dev.deliteai.impl.common.STATUS_CODES
+import dev.deliteai.impl.common.utils.jsonStringToHeaders
+import dev.deliteai.impl.io.datamodels.DownloadManagerCursor
+import dev.deliteai.impl.io.datamodels.DownloadTask
+import dev.deliteai.impl.io.datamodels.FileDownloadStateTransition
+import dev.deliteai.impl.loggers.LocalLogger
 import android.annotation.SuppressLint
 import android.app.Application
 import android.app.DownloadManager
