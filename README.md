@@ -1,6 +1,7 @@
 <div align="center">
+  <h1 align="center">DeliteAI</h1>
   <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="150">
-  <h1 align="center">DeliteAI: On-Device AI platform for creating delightful experiences</h1>
+  <h1 align="center">On-Device AI platform for creating delightful experiences</h1>
 </div>
 
 <div align="center">
