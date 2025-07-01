@@ -1,0 +1,26 @@
+[build-system]
+requires = [
+  "setuptools >= 77.0.3",
+  "Jinja2 >=3.1.6,<3.2",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "delitepy-library-stubs"
+version = "0.1.0"
+description = "Python stubs for the DelitePy library."
+authors = [{ name = "DeliteAI Authors" }]
+requires-python = ">= 3.9"
+dependencies = []
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Private :: Do Not Upload",
+]
+
+[tool.setuptools.packages.find]
+where = ["src_gen"]
+namespaces = false
+
+[tool.ruff]
+line-length = 100

@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
 # SPDX-License-Identifier: Apache-2.0
 
 # For more information about using CMake with Android Studio, read the

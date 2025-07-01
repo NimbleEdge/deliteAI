@@ -28,11 +28,11 @@ android {
         }
     }
 
-    namespace 'ai.nimbleedge.android.sampleapp'
+    namespace 'dev.deliteai.android.sampleapp'
     compileSdk 35
 
     defaultConfig {
-        applicationId "ai.nimbleedge.android.sampleapp"
+        applicationId "dev.deliteai.android.sampleapp"
         minSdk 31
         targetSdk 35
         versionCode 1

@@ -16,7 +16,7 @@ plugins {
 apply(plugin = "kotlin-android")
 
 android {
-    namespace = "ai.nimbleedge.nimblenet_core"
+    namespace = "dev.deliteai.nimblenet_core"
     compileSdk = neGradleConfig.compileSdk
 
     defaultConfig {
@@ -84,7 +84,7 @@ android {
 
             repositories {
                 maven {
-                    name = "nimbleedge_android"
+                    name = "deliteai_android"
                     url = uri(neGradleConfig.awsS3Url)
                     credentials(AwsCredentials::class) {
                         accessKey = neGradleConfig.awsAccessKey
@@ -106,7 +106,7 @@ fun PublishingExtension.createMavenPublication(name: String, artifactId: String)
     publications {
         register<MavenPublication>(name) {
             from(components[name])
-            groupId = "ai.nimbleedge"
+            groupId = "dev.deliteai"
             this.artifactId = artifactId
             version = neGradleConfig.releaseVersion
         }
