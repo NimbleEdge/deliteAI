@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Built-ins
 
 DelitePy supports a subset of the Python built-ins. We are continuously adding more built-ins,
