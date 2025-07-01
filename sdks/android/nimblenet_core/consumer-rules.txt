@@ -183,9 +183,9 @@
 -keep class **.
 -keep class **.R$* {*;}
 -ignorewarnings
--keep,includedescriptorclasses class ai.nimbleedge.datamodels.** {*;}
--keepclassmembers class ai.nimbleedge.datamodels.**
--keep,includedescriptorclasses class ai.nimbleedge.io.** {*;}
+-keep,includedescriptorclasses class dev.deliteai.datamodels.** {*;}
+-keepclassmembers class dev.deliteai.datamodels.**
+-keep,includedescriptorclasses class dev.deliteai.io.** {*;}
 
 # Okio
 -dontwarn java.nio.file.*
