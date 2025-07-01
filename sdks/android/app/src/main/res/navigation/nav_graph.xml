@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="ai.nimbleedge.android.sampleapp.FirstFragment"
+        android:name="dev.deliteai.android.sampleapp.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
