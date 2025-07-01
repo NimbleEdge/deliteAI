@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.loggers.workManager
+package dev.deliteai.impl.loggers.workManager
 
-import ai.nimbleedge.impl.DependencyContainer
-import ai.nimbleedge.impl.common.WORK_MANAGER
-import ai.nimbleedge.impl.common.WORK_MANAGER.WM_LOGS_UPLOAD_PAYLOAD_ID
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.WORK_MANAGER
+import dev.deliteai.impl.common.WORK_MANAGER.WM_LOGS_UPLOAD_PAYLOAD_ID
 import android.app.Application
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints

@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.loggers
+package dev.deliteai.impl.loggers
 
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import android.util.Log
 
 internal class LocalLogger {
