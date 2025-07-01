@@ -1,7 +1,6 @@
-# DeliteAI
-
 <div align="center">
   <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="150">
+  <h1 align="center">DeliteAI: On-Device AI platform for creating delightful experiences</h1>
 </div>
 
 <div align="center">
