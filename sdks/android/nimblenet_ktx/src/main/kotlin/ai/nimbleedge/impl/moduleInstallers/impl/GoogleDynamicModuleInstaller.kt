@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.moduleInstallers.impl
+package dev.deliteai.impl.moduleInstallers.impl
 
-import ai.nimbleedge.impl.common.METRIC_TYPE
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
-import ai.nimbleedge.impl.common.SHARED_PREFERENCES
-import ai.nimbleedge.impl.common.utils.buildLibDownloadLogBody
-import ai.nimbleedge.impl.io.AppPreferencesStore
-import ai.nimbleedge.impl.loggers.LocalLogger
-import ai.nimbleedge.impl.loggers.RemoteLogger
-import ai.nimbleedge.impl.moduleInstallers.ModuleInstaller
+import dev.deliteai.impl.common.METRIC_TYPE
+import dev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.common.SHARED_PREFERENCES
+import dev.deliteai.impl.common.utils.buildLibDownloadLogBody
+import dev.deliteai.impl.io.AppPreferencesStore
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.impl.loggers.RemoteLogger
+import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import android.os.SystemClock
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallRequest

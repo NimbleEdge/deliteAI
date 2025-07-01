@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.nativeBridge
+package dev.deliteai.impl.nativeBridge
 
-import ai.nimbleedge.datamodels.NimbleNetResult
-import ai.nimbleedge.datamodels.NimbleNetTensor
-import ai.nimbleedge.datamodels.UserEventData
-import ai.nimbleedge.impl.delitePy.proto.impl.ProtoObjectWrapper
+import dev.deliteai.datamodels.NimbleNetResult
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.datamodels.UserEventData
+import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
 
 internal interface CoreRuntime {
     fun initializeNimbleNet(

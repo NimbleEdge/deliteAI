@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.moduleInstallers
+package dev.deliteai.impl.moduleInstallers
 
 internal interface ModuleInstaller {
     suspend fun execute()

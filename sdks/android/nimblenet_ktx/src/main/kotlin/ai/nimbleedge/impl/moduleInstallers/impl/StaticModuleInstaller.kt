@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.impl.moduleInstallers.impl
+package dev.deliteai.impl.moduleInstallers.impl
 
-import ai.nimbleedge.impl.common.SDK_CONSTANTS
-import ai.nimbleedge.impl.loggers.LocalLogger
-import ai.nimbleedge.impl.moduleInstallers.ModuleInstaller
+import dev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 
 internal class StaticModuleInstaller(private val localLogger: LocalLogger) : ModuleInstaller {
     override suspend fun execute() {
