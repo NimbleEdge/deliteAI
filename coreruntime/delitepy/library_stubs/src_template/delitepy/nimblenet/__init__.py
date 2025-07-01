@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 """Package delitepy.nimblenet."""
 
 from delitepy.nimblenet.eventstore import *

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 from delitepy.ne_re.match import Match
 
 def split(pattern: str, string: str, return_matched_groups: bool = False) -> list[str]:

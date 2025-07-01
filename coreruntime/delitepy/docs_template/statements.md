@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Supported statements
 
 Semantics and behavior of the supported statements in DelitePy are the same as that of the
