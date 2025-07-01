@@ -1,10 +1,14 @@
 # DeliteAI
 
-<div align="left">
-  <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo">
+<div align="center">
+  <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="1500">
 </div>
 
-[![Join us on Discord](https://img.shields.io/badge/Join%20us-Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/y8WkMncstk)
+<div align="center">
+  <a href="https://discord.gg/y8WkMncstk"><img src="https://img.shields.io/badge/Discord-Join%20Us-purple?logo=discord&logoColor=white&style=for-the-badge"
+alt="Join us on Discord"></a>
+  <hr>
+</div>
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
