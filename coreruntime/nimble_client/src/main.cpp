@@ -1,16 +1,24 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <unistd.h>
 
 #include <fstream>
 #include <iostream>
 #include <vector>
 
+#include "string.h"
+#include "time.h"
+#include "nlohmann/json.hpp"
+
 #include "input_structs.hpp"
 #include "nimblejson.hpp"
 #include "nimblenet.h"
-#include "nlohmann/json.hpp"
-#include "string.h"
 #include "task_input_structs.hpp"
-#include "time.h"
+
 using namespace std;
 
 int main(int argc, char** argv) {
