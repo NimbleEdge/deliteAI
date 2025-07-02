@@ -1,0 +1,27 @@
+PODS:
+  - Alamofire (5.10.2)
+  - NimbleNetiOS (1.0.0):
+    - Alamofire
+    - SwiftProtobuf
+  - SwiftProtobuf (1.30.0)
+
+DEPENDENCIES:
+  - NimbleNetiOS (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - SwiftProtobuf
+
+EXTERNAL SOURCES:
+  NimbleNetiOS:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  NimbleNetiOS: 145ebb79ec30f04bd8c5c428771676cf2f22fb53
+  SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
+
+PODFILE CHECKSUM: c617cceb90748470b5c9389e93aad3ded77f678a
+
+COCOAPODS: 1.16.2

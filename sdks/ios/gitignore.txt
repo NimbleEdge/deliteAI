@@ -1,0 +1,40 @@
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods
+example/Pods
+example/Podfile.lock
+
+# script 
+script/build_os64
+script/build_simulator
+script/exposed_header
+
+# Archives
+*.xcarchive
+
+# App data
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# SwiftPM Xcode workspace
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+# Xcode Server
+sourceControl/
+*.xcscmblueprint
+*.xcworkspace
+
+# IDEs
+.idea/
+*.iml
+Ss
+# Other
+.DS_Store
