@@ -24,16 +24,7 @@ using namespace std;
 int main(int argc, char** argv) {
   cout << initialize_nimblenet(
               R"delim(
-		{
-			"deviceId": "preprocessingDevice",
-			"clientId": "testclient",
-			"host": "https://apiv3.nimbleedge-staging.com",
-			"clientSecret": "samplekey123",
-      "compatibilityTag": "generic-loader",
-      "maxInputsToSave": 1,
-      "internalDeviceId": "TestDevice1",
-      "debug": true
-		}
+{{ NIMBLENET_CONFIG_JSON }}
 	)delim",
               "./")
        << endl;
