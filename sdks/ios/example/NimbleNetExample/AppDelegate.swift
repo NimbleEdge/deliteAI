@@ -1,10 +1,8 @@
-//
-//  AppDelegate.swift
-//  nimblenet_ios
-//
-//  Created by 46650369 on 12/18/2023.
-//  Copyright (c) 2023 46650369. All rights reserved.
-//
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 import UIKit
 
