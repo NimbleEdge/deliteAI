@@ -53,7 +53,7 @@ struct LogSendingConfig {
 
 /**
  * @brief Populates a LogSendingConfig from a JSON object.
- * 
+ *
  * @param j The JSON object.
  * @param config The LogSendingConfig to populate.
  */
@@ -85,7 +85,7 @@ inline static void from_json(const nlohmann::json& j, LogSendingConfig& config) 
 
 /**
  * @brief Serializes a LogSendingConfig to a JSON object.
- * 
+ *
  * @param j The JSON object to populate.
  * @param config The LogSendingConfig to serialize.
  */
@@ -155,7 +155,7 @@ class LogSender {
   /**
    * @brief Resets the sender's retry counter for consecutive log send failures.
    */
-  void reset_sender_retries();
+  void reset_sender_retries() { concurrentLogFailures = 0; }
 
   /**
    * @brief Sends any pending logs to the server if enough time has elapsed and failure count is within limits.

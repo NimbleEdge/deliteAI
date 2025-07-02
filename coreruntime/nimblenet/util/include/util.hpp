@@ -346,6 +346,26 @@ void encrypt_data(char* data, int length);
  */
 void decrypt_data(char* data, int length);
 
+// Zipped iterators, taken from
+// https://stackoverflow.com/questions/8511035/sequence-zip-function-for-c11/70482642#70482642
+namespace detail {
+
+struct advance {
+  template <typename T>
+  void operator()(T& t) const {
+    ++t;
+  }
+};
+
+// Adaptation of for_each_arg, see:
+// https://isocpp.org/blog/2015/01/for-each-argument-sean-parent
+template <class... Iterators>
+void advance_all(Iterators&... iterators) {
+  [](...) {}((advance{}(iterators), 0)...);
+}
+
+}  // namespace detail
+
 /**
  * @brief Apply a function to zipped elements of multiple iterators in parallel.
  *
