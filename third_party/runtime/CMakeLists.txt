@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 set(TEMP_EXEC_INCLUDES "")
 set(TEMP_EXEC_LIBS "")
 set(TEMP_EXEC_DIR "")

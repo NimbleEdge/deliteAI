@@ -1,4 +1,7 @@
-#!/bin/bash -l
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
 
 set -x
 
@@ -12,12 +15,12 @@ currDir=`pwd`
 installGTest=0
 
 input="onnx"
-while getopts ":e:g" opt; do 
-    case $opt in 
+while getopts ":e:g" opt; do
+    case $opt in
         e)
-            if [ "$OPTARG" == "onnx" ]; then 
+            if [ "$OPTARG" == "onnx" ]; then
                 input="onnx"
-            else 
+            else
                 echo "Invalid executor input. Expected: onnx as an argument. Exiting..."
                 exit 1
             fi
@@ -25,17 +28,18 @@ while getopts ":e:g" opt; do
         g)
             installGTest=1
         ;;
-        \?) 
+        \?)
             echo "Invalid option: -$OPTARG"
             exit 1
             ;;
-    esac 
+    esac
 done
+
 if [ "$input" == "onnx" ]; then
     version="1.21.0"
     onnxruntime_genai_version="0.7.0"
     if [ $arch == "arm" ]
-    then 
+    then
         wget https://github.com/microsoft/onnxruntime/releases/download/v$version/onnxruntime-osx-arm64-$version.tgz
         tar -xvf onnxruntime-osx-arm64-$version.tgz
         mkdir -p ../third_party/runtime/onnx/unix
@@ -66,7 +70,7 @@ if [ "$input" == "onnx" ]; then
         mv "$folderName"/* ../third_party/runtime/onnx/unix/
         rm -f "$folderName".tgz
         rm -rf "$folderName"
-    
+
         ## Dowloading ORT_EXTENSIONS as well
         wget -O ../third_party/runtime/onnx/unix/lib/ort_extensions.zip "https://drive.google.com/uc?export=download&id=1TrA8DAZLwTaxcYAfz5pm9jFPWS8EEmBo"
         unzip -o ../third_party/runtime/onnx/unix/lib/ort_extensions.zip -d ../third_party/runtime/onnx/unix/lib/
@@ -80,16 +84,15 @@ if [ "$input" == "onnx" ]; then
         mv $onnxruntime_genai_foldername/* ../third_party/runtime/onnxgenai/unix/
         rm -f $onnxruntime_genai_foldername.tar.gz
         rm -rf $onnxruntime_genai_foldername
-    else 
+    else
         echo "Unsupported architecture: $arch"
         exit 1
     fi
 fi
 
-
 # install gtest for testing
 if [ $arch == "arm" ]
-then    
+then
 if [ $installGTest -eq 1 ]
 then
     if ! command -v brew &> /dev/null; then

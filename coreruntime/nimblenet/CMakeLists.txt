@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 set(BASE
 	server_api/src/server_api_structs.cpp
 	resource_manager/src/resource_manager.cpp

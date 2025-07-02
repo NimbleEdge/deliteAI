@@ -1,6 +1,11 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 cmake_minimum_required(VERSION 3.18)
 
 project(Core_Runtime)
+
 set(CMAKE_CXX_STANDARD 17)
 include(CMakePrintHelpers)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
