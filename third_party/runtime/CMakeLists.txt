@@ -6,15 +6,6 @@ set(TEMP_EXEC_INCLUDES "")
 set(TEMP_EXEC_LIBS "")
 set(TEMP_EXEC_DIR "")
 
-if(TORCH_EXECUTOR)
-	list(APPEND TEMP_EXEC_INCLUDES "${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/include/")
-	list(APPEND TEMP_EXEC_LIBS ${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/libtorch.so
-		${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/libtorch_cpu.so
-		${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/libc10.so
-		${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/libcpuinfo.a
-		${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/libclog.a)
-	list(APPEND TEMP_EXEC_DIR "${PROJECT_SOURCE_DIR}/../third_party/runtime/libtorch/unix/lib/")
-endif()
 if(TFLITE_EXECUTOR)
 	message("TFLite Lib Used")
 	list(APPEND TEMP_EXEC_INCLUDES "${PROJECT_SOURCE_DIR}/../third_party/runtime/tflite/unix/include/")
@@ -47,15 +38,6 @@ if(ONNXGENAI_EXECUTOR)
 		else()
 			list(APPEND TEMP_EXEC_LIBS ${PROJECT_SOURCE_DIR}/../third_party/runtime/onnxgenai/unix/lib/libonnxruntime-genai.so)
 		endif()
-endif()
-if(MNN_EXECUTOR)
-	list(APPEND TEMP_EXEC_INCLUDES "${PROJECT_SOURCE_DIR}/../third_party/runtime/mnn/unix/include/")
-	list(APPEND TEMP_EXEC_DIR "${PROJECT_SOURCE_DIR}/../third_party/runtime/mnn/unix/lib/Release/")
-	if(MACOS)
-		list(APPEND TEMP_EXEC_LIBS ${PROJECT_SOURCE_DIR}/../third_party/runtime/mnn/unix/lib/Release/libMNN.dylib)
-	else()
-		list(APPEND TEMP_EXEC_LIBS ${PROJECT_SOURCE_DIR}/../third_party/runtime/mnn/unix/lib/Release/libMNN.so)
-	endif()
 endif()
 if(EXECUTORCH_EXECUTOR)
 	# TODO: Need to build from source and then add .a files here
