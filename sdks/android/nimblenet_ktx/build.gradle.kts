@@ -30,7 +30,7 @@ jacoco { toolVersion = "0.8.8" }
 apply(plugin = "kotlin-android")
 
 android {
-    namespace = "ai.deliteai.nimblenet_ktx"
+    namespace = "dev.deliteai.nimblenet_ktx"
     compileSdk = neGradleConfig.compileSdk
 
     defaultConfig {
@@ -175,7 +175,7 @@ fun PublishingExtension.createMavenPublication(name: String, artifactId: String)
     publications {
         register<MavenPublication>(name) {
             from(components[name])
-            groupId = "ai.deliteai"
+            groupId = "dev.deliteai"
             this.artifactId = artifactId
             version = neGradleConfig.releaseVersion
         }

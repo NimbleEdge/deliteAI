@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.deliteai.impl.loggers.workManager
+packagedev.deliteai.impl.loggers.workManager
 
-import ai.deliteai.impl.DependencyContainer
-import ai.deliteai.impl.common.WORK_MANAGER
-import ai.deliteai.testUtils.nnConfig
+importdev.deliteai.impl.DependencyContainer
+importdev.deliteai.impl.common.WORK_MANAGER
+importdev.deliteai.testUtils.nnConfig
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4

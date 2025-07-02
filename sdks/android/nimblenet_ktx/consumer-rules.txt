@@ -183,8 +183,8 @@
 -keep class **.
 -keep class **.R$* {*;}
 -ignorewarnings
--keep,includedescriptorclasses class ai.deliteai.** {*;}
--keepclassmembers class ai.deliteai.**
+-keep,includedescriptorclasses classdev.deliteai.** {*;}
+-keepclassmembers classdev.deliteai.**
 
 # Okio
 -dontwarn java.nio.file.*
