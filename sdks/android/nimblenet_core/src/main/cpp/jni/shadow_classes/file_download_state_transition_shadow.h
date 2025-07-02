@@ -29,7 +29,7 @@ public:
     static bool init(JNIEnv* env) {
         if (env == nullptr) return false;
 
-        jclass localClass = env->FindClass("ai/deliteai/impl/io/datamodels/FileDownloadStateTransition");
+        jclass localClass = env->FindClass("dev/deliteai/impl/io/datamodels/FileDownloadStateTransition");
         if (localClass == nullptr) {
             LOGE("Class dev.deliteai.datamodels.FileDownloadStateTransition not found.\n");
             return  false;

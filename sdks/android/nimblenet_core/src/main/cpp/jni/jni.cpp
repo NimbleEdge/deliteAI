@@ -75,7 +75,7 @@ void initContext(JNIEnv *env, jobject ctx) {
 }
 
 extern "C" {
-void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initializeNimbleNet(
+void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initializeNimbleNet(
     JNIEnv *env, jobject thiz, jobject ctx, jstring jnimble_net_config, jstring jnimble_net_dir,
     jobject nimblenet_result_android) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -115,7 +115,7 @@ void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initializeN
 }
 
 extern "C" {
-void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_runMethod(
+void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_runMethod(
     JNIEnv *env, jobject thiz, jstring jTaskName, jobject kotlinInputMap,
     jobject nimbleNetResultAndroid) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -144,7 +144,7 @@ void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_runMethod(
 }
 }
 
-extern "C" JNIEXPORT void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_isReady(
+extern "C" JNIEXPORT void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_isReady(
     JNIEnv *env, jobject thiz, jobject nimblenet_result_android) {
   attachCrashReporter();
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -160,7 +160,7 @@ extern "C" JNIEXPORT void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRu
 }
 
 extern "C" JNIEXPORT jboolean JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_sendEvents(JNIEnv *env, jobject thiz,
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_sendEvents(JNIEnv *env, jobject thiz,
                                                                      jstring jparams,
                                                                      jstring jhomeDir) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -179,7 +179,7 @@ Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_sendEvents(JNIEnv *env, 
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_restartSession(JNIEnv *env, jobject thiz,
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_restartSession(JNIEnv *env, jobject thiz,
                                                                          jstring jsession_id) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
   attachCrashReporter();
@@ -193,7 +193,7 @@ Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_restartSession(JNIEnv *e
 }
 
 extern "C" {
-void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEvent(
+void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEvent(
     JNIEnv *env, jobject deliteAiController, jstring serializedEventMap, jstring tableName,
     jobject nimblenet_result_android) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -231,7 +231,7 @@ void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEvent(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEventProto(
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEventProto(
     JNIEnv *env, jobject thiz, jobject proto_event, jstring event_type,
     jobject nimblenet_result_android) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
@@ -268,7 +268,7 @@ Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_addEventProto(
 }
 
 extern "C" {
-void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeMetric(
+void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeMetric(
     JNIEnv *env, jobject deliteAiController, jstring jmetricType, jstring jmetric) {
   const char *metric = env->GetStringUTFChars(jmetric, nullptr);
   const char *metricType = env->GetStringUTFChars(jmetricType, nullptr);
@@ -279,7 +279,7 @@ void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeMetric
 }
 
 extern "C" {
-void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeRunMethodMetric(
+void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeRunMethodMetric(
     JNIEnv *env, jobject thiz, jstring jid, jlong jtotal_time_in_usecs) {
   const char *id = env->GetStringUTFChars(jid, nullptr);
   nimblenet::write_run_method_metric(id, jtotal_time_in_usecs);
@@ -289,7 +289,7 @@ void JNICALL Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_writeRunMet
 
 extern "C" {
 void JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_networkConnectionEstablishedCallback(
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_networkConnectionEstablishedCallback(
     JNIEnv *env, jobject deliteAiController) {
   nimblenet::internet_switched_on();
 }
@@ -297,7 +297,7 @@ Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_networkConnectionEstabli
 
 #ifdef GEMINI
 extern "C" JNIEXPORT void JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_pushGeminiResponseToQueue(
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_pushGeminiResponseToQueue(
     JNIEnv *env, jobject thiz, jstring text) noexcept {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
   attachCrashReporter();
@@ -308,7 +308,7 @@ Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_pushGeminiResponseToQueu
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_ai_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_closeGeminiResponseQueue(
+Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_closeGeminiResponseQueue(
     JNIEnv *env, jobject thiz) noexcept {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
   attachCrashReporter();

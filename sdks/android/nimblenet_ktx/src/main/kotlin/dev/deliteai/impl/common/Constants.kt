@@ -147,5 +147,4 @@ enum class PROTO_DATATYPE(val value: Int) {
 enum class NIMBLENET_VARIANTS {
     STATIC,
     GOOGLE_PLAY_FEATURE_DYNAMIC,
-    NIMBLE_EDGE_DYNAMIC,
 }

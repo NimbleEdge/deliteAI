@@ -65,7 +65,7 @@ public:
         if (env == nullptr) return isInitialized = false;
 
         jclass localClass = env->FindClass(
-                "ai/deliteai/impl/delitePy/proto/ProtoMemberExtender");
+                "dev/deliteai/impl/delitePy/proto/ProtoMemberExtender");
         if (localClass == nullptr) {
             LOGE("Class dev.deliteai.utils.ProtoMemberExtender not found.\n");
             return isInitialized = false;
@@ -93,7 +93,7 @@ public:
                                             "(Ljava/lang/String;)Z");
         sizeMethodId = env->GetMethodID(jobjectExtenderClass, "size", "()I");
         arrangeMethodId = env->GetMethodID(jobjectExtenderClass, "arrange",
-                                           "([I)Lai/deliteai/impl/delitePy/proto/impl/ProtoListWrapper;");
+                                           "([I)Ldev/deliteai/impl/delitePy/proto/impl/ProtoListWrapper;");
         printMethodId = env->GetMethodID(jobjectExtenderClass, "print", "()Ljava/lang/String;");
         getCoreTypeMethodId = env->GetMethodID(jobjectExtenderClass, "getCoreType", "()I");
         popValueByIndexMethodId = env->GetMethodID(jobjectExtenderClass, "pop", "(I)Ljava/lang/Object;");

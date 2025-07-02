@@ -22,7 +22,6 @@ import dev.deliteai.impl.loggers.RemoteLogger
 import dev.deliteai.impl.loggers.workManager.LogsUploadScheduler
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.impl.moduleInstallers.impl.GoogleDynamicModuleInstaller
-import dev.deliteai.impl.moduleInstallers.impl.InHouseDynamicModuleInstaller
 import dev.deliteai.impl.moduleInstallers.impl.StaticModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
 import dev.deliteai.impl.nativeBridge.impl.CoreRuntimeImpl
@@ -92,17 +91,6 @@ private constructor(
         GoogleDynamicModuleInstaller(
             splitInstallManager = splitInstallManagerSingleton,
             prefs = appPreferencesStoreSingleton,
-            localLogger = localLoggerSingleton,
-            remoteLogger = remoteLoggerSingleton,
-        )
-    }
-
-    private val inHouseDynamicModuleInstallerSingleton: InHouseDynamicModuleInstaller by lazy {
-        InHouseDynamicModuleInstaller(
-            application = application,
-            nimbleNetConfig = nimbleNetConfig,
-            networking = networkingSingleton,
-            hardwareInfo = hardwareInfoSingleton,
             localLogger = localLoggerSingleton,
             remoteLogger = remoteLoggerSingleton,
         )
@@ -188,10 +176,7 @@ private constructor(
     private fun getModuleInstallerInstance(): ModuleInstaller {
         return when (nimbleNetConfig.libraryVariant) {
             NIMBLENET_VARIANTS.STATIC -> staticModuleInstallerSingleton
-
             NIMBLENET_VARIANTS.GOOGLE_PLAY_FEATURE_DYNAMIC -> googleDynamicModuleInstallerSingleton
-
-            NIMBLENET_VARIANTS.NIMBLE_EDGE_DYNAMIC -> inHouseDynamicModuleInstallerSingleton
         }
     }
 }

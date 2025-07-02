@@ -11,10 +11,10 @@ import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 
 val nnConfig =
     NimbleNetConfig(
-        clientId = "test",
-        host = "test",
-        deviceId = "test",
-        clientSecret = "test",
+        clientId = "testclient",
+        host = "https://apiv3.nimbleedge-staging.com",
+        deviceId = "nimon_rulezzz",
+        clientSecret = "samplekey123",
         debug = true,
         initTimeOutInMs = 1000000000,
         compatibilityTag = "android-output-verification",
