@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-packagedev.deliteai.impl.coroutine
+package dev.deliteai.impl.coroutine
 
-importdev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import java.util.concurrent.ThreadPoolExecutor
 import kotlinx.coroutines.CoroutineScope

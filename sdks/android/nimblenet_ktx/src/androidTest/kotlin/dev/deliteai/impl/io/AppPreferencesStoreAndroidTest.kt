@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-packagedev.deliteai.impl.io
+package dev.deliteai.impl.io
 
 import android.content.Context
 import android.content.SharedPreferences

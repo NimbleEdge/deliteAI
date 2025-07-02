@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-packagedev.deliteai
+package dev.deliteai
 
-importdev.deliteai.datamodels.NimbleNetTensor
-importdev.deliteai.impl.common.DATATYPE
-importdev.deliteai.testUtils.nnConfig
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.impl.common.DATATYPE
+import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
