@@ -41,14 +41,9 @@ android {
 
         addStringConfigsFromLocalProperties(
             listOf(
-                "TEST_CLIENT_ID",
-                "TEST_CLIENT_SECRET",
-                "TEST_HOST",
-                "TEST_COMPATIBILITY_TAG",
                 "ANDROID_TEST_CLIENT_ID",
                 "ANDROID_TEST_CLIENT_SECRET",
                 "ANDROID_TEST_HOST",
-                "ANDROID_TEST_COMPATIBILITY_TAG",
                 "REMOTE_LOGGER_KEY"),
             project
         )
