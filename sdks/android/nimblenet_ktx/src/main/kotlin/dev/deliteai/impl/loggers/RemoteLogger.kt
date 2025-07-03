@@ -83,7 +83,7 @@ internal class RemoteLogger(
 
         val res =
             networking.sendRequest(
-                SDK_CONSTANTS.LIBS_DOWNLOAD_STATUS_LOGGER_URL,
+                BuildConfig.REMOTE_LOGGER_URL,
                 headerString,
                 payload,
                 null,

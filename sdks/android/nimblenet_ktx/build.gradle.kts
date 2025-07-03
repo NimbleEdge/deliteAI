@@ -44,7 +44,8 @@ android {
                 "ANDROID_TEST_CLIENT_ID",
                 "ANDROID_TEST_CLIENT_SECRET",
                 "ANDROID_TEST_HOST",
-                "REMOTE_LOGGER_KEY"),
+                "REMOTE_LOGGER_KEY",
+                "REMOTE_LOGGER_URL"),
             project
         )
 
