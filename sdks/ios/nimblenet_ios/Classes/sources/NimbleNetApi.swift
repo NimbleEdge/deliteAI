@@ -93,12 +93,12 @@ public class NimbleNetApi{
         }
     }
     
-    public static func runMethod(methodName: String, inputs: [String: NimbleNetTensor]) -> NimbleNetResult<NimbleEdgeOutput> {
+    public static func runMethod(methodName: String, inputs: [String: NimbleNetTensor]) -> NimbleNetResult<NimbleNetOutput> {
         
         do {
             try verifyUserInputs(inputs: inputs)
         } catch let error as DataTypeMismatchError {
-            return NimbleNetResult<NimbleEdgeOutput>(
+            return NimbleNetResult<NimbleNetOutput>(
                 data: [
                     "status": false,
                     "error": [
@@ -108,7 +108,7 @@ public class NimbleNetApi{
                 ] as NSDictionary
             )
         } catch {
-            return NimbleNetResult<NimbleEdgeOutput>(
+            return NimbleNetResult<NimbleNetOutput>(
                 data: [
                     "status": false,
                     "error": [
@@ -150,7 +150,7 @@ public class NimbleNetApi{
             res["data"] = dataDict
         }
 
-        return NimbleNetResult<NimbleEdgeOutput>(data: NSDictionary(dictionary: res))
+        return NimbleNetResult<NimbleNetOutput>(data: NSDictionary(dictionary: res))
         
         func convertToDictionary(_ input: NimbleNetTensor) -> [String: Any] {
             if(input.datatype.rawValue == DataType.FE_OBJ.rawValue){

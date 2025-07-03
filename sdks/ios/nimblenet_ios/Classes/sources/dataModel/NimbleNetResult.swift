@@ -20,7 +20,7 @@ public class TensorInternal{
     }
 }
 
-public class NimbleEdgeOutput {
+public class NimbleNetOutput {
     public var array: [TensorInternal] = []
     public var numOutputs: Int = 0
     private var map: [String: TensorInternal] = [:]
@@ -86,8 +86,8 @@ public class NimbleNetResult<T> {
     }
     
     private func parseData(_ data: Any) -> T? {
-        if T.self == NimbleEdgeOutput.self {
-            return NimbleEdgeOutput(data: data as! NSDictionary) as? T
+        if T.self == NimbleNetOutput.self {
+            return NimbleNetOutput(data: data as! NSDictionary) as? T
         } else if T.self == ModelStatusData.self {
             return ModelStatusData(data: data as! NSDictionary) as? T
         }  else if T.self == Int.self {
@@ -135,9 +135,9 @@ extension TensorInternal: CustomStringConvertible {
     }
 }
 
-extension NimbleEdgeOutput: CustomStringConvertible {
+extension NimbleNetOutput: CustomStringConvertible {
     public var description: String {
-        var outputDescription = "NimbleEdgeOutput:\n  Size: \(numOutputs)\n  Outputs:\n"
+        var outputDescription = "NimbleNetOutput:\n  Size: \(numOutputs)\n  Outputs:\n"
         for (key, value) in map {
             outputDescription += key.indentedDescription(indentationLevel: 2) + "\n"
             outputDescription += value.indentedDescription(indentationLevel: 3) + "\n"
