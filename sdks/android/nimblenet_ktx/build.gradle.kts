@@ -39,11 +39,20 @@ android {
         consumerProguardFiles("consumer-rules.txt")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField(
-            "String",
-            "REMOTE_LOGGER_KEY",
-            "\"${localProperties["REMOTE_LOGGER_KEY"]}\"",
+        addStringConfigsFromLocalProperties(
+            listOf(
+                "TEST_CLIENT_ID",
+                "TEST_CLIENT_SECRET",
+                "TEST_HOST",
+                "TEST_COMPATIBILITY_TAG",
+                "ANDROID_TEST_CLIENT_ID",
+                "ANDROID_TEST_CLIENT_SECRET",
+                "ANDROID_TEST_HOST",
+                "ANDROID_TEST_COMPATIBILITY_TAG",
+                "REMOTE_LOGGER_KEY"),
+            project
         )
+
     }
 
     buildFeatures { buildConfig = true }
@@ -197,4 +206,23 @@ tasks.register("formatKotlin") {
     group = "formatting"
     description = "Apply ktlint formatting to all Kotlin sources"
     dependsOn("ktfmtFormat")
+}
+
+private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
+    keys: List<String>,
+    project: Project
+) {
+    keys.forEach { key ->
+        val value = project.getLocalProperty(key)
+        buildConfigField("String", key, "\"$value\"")
+    }
+}
+
+private fun Project.getLocalProperty(key: String): String {
+    val propsFile = rootProject.file("local.properties")
+    val props = Properties()
+    if (propsFile.exists()) {
+        props.load(propsFile.inputStream())
+    }
+    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
 }
