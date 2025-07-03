@@ -1,8 +1,3 @@
-/*
- * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
- *
- * SPDX-License-Identifier: Apache-2.0
- */
 
 Pod::Spec.new do |s|
   # Basic Information
