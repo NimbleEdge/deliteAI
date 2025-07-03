@@ -10,4 +10,5 @@ object UtilityPlugins {
     const val mavenPublish = "org.gradle.maven-publish"
     const val kotlinxSerialization = "kotlinx-serialization"
     const val kotlinParcelize = "kotlin-parcelize"
+    const val dokka = "org.jetbrains.dokka"
 }

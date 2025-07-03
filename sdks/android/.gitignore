@@ -82,3 +82,8 @@ firebase/
 # Jetpack Compose compiler artifacts
 .compose-cache/
 
+# Documentation build output
+**/build/dokka/
+**/build/docs/
+docs/
+

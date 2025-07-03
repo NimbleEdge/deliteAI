@@ -21,6 +21,7 @@ plugins {
     id(UtilityPlugins.mavenPublish)
     id(UtilityPlugins.kotlinxSerialization)
     id(UtilityPlugins.kotlinParcelize)
+    id(UtilityPlugins.dokka)
     id("jacoco")
     id("com.ncorti.ktfmt.gradle") version "0.22.0"
 }
@@ -198,3 +199,46 @@ tasks.register("formatKotlin") {
     description = "Apply ktlint formatting to all Kotlin sources"
     dependsOn("ktfmtFormat")
 }
+
+// Dokka configuration for API documentation generation
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
+    dokkaSourceSets {
+        named("main") {
+            displayName.set("NimbleNet Android SDK")
+            
+            // Include all source directories for documentation
+            sourceRoots.from(file("src/main/kotlin"))
+            
+            // Documentation and linking configuration
+            moduleName.set("NimbleNet Android SDK")
+            moduleVersion.set(neGradleConfig.releaseVersion)
+            
+            // Configure API visibility
+            documentedVisibilities.set(
+                setOf(
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PUBLIC,
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED
+                )
+            )
+            
+            // Package documentation - exclude implementation packages
+            perPackageOption {
+                matchingRegex.set("dev\\.deliteai\\.impl.*")
+                suppress.set(true)
+            }
+        }
+    }
+}
+
+// Custom task for generating documentation
+tasks.register("generateDocs") {
+    group = "documentation"
+    description = "Generate API documentation using Dokka"
+    dependsOn("dokkaHtml")
+    
+    doLast {
+        println("✅ NimbleNet SDK documentation generated successfully!")
+        println("📁 Documentation available at: ${layout.buildDirectory.get()}/dokka/html/index.html")
+    }
+}
+
