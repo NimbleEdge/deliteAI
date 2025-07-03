@@ -147,21 +147,21 @@ class NimbleNetAndroidTest {
             hashMapOf(
                 "model_input" to
                     NimbleNetTensor(
-                        data = arrayOf("SIXTY-NINE"),
+                        data = arrayOf("MEDIUM-STR"),
                         shape = intArrayOf(1),
                         datatype = DATATYPE.STRING,
                     )
             )
         val result = NimbleNet.runMethod("string", modelInputs)
         val actualOutput = result.payload!!["model_output"]!!.data as Array<String>
-        assertTrue(result.status && actualOutput.contentEquals(arrayOf("sixty-nine")))
+        assertTrue(result.status && actualOutput.contentEquals(arrayOf("medium-str")))
     }
 
     @Test
     fun verifySingularInt32Conversion() = runBlocking {
         val modelInputs =
             hashMapOf(
-                "model_input" to NimbleNetTensor(data = 69, shape = null, datatype = DATATYPE.INT32)
+                "model_input" to NimbleNetTensor(data = 85, shape = null, datatype = DATATYPE.INT32)
             )
         val result = NimbleNet.runMethod("int32_singular", modelInputs)
 
@@ -178,7 +178,7 @@ class NimbleNetAndroidTest {
         val modelInputs =
             hashMapOf(
                 "model_input" to
-                    NimbleNetTensor(data = 69L, shape = null, datatype = DATATYPE.INT64)
+                    NimbleNetTensor(data = 85L, shape = null, datatype = DATATYPE.INT64)
             )
         val result = NimbleNet.runMethod("int64_singular", modelInputs)
         val actualOutput = result.payload!!["model_output"]!!.data as Long
@@ -190,7 +190,7 @@ class NimbleNetAndroidTest {
         val modelInputs =
             hashMapOf(
                 "model_input" to
-                    NimbleNetTensor(data = 69f, shape = null, datatype = DATATYPE.FLOAT)
+                    NimbleNetTensor(data = 85.6f, shape = null, datatype = DATATYPE.FLOAT)
             )
         val result = NimbleNet.runMethod("float32_singular", modelInputs)
         val actualOutput = result.payload!!["model_output"]!!.data as Float
@@ -202,7 +202,7 @@ class NimbleNetAndroidTest {
         val modelInputs =
             hashMapOf(
                 "model_input" to
-                    NimbleNetTensor(data = 69.0, shape = null, datatype = DATATYPE.DOUBLE)
+                    NimbleNetTensor(data = 85.6, shape = null, datatype = DATATYPE.DOUBLE)
             )
         val result = NimbleNet.runMethod("float64_singular", modelInputs)
         val actualOutput = result.payload!!["model_output"]!!.data as Double
