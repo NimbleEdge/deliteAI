@@ -8,16 +8,15 @@ package dev.deliteai.testUtils
 
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
+import dev.deliteai.nimblenet_ktx.BuildConfig
 
-val nnConfig =
-    NimbleNetConfig(
-        clientId = "test",
-        host = "test",
-        deviceId = "test",
-        clientSecret = "test",
-        debug = true,
-        initTimeOutInMs = 1000000000,
-        compatibilityTag = "test",
-        libraryVariant = NIMBLENET_VARIANTS.STATIC,
-        showDownloadProgress = true,
-    )
+val nnConfig = NimbleNetConfig(
+    clientId = BuildConfig.ANDROID_TEST_CLIENT_ID,
+    host = BuildConfig.ANDROID_TEST_HOST,
+    deviceId = "android-test",
+    clientSecret = BuildConfig.ANDROID_TEST_CLIENT_SECRET,
+    debug = true,
+    initTimeOutInMs = 20000,
+    compatibilityTag = "android-output-verification",
+    libraryVariant = NIMBLENET_VARIANTS.STATIC
+)

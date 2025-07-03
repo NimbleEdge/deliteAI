@@ -177,7 +177,7 @@ class E2ENetworkingAndroidTest {
         val nimblenetConfig = NimbleNetConfig(
             clientId = "testclient",
             host = "http://10.0.2.2:8080",
-            deviceId = "nimon_rulezzz",
+            deviceId = "android-test",
             clientSecret = "dummy",
             debug = true,
             initTimeOutInMs = 3000000000,

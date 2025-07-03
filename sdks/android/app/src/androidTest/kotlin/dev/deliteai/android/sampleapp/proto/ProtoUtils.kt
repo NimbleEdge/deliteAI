@@ -11,6 +11,7 @@ import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import com.google.protobuf.Any
 import com.google.protobuf.Message
 import com.google.protobuf.util.JsonFormat
+import dev.deliteai.nimblenet_ktx.BuildConfig
 import generated.Address
 import generated.Company
 import generated.Company.Department
@@ -21,13 +22,13 @@ import generated.EmailAddress
 import java.util.UUID
 
 val config = NimbleNetConfig(
-    clientId = "test",
-    host = "test",
-    deviceId = "test",
-    clientSecret = "test",
+    clientId = BuildConfig.ANDROID_TEST_CLIENT_ID,
+    host = BuildConfig.ANDROID_TEST_HOST,
+    deviceId = "android-test",
+    clientSecret = BuildConfig.ANDROID_TEST_CLIENT_SECRET,
     debug = true,
     initTimeOutInMs = 20000,
-    compatibilityTag = "test",
+    compatibilityTag = "proto-test",
     libraryVariant = NIMBLENET_VARIANTS.STATIC
 )
 

@@ -17,6 +17,6 @@ val nnConfig =
         clientSecret = "test",
         debug = true,
         initTimeOutInMs = 1000000000,
-        compatibilityTag = "android-output-verification",
+        compatibilityTag = "test",
         libraryVariant = NIMBLENET_VARIANTS.STATIC,
     )
