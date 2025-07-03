@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.deliteai.impl.io
+package dev.deliteai.impl.io
 
-import ai.deliteai.impl.DependencyContainer
-import ai.deliteai.impl.common.SDK_CONSTANTS
-import ai.deliteai.testUtils.nnConfig
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import android.os.Environment
 import androidx.test.core.app.ApplicationProvider

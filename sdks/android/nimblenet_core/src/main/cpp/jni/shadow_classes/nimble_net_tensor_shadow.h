@@ -34,7 +34,7 @@ public:
             return;
         }
 
-        jclass localClass = env->FindClass("ai/deliteai/datamodels/NimbleNetTensor");
+        jclass localClass = env->FindClass("dev/deliteai/datamodels/NimbleNetTensor");
         if (localClass == nullptr) {
             LOGE("Class dev.deliteai.datamodels.NimbleNetTensor not found.\n");
             return;
@@ -67,7 +67,7 @@ public:
         }
 
         dataFieldId = env->GetFieldID(tensorClass, "data", "Ljava/lang/Object;");
-        datatypeFieldId = env->GetFieldID(tensorClass, "datatype", "Lai/deliteai/impl/common/DATATYPE;");
+        datatypeFieldId = env->GetFieldID(tensorClass, "datatype", "Ldev/deliteai/impl/common/DATATYPE;");
         shapeFieldId = env->GetFieldID(tensorClass, "shape", "[I");
 
         if (dataFieldId == nullptr || datatypeFieldId == nullptr || shapeFieldId == nullptr) {

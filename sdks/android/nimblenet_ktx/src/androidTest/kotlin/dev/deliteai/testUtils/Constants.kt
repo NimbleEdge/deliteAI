@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.deliteai.testUtils
+package dev.deliteai.testUtils
 
-import ai.deliteai.datamodels.NimbleNetConfig
-import ai.deliteai.impl.common.NIMBLENET_VARIANTS
+import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 
 val nnConfig =
     NimbleNetConfig(

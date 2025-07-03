@@ -24,7 +24,7 @@ public:
     UserEventDataShadow(JNIEnv *env) {
         if (env == nullptr) return;
 
-        jclass localClass = env->FindClass("ai/deliteai/datamodels/UserEventData");
+        jclass localClass = env->FindClass("dev/deliteai/datamodels/UserEventData");
         if (localClass == nullptr) {
             LOGE("Class dev.deliteai.datamodels.UserEventData not found.\n");
             return;

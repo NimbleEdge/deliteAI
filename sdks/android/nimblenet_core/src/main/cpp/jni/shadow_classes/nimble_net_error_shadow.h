@@ -19,7 +19,7 @@ private:
 public:
     NimbleNetErrorShadow(JNIEnv *env) {
         if (env == nullptr) return;
-        jclass localClass = env->FindClass("ai/deliteai/datamodels/NimbleNetError");
+        jclass localClass = env->FindClass("dev/deliteai/datamodels/NimbleNetError");
         if (localClass == nullptr) return;
         nimbleNetErrorClass = (jclass)env->NewGlobalRef(localClass);
         env->DeleteLocalRef(localClass);
