@@ -1,0 +1,30 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+use_frameworks!
+use_modular_headers!
+platform :ios, '12.0'
+
+target 'NimbleNetExample' do
+  
+  pod 'NimbleNetiOS', :path => '../'
+end
+
+target 'NimbleNetExample_Tests' do
+  inherit! :search_paths
+
+  pod 'NimbleNetiOS', :path => '../'
+end
+
+post_install do |installer|
+    installer.generated_projects.each do |project|
+        project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+            end
+        end
+    end
+end
