@@ -16,8 +16,8 @@ class ProtoTest: XCTestCase {
  
         let config = NimbleNetConfig(
             clientId: "testclient",
-            clientSecret: "samplekey123",
-            host: "https://apiv3.nimbleedge-staging.com",
+            clientSecret: BundleConfig.clientSecret,
+            host: BundleConfig.host,
             deviceId: "ios-proto-test",
             debug: true,
             compatibilityTag: "proto-test"

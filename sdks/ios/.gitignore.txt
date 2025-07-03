@@ -31,6 +31,8 @@ playground.xcworkspace
 sourceControl/
 *.xcscmblueprint
 *.xcworkspace
+*.xcuserstate
+
 
 # IDEs
 .idea/

@@ -12,7 +12,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let config = NimbleNetConfig(clientId: "testclient", clientSecret: "samplekey123", host: "https://apiv3.nimbleedge-staging.com", deviceId: "hello-ios", debug: true, compatibilityTag: "proto-test")
+        let config = NimbleNetConfig(
+            clientId: "testclient",
+            clientSecret: BundleConfig.clientSecret,
+            host: BundleConfig.host,
+            deviceId: "hello-ios",
+            debug: true,
+            compatibilityTag: "proto-test"
+        )
         
         let res = NimbleNetApi.initialize(config: config)
         
