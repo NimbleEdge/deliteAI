@@ -4,7 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import java.util.Properties
+
 val neGradleConfig = NEGradleConfig(project.extra)
+val localProperties =
+    File(rootDir, "local.properties").let { file ->
+        Properties().apply {
+            if (file.exists()) {
+                load(file.inputStream())
+            }
+        }
+    }
 
 plugins {
     id(UtilityPlugins.androidLibraryPlugin)
@@ -85,10 +95,10 @@ android {
             repositories {
                 maven {
                     name = "deliteai_android"
-                    url = uri(neGradleConfig.awsS3Url)
+                    url = uri(getLocalProperty("AWS_S3_URL"))
                     credentials(AwsCredentials::class) {
-                        accessKey = neGradleConfig.awsAccessKey
-                        secretKey = neGradleConfig.awsSecretKey
+                        accessKey = getLocalProperty("AWS_ACCESS_KEY_ID")
+                        secretKey =  getLocalProperty("AWS_SECRET_ACCESS_KEY")
                     }
                 }
             }
@@ -111,4 +121,23 @@ fun PublishingExtension.createMavenPublication(name: String, artifactId: String)
             version = neGradleConfig.releaseVersion
         }
     }
+}
+
+private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
+    keys: List<String>,
+    project: Project
+) {
+    keys.forEach { key ->
+        val value = project.getLocalProperty(key)
+        buildConfigField("String", key, "\"$value\"")
+    }
+}
+
+private fun Project.getLocalProperty(key: String): String {
+    val propsFile = rootProject.file("local.properties")
+    val props = Properties()
+    if (propsFile.exists()) {
+        props.load(propsFile.inputStream())
+    }
+    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
 }

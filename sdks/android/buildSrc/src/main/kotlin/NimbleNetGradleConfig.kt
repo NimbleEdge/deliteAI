@@ -13,10 +13,6 @@ class NEGradleConfig(extra: ExtraPropertiesExtension) {
     val releaseVersion: String = extra.get("sdkReleaseVersion").toString()
     val ndkVersion: String = extra.get("ndkVersion").toString()
 
-    val awsAccessKey: String = extra.get("AWS_ACCESS_KEY_ID").toString()
-    val awsSecretKey: String = extra.get("AWS_SECRET_ACCESS_KEY").toString()
-    val awsS3Url: String = extra.get("AWS_S3_URL").toString()
-
     val compileSdk = 35
     val targetSdk = 35
     val minSdk = 31 // Update minSdk to 31 if Gemini needs to be enabled

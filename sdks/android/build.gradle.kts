@@ -58,42 +58,10 @@ allprojects {
     ext.set("cmakeArgumentsAndroid", configData["android"]?.get("cmake_args"))
     ext.set("ndkVersion", configData["android"]?.get("ndk"))
 
-    // Set AWS key and secret by taking from system env if available else take from gradle.properties
-    if (!System.getenv("AWS_ACCESS_KEY_ID").isNullOrEmpty()) {
-        ext.set("AWS_ACCESS_KEY_ID", System.getenv("AWS_ACCESS_KEY_ID"));
-    } else {
-        ext.set("AWS_ACCESS_KEY_ID", project.properties["AWS_ACCESS_KEY_ID"])
-    }
-
-    if (!System.getenv("AWS_SECRET_ACCESS_KEY").isNullOrEmpty()) {
-        ext.set("AWS_SECRET_ACCESS_KEY", System.getenv("AWS_SECRET_ACCESS_KEY"));
-    } else {
-        ext.set("AWS_SECRET_ACCESS_KEY", project.properties["AWS_SECRET_ACCESS_KEY"])
-    }
-
-    if (!System.getenv("AWS_S3_URL").isNullOrEmpty()) {
-        ext.set("AWS_S3_URL", System.getenv("AWS_S3_URL"));
-    } else {
-        ext.set("AWS_S3_URL", project.properties["AWS_S3_URL"])
-    }
-
-    val awsS3Url : String by extra(ext.get("AWS_S3_URL").toString())
-    val awsAccessKey : String by extra(ext.get("AWS_ACCESS_KEY_ID").toString())
-    val awsSecretKey : String by extra(ext.get("AWS_SECRET_ACCESS_KEY").toString())
-
     repositories {
         mavenCentral()
         gradlePluginPortal()
         google()
-        maven(url = "https://jitpack.io")
-        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
-        maven {
-            url = uri(awsS3Url)
-            credentials(AwsCredentials::class) {
-                accessKey = awsAccessKey
-                secretKey = awsSecretKey
-            }
-        }
     }
 }
 

@@ -45,7 +45,8 @@ android {
                 "ANDROID_TEST_CLIENT_SECRET",
                 "ANDROID_TEST_HOST",
                 "REMOTE_LOGGER_KEY",
-                "REMOTE_LOGGER_URL"),
+                "REMOTE_LOGGER_URL",
+            ),
             project
         )
 
@@ -90,10 +91,18 @@ android {
             repositories {
                 maven {
                     name = "deliteai_android"
-                    url = uri(neGradleConfig.awsS3Url)
+                    url = uri(getLocalProperty("AWS_S3_URL"))
                     credentials(AwsCredentials::class) {
-                        accessKey = neGradleConfig.awsAccessKey
-                        secretKey = neGradleConfig.awsSecretKey
+                        accessKey = getLocalProperty("AWS_ACCESS_KEY_ID")
+                        secretKey = getLocalProperty("AWS_SECRET_ACCESS_KEY")
+                    }
+                }
+                maven {
+                    name = "ossrh"
+                    url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+                    credentials {
+                        username = getLocalProperty("ossrhUsername")
+                        password = getLocalProperty("ossrhPassword")
                     }
                 }
             }
@@ -107,7 +116,6 @@ tasks.register("jacocoTestExternalDebugUnitTestReport", JacocoReport::class) {
 
     executionData.setFrom(fileTree(buildDir) { include("jacoco/testExternalDebugUnitTest.exec") })
 
-    // make sure to change the path here, if the flavors change
     classDirectories.setFrom(
         fileTree("$buildDir/tmp/kotlin-classes/externalDebug") {
             exclude(
@@ -175,7 +183,6 @@ tasks.withType<Test> {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
 
-// Helper function for Maven publications
 fun PublishingExtension.createMavenPublication(name: String, artifactId: String) {
     publications {
         register<MavenPublication>(name) {
@@ -188,13 +195,9 @@ fun PublishingExtension.createMavenPublication(name: String, artifactId: String)
 }
 
 ktfmt {
-    // Enforce Kotlinlang style (4-space indent, 100-column wrap)
     kotlinLangStyle()
-
     removeUnusedImports.set(true)
     manageTrailingCommas.set(true)
-
-    // Exclude generated source sets:
     srcSetPathExclusionPattern = Regex(".*generated.*")
 }
 
@@ -204,21 +207,18 @@ tasks.register("formatKotlin") {
     dependsOn("ktfmtFormat")
 }
 
-private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
-    keys: List<String>,
-    project: Project
-) {
-    keys.forEach { key ->
-        val value = project.getLocalProperty(key)
-        buildConfigField("String", key, "\"$value\"")
-    }
+tasks.register("publishProd") {
+    group = "publishing"
+    description = "Builds, signs, and uploads production artifacts to Maven Central"
+    dependsOn(
+        "publishExternalReleasePublicationToOssrhRepository"
+    )
 }
 
-private fun Project.getLocalProperty(key: String): String {
-    val propsFile = rootProject.file("local.properties")
-    val props = Properties()
-    if (propsFile.exists()) {
-        props.load(propsFile.inputStream())
-    }
-    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
+tasks.register("publishDev") {
+    group = "publishing"
+    description = "Builds, signs, and uploads development artifacts to S3"
+    dependsOn(
+        "publishInternalReleasePublicationToDeliteai_androidRepository",
+    )
 }
