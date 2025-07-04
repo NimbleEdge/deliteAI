@@ -1,0 +1,83 @@
+#!/bin/sh
+# Change s.source in NimbleNetiOS.podspec to = { :git => 'git@github.com:NimbleEdge/NimbleNetiOS.git', :tag => s.version.to_s }
+# for publishing the pod on internal org.
+
+set -eExuo pipefail
+
+uname -m
+arch
+
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+BASE_DIR=$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)
+
+usage() {
+    echo "Usage: $0 [--release]"
+    exit 1
+}
+
+target_branch="dev"
+target_source_repo="git@github.com:NimbleEdge/NimbleNetiOS.git"
+target_podspec_repo="git@github.com:NimbleEdge/NimbleSDK-Podspecs.git"
+target_dir_name="NimbleNetiOS"
+
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --release)
+            target_branch="main"
+            target_source_repo="https://github.com/NimbleEdge-Assets/NimbleSDKiOSSource"
+            target_podspec_repo="https://github.com/NimbleEdge-Assets/NimbleSDK-Podspecs"
+            target_dir_name="NimbleSDKiOSSource"
+            shift
+            ;;
+        *)
+            echo "Invalid argument: $1"
+            usage
+            ;;
+    esac
+done
+
+yaml_file="$BASE_DIR/config.yml"
+sdk_version=$(grep "sdk_version:" "$yaml_file" | awk '{print $2}' | tr -d '"')
+
+"$SCRIPT_DIR/build-nimblenet-static.sh" --Release
+
+mkdir -p $SCRIPT_DIR/release
+cd $SCRIPT_DIR/release
+
+git clone "$target_source_repo"
+git clone "$target_podspec_repo"
+
+rm -rf "$SCRIPT_DIR/release/$target_dir_name/*"
+rm -rf "$SCRIPT_DIR/release/NimbleNetiOS/nimblenet_ios"
+cp -r $BASE_DIR/sdks/ios/nimblenet_ios $BASE_DIR/sdks/ios/README.md $BASE_DIR/sdks/ios/LICENSE $BASE_DIR/sdks/ios/NimbleNetiOS.podspec "$target_dir_name"
+
+sed -i "" "s#VERSION_TO_BE_INJECTED#$sdk_version#g" "$target_dir_name/NimbleNetiOS.podspec"
+
+mkdir -p "$SCRIPT_DIR/release/NimbleSDK-Podspecs/NimbleNetiOS/$sdk_version"
+cp "$SCRIPT_DIR/release/$target_dir_name/NimbleNetiOS.podspec" "$SCRIPT_DIR/release/NimbleSDK-Podspecs/NimbleNetiOS/$sdk_version"
+
+deploy_changes() {
+    local repo_dir="$1"
+    local branch="$2"
+    local version="$3"
+
+    cd "$repo_dir" || exit
+    git add .
+    git status
+    git commit -m "release/$version"
+    git push origin "$branch" --dry-run
+    git tag "$version"
+    git push --tags --dry-run
+    cd - > /dev/null
+}
+
+echo "Target Branch: $target_branch"
+echo "Target Source Repo: $target_source_repo"
+echo "Target Podspec Repo: $target_podspec_repo"
+echo "Target Directory Name: $target_dir_name"
+
+deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
+deploy_changes "$SCRIPT_DIR/release/NimbleSDK-Podspecs" "$target_branch" "$sdk_version"
+
+cd ../../
+rm -rf "$SCRIPT_DIR/release"

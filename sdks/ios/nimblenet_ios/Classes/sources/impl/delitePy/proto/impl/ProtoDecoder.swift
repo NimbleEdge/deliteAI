@@ -69,6 +69,10 @@ struct ProtoObjectDecoder: Decoder {
         }
         return nil
     }
+    
+    mutating func handleConflictingOneOf() throws {
+        
+    }
 
     
     // MARK: - Map Fields

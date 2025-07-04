@@ -33,6 +33,8 @@ sourceControl/
 *.xcworkspace
 *.xcuserstate
 
+# nimblenet.xcfamewrok
+nimblenet_ios/Assets/nimblenet.xcframework
 
 # IDEs
 .idea/

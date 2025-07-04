@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
   # Basic Information
   s.name             = 'NimbleNetiOS'
-  s.version          = 'VERSION_TO_BE_INJECTED'
+  s.version          = '0.0.2'
   s.summary          = 'On-Device AI platform for creating delightful experiences with agentic workflows.'
 
   s.description      = <<-DESC
@@ -48,11 +48,10 @@ Pod::Spec.new do |s|
                               'nimblenet_ios/Assets/nimblenet.xcframework',
                               'nimblenet_ios/Assets/onnxruntime-genai.xcframework',
                               'nimblenet_ios/Assets/onnxruntime_extensions.xcframework',
-                              'nimblenet_ios/Assets/CrashReporter.xcframework',
                               'nimblenet_ios/Assets/LLaMARunner.xcframework'
 
   # External Dependencies
   s.dependency 'Alamofire', '~> 5.0'
   s.dependency 'SwiftProtobuf', '~> 1.18'
-
+  s.dependency 'PLCrashReporter'
 end
