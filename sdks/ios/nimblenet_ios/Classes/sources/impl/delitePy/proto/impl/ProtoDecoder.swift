@@ -71,7 +71,9 @@ struct ProtoObjectDecoder: Decoder {
     }
     
     mutating func handleConflictingOneOf() throws {
-        
+        /// Called by a `oneof` when it already has a value and is being asked to
+        /// accept a new value. Some formats require `oneof` decoding to fail in this
+        /// case.
     }
 
     
