@@ -33,7 +33,7 @@ class DownloadManager {
         let request = AF.streamRequest(url, method: HTTPMethod(rawValue: method), headers: afHeaders)
         // This creates a dispatch queue that executes tasks serially.
         // See https://developer.apple.com/documentation/dispatch/dispatchqueue/init(label:qos:attributes:autoreleasefrequency:target:)
-         let backgroundQueue = DispatchQueue(label: "com.nimbleedge.asyncDownloadQueue", qos: .background)
+         let backgroundQueue = DispatchQueue(label: "com.nimblenet.asyncDownloadQueue", qos: .background)
         request.responseStream(on: backgroundQueue) { stream in
             var currentStatus: FileDownloadStatus = DOWNLOAD_RUNNING
             
