@@ -172,7 +172,7 @@ public class NimbleNetApi{
     }
 
     //utils
-    private static func createNimbleEdgeDirectory() -> String {
+    private static func createNimbleNetDirectory() -> String {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Failed to get documents directory.")
         }
