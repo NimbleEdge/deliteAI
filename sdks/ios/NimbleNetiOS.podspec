@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
   # Basic Information
   s.name             = 'NimbleNetiOS'
-  s.version          = '0.0.2'
+  s.version          = 'VERSION_TO_BE_INJECTED'
   s.summary          = 'On-Device AI platform for creating delightful experiences with agentic workflows.'
 
   s.description      = <<-DESC
