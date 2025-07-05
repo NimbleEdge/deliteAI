@@ -7,29 +7,15 @@
 import java.io.File
 import org.yaml.snakeyaml.Yaml
 
-// TODO: (naman) cleanup this file
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    /**
-     * You should use `apply false` in the top-level build.gradle file to add
-     * a Gradle plugin as a build dependency, but not apply it to the current
-     * (root) project. You should not use `apply false` in sub-projects. For
-     * more information, see Applying external plugins with same version to
-     * subprojects.
-     */
-
-    id("com.android.application") version "8.7.3" apply false
-    id("com.android.library") version "7.4.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.6.21" apply false
-    id("org.gradle.maven-publish")
-    id("com.android.test") version "7.4.2" apply false
-    id("com.android.dynamic-feature") version "7.4.2" apply false
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" apply false
+    id(Deps.Plugins.MAVEN_PUBLISH)
+    id(Deps.Plugins.KOTLIN_COMPOSE) version Versions.COMPOSE_PLUGIN apply false
 }
 
 buildscript {
-    val compose_version by extra("1.3.0")
-    val agp_version by extra("8.7.3")
+    val compose_version by extra(Versions.COMPOSE)
+    val agp_version by extra(Versions.AGP)
     repositories {
         google()
         mavenCentral()
@@ -39,12 +25,11 @@ buildscript {
     }
 
     dependencies {
-        classpath(GradleDeps.androidBuildTools)
-        classpath(GradleDeps.kotlinGradle)
-        classpath(GradleDeps.kotlinxSerialization)
-        classpath("org.yaml:snakeyaml:2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${UtilityLibs.kotlinVersion}")
-        classpath("software.amazon.awssdk:s3:2.20.8")
+        classpath(Deps.BuildScript.ANDROID_GRADLE_PLUGIN)
+        classpath(Deps.BuildScript.KOTLIN_GRADLE_PLUGIN)
+        classpath(Deps.BuildScript.KOTLIN_SERIALIZATION)
+        classpath(Deps.BuildScript.SNAKE_YAML)
+        classpath(Deps.BuildScript.AWS_SDK)
     }
 }
 

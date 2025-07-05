@@ -1,6 +1,7 @@
 import com.android.build.api.dsl.DefaultConfig
 import org.gradle.api.GradleException
 import org.gradle.api.Project
+import java.io.File
 import java.util.Properties
 
 /**
@@ -23,3 +24,12 @@ fun Project.getLocalProperty(key: String): String {
     return props.getProperty(key)
         ?: throw GradleException("Missing local property: $key")
 }
+
+fun fetchLocalProperties(rootDir: File) =
+    File(rootDir, "local.properties").let { file ->
+        Properties().apply {
+            if (file.exists()) {
+                load(file.inputStream())
+            }
+        }
+    }

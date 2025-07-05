@@ -4,26 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import java.util.Properties
-
 val neGradleConfig = NEGradleConfig(project.extra)
-val localProperties =
-    File(rootDir, "local.properties").let { file ->
-        Properties().apply {
-            if (file.exists()) {
-                load(file.inputStream())
-            }
-        }
-    }
+val localProperties = fetchLocalProperties(rootDir)
 
 plugins {
-    id(UtilityPlugins.androidLibraryPlugin)
-    id(UtilityPlugins.mavenPublish)
-    id(UtilityPlugins.kotlinxSerialization)
-    id(UtilityPlugins.kotlinParcelize)
+    id(Deps.Plugins.ANDROID_LIBRARY)
+    id(Deps.Plugins.MAVEN_PUBLISH)
+    id(Deps.Plugins.KOTLINX_SERIALIZATION)
+    id(Deps.Plugins.KOTLIN_PARCELIZE)
 }
 
-apply(plugin = "kotlin-android")
+apply(plugin = Deps.Plugins.KOTLIN_ANDROID)
 
 android {
     namespace = "dev.deliteai.nimblenet_core"
@@ -35,7 +26,7 @@ android {
 
         ndk {
             val hasGenAi = neGradleConfig.commonCmakeArguments.any { it == "-DGENAI=1" } ||
-                    neGradleConfig.androidCmakeArguments.any { it == "-DGENAI=1" }
+                neGradleConfig.androidCmakeArguments.any { it == "-DGENAI=1" }
 
             //noinspection ChromeOsAbiSupport
             abiFilters += if (hasGenAi) {
@@ -85,59 +76,11 @@ android {
         }
     }
 
-    afterEvaluate {
-        publishing {
-            publications {
-                createMavenPublication("internalRelease", "nimblenet_core")
-                createMavenPublication("externalRelease", "nimblenet_core")
-            }
-
-            repositories {
-                maven {
-                    name = "deliteai_android"
-                    url = uri(getLocalProperty("AWS_S3_URL"))
-                    credentials(AwsCredentials::class) {
-                        accessKey = getLocalProperty("AWS_ACCESS_KEY_ID")
-                        secretKey =  getLocalProperty("AWS_SECRET_ACCESS_KEY")
-                    }
-                }
-            }
-        }
-    }
+    // Apply publishing configuration using the Publishing class
+    Publishing(project, neGradleConfig, "nimblenet_core").apply()
 
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-// Helper function for Maven publications
-fun PublishingExtension.createMavenPublication(name: String, artifactId: String) {
-    publications {
-        register<MavenPublication>(name) {
-            from(components[name])
-            groupId = "dev.deliteai"
-            this.artifactId = artifactId
-            version = neGradleConfig.releaseVersion
-        }
-    }
-}
-
-private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
-    keys: List<String>,
-    project: Project
-) {
-    keys.forEach { key ->
-        val value = project.getLocalProperty(key)
-        buildConfigField("String", key, "\"$value\"")
-    }
-}
-
-private fun Project.getLocalProperty(key: String): String {
-    val propsFile = rootProject.file("local.properties")
-    val props = Properties()
-    if (propsFile.exists()) {
-        props.load(propsFile.inputStream())
-    }
-    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
 }
