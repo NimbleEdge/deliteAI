@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import org.gradle.api.Project
 import org.gradle.api.credentials.AwsCredentials
 import org.gradle.api.publish.PublishingExtension

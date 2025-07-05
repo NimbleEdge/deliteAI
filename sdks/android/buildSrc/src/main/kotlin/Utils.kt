@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import com.android.build.api.dsl.DefaultConfig
 import org.gradle.api.GradleException
 import org.gradle.api.Project
