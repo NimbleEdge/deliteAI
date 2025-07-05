@@ -14,5 +14,8 @@ repositories {
 }
 
 dependencies {
+    //TODO:(naman) any better solution for this???
+    //need to hardcode this because we need this to compile BuildSrc
+    //depending upon the BuildSrc classes will cause circular dep
     implementation("com.android.tools.build:gradle:8.7.3")
 }
