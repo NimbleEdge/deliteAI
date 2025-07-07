@@ -21,6 +21,7 @@ plugins {
     id(UtilityPlugins.mavenPublish)
     id(UtilityPlugins.kotlinxSerialization)
     id(UtilityPlugins.kotlinParcelize)
+    id("org.jetbrains.dokka") version "1.9.10"
     id("jacoco")
     id("com.ncorti.ktfmt.gradle") version "0.22.0"
 }
@@ -39,16 +40,11 @@ android {
         consumerProguardFiles("consumer-rules.txt")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        addStringConfigsFromLocalProperties(
-            listOf(
-                "ANDROID_TEST_CLIENT_ID",
-                "ANDROID_TEST_CLIENT_SECRET",
-                "ANDROID_TEST_HOST",
-                "REMOTE_LOGGER_KEY",
-                "REMOTE_LOGGER_URL"),
-            project
+        buildConfigField(
+            "String",
+            "REMOTE_LOGGER_KEY",
+            "\"${localProperties["REMOTE_LOGGER_KEY"]}\"",
         )
-
     }
 
     buildFeatures { buildConfig = true }
@@ -204,21 +200,44 @@ tasks.register("formatKotlin") {
     dependsOn("ktfmtFormat")
 }
 
-private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
-    keys: List<String>,
-    project: Project
-) {
-    keys.forEach { key ->
-        val value = project.getLocalProperty(key)
-        buildConfigField("String", key, "\"$value\"")
+// Dokka configuration for API documentation generation
+tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
+    dokkaSourceSets {
+        named("main") {
+            displayName.set("NimbleNet Android SDK")
+
+            // Include all source directories for documentation
+            sourceRoots.from(file("src/main/kotlin"))
+
+            // Documentation and linking configuration
+            moduleName.set("NimbleNet Android SDK")
+            moduleVersion.set(neGradleConfig.releaseVersion)
+
+            // Configure API visibility
+            documentedVisibilities.set(
+                setOf(
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PUBLIC,
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED
+                )
+            )
+
+            // Package documentation - exclude implementation packages
+            perPackageOption {
+                matchingRegex.set("dev\\.deliteai\\.impl.*")
+                suppress.set(true)
+            }
+        }
     }
 }
 
-private fun Project.getLocalProperty(key: String): String {
-    val propsFile = rootProject.file("local.properties")
-    val props = Properties()
-    if (propsFile.exists()) {
-        props.load(propsFile.inputStream())
+// Custom task for generating documentation
+tasks.register("generateDocs") {
+    group = "documentation"
+    description = "Generate API documentation using Dokka"
+    dependsOn("dokkaHtml")
+
+    doLast {
+        println("✅ NimbleNet SDK documentation generated successfully!")
+        println("📁 Documentation available at: ${layout.buildDirectory.get()}/dokka/html/index.html")
     }
-    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
 }
