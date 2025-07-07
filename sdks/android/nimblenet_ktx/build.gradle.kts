@@ -72,7 +72,7 @@ android {
 
     testOptions { unitTests.isReturnDefaultValues = true }
 
-    Publishing(project, neGradleConfig, "nimblenet_ktx", includeMavenCentral = true).apply()
+    Publishing(project, neGradleConfig, "nimblenet_ktx").apply()
 }
 
 tasks.register("jacocoTestExternalDebugUnitTestReport", JacocoReport::class) {
@@ -159,22 +159,6 @@ tasks.register("formatKotlin") {
     group = "formatting"
     description = "Apply ktlint formatting to all Kotlin sources"
     dependsOn("ktfmtFormat")
-}
-
-tasks.register("publishProd") {
-    group = "publishing"
-    description = "Builds, signs, and uploads production artifacts to Maven Central"
-    dependsOn(
-        "publishExternalReleasePublicationToOssrhRepository"
-    )
-}
-
-tasks.register("publishDev") {
-    group = "publishing"
-    description = "Builds, signs, and uploads development artifacts to S3"
-    dependsOn(
-        "publishInternalReleasePublicationToDeliteai_androidRepository",
-    )
 }
 
 // Dokka configuration for API documentation generation

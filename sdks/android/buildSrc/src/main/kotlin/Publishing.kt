@@ -17,8 +17,7 @@ import org.gradle.kotlin.dsl.withType
 class Publishing(
     private val project: Project,
     private val neGradleConfig: NEGradleConfig,
-    private val artifact: String,
-    private val includeMavenCentral: Boolean = false
+    private val artifact: String
 ) {
     fun apply() {
         project.plugins.withType<MavenPublishPlugin> {
@@ -40,22 +39,20 @@ class Publishing(
                     }
                     repositories {
                         maven {
-                            name = "nimblenet"
-                            url = project.uri(project.getLocalProperty("AWS_S3_URL"))
+                            name = "dev"
+                            url = project.uri(project.getLocalProperty("AWS_S3_URL_DEV"))
                             credentials(AwsCredentials::class) {
-                                accessKey = project.getLocalProperty("AWS_ACCESS_KEY_ID")
-                                secretKey = project.getLocalProperty("AWS_SECRET_ACCESS_KEY")
+                                accessKey = project.getLocalProperty("AWS_ACCESS_KEY_ID_DEV")
+                                secretKey = project.getLocalProperty("AWS_SECRET_ACCESS_KEY_DEV")
                             }
                         }
-                        if (includeMavenCentral) {
-                            maven {
-                                name = "nimblenet"
-                                url =
-                                    project.uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
-                                credentials {
-                                    username = project.getLocalProperty("OSS_USER")
-                                    password = project.getLocalProperty("OSS_PASSWORD")
-                                }
+                        maven {
+                            name = "prod"
+                            url =
+                                project.uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+                            credentials {
+                                username = project.getLocalProperty("OSS_USER")
+                                password = project.getLocalProperty("OSS_PASSWORD")
                             }
                         }
                     }

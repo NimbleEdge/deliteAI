@@ -140,11 +140,4 @@ dependencies {
 repositories {
     google()
     mavenCentral()
-    maven {
-        url project.AWS_S3_URL
-        credentials(AwsCredentials) {
-            accessKey project.AWS_ACCESS_KEY_ID
-            secretKey project.AWS_SECRET_ACCESS_KEY
-        }
-    }
 }
