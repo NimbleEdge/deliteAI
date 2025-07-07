@@ -1,0 +1,93 @@
+name: Run Android Instrumentation Tests on Linux
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  test:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [31]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: nimbleedgedev.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Setup docker and start mock server
+        run: |
+          sudo apt install -y docker-ce docker-ce-cli
+          cd mockserver
+          docker compose up --build -d
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          cores: 4
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run tests
+        timeout-minutes: 60
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          working-directory: ./sdks/android
+          api-level: ${{ matrix.api-level }}
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          cores: 4
+          script: |
+            ./gradlew clean assembleExternalDebug
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkInIdealNetworkConditions && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkAfterInitialServerFailure && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldNeverWorkAfterThreeServerFailure && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onServerFailuresAssetDownloadShouldExactlyTryThreeTimes && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onSuccessCodeSDKShouldNotMakeExtraNetworkCalls && killall -INT crashpad_handler || true
+            ./gradlew :nimblenet_ktx:connectedExternalDebugAndroidTest && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoTest && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoAddEventTest && killall -INT crashpad_handler || true
+
+      - name: Upload Test Reports (Failure Only)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-report
+          path: "**/build/reports/androidTests/connected/**"
