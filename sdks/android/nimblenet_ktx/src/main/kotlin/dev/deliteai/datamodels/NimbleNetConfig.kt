@@ -25,7 +25,7 @@ import org.json.JSONObject
  * - [deviceId]: Unique identifier for this device
  * - [compatibilityTag]: Version compatibility identifier to identify an online deployment
  * - [libraryVariant]: Library deployment variant (static or dynamic)
- * - [debug]: Enable debug logging and diagnostics
+ * - [debug]: Enable debug logging and diagnostics for the delitePy script
  * - [sessionId]: Custom session identifier for session management of events
  * - [maxDBSizeKBs]: Database storage limit in kilobytes
  * - [maxEventsSizeKBs]: Event data storage limit in kilobytes

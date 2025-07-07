@@ -270,7 +270,7 @@ object NimbleNet {
     fun isReady(): NimbleNetResult<Unit> = safeCall { controller.isReady() }
 
     /**
-     * Restarts the current session, clearing any cached state.
+     * Restarts the current session, generates a random sessionId internally.
      *
      * @since 1.0.0
      */
