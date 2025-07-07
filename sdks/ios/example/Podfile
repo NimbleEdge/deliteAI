@@ -1,3 +1,9 @@
+# 
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+# 
+
 use_frameworks!
 use_modular_headers!
 platform :ios, '12.0'
