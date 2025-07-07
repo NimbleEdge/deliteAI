@@ -15,6 +15,7 @@ object Versions {
     const val AWS_SDK = "2.20.8"
     const val KTFMT = "0.22.0"
     const val JACOCO = "0.8.8"
+    const val DOKKA = "1.9.10"
 
     // Coroutines
     const val KOTLINX_COROUTINES_ANDROID = "1.3.3"

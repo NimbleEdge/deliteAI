@@ -14,6 +14,7 @@ plugins {
     id(Deps.Plugins.KOTLIN_PARCELIZE)
     id(Deps.Plugins.JACOCO)
     id(Deps.Plugins.KTFMT) version Versions.KTFMT
+    id(Deps.Plugins.DOKKA) version Versions.DOKKA
 }
 
 jacoco { toolVersion = Versions.JACOCO }
@@ -40,7 +41,6 @@ android {
             ),
             project
         )
-
     }
 
     buildFeatures { buildConfig = true }

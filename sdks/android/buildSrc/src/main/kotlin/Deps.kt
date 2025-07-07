@@ -14,6 +14,7 @@ object Deps {
         const val KOTLIN_COMPOSE = "org.jetbrains.kotlin.plugin.compose"
         const val JACOCO = "jacoco"
         const val KTFMT = "com.ncorti.ktfmt.gradle"
+        const val DOKKA = "org.jetbrains.dokka"
     }
 
     object BuildScript {
