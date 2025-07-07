@@ -76,8 +76,8 @@ echo "Target Source Repo: $target_source_repo"
 echo "Target Podspec Repo: $target_podspec_repo"
 echo "Target Directory Name: $target_dir_name"
 
-#deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
-#deploy_changes "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs" "$target_branch" "$sdk_version"
+deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
+deploy_changes "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs" "$target_branch" "$sdk_version"
 
 cd ../../
 rm -rf "$SCRIPT_DIR/release"
