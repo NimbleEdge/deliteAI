@@ -1,12 +1,12 @@
 
 Pod::Spec.new do |s|
   # Basic Information
-  s.name             = 'NimbleNetiOS'
+  s.name             = 'DeliteAI'
   s.version          = 'VERSION_TO_BE_INJECTED'
   s.summary          = 'On-Device AI platform for creating delightful experiences with agentic workflows.'
 
   s.description      = <<-DESC
-  **NimbleNetiOS** is a powerful **on-device AI platform** designed for developers to build
+  **DeliteAI** is a powerful **on-device AI platform** designed for developers to build
   **agentic workflows**. It empowers you to deliver secure, privacy-aware, and
   high-performance AI-native experiences and applications across various
   platforms and devices, leveraging the power of local AI inference.
@@ -38,17 +38,17 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   # Source Files and Headers
-  s.source_files = 'nimblenet_ios/Classes/**/*.{h,m,swift}'
-  s.public_header_files = 'nimblenet_ios/Classes/sources/**/*.h', 'nimblenet_ios/Classes/NimbleNetiOS.h'
+  s.source_files = 'deliteAI/Classes/**/*.{h,m,swift}'
+  s.public_header_files = 'deliteAI/Classes/sources/**/*.h', 'deliteAI/Classes/deliteAI.h'
 
   # Vendored Frameworks (Pre-compiled Binaries)
   # Ensure all paths here are correct relative to your Podspec file.
-  s.ios.preserve_paths = 'nimblenet_ios/Assets/*.xcframework'
-  s.ios.vendored_frameworks = 'nimblenet_ios/Assets/onnxruntime.xcframework',
-                              'nimblenet_ios/Assets/nimblenet.xcframework',
-                              'nimblenet_ios/Assets/onnxruntime-genai.xcframework',
-                              'nimblenet_ios/Assets/onnxruntime_extensions.xcframework',
-                              'nimblenet_ios/Assets/LLaMARunner.xcframework'
+  s.ios.preserve_paths = 'deliteAI/Assets/*.xcframework'
+  s.ios.vendored_frameworks = 'deliteAI/Assets/onnxruntime.xcframework',
+                              'deliteAI/Assets/nimblenet.xcframework',
+                              'deliteAI/Assets/onnxruntime-genai.xcframework',
+                              'deliteAI/Assets/onnxruntime_extensions.xcframework',
+                              'deliteAI/Assets/LLaMARunner.xcframework'
 
   # External Dependencies
   s.dependency 'Alamofire', '~> 5.0'

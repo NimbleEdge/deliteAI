@@ -6,9 +6,9 @@
 
 #import "NimbleNetController.h"
 #import "nimblenet.h"
-#import <NimbleNetiOS/FunctionPointersImpl.h>
+#import <DeliteAI/FunctionPointersImpl.h>
 #import <Network/Network.h>
-#import <NimbleNetiOS/NimbleNetiOS-Swift.h>
+#import <DeliteAI/DeliteAI-Swift.h>
 #import "executor_structs.h"
 #import "nimble_net_util.hpp"
 #import "nimblejson.hpp"

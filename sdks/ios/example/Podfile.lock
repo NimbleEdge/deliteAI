@@ -1,27 +1,31 @@
 PODS:
   - Alamofire (5.10.2)
-  - NimbleNetiOS (1.0.0):
-    - Alamofire
-    - SwiftProtobuf
+  - DeliteAI (0.0.2):
+    - Alamofire (~> 5.0)
+    - PLCrashReporter
+    - SwiftProtobuf (~> 1.18)
+  - PLCrashReporter (1.12.0)
   - SwiftProtobuf (1.30.0)
 
 DEPENDENCIES:
-  - NimbleNetiOS (from `../`)
+  - DeliteAI (from `../`)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - PLCrashReporter
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
-  NimbleNetiOS:
+  DeliteAI:
     :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  NimbleNetiOS: 145ebb79ec30f04bd8c5c428771676cf2f22fb53
+  DeliteAI: 0dea31baa282a1af2d1bfe9159c33fca1f215cd4
+  PLCrashReporter: db59ef96fa3d25f3650040d02ec2798cffee75f2
   SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
 
-PODFILE CHECKSUM: c617cceb90748470b5c9389e93aad3ded77f678a
+PODFILE CHECKSUM: 6bd02625405d17a8e3731b3f7ca3e5f4908b4614
 
 COCOAPODS: 1.16.2

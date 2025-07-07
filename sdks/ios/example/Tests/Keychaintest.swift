@@ -6,7 +6,7 @@
 
 import XCTest
 import Foundation
-@testable import NimbleNetiOS
+@testable import DeliteAI
 
 final class Keychaintest: XCTestCase {
     let appBundleIdentifier = "com.example.testappBundleIdentifier"

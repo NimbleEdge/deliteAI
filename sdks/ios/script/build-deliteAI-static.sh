@@ -66,5 +66,5 @@ xcodebuild -create-xcframework \
     -output nimblenet.xcframework
 
 
-cp -rf nimblenet.xcframework "$BASE_DIR/sdks/ios/nimblenet_ios/Assets"
+cp -rf nimblenet.xcframework "$BASE_DIR/sdks/ios/deliteAI/Assets"
 rm -rf nimblenet.xcframework

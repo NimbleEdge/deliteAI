@@ -5,7 +5,7 @@
  */
 
 import XCTest
-import NimbleNetiOS
+import DeliteAI
 import Foundation
 
 class runMethodInstrumentation: XCTestCase {
