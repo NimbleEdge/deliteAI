@@ -161,7 +161,7 @@ internal class NimbleNetController(
             fun isDerivedFromProtoMemberExtender(obj: Any): Boolean {
                 return try {
                     val clazz =
-                        Class.forName("dev.deliteai.impl.scriptWrappers.proto.ProtoMemberExtender")
+                        Class.forName("dev.deliteai.impl.delitePy.proto.ProtoMemberExtender")
                     clazz.isAssignableFrom(obj::class.java)
                 } catch (e: ClassNotFoundException) {
                     false

@@ -68,7 +68,7 @@ class ProtoTest(private val functionName: String, private val expectedResult: Ex
         fun initializeNimbleNet(): Unit = runBlocking(Dispatchers.Default) {
             val context =
                 InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
-            val res = NimbleNet.initialize(context, config.toString())
+            val res = NimbleNet.initialize(context, config)
             if (!res.status) throw RuntimeException("Init failed")
 
             var time = 0

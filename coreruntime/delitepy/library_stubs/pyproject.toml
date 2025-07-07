@@ -13,7 +13,7 @@ build-backend = "setuptools.build_meta"
 name = "delitepy-library-stubs"
 version = "0.1.0"
 description = "Python stubs for the DelitePy library."
-authors = [{ name = "DeliteAI Authors" }]
+authors = [{ name = "DeliteAI Authors", email = "team-opensource@nimbleedgehq.ai" }]
 requires-python = ">= 3.9"
 dependencies = []
 classifiers = [

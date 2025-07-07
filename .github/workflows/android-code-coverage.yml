@@ -1,0 +1,35 @@
+name: nimblenet_ktx code coverage
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  build-and-test:
+    if: ${{ github.event.review.state == 'approved' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Build and Test
+        run: |
+          cd sdks/android
+          ./gradlew :nimblenet_ktx:assembleExternalDebug
+          ./gradlew :nimblenet_ktx:testExternalDebugUnitTest
+          ./gradlew :nimblenet_ktx:jacocoTestReport
+
+      - name: Upload Coverage Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: |
+            sdks/android/nimblenet_ktx/build/reports/jacoco/externalDebug/html
+            sdks/android/nimblenet_ktx/build/reports/jacoco/externalDebug/jacoco.xml

@@ -6,10 +6,10 @@
 
 package dev.deliteai
 
-import dev.deliteai.controllers.InternalTaskController
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.impl.DependencyContainer
 import android.app.Application
+import dev.deliteai.impl.controllers.InternalTaskController
 
 object NimbleNetInternal {
     @Volatile private lateinit var controller: InternalTaskController
