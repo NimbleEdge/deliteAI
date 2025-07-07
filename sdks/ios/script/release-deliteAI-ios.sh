@@ -39,7 +39,7 @@ done
 yaml_file="$BASE_DIR/config.yml"
 sdk_version=$(grep "sdk_version:" "$yaml_file" | awk '{print $2}' | tr -d '"')
 
-"$SCRIPT_DIR/build-nimblenet-static.sh" --Release
+"$SCRIPT_DIR/build-deliteAI-static.sh" --Release
 
 mkdir -p $SCRIPT_DIR/release
 cd $SCRIPT_DIR/release
@@ -76,8 +76,8 @@ echo "Target Source Repo: $target_source_repo"
 echo "Target Podspec Repo: $target_podspec_repo"
 echo "Target Directory Name: $target_dir_name"
 
-deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
-deploy_changes "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs" "$target_branch" "$sdk_version"
+#deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
+#deploy_changes "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs" "$target_branch" "$sdk_version"
 
 cd ../../
 rm -rf "$SCRIPT_DIR/release"
