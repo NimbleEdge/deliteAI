@@ -21,9 +21,9 @@ plugins {
     id(UtilityPlugins.mavenPublish)
     id(UtilityPlugins.kotlinxSerialization)
     id(UtilityPlugins.kotlinParcelize)
-    id("org.jetbrains.dokka") version "1.9.10"
     id("jacoco")
     id("com.ncorti.ktfmt.gradle") version "0.22.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 }
 
 jacoco { toolVersion = "0.8.8" }
@@ -40,11 +40,17 @@ android {
         consumerProguardFiles("consumer-rules.txt")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField(
-            "String",
-            "REMOTE_LOGGER_KEY",
-            "\"${localProperties["REMOTE_LOGGER_KEY"]}\"",
+        addStringConfigsFromLocalProperties(
+            listOf(
+                "ANDROID_TEST_CLIENT_ID",
+                "ANDROID_TEST_CLIENT_SECRET",
+                "ANDROID_TEST_HOST",
+                "REMOTE_LOGGER_KEY",
+                "REMOTE_LOGGER_URL"
+            ),
+            project
         )
+
     }
 
     buildFeatures { buildConfig = true }
@@ -198,6 +204,25 @@ tasks.register("formatKotlin") {
     group = "formatting"
     description = "Apply ktlint formatting to all Kotlin sources"
     dependsOn("ktfmtFormat")
+}
+
+private fun com.android.build.api.dsl.DefaultConfig.addStringConfigsFromLocalProperties(
+    keys: List<String>,
+    project: Project
+) {
+    keys.forEach { key ->
+        val value = project.getLocalProperty(key)
+        buildConfigField("String", key, "\"$value\"")
+    }
+}
+
+private fun Project.getLocalProperty(key: String): String {
+    val propsFile = rootProject.file("local.properties")
+    val props = Properties()
+    if (propsFile.exists()) {
+        props.load(propsFile.inputStream())
+    }
+    return props.getProperty(key) ?: throw GradleException("Missing local property: $key")
 }
 
 // Dokka configuration for API documentation generation
