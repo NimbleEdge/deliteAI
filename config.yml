@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+common:
+  sdk_version: "0.1.0-dev"
+  cmake_args: "-DONNX_EXECUTOR=1 -DONNXGENAI_EXECUTOR=1 -DCMAKE_BUILD_TYPE=Debug -DSCRIPTING=1 -DNOSQL=1 -DTESTING=0 -DGENAI=1 -DORT_EXTENSIONS=1 -DREGEX_ENABLED=1 -DJNITESTING=0"
+
+android:
+  ndk: "25.1.8937393"
+  cmake_args: "-DANDROID_STL=c++_shared -DEXECUTORCH_EXECUTOR=0 -DONNXBuild=1_21_0_full -DONNXgenai=0_7_0_onnx_genai -DONNXext=0_13_0_ort_extensions -DMINIMAL_BUILD=0 -DExecutorchgenai=d4906e21_executorch -DGEMINI=1"
+
+ios:
+  cmake_args: "-DIOS=1 -DONNXBuild=1_21_0_ios_full -DONNXgenai=0_7_0_ios_onnx-genai -DONNXext=0_13_0_ort_extension -DMINIMAL_BUILD=0"
+
+react:
+  ndk: "21.4.7075529"
+  cmake_args: "-DMINIMAL_BUILD=0"
+
+simulator:
+  cmake_args: "-DCMAKE_BUILD_TYPE=Debug -DMINIMAL_BUILD=0"

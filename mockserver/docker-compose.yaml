@@ -1,0 +1,84 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d mds" ]
+      interval: 2s
+      timeout: 2s
+      retries: 3
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mds
+
+  dms:
+    image: deliteai.azurecr.io/asset-delivery-mock-service:5.0.0
+    container_name: dms_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./config_dms.yaml:/app/configs/config.yaml
+      - local_storage:/tmp/mds/remote
+      - local_secrets:/tmp/mds/secrets
+    working_dir: /app
+    command: [ "/bin/mds", "--config", "/app/configs" ]
+
+  mds:
+    image: deliteai.azurecr.io/asset-delivery-mock-service:5.0.0
+    container_name: mds_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./config_mds.yaml:/app/configs/config.yaml
+      - local_storage:/tmp/mds/remote
+      - local_secrets:/tmp/mds/secrets
+    working_dir: /app
+    command: [ "/bin/mds", "--config", "/app/configs" ]
+
+  ingestor:
+    image: timberio/vector:0.40.0-alpine
+    container_name: ingestor_service
+    restart: unless-stopped
+    environment:
+      API_KEY: apikey
+    volumes:
+      - ./config_ingestor.yaml:/etc/vector/vector.yaml
+      - ./ingestion_events/:/tmp/ingestor/
+
+  logger:
+    image: timberio/vector:0.40.0-alpine
+    container_name: logger_service
+    restart: unless-stopped
+    environment:
+      API_KEY: apikey
+    volumes:
+      - ./config_logger.yaml:/etc/vector/vector.yaml
+      - ./sdk_logs/:/tmp/logger/
+
+  mock_server:
+    build: .
+    container_name: mock_server
+    environment:
+      REMOTE_MDS_URL: http://mds:8080
+      REMOTE_DMS_URL: http://dms:8080
+      LOGGER_URL: http://logger:8080/v2
+      EXTERNAL_LOGGER_URL: http://ingestor:8080/v1/ingest
+    ports:
+      - "8080:8080"
+    stop_signal: SIGINT
+    volumes:
+      - ./ingestion_events/:/tmp/ingestor/
+      - ./sdk_logs/:/tmp/logger/
+
+volumes:
+  local_storage:
+  local_secrets:

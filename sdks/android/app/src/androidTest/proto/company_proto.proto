@@ -1,0 +1,61 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+syntax = "proto3";
+
+package generated;
+
+import "google/protobuf/any.proto";
+
+option java_package = "generated";
+option java_multiple_files = true;  // Generates separate classes instead of a single outer class
+
+message Address {
+    string street = 1;
+    string city = 2;
+    string state = 3;
+    string zip_code = 4;
+    map<string, string> additional_info = 5; // Stores extra details about the address
+    repeated int32 buildings = 6;
+}
+
+message EmailAddress {
+    string email = 1;
+}
+
+message Company {
+    string company_id = 1;
+    string company_name = 2;
+    repeated Department departments = 3;
+    bool global = 4;
+    repeated int32 office_pincodes= 5;
+
+    message Department {
+        int64 department_id = 1;
+        string department_name = 2;
+        repeated Employee employees = 3;
+        float revenue = 4;
+
+        message Employee {
+            string employee_id = 1;
+            string name = 2;
+            optional string title = 3;
+            ContactInfo contact_info = 4;
+            repeated Project projects = 5;
+
+            message ContactInfo {
+                string phone = 1;
+                google.protobuf.Any address = 2;
+            }
+
+            message Project {
+                string project_id = 1;
+                string project_name = 2;
+                string role = 3;
+            }
+        }
+    }
+}

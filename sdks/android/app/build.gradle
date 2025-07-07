@@ -1,0 +1,150 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlin.plugin.compose"
+}
+
+def executedTask = gradle.startParameter.taskNames.toString()
+def localProps = new Properties()
+localProps.load(new FileInputStream(rootProject.file("local.properties")))
+
+Properties localProperties = new Properties()
+def propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    localProperties.load(new FileInputStream(propertiesFile))
+}
+
+android {
+    signingConfigs {
+        externalRelease {
+            storeFile file(localProperties.getProperty('storeFile'))
+            storePassword localProperties.getProperty('storePassword')
+            keyPassword localProperties.getProperty('keyPassword')
+            keyAlias localProperties.getProperty('keyAlias')
+        }
+    }
+
+    namespace 'dev.deliteai.android.sampleapp'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "dev.deliteai.android.sampleapp"
+        minSdk 31
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.externalRelease
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        buildConfigField "String", "APP_CLIENT_ID", "\"${localProps['APP_CLIENT_ID']}\""
+        buildConfigField "String", "APP_CLIENT_SECRET", "\"${localProps['APP_CLIENT_SECRET']}\""
+        buildConfigField "String", "APP_HOST", "\"${localProps['APP_HOST']}\""
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.externalRelease
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            versionNameSuffix "-debug"
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    flavorDimensions += "default"
+    productFlavors {
+        internal {
+            dimension "default"
+        }
+        external {
+            dimension "default"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+        compose true
+        buildConfig true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+        exclude 'META-INF/*'
+    }
+}
+
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.3.1'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.compose.material3:material3:1.0.0-alpha11'
+
+    implementation project(':nimblenet_core')
+    implementation project(':nimblenet_ktx')
+
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation "androidx.profileinstaller:profileinstaller:1.3.0-alpha03"
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(UtilityLibs.okhttp)
+
+    implementation("com.google.protobuf:protobuf-java:3.25.2")
+    implementation("com.google.protobuf:protobuf-java-util:3.25.2")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url project.AWS_S3_URL
+        credentials(AwsCredentials) {
+            accessKey project.AWS_ACCESS_KEY_ID
+            secretKey project.AWS_SECRET_ACCESS_KEY
+        }
+    }
+}
