@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "ai.nimbleedge.examples"
+    namespace = "dev.deliteai.examples"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "ai.nimbleedge.examples"
+        applicationId = "dev.deliteai.examples"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

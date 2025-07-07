@@ -7,7 +7,7 @@
 
     <application>
         <service
-            android:name="ai.nimbleedge.notifications_summarizer.impl.notification.NotificationListener"
+            android:name="dev.deliteai.notifications_summarizer.impl.notification.NotificationListener"
             android:label="Notification Listener"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:exported="true">

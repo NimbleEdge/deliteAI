@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "ai.nimbleedge.notifications_summarizer"
+    namespace = "dev.deliteai.notifications_summarizer"
     compileSdk = 34
 
     defaultConfig {
@@ -50,8 +50,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    api("ai.nimbleedge:nimblenet_ktx:5.0.0-dev")
-    api("ai.nimbleedge:nimblenet_core:5.0.0-dev")
+    api("dev.deliteai:nimblenet_ktx:5.0.0-dev")
+    api("dev.deliteai:nimblenet_core:5.0.0-dev")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
