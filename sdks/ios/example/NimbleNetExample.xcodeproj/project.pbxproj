@@ -60,9 +60,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* RuntaskInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntaskInstrumentation.swift; sourceTree = "<group>"; };
 		894C59412E164D8A001CF7CA /* BundleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleConfig.swift; sourceTree = "<group>"; };
+		894C59642E1818E4001CF7CA /* NimbleNetExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NimbleNetExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		9FCEA74EEEB0E964DAAA3EB5 /* Pods_NimbleNetExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC08B5B7E1F463DC39796E39 /* NimbleNetiOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = NimbleNetiOS.podspec; path = ../NimbleNetiOS.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		C763B6852B6BA21B00D4C7D0 /* nimblenet_ios_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nimblenet_ios_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF6ED17F51459EFD0732BE8D /* Pods_NimbleNetExample_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = company_proto.pb.swift; sourceTree = "<group>"; };
 		F13F5E8B2DB77874005B44F0 /* nimblenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nimblenet.xcframework; path = ../nimblenet_ios/Assets/nimblenet.xcframework; sourceTree = "<group>"; };
@@ -126,10 +126,10 @@
 				F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				894C59642E1818E4001CF7CA /* NimbleNetExample-Bridging-Header.h */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				C763B6852B6BA21B00D4C7D0 /* nimblenet_ios_Example-Bridging-Header.h */,
 			);
 			path = NimbleNetExample;
 			sourceTree = "<group>";

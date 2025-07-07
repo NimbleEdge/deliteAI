@@ -48,11 +48,10 @@ Pod::Spec.new do |s|
                               'nimblenet_ios/Assets/nimblenet.xcframework',
                               'nimblenet_ios/Assets/onnxruntime-genai.xcframework',
                               'nimblenet_ios/Assets/onnxruntime_extensions.xcframework',
-                              'nimblenet_ios/Assets/CrashReporter.xcframework',
                               'nimblenet_ios/Assets/LLaMARunner.xcframework'
 
   # External Dependencies
   s.dependency 'Alamofire', '~> 5.0'
   s.dependency 'SwiftProtobuf', '~> 1.18'
-
+  s.dependency 'PLCrashReporter'
 end
