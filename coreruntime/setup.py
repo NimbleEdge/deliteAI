@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
 from setuptools import setup, find_packages
 from setuptools.dist import Distribution
 import glob

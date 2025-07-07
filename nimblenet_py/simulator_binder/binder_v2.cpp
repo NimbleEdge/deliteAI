@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <pybind11/embed.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -11,6 +17,7 @@
 #include "nlohmann/json.hpp"
 #include "simulator_utils.hpp"
 #include "task_input_structs.hpp"
+
 namespace py = pybind11;
 using namespace py::literals;
 

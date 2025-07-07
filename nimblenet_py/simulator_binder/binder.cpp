@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -13,6 +19,7 @@
 #include "nlohmann/json.hpp"
 #include "simulator_utils.hpp"
 #include "task_input_structs.hpp"
+
 namespace py = pybind11;
 
 template <typename T>
@@ -322,7 +329,7 @@ PYBIND11_MODULE(simulator, m) {
         - add_user_events
         - get_inference
         - run_method
-        - UserInput 
+        - UserInput
         - InputData
         - UserReturn
         )";
@@ -336,7 +343,7 @@ PYBIND11_MODULE(simulator, m) {
     Return value :
     Int : If success then return 1.
 
-    Exceptions : 
+    Exceptions :
     RunTimeError : If config file could not opened or found.
     RunTimeError : If config could not be parsed.
   )",
@@ -346,7 +353,7 @@ PYBIND11_MODULE(simulator, m) {
     Function to load model.
 
     Attributes :
-    modelFilePath : file path where model is stored 
+    modelFilePath : file path where model is stored
     inferenceConfigFilePath : file path where model config is stored (optional, only required if workflow script is not used)
     modelId : model id
 
@@ -355,7 +362,6 @@ PYBIND11_MODULE(simulator, m) {
 
     Exceptions :
     RunTimeError : model or config could not be parsed or loaded
-    
   )",
         py::arg("modelFilePath"), py::arg("inferenceConfigFilePath") = nullptr, py::arg("modelId"),
         py::arg("epConfigJsonChar") = nullptr);
@@ -372,7 +378,6 @@ PYBIND11_MODULE(simulator, m) {
 
     Exceptions :
     RunTimeError : File could not be read or events could not be successfully parsed.
-    
   )",
         py::arg("userEvents"), py::arg("tableName"));
 
@@ -388,7 +393,6 @@ PYBIND11_MODULE(simulator, m) {
 
     Exceptions :
     RunTimeError : File could not be read or events could not be successfully parsed.
-
   )",
         py::arg("userEvents"), py::arg("tableName"));
 
@@ -404,7 +408,6 @@ PYBIND11_MODULE(simulator, m) {
 
     Exceptions :
     RunTimeError : File could not be read or events could not be successfully parsed.
-
   )",
         py::arg("userEvents"), py::arg("tableName"));
 
