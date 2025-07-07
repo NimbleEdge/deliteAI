@@ -7,7 +7,7 @@
 package ai.nimbleedge.examples
 
 import ai.nimbleedge.examples.ui.theme.ExamplesTheme
-import ai.nimbleedge.notifications_summarizer.api.NotificationsSummarizerAgent
+import ai.nimbleedge.notifications_summarizer.NotificationsSummarizerAgent
 import android.Manifest
 import android.app.AlarmManager
 import android.app.Application

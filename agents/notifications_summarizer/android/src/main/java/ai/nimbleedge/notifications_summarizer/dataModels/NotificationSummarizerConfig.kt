@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.notifications_summarizer.api.dataModels
+package ai.nimbleedge.notifications_summarizer.dataModels
 
 data class NotificationSummarizerConfig(
     val onScheduledSummaryReady: (notificationSummary: NotificationSummary?) -> Unit,

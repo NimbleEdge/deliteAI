@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-
-from nimbleedge import ne_re as re
-from nimbleedge import nimblenet as nm
+from delitepy import ne_re as re
+from delitepy import nimblenet as nm
 
 hardware_info = nm.get_hardware_info()
 num_cores = int(hardware_info["numCores"])
@@ -26,10 +24,6 @@ MAX_CHARS_PER_NOTIFICATION = 2000  # kept in case you want to pre-truncate
 
 @concurrent
 def get_output_from_llm(message):
-    """
-    Always prepend SYSTEM_PROMPT, append PROMPT_END + ASSISTANT_RESPONSE_BEGIN,
-    then stream until done. Return the plain text output.
-    """
     output = ""
     final_prompt = SYSTEM_PROMPT + USER_PROMPT_BEGIN + message + PROMPT_END + ASSISTANT_RESPONSE_BEGIN
     print("final_prompt:", final_prompt)

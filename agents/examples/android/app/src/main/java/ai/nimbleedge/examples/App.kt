@@ -8,8 +8,8 @@ package ai.nimbleedge.examples
 
 import ai.nimbleedge.NimbleNet
 import ai.nimbleedge.datamodels.NimbleNetConfig
-import ai.nimbleedge.notifications_summarizer.api.NotificationsSummarizerAgent
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
+import ai.nimbleedge.notifications_summarizer.NotificationsSummarizerAgent
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummarizerConfig
 import ai.nimbleedge.utils.NIMBLENET_VARIANTS
 import android.app.Application
 import android.util.Log
@@ -36,14 +36,14 @@ class App : Application() {
             copyEspeakDataIfNeeded(application, "espeak-ng-data")
 
             val nimbleConfig = NimbleNetConfig(
-            clientId = "d-ai-sample",
-            host = "https://api.delite.ai",
-            deviceId = "test-device",
-            clientSecret = "secret_value",
-            debug = true,
-            compatibilityTag = "agent_notification_summarizer",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC
-        )
+                clientId = "d-ai-sample",
+                host = "https://api.delite.ai",
+                deviceId = "test-device",
+                clientSecret = "secret_value",
+                debug = true,
+                compatibilityTag = "agent_notification_summarizer",
+                libraryVariant = NIMBLENET_VARIANTS.STATIC
+            )
 
             val res = NimbleNet.initialize(application, nimbleConfig)
             check(res.status)

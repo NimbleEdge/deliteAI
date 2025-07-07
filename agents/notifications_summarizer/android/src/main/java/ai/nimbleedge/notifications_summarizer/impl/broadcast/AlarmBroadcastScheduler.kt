@@ -6,10 +6,8 @@
 
 package ai.nimbleedge.notifications_summarizer.impl.broadcast
 
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummarizerConfig
 import ai.nimbleedge.notifications_summarizer.impl.common.Constants.ACTION_NOTIFICATION_SUMMARIZER_ALARM
-import ai.nimbleedge.notifications_summarizer.impl.common.Constants.EXTRA_AUTO_PLAY
-import ai.nimbleedge.notifications_summarizer.impl.common.Constants.EXTRA_TAP_INTENT
 import android.app.AlarmManager
 import android.app.Application
 import android.app.PendingIntent

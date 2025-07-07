@@ -6,7 +6,7 @@
 
 package ai.nimbleedge.notifications_summarizer.impl
 
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummarizerConfig
 import ai.nimbleedge.notifications_summarizer.impl.broadcast.AlarmBroadcastScheduler
 import ai.nimbleedge.notifications_summarizer.impl.data.local.DB
 import ai.nimbleedge.notifications_summarizer.impl.data.local.NotificationSummaryDao

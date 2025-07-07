@@ -6,7 +6,7 @@
 
 package ai.nimbleedge.notifications_summarizer.impl
 
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummary
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummary
 import ai.nimbleedge.notifications_summarizer.impl.data.local.toNotificationSummary
 import ai.nimbleedge.notifications_summarizer.impl.notification.NotificationListener
 import java.time.LocalDate

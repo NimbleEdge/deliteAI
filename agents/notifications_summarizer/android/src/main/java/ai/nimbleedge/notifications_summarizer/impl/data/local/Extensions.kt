@@ -6,7 +6,7 @@
 
 package ai.nimbleedge.notifications_summarizer.impl.data.local
 
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummary
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummary
 
 
 fun NotificationSummaryEntity.toNotificationSummary(): NotificationSummary = NotificationSummary(

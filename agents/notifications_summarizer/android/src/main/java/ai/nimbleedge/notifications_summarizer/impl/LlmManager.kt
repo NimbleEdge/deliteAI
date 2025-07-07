@@ -8,7 +8,7 @@ package ai.nimbleedge.notifications_summarizer.impl
 
 import ai.nimbleedge.NimbleNet
 import ai.nimbleedge.datamodels.NimbleNetTensor
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummary
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummary
 import ai.nimbleedge.notifications_summarizer.impl.notification.dataModels.NotificationSnapshot
 import ai.nimbleedge.utils.DATATYPE
 import org.json.JSONArray

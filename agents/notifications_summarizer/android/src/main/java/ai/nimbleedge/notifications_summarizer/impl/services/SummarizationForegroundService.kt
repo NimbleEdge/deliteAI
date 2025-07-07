@@ -6,7 +6,7 @@
 
 package ai.nimbleedge.notifications_summarizer.impl.services
 
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummarizerConfig
 import ai.nimbleedge.notifications_summarizer.impl.DependencyContainer
 import ai.nimbleedge.notifications_summarizer.impl.LlmManager
 import ai.nimbleedge.notifications_summarizer.impl.common.Constants.TAG

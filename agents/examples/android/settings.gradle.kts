@@ -22,12 +22,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = "s3://nimblesdk-aar-test.s3.ap-south-1.amazonaws.com") {
-            credentials(AwsCredentials::class) {
-                accessKey = "AKIATVLEHMTQA6G557EQ"
-                secretKey = "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"
-            }
-        }
     }
 }
 

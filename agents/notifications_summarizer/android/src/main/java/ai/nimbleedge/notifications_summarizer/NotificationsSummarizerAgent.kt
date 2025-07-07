@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ai.nimbleedge.notifications_summarizer.api
+package ai.nimbleedge.notifications_summarizer
 
 import ai.nimbleedge.NimbleNet
 import ai.nimbleedge.datamodels.NimbleNetError
 import ai.nimbleedge.datamodels.NimbleNetResult
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummarizerConfig
-import ai.nimbleedge.notifications_summarizer.api.dataModels.NotificationSummary
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummarizerConfig
+import ai.nimbleedge.notifications_summarizer.dataModels.NotificationSummary
 import ai.nimbleedge.notifications_summarizer.impl.Controller
 import ai.nimbleedge.notifications_summarizer.impl.DependencyContainer
 import ai.nimbleedge.notifications_summarizer.impl.common.Constants.TAG
