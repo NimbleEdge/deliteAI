@@ -16,13 +16,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: Log in to ACR
-        uses: azure/docker-login@v1
-        with:
-          login-server: nimbleedgedev.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
       - name: Setup docker and start mock server
         run: |
           sudo apt install -y docker-ce docker-ce-cli
