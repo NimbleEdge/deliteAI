@@ -40,10 +40,10 @@ class Publishing(
                     repositories {
                         maven {
                             name = "dev"
-                            url = project.uri(project.getLocalProperty("AWS_S3_URL_DEV"))
+                            url = project.uri(project.getLocalProperty("ANDROID_DEV_AWS_S3_URL"))
                             credentials(AwsCredentials::class) {
-                                accessKey = project.getLocalProperty("AWS_ACCESS_KEY_ID_DEV")
-                                secretKey = project.getLocalProperty("AWS_SECRET_ACCESS_KEY_DEV")
+                                accessKey = project.getLocalProperty("ANDROID_DEV_AWS_ACCESS_KEY_ID")
+                                secretKey = project.getLocalProperty("ANDROID_DEV_AWS_SECRET_ACCESS_KEY")
                             }
                         }
                         maven {
