@@ -62,7 +62,7 @@ setup(
     name='nimbleedge',
     version=get_version(),
     author="DeliteAI Authors",
-    author_email="",
+    author_email="team-opensource@nimbleedgehq.ai",
     description='Python package to simulate the functionailties of NimbleSDK',
     long_description="Python package to simulate the functionailties of NimbleSDK.",
     packages=find_packages(),
