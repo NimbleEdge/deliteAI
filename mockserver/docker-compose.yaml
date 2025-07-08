@@ -17,7 +17,7 @@ services:
       POSTGRES_DB: mds
 
   dms:
-    image: deliteai.azurecr.io/asset-delivery-mock-service:5.0.0
+    image: deliteai.azurecr.io/asset-management-mock-service:5.0.0
     container_name: dms_service
     depends_on:
       postgres:

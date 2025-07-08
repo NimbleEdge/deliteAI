@@ -1,0 +1,26 @@
+{
+  "tier_config": {
+    "tier_1": {
+      "min_multi_core_score": 2500,
+      "min_ram": 8,
+      "min_num_cores": 8
+    },
+    "tier_2": {
+      "min_multi_core_score": 1800,
+      "min_ram": 4,
+      "min_num_cores": 4
+    }
+  },
+  "historical_benchmarks": [
+    {
+      "device": "Oppo Find X8 Pro",
+      "chipset": "MediaTek Dimensity 9400",
+      "multi_core_score": 8082
+    },
+    {
+      "device": "Asus Zenfone 11 Ultra",
+      "chipset": "Qualcomm Snapdragon 8 Gen 3",
+      "multi_core_score": 6787
+    }
+  ]
+}

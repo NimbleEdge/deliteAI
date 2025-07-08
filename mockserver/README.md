@@ -4,7 +4,7 @@
     ```
     python3 coreruntime/tests/utils/download_from_s3.py \
         --default_bucket deliteai \
-        --prefix assets/tests/llms/Llama-3.2-1B \
+        --prefix build-dependencies/llama-3.2-1B/onnx \
         --output mockserver/mockserver_assets/llama-3 \
         --archive_output True
     ```
