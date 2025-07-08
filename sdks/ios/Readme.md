@@ -10,15 +10,15 @@
 
 ## 🧭 Navigation
 
-* **Integrating DeliteAI into Your Project**: If you want to integrate the DeliteAI iOS SDK into your existing application.
+* **Integrating DeliteAI iOS SDK into Your Project**: If you want to integrate the DeliteAI iOS SDK into your existing application.
     * [Installation](#-installation)
-    * [Integrating DeliteAI in Code](#-integrating-deliteai-in-code)
-* **Local Development & Testing**: If you want to run the SDK locally via the example app or execute its unit tests.
+    * [Integrating DeliteAI iOS SDK in Code](#-integrating-deliteai-in-code)
+* **Local Development & Testing**: If you want to run the iOS SDK locally via the example app or execute its unit tests.
     * [Running the Example App Locally](#-running-the-example-app-locally)
     * [Running Unit Tests](#-running-unit-tests)
 
 
-# Integrating DeliteAI into Your Project
+# Integrating DeliteAI iOS SDK into Your Project
 
 This section guides you through the process of adding the DeliteAI iOS SDK to your application and making your first API calls.
 
@@ -51,7 +51,7 @@ DeliteAI iOS SDK is available as a CocoaPod. To integrate it into your Xcode pro
 
 3.  Open the generated `.xcworkspace` file in Xcode.
 
-## 📦 Integrating DeliteAI in Code
+## 📦 Integrating DeliteAI iOS SDK in Code
 
 Once you’ve installed the SDK, follow the steps below to integrate DeliteAI into your app code.
 
