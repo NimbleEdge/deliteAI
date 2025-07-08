@@ -11,6 +11,7 @@ example/Podfile.lock
 script/build_os64
 script/build_simulator
 script/exposed_header
+script/release
 
 # Archives
 *.xcarchive
@@ -34,7 +35,7 @@ sourceControl/
 *.xcuserstate
 
 # nimblenet.xcfamewrok
-nimblenet_ios/Assets/nimblenet.xcframework
+deliteAI/Assets/nimblenet.xcframework
 
 # IDEs
 .idea/

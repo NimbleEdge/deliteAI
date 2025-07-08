@@ -4,6 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
  
-#if __has_include("NimbleNetiOS-umbrella.h")
-#import "NimbleNetiOS-umbrella.h"
+#if __has_include("DeliteAI-umbrella.h")
+#import "DeliteAI-umbrella.h"
 #endif

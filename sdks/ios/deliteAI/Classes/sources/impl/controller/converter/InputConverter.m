@@ -5,7 +5,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <NimbleNetiOS/NimbleNetiOS-Swift.h>
+#import <DeliteAI/DeliteAI-Swift.h>
 #import "nimblejson.hpp"
 #import "executor_structs.h"
 #import "InputConverter.h"

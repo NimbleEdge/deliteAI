@@ -7,6 +7,8 @@
 <div align="center">
   <a href="https://discord.gg/y8WkMncstk"><img src="https://img.shields.io/badge/Discord-Join%20Us-purple?logo=discord&logoColor=white&style=for-the-badge"
 alt="Join us on Discord"></a>
+  <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
+alt="Try out fully on-device AI Assistant"></a>
   <hr>
 </div>
 
@@ -36,8 +38,13 @@ across multiple platforms and devices.
 - Flexible runtime support (ONNX or ExecuTorch)
 
 ## Getting Started
+To get started you can:
+- Follow the steps in [coreruntime](coreruntime/README.md) to build and test the core C++ SDK with Python bindings
+- Build and try out the [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) SDK and sample app
+- Explore the available agents in the [agents](agents) directory.
 
-[Coming Soon]
+Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it
+all in action.
 
 ## Documentation
 

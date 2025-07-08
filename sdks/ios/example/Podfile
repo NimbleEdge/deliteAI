@@ -1,22 +1,16 @@
-# 
-# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
-#
-# SPDX-License-Identifier: Apache-2.0
-# 
-
 use_frameworks!
 use_modular_headers!
 platform :ios, '12.0'
 
 target 'NimbleNetExample' do
   
-  pod 'NimbleNetiOS', :path => '../'
+  pod 'DeliteAI', :path => '../'
 end
 
 target 'NimbleNetExample_Tests' do
   inherit! :search_paths
 
-  pod 'NimbleNetiOS', :path => '../'
+  pod 'DeliteAI', :path => '../'
 end
 
 post_install do |installer|

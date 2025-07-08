@@ -5,7 +5,7 @@
  */
 
 import UIKit
-import NimbleNetiOS
+import DeliteAI
 import SwiftProtobuf
 
 class ViewController: UIViewController {

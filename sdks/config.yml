@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 common:
-  sdk_version: "0.1.0-dev"
+  sdk_version: "0.0.1-dev-1751904491"
   cmake_args: "-DONNX_EXECUTOR=1 -DONNXGENAI_EXECUTOR=1 -DCMAKE_BUILD_TYPE=Debug -DSCRIPTING=1 -DNOSQL=1 -DTESTING=0 -DGENAI=1 -DORT_EXTENSIONS=1 -DREGEX_ENABLED=1 -DJNITESTING=0"
 
 android:

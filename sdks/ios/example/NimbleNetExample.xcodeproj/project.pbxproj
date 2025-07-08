@@ -47,8 +47,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		44117BB2F6DA5A320C641AE8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample_Tests.release.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4F98A08D52D67F85C49C33B3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		53C0DE2D56DD10C721CBA2CE /* Pods-NimbleNetExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample.debug.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* NimbleNetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbleNetExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,8 +63,10 @@
 		607FACEB1AFB9204008FA782 /* RuntaskInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntaskInstrumentation.swift; sourceTree = "<group>"; };
 		894C59412E164D8A001CF7CA /* BundleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleConfig.swift; sourceTree = "<group>"; };
 		894C59642E1818E4001CF7CA /* NimbleNetExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NimbleNetExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		89709EC52E1C537D00AC6E95 /* DeliteAI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = DeliteAI.podspec; path = ../DeliteAI.podspec; sourceTree = SOURCE_ROOT; };
+		89709EC82E1C53A300AC6E95 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/nimbleedgeadmin/Desktop/NimbleEdge/folk/deliteAI/LICENSE; sourceTree = "<absolute>"; };
+		92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample.release.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample.release.xcconfig"; sourceTree = "<group>"; };
 		9FCEA74EEEB0E964DAAA3EB5 /* Pods_NimbleNetExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC08B5B7E1F463DC39796E39 /* NimbleNetiOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = NimbleNetiOS.podspec; path = ../NimbleNetiOS.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CF6ED17F51459EFD0732BE8D /* Pods_NimbleNetExample_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = company_proto.pb.swift; sourceTree = "<group>"; };
 		F13F5E8B2DB77874005B44F0 /* nimblenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nimblenet.xcframework; path = ../nimblenet_ios/Assets/nimblenet.xcframework; sourceTree = "<group>"; };
@@ -98,6 +102,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5CF5D3A16D8FF82F91769118 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				53C0DE2D56DD10C721CBA2CE /* Pods-NimbleNetExample.debug.xcconfig */,
+				92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */,
+				3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */,
+				4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +121,7 @@
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				A468A82C7A37DD62AFD7EF85 /* Frameworks */,
+				5CF5D3A16D8FF82F91769118 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,9 +180,9 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				AC08B5B7E1F463DC39796E39 /* NimbleNetiOS.podspec */,
+				89709EC82E1C53A300AC6E95 /* LICENSE */,
+				89709EC52E1C537D00AC6E95 /* DeliteAI.podspec */,
 				4F98A08D52D67F85C49C33B3 /* README.md */,
-				44117BB2F6DA5A320C641AE8 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -202,6 +218,7 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				490D44DC2E0A863B00883473 /* Embed Frameworks */,
 				872BCDDCDF40E59CAE2FC90B /* [CP] Embed Pods Frameworks */,
+				170DBA0FCAFC583FC3F63235 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -221,6 +238,7 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				B29575F5C065E4865174530E /* [CP] Embed Pods Frameworks */,
+				205F9C0D2015EB4C30BD4AB3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +314,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		170DBA0FCAFC583FC3F63235 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PLCrashReporter/PLCrashReporter.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PLCrashReporter.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		205F9C0D2015EB4C30BD4AB3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PLCrashReporter/PLCrashReporter.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PLCrashReporter.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		872BCDDCDF40E59CAE2FC90B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,8 +359,8 @@
 				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/NimbleNetiOS/onnxruntime-genai.framework/onnxruntime-genai",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/NimbleNetiOS/LLaMARunner.framework/LLaMARunner",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/onnxruntime-genai.framework/onnxruntime-genai",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/LLaMARunner.framework/LLaMARunner",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -351,8 +405,8 @@
 				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/NimbleNetiOS/onnxruntime-genai.framework/onnxruntime-genai",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/NimbleNetiOS/LLaMARunner.framework/LLaMARunner",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/onnxruntime-genai.framework/onnxruntime-genai",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/LLaMARunner.framework/LLaMARunner",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -551,6 +605,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53C0DE2D56DD10C721CBA2CE /* Pods-NimbleNetExample.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -588,6 +643,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -624,6 +680,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
@@ -647,12 +704,13 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample_Example.app/NimbleNetExample_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample.app/NimbleNetExample";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
@@ -672,7 +730,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample_Example.app/NimbleNetExample_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample.app/NimbleNetExample";
 			};
 			name = Release;
 		};

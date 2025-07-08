@@ -6,13 +6,13 @@
 
 #import <Foundation/Foundation.h>
 #import "FunctionPointersImpl.h"
-#import <NimbleNetiOS/NimbleNetiOS-Swift.h>
-#import "NimbleNetiOS/NimbleNetController.h"
+#import <DeliteAI/DeliteAI-Swift.h>
+#import "DeliteAI/NimbleNetController.h"
 #import "client.h"
 #import <zlib.h>
 #import "frontend_layer.h"
-#import "NimbleNetiOS/InputConverter.h"
-#import "NimbleNetiOS/OutputConverter.h"
+#import "DeliteAI/InputConverter.h"
+#import "DeliteAI/OutputConverter.h"
 
 BOOL fileExistsAtPath(const char *filePath) {
     NSFileManager *fileManager = [NSFileManager defaultManager];
