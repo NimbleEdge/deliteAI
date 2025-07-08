@@ -13,9 +13,12 @@
 
 DeliteAI is available as a CocoaPod. To integrate it into your Xcode project:
 
-1. Add DeliteAI to your **Podfile**:
+1. Add the DeliteAI source and pod to your **Podfile**:
 
     ```ruby
+    source 'git@github.com:NimbleEdge/deliteAI-iOS-Podspecs.git' # deliteAI source
+    source '[https://cdn.cocoapods.org/](https://cdn.cocoapods.org/)' # cocoaPods source
+
     platform :ios, '12.0'
 
     target 'YourAppTarget' do
