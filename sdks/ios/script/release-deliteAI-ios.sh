@@ -33,8 +33,8 @@ git clone "$target_podspec_repo"
 
 rm -rf "$SCRIPT_DIR/release/$target_dir_name/*"
 
-cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/sdks/ios/docs/INTEGRATION.md $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
-mv "$target_dir_name/INTEGRATION.md" "$target_dir_name/README.md" #renaming INTEGRATION.md -> README.md
+cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/sdks/ios/docs/DEVELOPMENT.md $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
+mv "$target_dir_name/DEVELOPMENT.md" "$target_dir_name/README.md" #renaming INTEGRATION.md -> README.md
 
 sed -i "" "s#VERSION_TO_BE_INJECTED#$sdk_version#g" "$target_dir_name/DeliteAI.podspec"
 
