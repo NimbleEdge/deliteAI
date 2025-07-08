@@ -26,7 +26,7 @@ The NimbleNet Android SDK features a **modular architecture** designed for flexi
 
 ```
 sdks/android/
-├── app/                    # Sample application demonstrating SDK usage
+├── app/                   # Sample application demonstrating SDK usage
 ├── buildSrc/              # Gradle build configuration and dependencies
 ├── nimblenet_ktx/         # Kotlin SDK - Main developer interface
 ├── nimblenet_core/        # Native bridge and C++ core runtime
