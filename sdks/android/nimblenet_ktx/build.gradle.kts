@@ -1,3 +1,5 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 /*
  * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
  *
@@ -191,14 +193,25 @@ tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
     }
 }
 
-// Custom task for generating documentation
-tasks.register("generateDocs") {
+tasks.named<DokkaTask>("dokkaGfm") {
     group = "documentation"
-    description = "Generate API documentation using Dokka"
-    dependsOn("dokkaHtml")
+    description = "Generate API docs as GitHub-Flavored Markdown"
 
-    doLast {
-        println("✅ NimbleNet SDK documentation generated successfully!")
-        println("📁 Documentation available at: ${layout.buildDirectory.get()}/dokka/html/index.html")
+    dokkaSourceSets {
+        named("main") {
+            moduleName.set("nimblenet_ktx")
+            moduleVersion.set(neGradleConfig.releaseVersion)
+            sourceRoots.from(file("src/main/kotlin"))
+            documentedVisibilities.set(
+                setOf(
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PUBLIC,
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED
+                )
+            )
+            perPackageOption {
+                matchingRegex.set("dev\\.deliteai\\.impl.*")
+                suppress.set(true)
+            }
+        }
     }
 }
