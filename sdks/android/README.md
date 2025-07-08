@@ -8,15 +8,15 @@
 
 ## Table of Contents
 
-- [Android Project Overview](#-android-project-overview)
-- [Prerequisites](#-prerequisites)
-- [Quick Start](#-quick-start)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Usage](#-usage)
-- [Detailed Documentation](#-sample-application)
-- [Running Tests](#-running-tests)
-- [API Reference](#-api-reference)
+- [Android Project Overview](#android-project-overview)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Integrating DeliteAI Android SDK into your App](#integrating-deliteai-android-sdk-into-your-app)
+- [Configuration](#configuration)
+- [Integration Example](#integration-example)
+- [Detailed Documentation](#detailed-documentation)
+- [Running Tests](#running-tests)
+- [API Reference](#api-reference)
 
 ## Android Project Overview
 
@@ -289,7 +289,7 @@ private fun trackUserInteraction() {
 }
 ```
 
-### Execute AI Models
+### Execute AI/ML Models
 
 ```kotlin
 import dev.deliteai.ModelInput
