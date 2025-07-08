@@ -1,26 +1,24 @@
-# NimbleNet Android SDK
+# DeliteAI Android SDK
 
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://www.android.com)
 [![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)](https://kotlinlang.org)
-[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg)](https://android-arsenal.com/api?level=21)
-[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](https://github.com/deliteai/nimblenet/releases)
 
-*A powerful Android SDK for real-time AI-powered data processing and analytics. NimbleNet enables you to build intelligent applications with real-time machine learning capabilities, event tracking, and much more.*
+*A powerful On-Device Android SDK for creating real-time AI-powered experiences natively integrated in your applications.*
 
 
-## 📚 Table of Contents
+## Table of Contents
 
-- [🏗️ Android Project Overview](#-android-project-overview)
-- [📋 Prerequisites](#-prerequisites)
-- [🚀 Quick Start](#-quick-start)
-- [📦 Installation](#-installation)
-- [⚙️ Configuration](#-configuration)
-- [💡 Usage](#-usage)
-- [📱 Detailed Documentation](#-sample-application)
-- [🧪 Running Tests](#-running-tests)
-- [📚 API Reference](#-api-reference)
+- [Android Project Overview](#-android-project-overview)
+- [Prerequisites](#-prerequisites)
+- [Quick Start](#-quick-start)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage](#-usage)
+- [Detailed Documentation](#-sample-application)
+- [Running Tests](#-running-tests)
+- [API Reference](#-api-reference)
 
-## 🏗️ Android Project Overview
+## Android Project Overview
 
 The NimbleNet Android SDK features a **modular architecture** designed for flexibility and separation of concerns. It leverages a high-performance **native C++ core** while exposing a clean and developer-friendly **Kotlin API**.
 
@@ -74,7 +72,7 @@ The SDK supports two build flavors to accommodate different use cases:
 - Extended debugging capabilities over External flavor
 - Development utilities (database reset, cache management)
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, ensure your development environment meets the following requirements:
 
@@ -134,7 +132,7 @@ keyPassword=your_key_password
 keyAlias=your_key_alias
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 Follow these steps to get the sample application running in minutes.
 
@@ -158,9 +156,9 @@ cd deliteAI/sdks/android
 adb shell monkey -p dev.deliteai.android.sampleapp.debug -c android.intent.category.LAUNCHER 1
 ```
 
-## 📦 Installation
+## Integrating DeliteAI Android SDK into your App
 
-Integrate the NimbleNet SDK into your project by adding the following dependencies to your module-level `build.gradle.kts` or `build.gradle` file.
+Add the following dependencies to your module-level `build.gradle.kts` or `build.gradle` file.
 
 ### Gradle (Kotlin DSL)
 
@@ -180,11 +178,11 @@ dependencies {
 }
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### SDK Configuration
 
-The SDK's native behavior is controlled by `deliteAI/sdks/config.yml`.
+The SDK's native behavior is controlled by `deliteAI/config.yml`.
 
 ```yaml
 common:
@@ -203,9 +201,9 @@ android:
 - **android.cmake_args**: Additional CMake arguments applied only to the Android build.
 - **android.ndk**: Specifies the Android NDK version used for native C++ compilation.
 
-For a complete list of supported flags, refer to our [Core Runtime Documentation](../../coreruntime/README.md).
+(TODO: replace with working link) For a complete list of supported flags, refer to our [Core Runtime Documentation](../../coreruntime/README.md).
 
-## 💡 Usage
+## Integration Example
 
 ### Initialize the SDK
 
@@ -338,7 +336,7 @@ private fun getPersonalizedRecommendations() {
 }
 ```
 
-## 🧪 Running Tests
+## Running Tests
 
 The NimbleNet Android SDK includes comprehensive test suites to ensure reliability and functionality. You can run both unit tests and instrumented Android tests.
 
@@ -363,6 +361,6 @@ Run instrumented tests on a connected device or emulator:
 - Device meets the minimum requirements listed in [Prerequisites](#-prerequisites)
 - Proper configuration in `local.properties`
 
-## 📚 API Reference
+## API Reference
 
 #### (TODO: replace with working link) For detailed API documentation, see our [API Reference Guide](docs/api-reference.md).
