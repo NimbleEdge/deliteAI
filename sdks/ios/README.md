@@ -1,7 +1,7 @@
 # DeliteAI iOS SDK
 
-[![Platform](https://img.shields.io/badge/platform-iOS-orange.svg)](https://github.com/NimbleEdge/deliteAI)
-[![Languages](https://img.shields.io/badge/language-Swift-orange.svg)](https://github.com/NimbleEdge/deliteAI)
+[![Platform](https://img.shields.io/badge/platform-iOS-orange.svg)](https://developer.apple.com/ios/)
+[![Languages](https://img.shields.io/badge/language-Swift-orange.svg)](https://www.swift.org/)
 
 **DeliteAI iOS SDK** is an powerful yet easy to integrate SDK into your iOS applications enabling you to build **AI agentic workflows** and experiences in your apps without worrying about low level interfaces or privacy challenges as the AI is run **locally on-device**.
 
@@ -10,11 +10,11 @@
 ## Table of Contents
 
 * **Integrating DeliteAI iOS SDK into Your Project**: If you want to integrate the DeliteAI iOS SDK into your existing application.
-    * [Installation](#-installation)
-    * [Integrating DeliteAI iOS SDK in Code](#-integrating-deliteai-ios-sdk-in-code)
+    * [Installation](#installation)
+    * [Integrating DeliteAI iOS SDK in Code](#integrating-deliteai-ios-sdk-in-code)
 * **Local Development & Testing**: If you want to run the iOS SDK locally via the example app or execute its unit tests.
-    * [Running the Example App Locally](./docs/DEVELOPMENT.md#-running-the-sdk-locally-through-example-app)
-    * [Running Unit Tests](./docs/DEVELOPMENT.md#-running-unit-tests)
+    * [Running the Example App Locally](./docs/DEVELOPMENT.md#running-the-sdk-locally-through-example-app)
+    * [Running Unit Tests](./docs/DEVELOPMENT.md#running-unit-tests)
 
 
 # Integrating DeliteAI iOS SDK into Your Project

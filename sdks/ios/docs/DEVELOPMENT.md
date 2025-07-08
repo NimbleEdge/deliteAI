@@ -1,11 +1,6 @@
 # DeliteAI iOS SDK
 
-[![Platform](https://img.shields.io/badge/platform-iOS-orange.svg)](https://github.com/NimbleEdge/deliteAI)
-[![Languages](https://img.shields.io/badge/language-Swift-orange.svg)](https://github.com/NimbleEdge/deliteAI)
-
-**DeliteAI iOS SDK** is an powerful yet easy to integrate SDK into your iOS applications enabling you to build **AI agentic workflows** and experiences in your apps without worrying about low level interfaces or privacy challenges as the AI is run **locally on-device**.
-
----
+To build the **DeliteAI iOS SDK** locally and run tests follow these steps below:
 
 ## Running the SDK Locally Through Example App
 
