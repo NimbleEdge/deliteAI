@@ -12,7 +12,7 @@
 
 
 @interface NimbleNetController : NSObject
--(NSDictionary*)initialize_nimblenet_controller:(NSString *)configJson;
+-(NSDictionary*)initialize_nimblenet_controller:(NSString *)configJson assetsJson:(NSString*)assetsJson;
 -(NSDictionary*)add_event_controller:(NSString *)eventMapJsonString eventType:(NSString *)eventType;
 -(NSDictionary*)is_ready_controller;
 -(NSDictionary*)run_task_controller:(NSString *)taskName

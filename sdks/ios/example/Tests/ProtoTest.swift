@@ -20,7 +20,8 @@ class ProtoTest: XCTestCase {
             host: BundleConfig.host,
             deviceId: "ios-proto-test",
             debug: true,
-            compatibilityTag: "proto-test"
+            compatibilityTag: "proto-test",
+            online: true
         )
         
         let res = NimbleNetApi.initialize(config: config)

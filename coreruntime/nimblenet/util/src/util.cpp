@@ -202,7 +202,10 @@ void delete_extra_files(const std::string& directory, float fileTimeDeleteInDays
 
       // Get information about the file
       if (stat(fullpath.c_str(), &fileInfo) != 0) {
+        // TODO: this throws an error while doing stat for symlinks in ios
+#ifndef IOS
         LOG_TO_ERROR("Error getting file information for %s", fullpath.c_str());
+#endif  // IOS
         continue;
       }
       if (S_ISDIR(fileInfo.st_mode)) {

@@ -15,16 +15,18 @@ public struct NimbleNetConfig: Codable {
     public var maxDBSizeKBs: Float?
     public var maxEventsSizeKBs: Float?
     public var cohortIds: [String]
-    public init(clientId: String,
-                clientSecret: String,
-                host: String,
-                deviceId: String,
-                debug: Bool = false,
-                compatibilityTag:String,
-                sessionId: String = "",
-                maxDBSizeKBs: Float? = nil,
-                maxEventsSizeKBs: Float? = nil,
-                cohortIds: [String] = []) {
+    public var online: Bool
+    public init(clientId: String = "",
+                    clientSecret: String = "",
+                    host: String = "",
+                    deviceId: String = "",
+                    debug: Bool = false,
+                    compatibilityTag:String = "",
+                    sessionId: String = "",
+                    maxDBSizeKBs: Float? = nil,
+                    maxEventsSizeKBs: Float? = nil,
+                    cohortIds: [String] = [],
+                    online: Bool = false) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.host = host
@@ -35,5 +37,6 @@ public struct NimbleNetConfig: Codable {
         self.maxDBSizeKBs = maxDBSizeKBs
         self.maxEventsSizeKBs = maxEventsSizeKBs
         self.cohortIds = cohortIds
+        self.online = online
     }
 }
