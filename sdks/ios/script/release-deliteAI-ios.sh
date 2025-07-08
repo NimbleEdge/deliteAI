@@ -65,4 +65,4 @@ deploy_changes "$SCRIPT_DIR/release/$target_dir_name" "main" "$sdk_version"
 deploy_changes "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs" "$target_branch" "$sdk_version"
 
 cd ../../
- rm -rf "$SCRIPT_DIR/release"
+rm -rf "$SCRIPT_DIR/release"
