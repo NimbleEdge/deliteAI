@@ -40,9 +40,8 @@ across multiple platforms and devices.
 ## Getting Started
 To get started you can:
 - Follow the steps in [coreruntime](coreruntime/README.md) to build and test the core C++ SDK with Python bindings
-- Build and try out the sample [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) app
-
-You can look at the available agents in the [agents](agents) directory.
+- Build and try out the [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) SDK and sample app
+- Explore the available agents in the [agents](agents) directory.
 
 Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it
 all in action.
