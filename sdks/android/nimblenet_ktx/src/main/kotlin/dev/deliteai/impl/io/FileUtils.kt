@@ -56,6 +56,7 @@ internal class FileUtils(
 
     private fun File.folderSize(): Long = walk().filter { it.isFile }.sumOf { it.length() }
 
+    // TODO: Break this function
     fun processModules(context: Context, assetsJson: JSONArray): JSONArray {
         // Create target directory in internal storage
         val targetDir =

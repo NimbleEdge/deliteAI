@@ -97,7 +97,7 @@ object NimbleNet {
      *     online = true
      * )
      *
-     * val offline_config = NimbleNetConfig()
+     * val offlineConfig = NimbleNetConfig(online = false)
      *
      * val assetsJson = [
      *             {
@@ -133,7 +133,7 @@ object NimbleNet {
      * val result = NimbleNet.initialize(application, config)
      *
      * // For offline initialization
-     * val result = NimbleNet.initialize(application, offline_config, assetsJson)
+     * val result = NimbleNet.initialize(application, offlineConfig, assetsJson)
      * if (result.status) {
      *     // SDK initialized successfully
      * } else {
@@ -161,6 +161,7 @@ object NimbleNet {
         controller = container.getNimbleNetController()
         localLogger = container.getLocalLogger()
 
+        // TODO: Move this logic to NimbleNetController
         // Pass deliteAssets only if online flag is false, else pass it on as null
         return if (config.online) {
             runCatching { controller.initialize(config, null) }
