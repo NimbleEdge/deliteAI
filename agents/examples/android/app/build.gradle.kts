@@ -10,6 +10,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val localProps by lazy {
+    java.util.Properties().apply {
+        rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use(::load)
+    }
+}
+
 android {
     namespace = "dev.deliteai.examples"
     compileSdk = 35
@@ -22,6 +28,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "APP_CLIENT_ID", "\"${localProps.getProperty("APP_CLIENT_ID", "")}\"")
+        buildConfigField("String", "APP_CLIENT_SECRET", "\"${localProps.getProperty("APP_CLIENT_SECRET", "")}\"")
+        buildConfigField("String", "APP_HOST", "\"${localProps.getProperty("APP_HOST", "")}\"")
     }
 
     buildTypes {
@@ -42,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

@@ -36,10 +36,10 @@ class App : Application() {
             copyEspeakDataIfNeeded(application, "espeak-ng-data")
 
             val nimbleConfig = NimbleNetConfig(
-                clientId = "d-ai-sample",
-                host = "https://api.delite.ai",
+                clientId = "YOUR_CLIENT_ID",
+                host = "YOUR_HOST",
                 deviceId = "test-device",
-                clientSecret = "secret_value",
+                clientSecret = "YOUR_CLIENT_SECRET",
                 debug = true,
                 compatibilityTag = "agent_notification_summarizer",
                 libraryVariant = NIMBLENET_VARIANTS.STATIC
