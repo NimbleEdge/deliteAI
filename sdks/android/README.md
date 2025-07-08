@@ -229,7 +229,8 @@ class MainActivity : AppCompatActivity() {
             host = "https://your-api-endpoint.com",
             deviceId = "unique-device-identifier",
             compatibilityTag = "YourModelVersion",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC
+            libraryVariant = NIMBLENET_VARIANTS.STATIC,
+            online = true
         )
 
         CoroutineScope(Dispatchers.Default).launch {
