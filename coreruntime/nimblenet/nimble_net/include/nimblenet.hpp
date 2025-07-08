@@ -4,9 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#pragma once
+
 #include <memory>
 
 #include "executor_structs.h"
+#include "list_data_variable.hpp"
 #include "map_data_variable.hpp"
 
 class DataVariable;
@@ -82,6 +85,16 @@ void update_session(const std::string& sessionIdString);
  */
 void deallocate_nimblenet();
 
+/**
+ * @brief Loads assets provided from disk into homeDir.
+ */
+NimbleNetStatus* load_modules(const OpReturnType assetsJson, const std::string& homeDirectory = "");
+
+/**
+ * @brief Loads assets provided from disk into homeDir.
+ */
+NimbleNetStatus* load_modules(const nlohmann::json assetsJson,
+                              const std::string& homeDirectory = "");
 /**
  * @brief Sends a crash log to the monitoring backend.
  *

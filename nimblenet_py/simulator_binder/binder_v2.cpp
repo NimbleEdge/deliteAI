@@ -15,7 +15,6 @@
 #include "input_structs.hpp"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
-#include "simulator_utils.hpp"
 #include "task_input_structs.hpp"
 
 namespace py = pybind11;
@@ -69,17 +68,6 @@ nlohmann::json convert_py_dict_to_json(py::dict py_dict) {
     // Handle JSON parsing errors
     throw std::runtime_error("JSON parsing error: " + std::string(e.what()));
   }
-}
-
-nlohmann::json convert_py_list_to_json(py::list& list) {
-  nlohmann::json jsonArray = nlohmann::json(nlohmann::json::array());
-  for (const auto& item : list) {
-    py::module_ json_module = py::module_::import("json");
-    py::str json_str = json_module.attr("dumps")(item);
-    std::string cpp_json_str = py::cast<std::string>(json_str);
-    jsonArray.push_back(nlohmann::json::parse(cpp_json_str));
-  }
-  return jsonArray;
 }
 
 CTensor assign_CTensor_list(const std::string& name, py::list&& list) {
@@ -407,69 +395,6 @@ std::unordered_set<std::string> get_build_flags_set() {
   return ret;
 }
 
-std::string parseScriptToAST(const std::string& scriptPath) {
-  auto localVars = py::dict("fileName"_a = scriptPath.c_str());
-  py::exec(R"(
-      if fileName.endswith(".zip"):
-        import ast
-        import ast2json
-        import json
-        import sys
-        import io
-        import zipfile
-        import os
-
-        zip_file = zipfile.ZipFile(fileName)
-
-        # Prepare the super JSON object
-        super_json = {}
-        main = False
-
-        # Process each file in the archive
-        for name in zip_file.namelist():
-            if name.endswith('/'):
-                raise ValueError(f"Directories are not allowed in zip file: {name}")
-
-            if name == 'main.py':
-                main = True
-            if not name.endswith('.py'):
-                raise ValueError(f"Unsupported file type: {name}. Only .py files are allowed.")
-
-            # Read file content
-            with zip_file.open(name) as file:
-                content = file.read().decode('utf-8')
-
-            # Parse Python source to AST
-            tree = ast.parse(content, filename=name)
-
-            # Convert AST to JSON
-            json_ast = ast2json.ast2json(tree)
-
-            # Use base fileName without extension as key
-            base_name = os.path.splitext(os.path.basename(name))[0]
-            super_json[base_name] = json_ast
-
-        if not main:
-            raise ValueError("main.py file is required in the zip archive.")
-        # Output final JSON object
-        parsedAST = json.dumps(super_json)
-      else:
-        import ast
-        import ast2json
-        import json
-        f = open(fileName, 'r')
-        tree = ast2json.ast2json(ast.parse(f.read()))
-        parsedAST = json.dumps(tree, indent=2)
-  )",
-           py::dict(), localVars);
-  return localVars["parsedAST"].cast<std::string>();
-}
-
-void load_simulator_modules(py::list& moduleConfig) {
-  auto jsonConfig = convert_py_list_to_json(moduleConfig);
-  SimulatorUtils::copy_modules(std::move(jsonConfig));
-}
-
 void load_task(py::module_& m) {
   m.def("load_workflow_script", &load_task_in_simulator,
         R"(
@@ -508,12 +433,5 @@ void get_build_flags_simulator(py::module_& m) {
 
     Return Value:
     set : Set of build flags
-  )");
-}
-
-void load_modules(py::module_& m) {
-  m.def("load_modules", &load_simulator_modules,
-        R"(
-      Loads assets for simulator in offline mode.
   )");
 }

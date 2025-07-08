@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <optional>
 #include <string>
@@ -13,6 +14,8 @@
 #include "core_utils/fmt.hpp"
 #include "native_interface_constants.hpp"
 #include "native_interface_structs.hpp"
+
+namespace fs = std::filesystem;
 
 /**
  * @brief nativeinterface namespace acts as an interface between C++ SDK and the frontend layers.
@@ -85,7 +88,8 @@ bool get_file_from_device_common(const std::string& fileName, std::string& resul
                                  bool filePathProvided = false);
 
 /**
- * @brief Similar to get_file_from_device_common, this method assumes that the file being read is not encrypted.
+ * @brief Similar to get_file_from_device_common, this method assumes that the file being read is
+ * not encrypted.
  */
 bool get_unencrypted_file_from_device_common(const std::string& fileName, std::string& result,
                                              bool filePathProvided = false);
@@ -163,6 +167,8 @@ bool write_compressed_data_on_file(const std::string&& content, const std::strin
  */
 void write_data_to_file(const std::string&& content, const std::string& fileName,
                         bool filePathProvided = true);
+
+void create_symlink(const fs::path& target, const std::string& link);
 
 /**
  * @brief Deletes a file.

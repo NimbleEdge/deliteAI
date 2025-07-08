@@ -30,16 +30,11 @@ std::unique_ptr<CoreSDK> coreSDK = std::make_unique<CoreSDK>();
 NimbleNetStatus* initialize_nimblenet_unwrapped(const char* configJson, const char* homeDirectory) {
   auto config = std::shared_ptr<Config>(new Config(std::string(configJson)));
   logger->set_debug_flag(config->debug);
-#ifdef SIMULATION_MODE
-  homeDirectory = "./NimbleSDK/";
-  nativeinterface::HOMEDIR = homeDirectory;
-  if (config->online) {
-    nativeinterface::create_folder(nativeinterface::HOMEDIR);
-  }
-#else
   nativeinterface::HOMEDIR = std::string(homeDirectory) + "/";
-  nativeinterface::create_folder(nativeinterface::HOMEDIR);
-#endif
+  if (!nativeinterface::create_folder(nativeinterface::HOMEDIR)) {
+    return util::nimblestatus(1, "%s", "Could not create homeDir");
+  }
+
   bool initLogger;
   initLogger = logger->init_logger(nativeinterface::HOMEDIR + loggerconstants::LogDir);
 
@@ -104,6 +99,10 @@ bool deallocate_output_memory2(CTensors* output) {
   TRY_CATCH_RETURN_DEFAULT(coreSDK->deallocate_output_memory(output), false);
 }
 
+NimbleNetStatus* load_modules(const char* assetsJson, const char* homeDir) {
+  TRY_CATCH_RETURN_NIMBLESTATUS(coreSDK->load_modules(assetsJson, homeDir));
+}
+
 #ifdef SIMULATION_MODE
 
 const char** get_build_flags() {
@@ -130,19 +129,6 @@ const char** get_build_flags() {
 #endif  // SIMULATION_MODE
 // nimblenet C end
 #ifdef SIMULATION_MODE
-
-int initialize_nimblenet_from_file(const char* filePath) {
-  std::string configJson;
-  if (!nativeinterface::get_file_from_device_common(filePath, configJson, true)) {
-    LOG_TO_CLIENT_ERROR("%s", "Error while reading config file.");
-    throw runtime_error("Error while reading config file.");
-  };
-  auto t = nimblenet::initialize_nimblenet(configJson.c_str(), "./");
-  if (t == nullptr) return 1;
-  LOG_TO_CLIENT_ERROR("%s", t->message);
-  free(t);
-  return 0;
-}
 
 bool add_events_from_file(const char* userInputFilePath, const char* tableName) {
   return coreSDK->add_events_from_file(userInputFilePath, tableName);
@@ -253,6 +239,14 @@ void update_session(const std::string& sessionIdString) {
 }
 
 void deallocate_nimblenet() { ::deallocate_nimblenet(); }
+
+NimbleNetStatus* load_modules(const OpReturnType assetsJson, const std::string& homeDir) {
+  TRY_CATCH_RETURN_NIMBLESTATUS(coreSDK->load_modules(assetsJson, homeDir));
+}
+
+NimbleNetStatus* load_modules(const nlohmann::json assetsJson, const std::string& homeDir) {
+  TRY_CATCH_RETURN_NIMBLESTATUS(coreSDK->load_modules(assetsJson, homeDir));
+}
 
 // internal
 void send_crash_log(const std::string& errorMessage) {

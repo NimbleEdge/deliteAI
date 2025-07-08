@@ -8,14 +8,13 @@ find_package(pybind11 CONFIG REQUIRED)
 
 target_include_directories(nimblenet PUBLIC 
     ${PROJECT_SOURCE_DIR}/nimblenet/simulation_manager/input_data_extractor/include/
-    ${PROJECT_SOURCE_DIR}/../nimblenet_py/simulator_utils/include/
     "${PROJECT_SOURCE_DIR}/../third_party/json/include/"
 )
 
 target_sources(nimblenet ${VISIBILITY}
     ${PROJECT_SOURCE_DIR}/nimblenet/simulation_manager/input_data_extractor/src/input_data_extractor.cpp 
     ${PROJECT_SOURCE_DIR}/nimblenet/simulation_manager/input_data_extractor/src/c_tensors_data_extractor.cpp
-    ${PROJECT_SOURCE_DIR}/../nimblenet_py/simulator_utils/src/simulator_utils.cpp
+    ${PROJECT_SOURCE_DIR}/../nimblenet_py/simulator_binder/delitepy_script_parser.cpp
 )
 
 target_link_libraries(nimblenet PRIVATE pybind11::module)

@@ -31,8 +31,7 @@ def test_simulator():
     ]
 
     # initialize nimblenet    
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"debug": true, "online": false}''')
+    assert simulator.initialize('''{"debug": true, "online": false}''', modules)
 
     input = {"singleString": "singleString", "singleFloat": 10.10, "boolTensor": np.full((3), True, dtype=bool)}
 
@@ -71,8 +70,7 @@ def test_nested_json():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"debug": true, "online": false}''')
+    assert simulator.initialize('''{"debug": true, "online": false}''', modules)
     
     nestedJson = {"key1": 1, "key2": [1, 2, 3, "fsd"], "key3": "data1", "key4": {"fsd": "fdsd", "uio": 1.89}, "key5": [{"x": 1}], "bigValue": 12345678910}
     nestedArray = [{"key1": 1, "key2": [1, 2, 3, "fsd"], "key3": "data1", "key4": {"fsd": "fdsd", "uio": 1.89}, "key5": [{"x": 1}]}, "dfs"]
@@ -101,8 +99,7 @@ def test_regex():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"debug": true, "online": false}''')
+    assert simulator.initialize('''{"debug": true}''', modules)
     output = simulator.run_method("main", {})
     assert len(output.keys()) == 65
     assert np.all(np.asarray(output["split1"]) == np.asarray(['Words', 'words', 'words']))
@@ -185,8 +182,7 @@ def test_json_stream():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize("""{"debug": true, "online": false}""")
+    assert simulator.initialize("""{"debug": true, "online": false}""", modules)
 
     simulator.run_method("create_json_stream", {})
 
@@ -253,8 +249,7 @@ def test_retriever():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
     process = psutil.Process(os.getpid())
 
     def get_cpu_usage_of_process_in_time(waitTime):
@@ -304,8 +299,7 @@ def test_tts_tokenizer():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
     with open("../simulation_assets/vocab.json", 'r') as f:
         data = json.load(f)
 
@@ -329,8 +323,7 @@ def test_class_support():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
     
     def assert_callback(output):
         print("asserting callback", output)
@@ -365,8 +358,7 @@ def test_invalid_dataType_model():
         }
     ]
     
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
 
     output = simulator.run_method("invalid_model_function", {})
     assert len(output.keys()) == 0
@@ -389,8 +381,7 @@ def test_multi_threading():
     taskThreadIndex = process.num_threads()
 
     # While loading the script, number of threads should increase
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
     
     if {"GENAI"}.issubset(build_flags):
         assert process.num_threads() == taskThreadIndex + 6
@@ -441,8 +432,7 @@ def test_multi_threading_with_limited_threads():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
  
     def test(n):
         # Test with limited number of threads
@@ -469,8 +459,7 @@ def test_try_catch():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
 
     output = simulator.run_method("try_catch_test",{})
 
@@ -486,8 +475,7 @@ def test_string_slicing():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
     ## Test ASCII string slicing
     ascii_output = simulator.run_method("test_ascii_string_slicing", {"s": "Hello, World!"})
     assert ascii_output["s[0:5:1]"] == "Hello"
@@ -535,8 +523,7 @@ def test_list_operations():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
 
     # Test basic list creation
     basic_lists = simulator.run_method("test_basic_lists", {})
@@ -618,8 +605,7 @@ def test_python_modules():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize('''{"online": false}''')
+    assert simulator.initialize('''{"online": false}''', modules)
 
     results = simulator.run_method("run", {})
     assert len(results) == 2

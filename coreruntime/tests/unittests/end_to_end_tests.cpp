@@ -716,40 +716,39 @@ TEST_F(EndToEndTest, run_sdk_with_invalid_model) {
   ASSERT_NE(status, nullptr);
 }
 
-// TODO: (Arpit2601) Uncomment when bringing offline sdk changes
-// TEST_F(EndToEndTest, run_sdk_offline_mode) {
-//   std::string json_str = R"(
-//     [
-//         {
-//             "name": "workflow_script",
-//             "version": "1.0.0",
-//             "type": "script",
-//             "location": {
-//                 "path": "./assets/end_to_end_test/add_script.ast"
-//             }
-//         },
-//         {
-//             "name": "add_model",
-//             "version": "1.0.0",
-//             "type": "model",
-//             "location": {
-//                 "path": "./assets/end_to_end_test/add_two_model.onnx"
-//             }
-//         }
-//     ]
-// )";
+TEST_F(EndToEndTest, run_sdk_offline_mode) {
+  std::string json_str = R"(
+    [
+        {
+            "name": "workflow_script",
+            "version": "1.0.0",
+            "type": "script",
+            "location": {
+                "path": "./assets/end_to_end_test/add_script.ast"
+            }
+        },
+        {
+            "name": "add_model",
+            "version": "1.0.0",
+            "type": "model",
+            "location": {
+                "path": "./assets/end_to_end_test/add_two_model.onnx"
+            }
+        }
+    ]
+)";
 
-//   nlohmann::json j = nlohmann::json::parse(json_str);
-//   ASSERT_EQ(nimblenet::load_modules(j, nativeinterface::HOMEDIR), nullptr);
-//   std::string config = R"delim(
-//       {
-//           "online": false,
-//           "debug": true
-//       }
-//       )delim";
-//   ASSERT_EQ(TestsUtil::initialize_and_is_ready(config), nullptr);
-//   TestsUtil::assert_deployment("add", 7);
-// }
+  nlohmann::json j = nlohmann::json::parse(json_str);
+  ASSERT_EQ(nimblenet::load_modules(j, nativeinterface::HOMEDIR), nullptr);
+  std::string config = R"delim(
+      {
+          "online": false,
+          "debug": true
+      }
+      )delim";
+  ASSERT_EQ(TestsUtil::initialize_and_is_ready(config), nullptr);
+  TestsUtil::assert_deployment("add", 7);
+}
 
 #ifdef GENAI
 TEST_F(EndToEndTest, DISABLED_run_sdk_with_llm) {

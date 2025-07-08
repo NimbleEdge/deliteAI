@@ -17,7 +17,6 @@
 #include "nimblejson.hpp"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
-#include "simulator_utils.hpp"
 #include "task_input_structs.hpp"
 
 namespace py = pybind11;
@@ -232,24 +231,48 @@ bool freeFrontendContext(void* context) {
   return true;
 }
 
-int initialize_simulator_nimblenet(const char* configInput) {
+nlohmann::json convert_py_list_to_json(py::list& list) {
+  nlohmann::json jsonArray = nlohmann::json(nlohmann::json::array());
+  for (const auto& item : list) {
+    py::module_ json_module = py::module_::import("json");
+    py::str json_str = json_module.attr("dumps")(item);
+    std::string cpp_json_str = py::cast<std::string>(json_str);
+    jsonArray.push_back(nlohmann::json::parse(cpp_json_str));
+  }
+  return jsonArray;
+}
+
+void load_simulator_modules(py::list& moduleConfig) {
+  auto jsonConfig = convert_py_list_to_json(moduleConfig);
+  std::string jsonString = jsonConfig.dump();
+  auto status = load_modules(jsonString.c_str(), "./NimbleSDK/");
+  if (status != nullptr) {
+    throw std::runtime_error("Error while loading modules");
+  }
+}
+
+int initialize_simulator_nimblenet(const char* configInput, py::list moduleConfig) {
   // Resetting before initialise so as to use same instance of nimblenet across multiple python
   // sessions.
   reset();
-  // If no config provided prepare a default config
 
   // setting global cleanup functions
   globalDeallocate = deallocFrontendTensors;
   globalFrontendContextFree = freeFrontendContext;
 
+  // If no config provided prepare a default config
   if (configInput == nullptr) {
     configInput = "{}";
   }
-  std::ifstream configFile(configInput);
-  if (configFile) {
-    return initialize_nimblenet_from_file(configInput);
-  };
-  auto t = initialize_nimblenet(configInput, "./");
+  nlohmann::json configJson = nlohmann::json::parse(configInput);
+  if (!configJson.value("online", false)) {
+    if (py::len(moduleConfig) == 0) {
+      throw std::runtime_error(
+          "moduleInfo has to be present if online flag is either false or not present in config");
+    }
+    load_simulator_modules(moduleConfig);
+  }
+  auto t = initialize_nimblenet(configInput, "./NimbleSDK/");
   if (t == nullptr) return 1;
   throw std::runtime_error(std::string(t->message) + "\nInit failed.");
 }
@@ -317,8 +340,6 @@ void run_task(py::module_&);
 
 void get_build_flags_simulator(py::module_& m);
 
-void load_modules(py::module_&);
-
 PYBIND11_MODULE(simulator, m) {
   m.doc() = R"(
       Simulator module which defines the following data type types and functions exposed for simulation.
@@ -338,8 +359,9 @@ PYBIND11_MODULE(simulator, m) {
     Initializes the simulator.
 
     Attributes :
-    config (string) : File path where configurations are defined or string buffer with the configurations. It is optional field, if not provided nimblenet will initialize with default configs i.e. in offline mode with isTimeSimulated as true.
-
+    config (string) : String buffer with the configurations. It is optional field, if not provided nimblenet will initialize with default configs i.e. in offline mode with isTimeSimulated as true.
+    moduleConfig(list): Module information to be loaded from disk in case of offline initialize
+    
     Return value :
     Int : If success then return 1.
 
@@ -347,7 +369,7 @@ PYBIND11_MODULE(simulator, m) {
     RunTimeError : If config file could not opened or found.
     RunTimeError : If config could not be parsed.
   )",
-        py::arg("config") = nullptr);
+        py::arg("config") = nullptr, py::arg("moduleConfig") = py::list());
 
   m.def("load_model", &load_model_from_file, R"(
     Function to load model.
@@ -427,5 +449,4 @@ PYBIND11_MODULE(simulator, m) {
   load_task(m);
   run_task(m);
   get_build_flags_simulator(m);
-  load_modules(m);
 }

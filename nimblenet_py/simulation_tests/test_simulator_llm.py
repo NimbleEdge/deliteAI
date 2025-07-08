@@ -37,8 +37,7 @@ def test_llm():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize("""{"debug": true, "online": false}""")
+    assert simulator.initialize("""{"debug": true, "online": false}""", modules)
 
     while not simulator.is_ready():
         time.sleep(1)
@@ -91,8 +90,7 @@ def test_list_compatible_llms():
             }
         }
     ]
-    simulator.load_modules(modules)
-    assert simulator.initialize("""{"debug": true, "online": false}""")
+    assert simulator.initialize("""{"debug": true, "online": false}""", modules)
 
     while not simulator.is_ready():
         time.sleep(1)
@@ -127,8 +125,7 @@ def test_invalid_llm():
         }
     ]
 
-    simulator.load_modules(modules)
-    assert simulator.initialize("""{"debug": true, "online": false}""")
+    assert simulator.initialize("""{"debug": true, "online": false}""", modules)
 
     # Wait for sometime for is_ready, it should be false
     i = 3

@@ -28,6 +28,9 @@
 #include "server_api.hpp"
 #include "user_events_manager.hpp"
 #include "util.hpp"
+#ifdef SIMULATION_MODE
+#include "nimblenet_py_interface.hpp"
+#endif  // SIMULATION_MODE
 
 class TaskManager;
 class ResourceManager;
@@ -176,6 +179,13 @@ class CoreSDK {
   void atomic_repeatable_minimal_initialize(const MinimalInitializationConfig& minInitConfig);
   NimbleNetStatus* process_add_user_event_response(const UserEventsData& userEventsData,
                                                    CUserEventsData* cUserEventsData);
+  NimbleNetStatus* process_module_info(const nlohmann::json assetsJson, const std::string& homeDir);
+  /**
+   * @brief Copies an asset from the provided asset.location to homedir with the name accepted by
+   * SDK.
+   */
+  static void copy_module(const std::shared_ptr<Asset> asset, Deployment& deployment,
+                          bool addToDeployment);
 #ifdef SIMULATION_MODE
   /**
    * @brief Add simulated user events in internal vector.
@@ -296,6 +306,12 @@ class CoreSDK {
    * @brief Frees memory allocated for outputs.
    */
   bool deallocate_output_memory(CTensors* output);
+
+  NimbleNetStatus* load_modules(const char* assetsJson, const char* homeDir);
+
+  NimbleNetStatus* load_modules(const OpReturnType assetsJson, const std::string& homeDir);
+
+  NimbleNetStatus* load_modules(const nlohmann::json assetsJson, const std::string& homeDir);
 
   /**
    * @brief Reloads a model with a given execution provider config.

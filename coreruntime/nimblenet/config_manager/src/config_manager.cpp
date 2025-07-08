@@ -32,18 +32,18 @@ void Config::init(const nlohmann::json& j) {
     j.at("cohortIds").get_to(cohortIds);
   }
 
-// Set online and isTimeSimulated flag only in SIMULATION_MODE/TESTING, by default the value will be
-// true and false respectively
+// Set isTimeSimulated flag only in SIMULATION_MODE/TESTING, by default the value will be
+// false
 #if defined(SIMULATION_MODE) || defined(TESTING)
-  if (j.find("online") != j.end()) {
-    j.at("online").get_to(online);
-  }
   if (j.find("isTimeSimulated") != j.end()) {
     j.at("isTimeSimulated").get_to(isTimeSimulated);
   }
 #endif
   if (j.find("debug") != j.end()) {
     j.at("debug").get_to(debug);
+  }
+  if (j.find("online") != j.end()) {
+    j.at("online").get_to(online);
   }
 
   if (j.find("maxDBSizeKBs") != j.end()) {
@@ -52,22 +52,16 @@ void Config::init(const nlohmann::json& j) {
   if (j.find("maxEventsSizeKBs") != j.end()) {
     j.at("maxEventsSizeKBs").get_to(maxEventsSizeKBs);
   }
-#ifdef SIMULATION_MODE
   if (online) {
     j.at("compatibilityTag").get_to(compatibilityTag);
-    if (compatibilityTag == "") {
-      compatibilityTag = coresdkconstants::DefaultCompatibilityTag;
-    }
   } else {
-    compatibilityTag = coresdkconstants::DefaultCompatibilityTag;
+    if (!j.contains("compatibilityTag") ||
+        (j.contains("compatibilityTag") && j.at("compatibilityTag") == "")) {
+      compatibilityTag = coresdkconstants::DefaultCompatibilityTag;
+    } else {
+      j.at("compatibilityTag").get_to(compatibilityTag);
+    }
   }
-#else
-  j.at("compatibilityTag").get_to(compatibilityTag);
-  if (compatibilityTag == "") {
-    compatibilityTag = coresdkconstants::DefaultCompatibilityTag;
-  }
-
-#endif  // SIMULATION_MODE
 
   if (online) {
     j.at("clientId").get_to(clientId);

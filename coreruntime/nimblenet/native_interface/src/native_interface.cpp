@@ -390,4 +390,18 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
   return ::schedule_logs_upload(repeatIntervalInMinutes, retryIntervalInMinutesIfFailed,
                                 workManagerConfigJsonChar);
 }
+
+void create_symlink(const fs::path& target, const std::string& link) {
+  std::string targetStr = target.string();
+  try {
+    // Ignoring the return value, since we don't care if link existed or not
+    static_cast<void>(fs::remove(link));
+    fs::create_symlink(fs::absolute(target), link);
+  } catch (const fs::filesystem_error& e) {
+    THROW("Could not create symlink from %s to %s with error: %s", targetStr.c_str(), link.c_str(),
+          e.what());
+  } catch (...) {
+    THROW("Could not create symlink from %s to %s", targetStr.c_str(), link.c_str());
+  }
+}
 }  // namespace nativeinterface

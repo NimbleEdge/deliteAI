@@ -69,6 +69,11 @@ void update_session(const char* sessionIdString);
 void deallocate_nimblenet();
 
 /**
+ * @brief Copies assets provided from disk into homeDirectory.
+ */
+NimbleNetStatus* load_modules(const char* assetsJson, const char* homeDirectory);
+
+/**
  * @brief Sends a crash log to the monitoring backend.
  *
  * @param errorMessage Description or traceback of the crash.
@@ -120,11 +125,6 @@ bool deallocate_output_memory2(CTensors* output);
 // ==============================
 // Simulation/Test Mode Functions
 // ==============================
-
-/**
- * @brief Initializes NimbleNet from a file-based configuration.
- */
-int initialize_nimblenet_from_file(const char* configFilePath);
 
 /**
  * @brief Loads user events from a file and adds them to the event table.

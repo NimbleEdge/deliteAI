@@ -556,6 +556,88 @@ bool CoreSDK::send_events(const char* minInitConfigJsonChar) {
   return status;
 }
 
+void CoreSDK::copy_module(const std::shared_ptr<Asset> asset, Deployment& deployment,
+                          bool addToDeployment) {
+  switch (asset->type) {
+    case AssetType::SCRIPT: {
+      std::string delitepycontent;
+#ifdef SIMULATION_MODE
+      delitepycontent = parseScriptToAST(asset->location.path);
+#else
+      nativeinterface::get_unencrypted_file_from_device_common(asset->location.path,
+                                                               delitepycontent, true);
+#endif  // SIMULATION_MODE
+      nativeinterface::write_data_to_file(std::move(delitepycontent),
+                                          asset->get_file_name_on_device(), false);
+      if (addToDeployment) deployment.script = asset;
+      break;
+    }
+    case AssetType::MODEL: {
+      std::string outputFilePath =
+          nativeinterface::get_full_file_path_common(asset->get_file_name_on_device());
+      nativeinterface::create_symlink(fs::absolute(asset->location.path), outputFilePath);
+      if (addToDeployment) deployment.modules.push_back(asset);
+      break;
+    }
+#ifdef GENAI
+    case AssetType::RETRIEVER: {
+      for (const auto& asset : asset->arguments) {
+        copy_module(asset, deployment, false);
+      }
+      if (addToDeployment) deployment.modules.push_back(asset);
+      break;
+    }
+    case AssetType::DOCUMENT: {
+      std::string outputFilePath =
+          nativeinterface::get_full_file_path_common(asset->get_file_name_on_device());
+      nativeinterface::create_symlink(fs::absolute(asset->location.path), outputFilePath);
+      if (addToDeployment) deployment.modules.push_back(asset);
+      break;
+    }
+    case AssetType::LLM: {
+      std::string outputFilePath =
+          nativeinterface::get_full_file_path_common(asset->get_file_name_on_device());
+      nativeinterface::create_symlink(fs::absolute(asset->location.path), outputFilePath);
+      if (addToDeployment) deployment.modules.push_back(asset);
+      break;
+    }
+#endif  // GENAI
+    default:
+      THROW("AssetType %s not supported in simulator.",
+            assetmanager::get_string_from_asset_type(asset->type).c_str());
+  }
+}
+
+NimbleNetStatus* CoreSDK::process_module_info(const nlohmann::json assetsJson,
+                                              const std::string& homeDir) {
+  nativeinterface::HOMEDIR = homeDir + "/";
+  if (!nativeinterface::create_folder(nativeinterface::HOMEDIR)) {
+    THROW("Could not create directory %s", nativeinterface::HOMEDIR.c_str());
+  }
+  Deployment deployment = {.Id = 1};
+  for (const auto& it : assetsJson) {
+    std::shared_ptr<Asset> asset = assetmanager::parse_module_info(it);
+    copy_module(asset, deployment, true);
+  }
+  // Write deployment_config to disk
+  util::save_deployment_on_device(deployment, coresdkconstants::DefaultCompatibilityTag);
+  return nullptr;
+}
+
+NimbleNetStatus* CoreSDK::load_modules(const OpReturnType assetsJson, const std::string& homeDir) {
+  return process_module_info(assetsJson->to_json(), homeDir);
+}
+
+NimbleNetStatus* CoreSDK::load_modules(const char* assetsJson, const char* homeDir) {
+  nlohmann::json jsonConfig = nlohmann::json::parse(assetsJson);
+  return process_module_info(jsonConfig, homeDir);
+}
+
+NimbleNetStatus* CoreSDK::load_modules(const nlohmann::json assetsJson,
+                                       const std::string& homeDir) {
+  return process_module_info(assetsJson, homeDir);
+}
+
 CoreSDK::~CoreSDK() {
   if (_threadRunning == true) {
     _threadRunning = false;

@@ -61,8 +61,7 @@ modules = [
 
 
 def main():
-    simulator.load_modules(modules)
-    assert simulator.initialize(NE_CONFIG_OFFLINE)
+    assert simulator.initialize(NE_CONFIG_OFFLINE, modules)
     simulator.run_method("set_context", {"context": context})
 
     while True:

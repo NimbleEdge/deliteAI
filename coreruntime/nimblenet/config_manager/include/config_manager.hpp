@@ -86,25 +86,19 @@ class Config {
   /** List of cohort identifiers where this configuration will be used. */
   nlohmann::json cohortIds = nlohmann::json::array();
 
-#ifdef SIMULATION_MODE
-  /**
-   * @brief Indicates if the simulator runs in online mode.
-   * Defaults to false in simulation mode.
-   */
+  /** Flag to indicate whether assets should be fetched from cloud or provided from disk. */
   bool online = false;
 
+#ifdef SIMULATION_MODE
   /**
    * @brief Flag indicating whether time is simulated.
    * Defaults to true in simulation mode.
    */
   bool isTimeSimulated = true;
 #else
-  /** Online mode is always enabled outside of simulation. */
-  bool online = true;
-
   /** Time simulation is disabled outside of simulation. */
   bool isTimeSimulated = false;
-#endif
+#endif  // SIMULATION_MODE
 
   /**
    * @brief Returns a C-style string representing the current configuration state.
