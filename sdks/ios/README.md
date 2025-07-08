@@ -12,7 +12,7 @@
 
 * **Integrating DeliteAI iOS SDK into Your Project**: If you want to integrate the DeliteAI iOS SDK into your existing application.
     * [Installation](#-installation)
-    * [Integrating DeliteAI iOS SDK in Code](#-integrating-deliteai-in-code)
+    * [Integrating DeliteAI iOS SDK in Code](#-integrating-deliteai-ios-sdk-in-code)
 * **Local Development & Testing**: If you want to run the iOS SDK locally via the example app or execute its unit tests.
     * [Running the Example App Locally](#-running-the-example-app-locally)
     * [Running Unit Tests](#-running-unit-tests)
