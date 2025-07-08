@@ -1,0 +1,146 @@
+[
+    {
+        "name": "bundles",
+        "shape": [
+            2
+        ],
+        "type": 681,
+        "shapeLength": 1,
+        "Data": [
+            {
+                "bundleId": 1,
+                "promotion_code": 2,
+                "productIds": [
+                    2,
+                    3,
+                    4,
+                    78,
+                    12
+                ],
+                "bundleStrings": [
+                    "fsdf",
+                    "gfhf",
+                    "324"
+                ],
+                "bundleFloats": [
+                    12.12,
+                    45.6
+                ]
+            },
+            {
+                "bundleId": 2,
+                "promotion_code": 2,
+                "productIds": [
+                    21,
+                    39,
+                    67,
+                    78,
+                    12
+                ],
+                "bundleStrings": [
+                    "fd",
+                    "fd"
+                ],
+                "bundleFloats": [
+                    456.12,
+                    0
+                ]
+            }
+        ]
+    },
+    {
+        "name": "nestedJsonObject",
+        "type": 670,
+        "shapeLength": 0,
+        "shape": [],
+        "Data": {
+            "data": [
+                1,
+                2,
+                3
+            ],
+            "data2": [
+                1,
+                2.08,
+                3
+            ],
+            "data3": "abcd",
+            "nullValue": null
+        }
+    },
+    {
+        "name": "nestedJsonArray1",
+        "type": 681,
+        "shapeLength": 1,
+        "shape": [
+            6
+        ],
+        "Data": [
+            {
+                "data": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "data2": [
+                    1.90,
+                    2.123,
+                    3.45
+                ],
+                "data3": "stringValue"
+            },
+            1,
+            null
+        ]
+    },
+    {
+        "name": "nestedJsonArray2",
+        "type": 681,
+        "shapeLength": 1,
+        "shape": [
+            6
+        ],
+        "Data": [
+            {
+                "data": [
+                    {
+                        "x": 1
+                    },
+                    {
+                        "y": 2
+                    },
+                    {
+                        "z": 3
+                    }
+                ]
+            },
+            {
+                "data2": [
+                    1.90,
+                    2.123,
+                    3.45
+                ],
+                "data3": "stringValue"
+            },
+            "stringValue"
+        ]
+    },
+    {
+        "Data": {},
+        "name": "emptyJson",
+        "type": 670,
+        "shape": [],
+        "shapeLength": 0
+    },
+    {
+        "Data": [],
+        "name": "emptyJsonArray",
+        "type": 681,
+        "shape": [
+            0
+        ],
+        "shapeLength": 1
+    }
+]

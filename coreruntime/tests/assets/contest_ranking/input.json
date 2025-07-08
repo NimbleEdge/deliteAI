@@ -1,0 +1,103 @@
+[
+    {
+        "type": 11,
+        "Data": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "shape": [
+            5,
+            8
+        ],
+        "name": "inputsToModel",
+        "length": 40
+    },
+    {
+        "type": 681,
+        "Data": [
+            {
+                "contestType": "grand",
+                "productid": 1,
+                "roundid": 2022,
+                "winnerPercent": 75,
+                "prizeAmount": 29.9,
+                "entryFee": 19
+            },
+            {
+                "contestType": "special",
+                "productid": 2,
+                "roundid": 2023,
+                "winnerPercent": 50,
+                "prizeAmount": 19.90,
+                "entryFee": 39
+            },
+            {
+                "contestType": "grand",
+                "productid": 3,
+                "roundid": 2024,
+                "winnerPercent": 25,
+                "prizeAmount": 19.90,
+                "entryFee": 19
+            },
+            {
+                "contestType": "grand",
+                "productid": 4,
+                "roundid": 2023,
+                "winnerPercent": 25,
+                "prizeAmount": 29.9,
+                "entryFee": 29
+            },
+            {
+                "contestType": "special",
+                "productid": 5,
+                "roundid": 2022,
+                "winnerPercent": 75,
+                "prizeAmount": 29.9,
+                "entryFee": 19
+            }
+        ],
+        "length": 5,
+        "name": "inputToProcessor",
+        "shape": [
+            5
+        ]
+    }
+]

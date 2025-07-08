@@ -1,0 +1,2639 @@
+{
+  "_type": "Module",
+  "body": [
+    {
+      "_type": "ImportFrom",
+      "col_offset": 0,
+      "end_col_offset": 36,
+      "end_lineno": 5,
+      "level": 0,
+      "lineno": 5,
+      "module": "delitepy",
+      "names": [
+        {
+          "_type": "alias",
+          "asname": "nm",
+          "col_offset": 21,
+          "end_col_offset": 36,
+          "end_lineno": 5,
+          "lineno": 5,
+          "name": "nimblenet"
+        }
+      ]
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 31,
+      "end_lineno": 7,
+      "lineno": 7,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 9,
+          "end_lineno": 7,
+          "id": "tableName",
+          "lineno": 7
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 10,
+        "end_col_offset": 31,
+        "end_lineno": 7,
+        "kind": null,
+        "lineno": 7,
+        "n": "ContestJoinedClient",
+        "s": "ContestJoinedClient",
+        "value": "ContestJoinedClient"
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 1,
+      "end_lineno": 17,
+      "lineno": 9,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 30,
+          "end_lineno": 9,
+          "id": "contestJoinedClientTableSchema",
+          "lineno": 9
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Dict",
+        "col_offset": 33,
+        "end_col_offset": 1,
+        "end_lineno": 17,
+        "keys": [
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 17,
+            "end_lineno": 10,
+            "kind": null,
+            "lineno": 10,
+            "n": "contestType",
+            "s": "contestType",
+            "value": "contestType"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 15,
+            "end_lineno": 11,
+            "kind": null,
+            "lineno": 11,
+            "n": "productid",
+            "s": "productid",
+            "value": "productid"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 13,
+            "end_lineno": 12,
+            "kind": null,
+            "lineno": 12,
+            "n": "roundid",
+            "s": "roundid",
+            "value": "roundid"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 19,
+            "end_lineno": 13,
+            "kind": null,
+            "lineno": 13,
+            "n": "winnerPercent",
+            "s": "winnerPercent",
+            "value": "winnerPercent"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 17,
+            "end_lineno": 14,
+            "kind": null,
+            "lineno": 14,
+            "n": "prizeAmount",
+            "s": "prizeAmount",
+            "value": "prizeAmount"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 14,
+            "end_lineno": 15,
+            "kind": null,
+            "lineno": 15,
+            "n": "entryFee",
+            "s": "entryFee",
+            "value": "entryFee"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 17,
+            "end_lineno": 16,
+            "kind": null,
+            "lineno": 16,
+            "n": "enrichedKey",
+            "s": "enrichedKey",
+            "value": "enrichedKey"
+          }
+        ],
+        "lineno": 9,
+        "values": [
+          {
+            "_type": "Constant",
+            "col_offset": 19,
+            "end_col_offset": 27,
+            "end_lineno": 10,
+            "kind": null,
+            "lineno": 10,
+            "n": "string",
+            "s": "string",
+            "value": "string"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 18,
+            "end_col_offset": 25,
+            "end_lineno": 11,
+            "kind": null,
+            "lineno": 11,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 16,
+            "end_col_offset": 23,
+            "end_lineno": 12,
+            "kind": null,
+            "lineno": 12,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 22,
+            "end_col_offset": 29,
+            "end_lineno": 13,
+            "kind": null,
+            "lineno": 13,
+            "n": "float",
+            "s": "float",
+            "value": "float"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 19,
+            "end_col_offset": 27,
+            "end_lineno": 14,
+            "kind": null,
+            "lineno": 14,
+            "n": "double",
+            "s": "double",
+            "value": "double"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 16,
+            "end_col_offset": 23,
+            "end_lineno": 15,
+            "kind": null,
+            "lineno": 15,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 19,
+            "end_col_offset": 26,
+            "end_lineno": 16,
+            "kind": null,
+            "lineno": 16,
+            "n": "int64",
+            "s": "int64",
+            "value": "int64"
+          }
+        ]
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 21,
+      "end_lineno": 19,
+      "lineno": 19,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 16,
+          "end_lineno": 19,
+          "id": "expiryTimeInMins",
+          "lineno": 19
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 19,
+        "end_col_offset": 21,
+        "end_lineno": 19,
+        "kind": null,
+        "lineno": 19,
+        "n": 60,
+        "s": 60,
+        "value": 60
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 7,
+      "end_lineno": 20,
+      "lineno": 20,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 3,
+          "end_lineno": 20,
+          "id": "val",
+          "lineno": 20
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 6,
+        "end_col_offset": 7,
+        "end_lineno": 20,
+        "kind": null,
+        "lineno": 20,
+        "n": 1,
+        "s": 1,
+        "value": 1
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 60,
+      "end_lineno": 21,
+      "lineno": 21,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 8,
+          "end_lineno": 21,
+          "id": "rawStore",
+          "lineno": 21
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [
+          {
+            "_type": "Name",
+            "col_offset": 26,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 35,
+            "end_lineno": 21,
+            "id": "tableName",
+            "lineno": 21
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 36,
+            "end_col_offset": 42,
+            "end_lineno": 21,
+            "kind": null,
+            "lineno": 21,
+            "n": "time",
+            "s": "time",
+            "value": "time"
+          },
+          {
+            "_type": "Name",
+            "col_offset": 43,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 59,
+            "end_lineno": 21,
+            "id": "expiryTimeInMins",
+            "lineno": 21
+          }
+        ],
+        "col_offset": 9,
+        "end_col_offset": 60,
+        "end_lineno": 21,
+        "func": {
+          "_type": "Attribute",
+          "attr": "RawEventStore",
+          "col_offset": 9,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 25,
+          "end_lineno": 21,
+          "lineno": 21,
+          "value": {
+            "_type": "Name",
+            "col_offset": 9,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 11,
+            "end_lineno": 21,
+            "id": "nm",
+            "lineno": 21
+          }
+        },
+        "keywords": [],
+        "lineno": 21
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 47,
+      "end_lineno": 22,
+      "lineno": 22,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 2,
+          "end_lineno": 22,
+          "id": "df",
+          "lineno": 22
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [
+          {
+            "_type": "Name",
+            "col_offset": 16,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 46,
+            "end_lineno": 22,
+            "id": "contestJoinedClientTableSchema",
+            "lineno": 22
+          }
+        ],
+        "col_offset": 3,
+        "end_col_offset": 47,
+        "end_lineno": 22,
+        "func": {
+          "_type": "Attribute",
+          "attr": "Dataframe",
+          "col_offset": 3,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 15,
+          "end_lineno": 22,
+          "lineno": 22,
+          "value": {
+            "_type": "Name",
+            "col_offset": 3,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 5,
+            "end_lineno": 22,
+            "id": "nm",
+            "lineno": 22
+          }
+        },
+        "keywords": [],
+        "lineno": 22
+      }
+    },
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "type",
+            "col_offset": 19,
+            "end_col_offset": 23,
+            "end_lineno": 25,
+            "lineno": 25,
+            "type_comment": null
+          },
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "event",
+            "col_offset": 24,
+            "end_col_offset": 29,
+            "end_lineno": 25,
+            "lineno": 25,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 17,
+          "end_lineno": 26,
+          "lineno": 26,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 7,
+              "end_lineno": 26,
+              "id": "val",
+              "lineno": 26
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "BinOp",
+            "col_offset": 10,
+            "end_col_offset": 17,
+            "end_lineno": 26,
+            "left": {
+              "_type": "Name",
+              "col_offset": 10,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 13,
+              "end_lineno": 26,
+              "id": "val",
+              "lineno": 26
+            },
+            "lineno": 26,
+            "op": {
+              "_type": "Add"
+            },
+            "right": {
+              "_type": "Constant",
+              "col_offset": 16,
+              "end_col_offset": 17,
+              "end_lineno": 26,
+              "kind": null,
+              "lineno": 26,
+              "n": 1,
+              "s": 1,
+              "value": 1
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 30,
+          "end_lineno": 27,
+          "lineno": 27,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 24,
+              "end_lineno": 27,
+              "lineno": 27,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 10,
+                "end_col_offset": 23,
+                "end_lineno": 27,
+                "kind": null,
+                "lineno": 27,
+                "n": "enrichedKey",
+                "s": "enrichedKey",
+                "value": "enrichedKey"
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 9,
+                "end_lineno": 27,
+                "id": "event",
+                "lineno": 27
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Name",
+            "col_offset": 27,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 30,
+            "end_lineno": 27,
+            "id": "val",
+            "lineno": 27
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 20,
+          "end_lineno": 28,
+          "lineno": 28,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 14,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 19,
+                "end_lineno": 28,
+                "id": "event",
+                "lineno": 28
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 20,
+            "end_lineno": 28,
+            "func": {
+              "_type": "Attribute",
+              "attr": "append",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 13,
+              "end_lineno": 28,
+              "lineno": 28,
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 6,
+                "end_lineno": 28,
+                "id": "df",
+                "lineno": 28
+              }
+            },
+            "keywords": [],
+            "lineno": 28
+          }
+        },
+        {
+          "_type": "Return",
+          "col_offset": 4,
+          "end_col_offset": 10,
+          "end_lineno": 29,
+          "lineno": 29,
+          "value": null
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [
+        {
+          "_type": "Call",
+          "args": [
+            {
+              "_type": "Name",
+              "col_offset": 11,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 19,
+              "end_lineno": 24,
+              "id": "rawStore",
+              "lineno": 24
+            }
+          ],
+          "col_offset": 1,
+          "end_col_offset": 20,
+          "end_lineno": 24,
+          "func": {
+            "_type": "Name",
+            "col_offset": 1,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 10,
+            "end_lineno": 24,
+            "id": "add_event",
+            "lineno": 24
+          },
+          "keywords": [],
+          "lineno": 24
+        }
+      ],
+      "end_col_offset": 10,
+      "end_lineno": 29,
+      "lineno": 25,
+      "name": "add_event_hook",
+      "returns": null,
+      "type_comment": null
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "end_lineno": 31,
+      "lineno": 31,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 8,
+          "end_lineno": 31,
+          "id": "dataType",
+          "lineno": 31
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 9,
+        "end_col_offset": 17,
+        "end_lineno": 31,
+        "kind": null,
+        "lineno": 31,
+        "n": "double",
+        "s": "double",
+        "value": "double"
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 19,
+      "end_lineno": 32,
+      "lineno": 32,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 11,
+          "end_lineno": 32,
+          "id": "intDataType",
+          "lineno": 32
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 12,
+        "end_col_offset": 19,
+        "end_lineno": 32,
+        "kind": null,
+        "lineno": 32,
+        "n": "int32",
+        "s": "int32",
+        "value": "int32"
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 148,
+      "end_lineno": 34,
+      "lineno": 34,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 20,
+          "end_lineno": 34,
+          "id": "contestTypeProcessor",
+          "lineno": 34
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 21,
+        "end_col_offset": 148,
+        "end_lineno": 34,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 21,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 146,
+          "end_lineno": 34,
+          "lineno": 34,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 117,
+                "end_col_offset": 130,
+                "end_lineno": 34,
+                "kind": null,
+                "lineno": 34,
+                "n": "prizeAmount",
+                "s": "prizeAmount",
+                "value": "prizeAmount"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 131,
+                "end_col_offset": 136,
+                "end_lineno": 34,
+                "kind": null,
+                "lineno": 34,
+                "n": "Avg",
+                "s": "Avg",
+                "value": "Avg"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 137,
+                "end_col_offset": 138,
+                "end_lineno": 34,
+                "kind": null,
+                "lineno": 34,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 21,
+            "end_col_offset": 139,
+            "end_lineno": 34,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 21,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 116,
+              "end_lineno": 34,
+              "lineno": 34,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 84,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 85,
+                        "end_col_offset": 98,
+                        "end_lineno": 34,
+                        "kind": null,
+                        "lineno": 34,
+                        "n": "contestType",
+                        "s": "contestType",
+                        "value": "contestType"
+                      }
+                    ],
+                    "end_col_offset": 99,
+                    "end_lineno": 34,
+                    "lineno": 34
+                  }
+                ],
+                "col_offset": 21,
+                "end_col_offset": 100,
+                "end_lineno": 34,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 21,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 83,
+                  "end_lineno": 34,
+                  "lineno": 34,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 58,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 59,
+                            "end_col_offset": 61,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 18,
+                            "s": 18,
+                            "value": 18
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 62,
+                            "end_col_offset": 64,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 15,
+                            "s": 15,
+                            "value": 15
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 65,
+                            "end_col_offset": 67,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 10,
+                            "s": 10,
+                            "value": 10
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 68,
+                            "end_col_offset": 69,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 8,
+                            "s": 8,
+                            "value": 8
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 70,
+                            "end_col_offset": 71,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 6,
+                            "s": 6,
+                            "value": 6
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 72,
+                            "end_col_offset": 73,
+                            "end_lineno": 34,
+                            "kind": null,
+                            "lineno": 34,
+                            "n": 1,
+                            "s": 1,
+                            "value": 1
+                          }
+                        ],
+                        "end_col_offset": 74,
+                        "end_lineno": 34,
+                        "lineno": 34
+                      }
+                    ],
+                    "col_offset": 21,
+                    "end_col_offset": 75,
+                    "end_lineno": 34,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 21,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 57,
+                      "end_lineno": 34,
+                      "lineno": 34,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 34,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 42,
+                            "end_lineno": 34,
+                            "id": "dataType",
+                            "lineno": 34
+                          }
+                        ],
+                        "col_offset": 21,
+                        "end_col_offset": 43,
+                        "end_lineno": 34,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 21,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 33,
+                          "end_lineno": 34,
+                          "lineno": 34,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 21,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 23,
+                            "end_lineno": 34,
+                            "id": "df",
+                            "lineno": 34
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 34
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 34
+                  }
+                },
+                "keywords": [],
+                "lineno": 34
+              }
+            },
+            "keywords": [],
+            "lineno": 34
+          }
+        },
+        "keywords": [],
+        "lineno": 34
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 149,
+      "end_lineno": 35,
+      "lineno": 35,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 21,
+          "end_lineno": 35,
+          "id": "roundProductProcessor",
+          "lineno": 35
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 22,
+        "end_col_offset": 149,
+        "end_lineno": 35,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 22,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 147,
+          "end_lineno": 35,
+          "lineno": 35,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 121,
+                "end_col_offset": 131,
+                "end_lineno": 35,
+                "kind": null,
+                "lineno": 35,
+                "n": "entryFee",
+                "s": "entryFee",
+                "value": "entryFee"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 132,
+                "end_col_offset": 137,
+                "end_lineno": 35,
+                "kind": null,
+                "lineno": 35,
+                "n": "Sum",
+                "s": "Sum",
+                "value": "Sum"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 138,
+                "end_col_offset": 139,
+                "end_lineno": 35,
+                "kind": null,
+                "lineno": 35,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 22,
+            "end_col_offset": 140,
+            "end_lineno": 35,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 22,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 120,
+              "end_lineno": 35,
+              "lineno": 35,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 80,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 81,
+                        "end_col_offset": 90,
+                        "end_lineno": 35,
+                        "kind": null,
+                        "lineno": 35,
+                        "n": "roundid",
+                        "s": "roundid",
+                        "value": "roundid"
+                      },
+                      {
+                        "_type": "Constant",
+                        "col_offset": 91,
+                        "end_col_offset": 102,
+                        "end_lineno": 35,
+                        "kind": null,
+                        "lineno": 35,
+                        "n": "productid",
+                        "s": "productid",
+                        "value": "productid"
+                      }
+                    ],
+                    "end_col_offset": 103,
+                    "end_lineno": 35,
+                    "lineno": 35
+                  }
+                ],
+                "col_offset": 22,
+                "end_col_offset": 104,
+                "end_lineno": 35,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 22,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 79,
+                  "end_lineno": 35,
+                  "lineno": 35,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 59,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 60,
+                            "end_col_offset": 62,
+                            "end_lineno": 35,
+                            "kind": null,
+                            "lineno": 35,
+                            "n": 21,
+                            "s": 21,
+                            "value": 21
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 63,
+                            "end_col_offset": 65,
+                            "end_lineno": 35,
+                            "kind": null,
+                            "lineno": 35,
+                            "n": 17,
+                            "s": 17,
+                            "value": 17
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 66,
+                            "end_col_offset": 67,
+                            "end_lineno": 35,
+                            "kind": null,
+                            "lineno": 35,
+                            "n": 9,
+                            "s": 9,
+                            "value": 9
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 68,
+                            "end_col_offset": 69,
+                            "end_lineno": 35,
+                            "kind": null,
+                            "lineno": 35,
+                            "n": 8,
+                            "s": 8,
+                            "value": 8
+                          }
+                        ],
+                        "end_col_offset": 70,
+                        "end_lineno": 35,
+                        "lineno": 35
+                      }
+                    ],
+                    "col_offset": 22,
+                    "end_col_offset": 71,
+                    "end_lineno": 35,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 22,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 58,
+                      "end_lineno": 35,
+                      "lineno": 35,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 35,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 43,
+                            "end_lineno": 35,
+                            "id": "dataType",
+                            "lineno": 35
+                          }
+                        ],
+                        "col_offset": 22,
+                        "end_col_offset": 44,
+                        "end_lineno": 35,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 22,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 34,
+                          "end_lineno": 35,
+                          "lineno": 35,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 22,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 24,
+                            "end_lineno": 35,
+                            "id": "df",
+                            "lineno": 35
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 35
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 35
+                  }
+                },
+                "keywords": [],
+                "lineno": 35
+              }
+            },
+            "keywords": [],
+            "lineno": 35
+          }
+        },
+        "keywords": [],
+        "lineno": 35
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 132,
+      "end_lineno": 36,
+      "lineno": 36,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 17,
+          "end_lineno": 36,
+          "id": "entryFeeProcessor",
+          "lineno": 36
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 18,
+        "end_col_offset": 132,
+        "end_lineno": 36,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 18,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 130,
+          "end_lineno": 36,
+          "lineno": 36,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 102,
+                "end_col_offset": 112,
+                "end_lineno": 36,
+                "kind": null,
+                "lineno": 36,
+                "n": "entryFee",
+                "s": "entryFee",
+                "value": "entryFee"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 113,
+                "end_col_offset": 120,
+                "end_lineno": 36,
+                "kind": null,
+                "lineno": 36,
+                "n": "Count",
+                "s": "Count",
+                "value": "Count"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 121,
+                "end_col_offset": 122,
+                "end_lineno": 36,
+                "kind": null,
+                "lineno": 36,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 18,
+            "end_col_offset": 123,
+            "end_lineno": 36,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 18,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 101,
+              "end_lineno": 36,
+              "lineno": 36,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 72,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 73,
+                        "end_col_offset": 83,
+                        "end_lineno": 36,
+                        "kind": null,
+                        "lineno": 36,
+                        "n": "entryFee",
+                        "s": "entryFee",
+                        "value": "entryFee"
+                      }
+                    ],
+                    "end_col_offset": 84,
+                    "end_lineno": 36,
+                    "lineno": 36
+                  }
+                ],
+                "col_offset": 18,
+                "end_col_offset": 85,
+                "end_lineno": 36,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 18,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 71,
+                  "end_lineno": 36,
+                  "lineno": 36,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 55,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 56,
+                            "end_col_offset": 57,
+                            "end_lineno": 36,
+                            "kind": null,
+                            "lineno": 36,
+                            "n": 8,
+                            "s": 8,
+                            "value": 8
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 58,
+                            "end_col_offset": 59,
+                            "end_lineno": 36,
+                            "kind": null,
+                            "lineno": 36,
+                            "n": 4,
+                            "s": 4,
+                            "value": 4
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 60,
+                            "end_col_offset": 61,
+                            "end_lineno": 36,
+                            "kind": null,
+                            "lineno": 36,
+                            "n": 2,
+                            "s": 2,
+                            "value": 2
+                          }
+                        ],
+                        "end_col_offset": 62,
+                        "end_lineno": 36,
+                        "lineno": 36
+                      }
+                    ],
+                    "col_offset": 18,
+                    "end_col_offset": 63,
+                    "end_lineno": 36,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 18,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 54,
+                      "end_lineno": 36,
+                      "lineno": 36,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 31,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 39,
+                            "end_lineno": 36,
+                            "id": "dataType",
+                            "lineno": 36
+                          }
+                        ],
+                        "col_offset": 18,
+                        "end_col_offset": 40,
+                        "end_lineno": 36,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 18,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 30,
+                          "end_lineno": 36,
+                          "lineno": 36,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 18,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 20,
+                            "end_lineno": 36,
+                            "id": "df",
+                            "lineno": 36
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 36
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 36
+                  }
+                },
+                "keywords": [],
+                "lineno": 36
+              }
+            },
+            "keywords": [],
+            "lineno": 36
+          }
+        },
+        "keywords": [],
+        "lineno": 36
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 137,
+      "end_lineno": 37,
+      "lineno": 37,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 20,
+          "end_lineno": 37,
+          "id": "prizeAmountProcessor",
+          "lineno": 37
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 21,
+        "end_col_offset": 137,
+        "end_lineno": 37,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 21,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 135,
+          "end_lineno": 37,
+          "lineno": 37,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 109,
+                "end_col_offset": 119,
+                "end_lineno": 37,
+                "kind": null,
+                "lineno": 37,
+                "n": "entryFee",
+                "s": "entryFee",
+                "value": "entryFee"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 120,
+                "end_col_offset": 125,
+                "end_lineno": 37,
+                "kind": null,
+                "lineno": 37,
+                "n": "Min",
+                "s": "Min",
+                "value": "Min"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 126,
+                "end_col_offset": 127,
+                "end_lineno": 37,
+                "kind": null,
+                "lineno": 37,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 21,
+            "end_col_offset": 128,
+            "end_lineno": 37,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 21,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 108,
+              "end_lineno": 37,
+              "lineno": 37,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 76,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 77,
+                        "end_col_offset": 90,
+                        "end_lineno": 37,
+                        "kind": null,
+                        "lineno": 37,
+                        "n": "prizeAmount",
+                        "s": "prizeAmount",
+                        "value": "prizeAmount"
+                      }
+                    ],
+                    "end_col_offset": 91,
+                    "end_lineno": 37,
+                    "lineno": 37
+                  }
+                ],
+                "col_offset": 21,
+                "end_col_offset": 92,
+                "end_lineno": 37,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 21,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 75,
+                  "end_lineno": 37,
+                  "lineno": 37,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 58,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 59,
+                            "end_col_offset": 61,
+                            "end_lineno": 37,
+                            "kind": null,
+                            "lineno": 37,
+                            "n": 16,
+                            "s": 16,
+                            "value": 16
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 62,
+                            "end_col_offset": 63,
+                            "end_lineno": 37,
+                            "kind": null,
+                            "lineno": 37,
+                            "n": 7,
+                            "s": 7,
+                            "value": 7
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 64,
+                            "end_col_offset": 65,
+                            "end_lineno": 37,
+                            "kind": null,
+                            "lineno": 37,
+                            "n": 3,
+                            "s": 3,
+                            "value": 3
+                          }
+                        ],
+                        "end_col_offset": 66,
+                        "end_lineno": 37,
+                        "lineno": 37
+                      }
+                    ],
+                    "col_offset": 21,
+                    "end_col_offset": 67,
+                    "end_lineno": 37,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 21,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 57,
+                      "end_lineno": 37,
+                      "lineno": 37,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 34,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 42,
+                            "end_lineno": 37,
+                            "id": "dataType",
+                            "lineno": 37
+                          }
+                        ],
+                        "col_offset": 21,
+                        "end_col_offset": 43,
+                        "end_lineno": 37,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 21,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 33,
+                          "end_lineno": 37,
+                          "lineno": 37,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 21,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 23,
+                            "end_lineno": 37,
+                            "id": "df",
+                            "lineno": 37
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 37
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 37
+                  }
+                },
+                "keywords": [],
+                "lineno": 37
+              }
+            },
+            "keywords": [],
+            "lineno": 37
+          }
+        },
+        "keywords": [],
+        "lineno": 37
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 145,
+      "end_lineno": 38,
+      "lineno": 38,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 22,
+          "end_lineno": 38,
+          "id": "winnerPercentProcessor",
+          "lineno": 38
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 23,
+        "end_col_offset": 145,
+        "end_lineno": 38,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 23,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 143,
+          "end_lineno": 38,
+          "lineno": 38,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 114,
+                "end_col_offset": 127,
+                "end_lineno": 38,
+                "kind": null,
+                "lineno": 38,
+                "n": "prizeAmount",
+                "s": "prizeAmount",
+                "value": "prizeAmount"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 128,
+                "end_col_offset": 133,
+                "end_lineno": 38,
+                "kind": null,
+                "lineno": 38,
+                "n": "Max",
+                "s": "Max",
+                "value": "Max"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 134,
+                "end_col_offset": 135,
+                "end_lineno": 38,
+                "kind": null,
+                "lineno": 38,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 23,
+            "end_col_offset": 136,
+            "end_lineno": 38,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 23,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 113,
+              "end_lineno": 38,
+              "lineno": 38,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 79,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 80,
+                        "end_col_offset": 95,
+                        "end_lineno": 38,
+                        "kind": null,
+                        "lineno": 38,
+                        "n": "winnerPercent",
+                        "s": "winnerPercent",
+                        "value": "winnerPercent"
+                      }
+                    ],
+                    "end_col_offset": 96,
+                    "end_lineno": 38,
+                    "lineno": 38
+                  }
+                ],
+                "col_offset": 23,
+                "end_col_offset": 97,
+                "end_lineno": 38,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 23,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 78,
+                  "end_lineno": 38,
+                  "lineno": 38,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 60,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 61,
+                            "end_col_offset": 63,
+                            "end_lineno": 38,
+                            "kind": null,
+                            "lineno": 38,
+                            "n": 11,
+                            "s": 11,
+                            "value": 11
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 64,
+                            "end_col_offset": 66,
+                            "end_lineno": 38,
+                            "kind": null,
+                            "lineno": 38,
+                            "n": 25,
+                            "s": 25,
+                            "value": 25
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 67,
+                            "end_col_offset": 68,
+                            "end_lineno": 38,
+                            "kind": null,
+                            "lineno": 38,
+                            "n": 1,
+                            "s": 1,
+                            "value": 1
+                          }
+                        ],
+                        "end_col_offset": 69,
+                        "end_lineno": 38,
+                        "lineno": 38
+                      }
+                    ],
+                    "col_offset": 23,
+                    "end_col_offset": 70,
+                    "end_lineno": 38,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 23,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 59,
+                      "end_lineno": 38,
+                      "lineno": 38,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 36,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 44,
+                            "end_lineno": 38,
+                            "id": "dataType",
+                            "lineno": 38
+                          }
+                        ],
+                        "col_offset": 23,
+                        "end_col_offset": 45,
+                        "end_lineno": 38,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 23,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 35,
+                          "end_lineno": 38,
+                          "lineno": 38,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 23,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 25,
+                            "end_lineno": 38,
+                            "id": "df",
+                            "lineno": 38
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 38
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 38
+                  }
+                },
+                "keywords": [],
+                "lineno": 38
+              }
+            },
+            "keywords": [],
+            "lineno": 38
+          }
+        },
+        "keywords": [],
+        "lineno": 38
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 146,
+      "end_lineno": 39,
+      "lineno": 39,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 20,
+          "end_lineno": 39,
+          "id": "enrichedKeyProcessor",
+          "lineno": 39
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [],
+        "col_offset": 21,
+        "end_col_offset": 146,
+        "end_lineno": 39,
+        "func": {
+          "_type": "Attribute",
+          "attr": "create",
+          "col_offset": 21,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 144,
+          "end_lineno": 39,
+          "lineno": 39,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 113,
+                "end_col_offset": 126,
+                "end_lineno": 39,
+                "kind": null,
+                "lineno": 39,
+                "n": "enrichedKey",
+                "s": "enrichedKey",
+                "value": "enrichedKey"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 127,
+                "end_col_offset": 134,
+                "end_lineno": 39,
+                "kind": null,
+                "lineno": 39,
+                "n": "Count",
+                "s": "Count",
+                "value": "Count"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 135,
+                "end_col_offset": 136,
+                "end_lineno": 39,
+                "kind": null,
+                "lineno": 39,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              }
+            ],
+            "col_offset": 21,
+            "end_col_offset": 137,
+            "end_lineno": 39,
+            "func": {
+              "_type": "Attribute",
+              "attr": "add_computation",
+              "col_offset": 21,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 112,
+              "end_lineno": 39,
+              "lineno": 39,
+              "value": {
+                "_type": "Call",
+                "args": [
+                  {
+                    "_type": "List",
+                    "col_offset": 80,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "elts": [
+                      {
+                        "_type": "Constant",
+                        "col_offset": 81,
+                        "end_col_offset": 94,
+                        "end_lineno": 39,
+                        "kind": null,
+                        "lineno": 39,
+                        "n": "enrichedKey",
+                        "s": "enrichedKey",
+                        "value": "enrichedKey"
+                      }
+                    ],
+                    "end_col_offset": 95,
+                    "end_lineno": 39,
+                    "lineno": 39
+                  }
+                ],
+                "col_offset": 21,
+                "end_col_offset": 96,
+                "end_lineno": 39,
+                "func": {
+                  "_type": "Attribute",
+                  "attr": "groupBy",
+                  "col_offset": 21,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 79,
+                  "end_lineno": 39,
+                  "lineno": 39,
+                  "value": {
+                    "_type": "Call",
+                    "args": [
+                      {
+                        "_type": "List",
+                        "col_offset": 61,
+                        "ctx": {
+                          "_type": "Load"
+                        },
+                        "elts": [
+                          {
+                            "_type": "Constant",
+                            "col_offset": 62,
+                            "end_col_offset": 64,
+                            "end_lineno": 39,
+                            "kind": null,
+                            "lineno": 39,
+                            "n": 11,
+                            "s": 11,
+                            "value": 11
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 65,
+                            "end_col_offset": 67,
+                            "end_lineno": 39,
+                            "kind": null,
+                            "lineno": 39,
+                            "n": 25,
+                            "s": 25,
+                            "value": 25
+                          },
+                          {
+                            "_type": "Constant",
+                            "col_offset": 68,
+                            "end_col_offset": 69,
+                            "end_lineno": 39,
+                            "kind": null,
+                            "lineno": 39,
+                            "n": 1,
+                            "s": 1,
+                            "value": 1
+                          }
+                        ],
+                        "end_col_offset": 70,
+                        "end_lineno": 39,
+                        "lineno": 39
+                      }
+                    ],
+                    "col_offset": 21,
+                    "end_col_offset": 71,
+                    "end_lineno": 39,
+                    "func": {
+                      "_type": "Attribute",
+                      "attr": "rollingWindow",
+                      "col_offset": 21,
+                      "ctx": {
+                        "_type": "Load"
+                      },
+                      "end_col_offset": 60,
+                      "end_lineno": 39,
+                      "lineno": 39,
+                      "value": {
+                        "_type": "Call",
+                        "args": [
+                          {
+                            "_type": "Name",
+                            "col_offset": 34,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 45,
+                            "end_lineno": 39,
+                            "id": "intDataType",
+                            "lineno": 39
+                          }
+                        ],
+                        "col_offset": 21,
+                        "end_col_offset": 46,
+                        "end_lineno": 39,
+                        "func": {
+                          "_type": "Attribute",
+                          "attr": "processor",
+                          "col_offset": 21,
+                          "ctx": {
+                            "_type": "Load"
+                          },
+                          "end_col_offset": 33,
+                          "end_lineno": 39,
+                          "lineno": 39,
+                          "value": {
+                            "_type": "Name",
+                            "col_offset": 21,
+                            "ctx": {
+                              "_type": "Load"
+                            },
+                            "end_col_offset": 23,
+                            "end_lineno": 39,
+                            "id": "df",
+                            "lineno": 39
+                          }
+                        },
+                        "keywords": [],
+                        "lineno": 39
+                      }
+                    },
+                    "keywords": [],
+                    "lineno": 39
+                  }
+                },
+                "keywords": [],
+                "lineno": 39
+              }
+            },
+            "keywords": [],
+            "lineno": 39
+          }
+        },
+        "keywords": [],
+        "lineno": 39
+      }
+    },
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "inputs",
+            "col_offset": 37,
+            "end_col_offset": 43,
+            "end_lineno": 41,
+            "lineno": 41,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 88,
+          "end_lineno": 42,
+          "lineno": 42,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 23,
+              "end_lineno": 42,
+              "id": "enriched_key_output",
+              "lineno": 42
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 61,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 87,
+                "end_lineno": 42,
+                "lineno": 42,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 68,
+                  "end_col_offset": 86,
+                  "end_lineno": 42,
+                  "kind": null,
+                  "lineno": 42,
+                  "n": "inputToProcessor",
+                  "s": "inputToProcessor",
+                  "value": "inputToProcessor"
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 61,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 67,
+                  "end_lineno": 42,
+                  "id": "inputs",
+                  "lineno": 42
+                }
+              }
+            ],
+            "col_offset": 26,
+            "end_col_offset": 88,
+            "end_lineno": 42,
+            "func": {
+              "_type": "Attribute",
+              "attr": "get_for_items",
+              "col_offset": 26,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 60,
+              "end_lineno": 42,
+              "lineno": 42,
+              "value": {
+                "_type": "Name",
+                "col_offset": 26,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 46,
+                "end_lineno": 42,
+                "id": "enrichedKeyProcessor",
+                "lineno": 42
+              }
+            },
+            "keywords": [],
+            "lineno": 42
+          }
+        },
+        {
+          "_type": "Return",
+          "col_offset": 4,
+          "end_col_offset": 13,
+          "end_lineno": 43,
+          "lineno": 43,
+          "value": {
+            "_type": "Dict",
+            "col_offset": 11,
+            "end_col_offset": 13,
+            "end_lineno": 43,
+            "keys": [],
+            "lineno": 43,
+            "values": []
+          }
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [],
+      "end_col_offset": 13,
+      "end_lineno": 43,
+      "lineno": 41,
+      "name": "get_processor_output_invalid_key",
+      "returns": null,
+      "type_comment": null
+    },
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "inputs",
+            "col_offset": 38,
+            "end_col_offset": 44,
+            "end_lineno": 45,
+            "lineno": 45,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 88,
+          "end_lineno": 46,
+          "lineno": 46,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 23,
+              "end_lineno": 46,
+              "id": "enriched_key_output",
+              "lineno": 46
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 61,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 87,
+                "end_lineno": 46,
+                "lineno": 46,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 68,
+                  "end_col_offset": 86,
+                  "end_lineno": 46,
+                  "kind": null,
+                  "lineno": 46,
+                  "n": "inputToProcessor",
+                  "s": "inputToProcessor",
+                  "value": "inputToProcessor"
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 61,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 67,
+                  "end_lineno": 46,
+                  "id": "inputs",
+                  "lineno": 46
+                }
+              }
+            ],
+            "col_offset": 26,
+            "end_col_offset": 88,
+            "end_lineno": 46,
+            "func": {
+              "_type": "Attribute",
+              "attr": "get_for_items",
+              "col_offset": 26,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 60,
+              "end_lineno": 46,
+              "lineno": 46,
+              "value": {
+                "_type": "Name",
+                "col_offset": 26,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 46,
+                "end_lineno": 46,
+                "id": "enrichedKeyProcessor",
+                "lineno": 46
+              }
+            },
+            "keywords": [],
+            "lineno": 46
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 30,
+          "end_lineno": 47,
+          "lineno": 47,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 29,
+                "end_lineno": 47,
+                "id": "enriched_key_output",
+                "lineno": 47
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 30,
+            "end_lineno": 47,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 47,
+              "id": "print",
+              "lineno": 47
+            },
+            "keywords": [],
+            "lineno": 47
+          }
+        },
+        {
+          "_type": "Return",
+          "col_offset": 4,
+          "end_col_offset": 56,
+          "end_lineno": 48,
+          "lineno": 48,
+          "value": {
+            "_type": "Dict",
+            "col_offset": 11,
+            "end_col_offset": 56,
+            "end_lineno": 48,
+            "keys": [
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 34,
+                "end_lineno": 48,
+                "kind": null,
+                "lineno": 48,
+                "n": "enriched_key_outpput",
+                "s": "enriched_key_outpput",
+                "value": "enriched_key_outpput"
+              }
+            ],
+            "lineno": 48,
+            "values": [
+              {
+                "_type": "Name",
+                "col_offset": 36,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 55,
+                "end_lineno": 48,
+                "id": "enriched_key_output",
+                "lineno": 48
+              }
+            ]
+          }
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [],
+      "end_col_offset": 56,
+      "end_lineno": 48,
+      "lineno": 45,
+      "name": "get_enriched_key_processor_output",
+      "returns": null,
+      "type_comment": null
+    }
+  ],
+  "type_ignores": []
+}

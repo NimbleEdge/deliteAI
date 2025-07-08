@@ -1,0 +1,78 @@
+{
+    "inputs": [
+        {
+            "dataType": 1,
+            "name": "agg_contestType",
+            "processor": {
+                "groupBy": [
+                    "ID"
+                ],
+                "operations": [
+                    {
+                        "columnName": "ID",
+                        "default": 1,
+                        "operator": "Avg"
+                    }
+                ],
+                "rollingWindowsInSecs": [
+                    15,
+                    60
+                ],
+                "tableName": "UserInteraction"
+            },
+            "shape": [
+                2
+            ]
+        },
+        {
+            "dataType": 1,
+            "name": "agg_entryFee",
+            "processor": {
+                "groupBy": [
+                    "ID"
+                ],
+                "operations": [
+                    {
+                        "columnName": "entryFee",
+                        "default": 0,
+                        "operator": "Avg"
+                    }
+                ],
+                "rollingWindowsInSecs": [
+                    15,
+                    60
+                ],
+                "tableName": "UserInteraction"
+            },
+            "shape": [
+                2
+            ]
+        },
+        {
+            "dataType": 1,
+            "name": "contest_features",
+            "shape": [
+                10,
+                3
+            ]
+        }
+    ],
+    "inputsToProcessors": [
+        {
+            "inputNames": [
+                "agg_entryFee",
+                "agg_contestType"
+            ],
+            "name": "userInput"
+        }
+    ],
+    "outputs": [
+        {
+            "dataType": 1,
+            "name": "scores",
+            "shape": [
+                10
+            ]
+        }
+    ]
+}

@@ -1,0 +1,67 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/SCRIPT_LOAD_FAILURE/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/4.0.0/formats/json",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": []
+    },
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/deployments/SCRIPT_LOAD_FAILURE/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/6.0.0/formats/json",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": []
+    },
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/deployments/SCRIPT_LOAD_FAILURE/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": []
+    }
+]

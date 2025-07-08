@@ -1,0 +1,116 @@
+{
+    "warmup": [
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 1,
+                "roundid": 2022,
+                "winnerPercent": 50,
+                "prizeAmount": 19.9,
+                "entryFee": 19
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "grand",
+                "productid": 2,
+                "roundid": 2023,
+                "winnerPercent": 75,
+                "prizeAmount": 29.90,
+                "entryFee": 29
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "grand",
+                "productid": 3,
+                "roundid": 2024,
+                "winnerPercent": 25,
+                "prizeAmount": 19.90,
+                "entryFee": 39
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 4,
+                "roundid": 2023,
+                "winnerPercent": 50,
+                "prizeAmount": 29.9,
+                "entryFee": 29
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 5,
+                "roundid": 2022,
+                "winnerPercent": 25,
+                "prizeAmount": 19.90,
+                "entryFee": 19
+            },
+            "sleepTime": 2
+        }
+    ],
+    "inSession": [
+        {
+            "event": {
+                "contestType": "grand",
+                "productid": 5,
+                "roundid": 2022,
+                "winnerPercent": 25,
+                "prizeAmount": 19.9,
+                "entryFee": 19
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 4,
+                "roundid": 2023,
+                "winnerPercent": 25,
+                "prizeAmount": 29.90,
+                "entryFee": 29
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 1,
+                "roundid": 2022,
+                "winnerPercent": 25,
+                "prizeAmount": 19.90,
+                "entryFee": 39
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "special",
+                "productid": 2,
+                "roundid": 2023,
+                "winnerPercent": 75,
+                "prizeAmount": 29.9,
+                "entryFee": 19
+            },
+            "sleepTime": 2
+        },
+        {
+            "event": {
+                "contestType": "grand",
+                "productid": 3,
+                "roundid": 2024,
+                "winnerPercent": 50,
+                "prizeAmount": 19.90,
+                "entryFee": 39
+            },
+            "sleepTime": 0
+        }
+    ]
+}

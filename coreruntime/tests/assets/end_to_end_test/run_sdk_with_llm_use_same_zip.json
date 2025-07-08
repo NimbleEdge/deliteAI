@@ -1,0 +1,66 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/deployments/LLM/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/8.0.0/formats/json",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/llm/names/llama-3/versions/1.0.0/formats/zip",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [],
+        "external_logger_scriptlogs": [],
+        "unauthenticated_external_logs": []
+    },
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/deployments/LLM/config",
+                "status_code": 304
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "logger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [],
+        "external_logger_scriptlogs": [],
+        "unauthenticated_external_logs": []
+    }
+]

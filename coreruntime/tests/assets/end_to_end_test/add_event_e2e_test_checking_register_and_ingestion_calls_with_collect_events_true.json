@@ -1,0 +1,47 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/ADD_EVENT/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/5.0.0/formats/json",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/events/eventType1/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/events/updatedEventType/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/events/eventType3/register",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": []
+    },
+    {
+        "api_calls": [
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/ADD_EVENT/config",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": []
+    }
+]

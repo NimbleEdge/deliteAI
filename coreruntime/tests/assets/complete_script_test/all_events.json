@@ -1,0 +1,48 @@
+{
+    "contestBundles": [
+        {
+            "event": {
+                "bundleId": 1,
+                "promotion_code": 1,
+                "productIds": [
+                    2,
+                    3,
+                    4,
+                    78,
+                    12
+                ],
+                "bundleStrings": [
+                    "string1",
+                    "string2",
+                    "string3"
+                ],
+                "bundleFloats": [
+                    12.12,
+                    45.6
+                ]
+            }
+        },
+        {
+            "event": {
+                "bundleId": 2,
+                "promotion_code": 2,
+                "productIds": [
+                    21,
+                    39,
+                    67,
+                    78,
+                    12
+                ],
+                "bundleStrings": [
+                    "string4",
+                    "string5",
+                    "string6"
+                ],
+                "bundleFloats": [
+                    456.12,
+                    0
+                ]
+            }
+        }
+    ]
+}

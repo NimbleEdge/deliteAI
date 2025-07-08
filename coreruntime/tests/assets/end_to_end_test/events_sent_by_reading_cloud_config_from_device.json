@@ -1,0 +1,72 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/ADD_EVENT/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/5.0.0/formats/json",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "externalLogger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [
+            {
+                "@timestamp": "2025-02-19T08:41:39.517791253Z",
+                "category": "eventType1",
+                "clientId": "testclient",
+                "compatibilityTag": "ADD_EVENT",
+                "deviceID": "testDevice",
+                "event_json": {
+                    "floatData": 1.12,
+                    "id": 1,
+                    "stringData": "abcd"
+                },
+                "sessionId": "1739954496",
+                "timestamp": "2025-02-19 08:41:37.002+00:00"
+            }
+        ]
+    },
+    {
+        "api_calls": [
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/ADD_EVENT/config",
+                "status_code": 304
+            },
+            {
+                "is_mocked": false,
+                "path": "externalLogger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [
+            {
+                "@timestamp": "2025-02-19T08:41:44.577459463Z",
+                "category": "eventType1",
+                "clientId": "testclient",
+                "compatibilityTag": "ADD_EVENT",
+                "deviceID": "testDevice",
+                "event_json": {
+                    "floatData": 1.12,
+                    "id": 1,
+                    "stringData": "abcd"
+                },
+                "sessionId": "1739954500",
+                "timestamp": "2025-02-19 08:41:43.005+00:00"
+            }
+        ]
+    }
+]

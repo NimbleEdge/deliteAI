@@ -1,0 +1,584 @@
+{
+  "_type": "Module",
+  "body": [
+    {
+      "_type": "ImportFrom",
+      "col_offset": 0,
+      "end_col_offset": 36,
+      "end_lineno": 5,
+      "level": 0,
+      "lineno": 5,
+      "module": "delitepy",
+      "names": [
+        {
+          "_type": "alias",
+          "asname": "nm",
+          "col_offset": 21,
+          "end_col_offset": 36,
+          "end_lineno": 5,
+          "lineno": 5,
+          "name": "nimblenet"
+        }
+      ]
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 31,
+      "end_lineno": 7,
+      "lineno": 7,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 9,
+          "end_lineno": 7,
+          "id": "tableName",
+          "lineno": 7
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 10,
+        "end_col_offset": 31,
+        "end_lineno": 7,
+        "kind": null,
+        "lineno": 7,
+        "n": "ContestJoinedClient",
+        "s": "ContestJoinedClient",
+        "value": "ContestJoinedClient"
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 1,
+      "end_lineno": 16,
+      "lineno": 9,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 30,
+          "end_lineno": 9,
+          "id": "contestJoinedClientTableSchema",
+          "lineno": 9
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Dict",
+        "col_offset": 33,
+        "end_col_offset": 1,
+        "end_lineno": 16,
+        "keys": [
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 17,
+            "end_lineno": 10,
+            "kind": null,
+            "lineno": 10,
+            "n": "contestType",
+            "s": "contestType",
+            "value": "contestType"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 15,
+            "end_lineno": 11,
+            "kind": null,
+            "lineno": 11,
+            "n": "productid",
+            "s": "productid",
+            "value": "productid"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 13,
+            "end_lineno": 12,
+            "kind": null,
+            "lineno": 12,
+            "n": "roundid",
+            "s": "roundid",
+            "value": "roundid"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 19,
+            "end_lineno": 13,
+            "kind": null,
+            "lineno": 13,
+            "n": "winnerPercent",
+            "s": "winnerPercent",
+            "value": "winnerPercent"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 17,
+            "end_lineno": 14,
+            "kind": null,
+            "lineno": 14,
+            "n": "prizeAmount",
+            "s": "prizeAmount",
+            "value": "prizeAmount"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 4,
+            "end_col_offset": 14,
+            "end_lineno": 15,
+            "kind": null,
+            "lineno": 15,
+            "n": "entryFee",
+            "s": "entryFee",
+            "value": "entryFee"
+          }
+        ],
+        "lineno": 9,
+        "values": [
+          {
+            "_type": "Constant",
+            "col_offset": 19,
+            "end_col_offset": 27,
+            "end_lineno": 10,
+            "kind": null,
+            "lineno": 10,
+            "n": "string",
+            "s": "string",
+            "value": "string"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 18,
+            "end_col_offset": 25,
+            "end_lineno": 11,
+            "kind": null,
+            "lineno": 11,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 16,
+            "end_col_offset": 23,
+            "end_lineno": 12,
+            "kind": null,
+            "lineno": 12,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 22,
+            "end_col_offset": 29,
+            "end_lineno": 13,
+            "kind": null,
+            "lineno": 13,
+            "n": "float",
+            "s": "float",
+            "value": "float"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 19,
+            "end_col_offset": 27,
+            "end_lineno": 14,
+            "kind": null,
+            "lineno": 14,
+            "n": "double",
+            "s": "double",
+            "value": "double"
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 16,
+            "end_col_offset": 23,
+            "end_lineno": 15,
+            "kind": null,
+            "lineno": 15,
+            "n": "int32",
+            "s": "int32",
+            "value": "int32"
+          }
+        ]
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 21,
+      "end_lineno": 18,
+      "lineno": 18,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 16,
+          "end_lineno": 18,
+          "id": "expiryTimeInMins",
+          "lineno": 18
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Constant",
+        "col_offset": 19,
+        "end_col_offset": 21,
+        "end_lineno": 18,
+        "kind": null,
+        "lineno": 18,
+        "n": 60,
+        "s": 60,
+        "value": 60
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 48,
+      "end_lineno": 19,
+      "lineno": 19,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 2,
+          "end_lineno": 19,
+          "id": "df",
+          "lineno": 19
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [
+          {
+            "_type": "Name",
+            "col_offset": 17,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 47,
+            "end_lineno": 19,
+            "id": "contestJoinedClientTableSchema",
+            "lineno": 19
+          }
+        ],
+        "col_offset": 4,
+        "end_col_offset": 48,
+        "end_lineno": 19,
+        "func": {
+          "_type": "Attribute",
+          "attr": "Dataframe",
+          "col_offset": 4,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 16,
+          "end_lineno": 19,
+          "lineno": 19,
+          "value": {
+            "_type": "Name",
+            "col_offset": 4,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 6,
+            "end_lineno": 19,
+            "id": "nm",
+            "lineno": 19
+          }
+        },
+        "keywords": [],
+        "lineno": 19
+      }
+    },
+    {
+      "_type": "Assign",
+      "col_offset": 0,
+      "end_col_offset": 62,
+      "end_lineno": 20,
+      "lineno": 20,
+      "targets": [
+        {
+          "_type": "Name",
+          "col_offset": 0,
+          "ctx": {
+            "_type": "Store"
+          },
+          "end_col_offset": 8,
+          "end_lineno": 20,
+          "id": "rawStore",
+          "lineno": 20
+        }
+      ],
+      "type_comment": null,
+      "value": {
+        "_type": "Call",
+        "args": [
+          {
+            "_type": "Name",
+            "col_offset": 26,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 35,
+            "end_lineno": 20,
+            "id": "tableName",
+            "lineno": 20
+          },
+          {
+            "_type": "Constant",
+            "col_offset": 37,
+            "end_col_offset": 43,
+            "end_lineno": 20,
+            "kind": null,
+            "lineno": 20,
+            "n": "time",
+            "s": "time",
+            "value": "time"
+          },
+          {
+            "_type": "Name",
+            "col_offset": 45,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 61,
+            "end_lineno": 20,
+            "id": "expiryTimeInMins",
+            "lineno": 20
+          }
+        ],
+        "col_offset": 9,
+        "end_col_offset": 62,
+        "end_lineno": 20,
+        "func": {
+          "_type": "Attribute",
+          "attr": "RawEventStore",
+          "col_offset": 9,
+          "ctx": {
+            "_type": "Load"
+          },
+          "end_col_offset": 25,
+          "end_lineno": 20,
+          "lineno": 20,
+          "value": {
+            "_type": "Name",
+            "col_offset": 9,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 11,
+            "end_lineno": 20,
+            "id": "nm",
+            "lineno": 20
+          }
+        },
+        "keywords": [],
+        "lineno": 20
+      }
+    },
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "type",
+            "col_offset": 16,
+            "end_col_offset": 20,
+            "end_lineno": 23,
+            "lineno": 23,
+            "type_comment": null
+          },
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "event",
+            "col_offset": 21,
+            "end_col_offset": 26,
+            "end_lineno": 23,
+            "lineno": 23,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 30,
+          "end_lineno": 24,
+          "lineno": 24,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 22,
+              "end_lineno": 24,
+              "lineno": 24,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 10,
+                "end_col_offset": 21,
+                "end_lineno": 24,
+                "kind": null,
+                "lineno": 24,
+                "n": "productid",
+                "s": "productid",
+                "value": "productid"
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 9,
+                "end_lineno": 24,
+                "id": "event",
+                "lineno": 24
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Constant",
+            "col_offset": 25,
+            "end_col_offset": 30,
+            "end_lineno": 24,
+            "kind": null,
+            "lineno": 24,
+            "n": "123",
+            "s": "123",
+            "value": "123"
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 20,
+          "end_lineno": 25,
+          "lineno": 25,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 14,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 19,
+                "end_lineno": 25,
+                "id": "event",
+                "lineno": 25
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 20,
+            "end_lineno": 25,
+            "func": {
+              "_type": "Attribute",
+              "attr": "append",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 13,
+              "end_lineno": 25,
+              "lineno": 25,
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 6,
+                "end_lineno": 25,
+                "id": "df",
+                "lineno": 25
+              }
+            },
+            "keywords": [],
+            "lineno": 25
+          }
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [
+        {
+          "_type": "Call",
+          "args": [
+            {
+              "_type": "Name",
+              "col_offset": 11,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 19,
+              "end_lineno": 22,
+              "id": "rawStore",
+              "lineno": 22
+            }
+          ],
+          "col_offset": 1,
+          "end_col_offset": 20,
+          "end_lineno": 22,
+          "func": {
+            "_type": "Name",
+            "col_offset": 1,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 10,
+            "end_lineno": 22,
+            "id": "add_event",
+            "lineno": 22
+          },
+          "keywords": [],
+          "lineno": 22
+        }
+      ],
+      "end_col_offset": 20,
+      "end_lineno": 25,
+      "lineno": 23,
+      "name": "enrichEvent",
+      "returns": null,
+      "type_comment": null
+    }
+  ],
+  "type_ignores": []
+}

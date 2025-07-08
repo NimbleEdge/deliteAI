@@ -1,0 +1,14 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [],
+        "external_logger_scriptlogs": [],
+        "unauthenticated_external_logs": []
+    }
+]

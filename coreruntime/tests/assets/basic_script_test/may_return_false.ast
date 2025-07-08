@@ -1,0 +1,156 @@
+{
+  "_type": "Module",
+  "body": [
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "inputs",
+            "col_offset": 9,
+            "end_col_offset": 15,
+            "end_lineno": 1,
+            "lineno": 1,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Return",
+          "col_offset": 4,
+          "end_col_offset": 5,
+          "end_lineno": 6,
+          "lineno": 2,
+          "value": {
+            "_type": "Dict",
+            "col_offset": 11,
+            "end_col_offset": 5,
+            "end_lineno": 6,
+            "keys": [
+              {
+                "_type": "Constant",
+                "col_offset": 8,
+                "end_col_offset": 30,
+                "end_lineno": 3,
+                "kind": null,
+                "lineno": 3,
+                "n": "__NIMBLE_EXIT_STATUS",
+                "s": "__NIMBLE_EXIT_STATUS",
+                "value": "__NIMBLE_EXIT_STATUS"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 8,
+                "end_col_offset": 21,
+                "end_lineno": 4,
+                "kind": null,
+                "lineno": 4,
+                "n": "numericData",
+                "s": "numericData",
+                "value": "numericData"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 8,
+                "end_col_offset": 17,
+                "end_lineno": 5,
+                "kind": null,
+                "lineno": 5,
+                "n": "message",
+                "s": "message",
+                "value": "message"
+              }
+            ],
+            "lineno": 2,
+            "values": [
+              {
+                "_type": "UnaryOp",
+                "col_offset": 32,
+                "end_col_offset": 56,
+                "end_lineno": 3,
+                "lineno": 3,
+                "op": {
+                  "_type": "Not"
+                },
+                "operand": {
+                  "_type": "Subscript",
+                  "col_offset": 36,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 56,
+                  "end_lineno": 3,
+                  "lineno": 3,
+                  "slice": {
+                    "_type": "Constant",
+                    "col_offset": 43,
+                    "end_col_offset": 55,
+                    "end_lineno": 3,
+                    "kind": null,
+                    "lineno": 3,
+                    "n": "shouldFail",
+                    "s": "shouldFail",
+                    "value": "shouldFail"
+                  },
+                  "value": {
+                    "_type": "Name",
+                    "col_offset": 36,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "end_col_offset": 42,
+                    "end_lineno": 3,
+                    "id": "inputs",
+                    "lineno": 3
+                  }
+                }
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 23,
+                "end_col_offset": 24,
+                "end_lineno": 4,
+                "kind": null,
+                "lineno": 4,
+                "n": 5,
+                "s": 5,
+                "value": 5
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 19,
+                "end_col_offset": 40,
+                "end_lineno": 5,
+                "kind": null,
+                "lineno": 5,
+                "n": "Some error occurred",
+                "s": "Some error occurred",
+                "value": "Some error occurred"
+              }
+            ]
+          }
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [],
+      "end_col_offset": 5,
+      "end_lineno": 6,
+      "lineno": 1,
+      "name": "main",
+      "returns": null,
+      "type_comment": null,
+      "type_params": []
+    }
+  ],
+  "type_ignores": []
+}

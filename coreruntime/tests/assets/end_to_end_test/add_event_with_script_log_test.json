@@ -1,0 +1,52 @@
+[
+    {
+        "api_calls": [
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/register",
+                "status_code": 200
+            },
+            {
+                "is_mocked": true,
+                "path": "mds/api/v4/clients/testclient/deployments/ADD_EVENT/config",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "mds/api/v4/clients/testclient/assets/script/names/DEFAULT_SCRIPT/versions/5.0.0/formats/json",
+                "status_code": 200
+            },
+            {
+                "is_mocked": false,
+                "path": "externalLogger",
+                "status_code": 200
+            }
+        ],
+        "external_logger_events": [
+            {
+                "category": "eventType1",
+                "clientId": "testclient",
+                "compatibilityTag": "ADD_EVENT",
+                "event_json": {
+                    "floatData": 1.12,
+                    "id": 1,
+                    "stringData": "abcd"
+                }
+            }
+        ],
+        "external_logger_scriptlogs": [
+            {
+                "category": "event",
+                "clientId": "testclient",
+                "compatibilityTag": "ADD_EVENT",
+                "deploymentId": "8",
+                "event_json": {
+                    "floatData": 1.12,
+                    "id": 1,
+                    "stringData": "abcd"
+                }
+            }
+        ],
+        "unauthenticated_external_logs": []
+    }
+]

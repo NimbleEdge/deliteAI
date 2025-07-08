@@ -1,0 +1,2124 @@
+{
+  "_type": "Module",
+  "body": [
+    {
+      "_type": "ImportFrom",
+      "col_offset": 0,
+      "end_col_offset": 38,
+      "end_lineno": 1,
+      "level": 0,
+      "lineno": 1,
+      "module": "delitepy",
+      "names": [
+        {
+          "_type": "alias",
+          "asname": "nm",
+          "col_offset": 23,
+          "end_col_offset": 38,
+          "end_lineno": 1,
+          "lineno": 1,
+          "name": "nimblenet"
+        }
+      ]
+    },
+    {
+      "_type": "FunctionDef",
+      "args": {
+        "_type": "arguments",
+        "args": [
+          {
+            "_type": "arg",
+            "annotation": null,
+            "arg": "inputs",
+            "col_offset": 9,
+            "end_col_offset": 15,
+            "end_lineno": 3,
+            "lineno": 3,
+            "type_comment": null
+          }
+        ],
+        "defaults": [],
+        "kw_defaults": [],
+        "kwarg": null,
+        "kwonlyargs": [],
+        "posonlyargs": [],
+        "vararg": null
+      },
+      "body": [
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 30,
+          "end_lineno": 7,
+          "lineno": 7,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Constant",
+                "col_offset": 10,
+                "end_col_offset": 29,
+                "end_lineno": 7,
+                "kind": null,
+                "lineno": 7,
+                "n": "Found json object",
+                "s": "Found json object",
+                "value": "Found json object"
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 30,
+            "end_lineno": 7,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 7,
+              "id": "print",
+              "lineno": 7
+            },
+            "keywords": [],
+            "lineno": 7
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 37,
+          "end_lineno": 8,
+          "lineno": 8,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 36,
+                "end_lineno": 8,
+                "lineno": 8,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 17,
+                  "end_col_offset": 35,
+                  "end_lineno": 8,
+                  "kind": null,
+                  "lineno": 8,
+                  "n": "nestedJsonObject",
+                  "s": "nestedJsonObject",
+                  "value": "nestedJsonObject"
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 10,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 16,
+                  "end_lineno": 8,
+                  "id": "inputs",
+                  "lineno": 8
+                }
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 37,
+            "end_lineno": 8,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 8,
+              "id": "print",
+              "lineno": 8
+            },
+            "keywords": [],
+            "lineno": 8
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 9,
+          "lineno": 9,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 15,
+              "end_lineno": 9,
+              "id": "json_object",
+              "lineno": 9
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 18,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 44,
+            "end_lineno": 9,
+            "lineno": 9,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 25,
+              "end_col_offset": 43,
+              "end_lineno": 9,
+              "kind": null,
+              "lineno": 9,
+              "n": "nestedJsonObject",
+              "s": "nestedJsonObject",
+              "value": "nestedJsonObject"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 18,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 24,
+              "end_lineno": 9,
+              "id": "inputs",
+              "lineno": 9
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 42,
+          "end_lineno": 11,
+          "lineno": 11,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 20,
+              "end_lineno": 11,
+              "id": "json_object_data",
+              "lineno": 11
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 23,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 42,
+            "end_lineno": 11,
+            "lineno": 11,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 35,
+              "end_col_offset": 41,
+              "end_lineno": 11,
+              "kind": null,
+              "lineno": 11,
+              "n": "data",
+              "s": "data",
+              "value": "data"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 23,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 34,
+              "end_lineno": 11,
+              "id": "json_object",
+              "lineno": 11
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 12,
+          "lineno": 12,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 21,
+              "end_lineno": 12,
+              "id": "json_object_data2",
+              "lineno": 12
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 24,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 44,
+            "end_lineno": 12,
+            "lineno": 12,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 36,
+              "end_col_offset": 43,
+              "end_lineno": 12,
+              "kind": null,
+              "lineno": 12,
+              "n": "data2",
+              "s": "data2",
+              "value": "data2"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 24,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 35,
+              "end_lineno": 12,
+              "id": "json_object",
+              "lineno": 12
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 13,
+          "lineno": 13,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 21,
+              "end_lineno": 13,
+              "id": "json_object_data3",
+              "lineno": 13
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 24,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 44,
+            "end_lineno": 13,
+            "lineno": 13,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 36,
+              "end_col_offset": 43,
+              "end_lineno": 13,
+              "kind": null,
+              "lineno": 13,
+              "n": "data3",
+              "s": "data3",
+              "value": "data3"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 24,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 35,
+              "end_lineno": 13,
+              "id": "json_object",
+              "lineno": 13
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 17,
+          "end_lineno": 14,
+          "lineno": 14,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 5,
+              "end_lineno": 14,
+              "id": "a",
+              "lineno": 14
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "List",
+            "col_offset": 8,
+            "ctx": {
+              "_type": "Load"
+            },
+            "elts": [
+              {
+                "_type": "Constant",
+                "col_offset": 9,
+                "end_col_offset": 10,
+                "end_lineno": 14,
+                "kind": null,
+                "lineno": 14,
+                "n": 3,
+                "s": 3,
+                "value": 3
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 13,
+                "end_lineno": 14,
+                "kind": null,
+                "lineno": 14,
+                "n": 4,
+                "s": 4,
+                "value": 4
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 15,
+                "end_col_offset": 16,
+                "end_lineno": 14,
+                "kind": null,
+                "lineno": 14,
+                "n": 5,
+                "s": 5,
+                "value": 5
+              }
+            ],
+            "end_col_offset": 17,
+            "end_lineno": 14,
+            "lineno": 14
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 28,
+          "end_lineno": 15,
+          "lineno": 15,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 24,
+              "end_lineno": 15,
+              "lineno": 15,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 16,
+                "end_col_offset": 23,
+                "end_lineno": 15,
+                "kind": null,
+                "lineno": 15,
+                "n": "data4",
+                "s": "data4",
+                "value": "data4"
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 15,
+                "end_lineno": 15,
+                "id": "json_object",
+                "lineno": 15
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Name",
+            "col_offset": 27,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 28,
+            "end_lineno": 15,
+            "id": "a",
+            "lineno": 15
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 43,
+          "end_lineno": 16,
+          "lineno": 16,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 23,
+              "end_lineno": 16,
+              "lineno": 16,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 16,
+                "end_col_offset": 22,
+                "end_lineno": 16,
+                "kind": null,
+                "lineno": 16,
+                "n": "data",
+                "s": "data",
+                "value": "data"
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 15,
+                "end_lineno": 16,
+                "id": "json_object",
+                "lineno": 16
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Constant",
+            "col_offset": 26,
+            "end_col_offset": 43,
+            "end_lineno": 16,
+            "kind": null,
+            "lineno": 16,
+            "n": "changedToString",
+            "s": "changedToString",
+            "value": "changedToString"
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 22,
+          "end_lineno": 17,
+          "lineno": 17,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 21,
+                "end_lineno": 17,
+                "id": "json_object",
+                "lineno": 17
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 22,
+            "end_lineno": 17,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 17,
+              "id": "print",
+              "lineno": 17
+            },
+            "keywords": [],
+            "lineno": 17
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 12,
+          "end_lineno": 18,
+          "lineno": 18,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 11,
+                "end_lineno": 18,
+                "id": "a",
+                "lineno": 18
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 12,
+            "end_lineno": 18,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 18,
+              "id": "print",
+              "lineno": 18
+            },
+            "keywords": [],
+            "lineno": 18
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 65,
+          "end_lineno": 19,
+          "lineno": 19,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 26,
+                "end_lineno": 19,
+                "id": "json_object_data",
+                "lineno": 19
+              },
+              {
+                "_type": "Name",
+                "col_offset": 28,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 45,
+                "end_lineno": 19,
+                "id": "json_object_data2",
+                "lineno": 19
+              },
+              {
+                "_type": "Name",
+                "col_offset": 47,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 64,
+                "end_lineno": 19,
+                "id": "json_object_data3",
+                "lineno": 19
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 65,
+            "end_lineno": 19,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 19,
+              "id": "print",
+              "lineno": 19
+            },
+            "keywords": [],
+            "lineno": 19
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 37,
+          "end_lineno": 22,
+          "lineno": 22,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 36,
+                "end_lineno": 22,
+                "lineno": 22,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 17,
+                  "end_col_offset": 35,
+                  "end_lineno": 22,
+                  "kind": null,
+                  "lineno": 22,
+                  "n": "nestedJsonArray1",
+                  "s": "nestedJsonArray1",
+                  "value": "nestedJsonArray1"
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 10,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 16,
+                  "end_lineno": 22,
+                  "id": "inputs",
+                  "lineno": 22
+                }
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 37,
+            "end_lineno": 22,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 22,
+              "id": "print",
+              "lineno": 22
+            },
+            "keywords": [],
+            "lineno": 22
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 23,
+          "lineno": 23,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 15,
+              "end_lineno": 23,
+              "id": "json_array1",
+              "lineno": 23
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 18,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 44,
+            "end_lineno": 23,
+            "lineno": 23,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 25,
+              "end_col_offset": 43,
+              "end_lineno": 23,
+              "kind": null,
+              "lineno": 23,
+              "n": "nestedJsonArray1",
+              "s": "nestedJsonArray1",
+              "value": "nestedJsonArray1"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 18,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 24,
+              "end_lineno": 23,
+              "id": "inputs",
+              "lineno": 23
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 34,
+          "end_lineno": 25,
+          "lineno": 25,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 17,
+              "end_lineno": 25,
+              "id": "json_array1_1",
+              "lineno": 25
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 20,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 34,
+            "end_lineno": 25,
+            "lineno": 25,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 32,
+              "end_col_offset": 33,
+              "end_lineno": 25,
+              "kind": null,
+              "lineno": 25,
+              "n": 1,
+              "s": 1,
+              "value": 1
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 20,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 31,
+              "end_lineno": 25,
+              "id": "json_array1",
+              "lineno": 25
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 34,
+          "end_lineno": 26,
+          "lineno": 26,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 17,
+              "end_lineno": 26,
+              "id": "json_array1_2",
+              "lineno": 26
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 20,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 34,
+            "end_lineno": 26,
+            "lineno": 26,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 32,
+              "end_col_offset": 33,
+              "end_lineno": 26,
+              "kind": null,
+              "lineno": 26,
+              "n": 2,
+              "s": 2,
+              "value": 2
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 20,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 31,
+              "end_lineno": 26,
+              "id": "json_array1",
+              "lineno": 26
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 27,
+          "lineno": 27,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 27,
+              "end_lineno": 27,
+              "lineno": 27,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 19,
+                "end_col_offset": 26,
+                "end_lineno": 27,
+                "kind": null,
+                "lineno": 27,
+                "n": "data3",
+                "s": "data3",
+                "value": "data3"
+              },
+              "value": {
+                "_type": "Subscript",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 18,
+                "end_lineno": 27,
+                "lineno": 27,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 16,
+                  "end_col_offset": 17,
+                  "end_lineno": 27,
+                  "kind": null,
+                  "lineno": 27,
+                  "n": 2,
+                  "s": 2,
+                  "value": 2
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 4,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 15,
+                  "end_lineno": 27,
+                  "id": "json_array1",
+                  "lineno": 27
+                }
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Constant",
+            "col_offset": 30,
+            "end_col_offset": 44,
+            "end_lineno": 27,
+            "kind": null,
+            "lineno": 27,
+            "n": "editedString",
+            "s": "editedString",
+            "value": "editedString"
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 51,
+          "end_lineno": 28,
+          "lineno": 28,
+          "targets": [
+            {
+              "_type": "Subscript",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 29,
+              "end_lineno": 28,
+              "lineno": 28,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 19,
+                "end_col_offset": 28,
+                "end_lineno": 28,
+                "kind": null,
+                "lineno": 28,
+                "n": "dataAdd",
+                "s": "dataAdd",
+                "value": "dataAdd"
+              },
+              "value": {
+                "_type": "Subscript",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 18,
+                "end_lineno": 28,
+                "lineno": 28,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 16,
+                  "end_col_offset": 17,
+                  "end_lineno": 28,
+                  "kind": null,
+                  "lineno": 28,
+                  "n": 1,
+                  "s": 1,
+                  "value": 1
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 4,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 15,
+                  "end_lineno": 28,
+                  "id": "json_array1",
+                  "lineno": 28
+                }
+              }
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "List",
+            "col_offset": 32,
+            "ctx": {
+              "_type": "Load"
+            },
+            "elts": [
+              {
+                "_type": "Constant",
+                "col_offset": 33,
+                "end_col_offset": 34,
+                "end_lineno": 28,
+                "kind": null,
+                "lineno": 28,
+                "n": 1,
+                "s": 1,
+                "value": 1
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 36,
+                "end_col_offset": 40,
+                "end_lineno": 28,
+                "kind": null,
+                "lineno": 28,
+                "n": 3.45,
+                "s": 3.45,
+                "value": 3.45
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 42,
+                "end_col_offset": 50,
+                "end_lineno": 28,
+                "kind": null,
+                "lineno": 28,
+                "n": "fdnfsj",
+                "s": "fdnfsj",
+                "value": "fdnfsj"
+              }
+            ],
+            "end_col_offset": 51,
+            "end_lineno": 28,
+            "lineno": 28
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 22,
+          "end_lineno": 29,
+          "lineno": 29,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 21,
+                "end_lineno": 29,
+                "id": "json_array1",
+                "lineno": 29
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 22,
+            "end_lineno": 29,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 29,
+              "id": "print",
+              "lineno": 29
+            },
+            "keywords": [],
+            "lineno": 29
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 39,
+          "end_lineno": 30,
+          "lineno": 30,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 23,
+                "end_lineno": 30,
+                "id": "json_array1_1",
+                "lineno": 30
+              },
+              {
+                "_type": "Name",
+                "col_offset": 25,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 38,
+                "end_lineno": 30,
+                "id": "json_array1_2",
+                "lineno": 30
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 39,
+            "end_lineno": 30,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 30,
+              "id": "print",
+              "lineno": 30
+            },
+            "keywords": [],
+            "lineno": 30
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 37,
+          "end_lineno": 33,
+          "lineno": 33,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 36,
+                "end_lineno": 33,
+                "lineno": 33,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 17,
+                  "end_col_offset": 35,
+                  "end_lineno": 33,
+                  "kind": null,
+                  "lineno": 33,
+                  "n": "nestedJsonArray2",
+                  "s": "nestedJsonArray2",
+                  "value": "nestedJsonArray2"
+                },
+                "value": {
+                  "_type": "Name",
+                  "col_offset": 10,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 16,
+                  "end_lineno": 33,
+                  "id": "inputs",
+                  "lineno": 33
+                }
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 37,
+            "end_lineno": 33,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 33,
+              "id": "print",
+              "lineno": 33
+            },
+            "keywords": [],
+            "lineno": 33
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 44,
+          "end_lineno": 34,
+          "lineno": 34,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 15,
+              "end_lineno": 34,
+              "id": "json_array2",
+              "lineno": 34
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 18,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 44,
+            "end_lineno": 34,
+            "lineno": 34,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 25,
+              "end_col_offset": 43,
+              "end_lineno": 34,
+              "kind": null,
+              "lineno": 34,
+              "n": "nestedJsonArray2",
+              "s": "nestedJsonArray2",
+              "value": "nestedJsonArray2"
+            },
+            "value": {
+              "_type": "Name",
+              "col_offset": 18,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 24,
+              "end_lineno": 34,
+              "id": "inputs",
+              "lineno": 34
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 45,
+          "end_lineno": 35,
+          "lineno": 35,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 20,
+              "end_lineno": 35,
+              "id": "json_array2_data",
+              "lineno": 35
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 23,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 45,
+            "end_lineno": 35,
+            "lineno": 35,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 38,
+              "end_col_offset": 44,
+              "end_lineno": 35,
+              "kind": null,
+              "lineno": 35,
+              "n": "data",
+              "s": "data",
+              "value": "data"
+            },
+            "value": {
+              "_type": "Subscript",
+              "col_offset": 23,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 37,
+              "end_lineno": 35,
+              "lineno": 35,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 35,
+                "end_col_offset": 36,
+                "end_lineno": 35,
+                "kind": null,
+                "lineno": 35,
+                "n": 0,
+                "s": 0,
+                "value": 0
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 23,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 34,
+                "end_lineno": 35,
+                "id": "json_array2",
+                "lineno": 35
+              }
+            }
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 37,
+          "end_lineno": 36,
+          "lineno": 36,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Dict",
+                "col_offset": 28,
+                "end_col_offset": 36,
+                "end_lineno": 36,
+                "keys": [
+                  {
+                    "_type": "Constant",
+                    "col_offset": 29,
+                    "end_col_offset": 32,
+                    "end_lineno": 36,
+                    "kind": null,
+                    "lineno": 36,
+                    "n": "t",
+                    "s": "t",
+                    "value": "t"
+                  }
+                ],
+                "lineno": 36,
+                "values": [
+                  {
+                    "_type": "Constant",
+                    "col_offset": 34,
+                    "end_col_offset": 35,
+                    "end_lineno": 36,
+                    "kind": null,
+                    "lineno": 36,
+                    "n": 4,
+                    "s": 4,
+                    "value": 4
+                  }
+                ]
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 37,
+            "end_lineno": 36,
+            "func": {
+              "_type": "Attribute",
+              "attr": "append",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 27,
+              "end_lineno": 36,
+              "lineno": 36,
+              "value": {
+                "_type": "Name",
+                "col_offset": 4,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 20,
+                "end_lineno": 36,
+                "id": "json_array2_data",
+                "lineno": 36
+              }
+            },
+            "keywords": [],
+            "lineno": 36
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 39,
+          "end_lineno": 37,
+          "lineno": 37,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 20,
+              "end_lineno": 37,
+              "id": "json_array2_size",
+              "lineno": 37
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 27,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 38,
+                "end_lineno": 37,
+                "id": "json_array2",
+                "lineno": 37
+              }
+            ],
+            "col_offset": 23,
+            "end_col_offset": 39,
+            "end_lineno": 37,
+            "func": {
+              "_type": "Name",
+              "col_offset": 23,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 26,
+              "end_lineno": 37,
+              "id": "len",
+              "lineno": 37
+            },
+            "keywords": [],
+            "lineno": 37
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 55,
+          "end_lineno": 38,
+          "lineno": 38,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 25,
+              "end_lineno": 38,
+              "id": "json_array2_data_size",
+              "lineno": 38
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Subscript",
+                "col_offset": 32,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 54,
+                "end_lineno": 38,
+                "lineno": 38,
+                "slice": {
+                  "_type": "Constant",
+                  "col_offset": 47,
+                  "end_col_offset": 53,
+                  "end_lineno": 38,
+                  "kind": null,
+                  "lineno": 38,
+                  "n": "data",
+                  "s": "data",
+                  "value": "data"
+                },
+                "value": {
+                  "_type": "Subscript",
+                  "col_offset": 32,
+                  "ctx": {
+                    "_type": "Load"
+                  },
+                  "end_col_offset": 46,
+                  "end_lineno": 38,
+                  "lineno": 38,
+                  "slice": {
+                    "_type": "Constant",
+                    "col_offset": 44,
+                    "end_col_offset": 45,
+                    "end_lineno": 38,
+                    "kind": null,
+                    "lineno": 38,
+                    "n": 0,
+                    "s": 0,
+                    "value": 0
+                  },
+                  "value": {
+                    "_type": "Name",
+                    "col_offset": 32,
+                    "ctx": {
+                      "_type": "Load"
+                    },
+                    "end_col_offset": 43,
+                    "end_lineno": 38,
+                    "id": "json_array2",
+                    "lineno": 38
+                  }
+                }
+              }
+            ],
+            "col_offset": 28,
+            "end_col_offset": 55,
+            "end_lineno": 38,
+            "func": {
+              "_type": "Name",
+              "col_offset": 28,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 31,
+              "end_lineno": 38,
+              "id": "len",
+              "lineno": 38
+            },
+            "keywords": [],
+            "lineno": 38
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 47,
+          "end_lineno": 39,
+          "lineno": 39,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 21,
+              "end_lineno": 39,
+              "id": "json_array2_data2",
+              "lineno": 39
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "Subscript",
+            "col_offset": 24,
+            "ctx": {
+              "_type": "Load"
+            },
+            "end_col_offset": 47,
+            "end_lineno": 39,
+            "lineno": 39,
+            "slice": {
+              "_type": "Constant",
+              "col_offset": 39,
+              "end_col_offset": 46,
+              "end_lineno": 39,
+              "kind": null,
+              "lineno": 39,
+              "n": "data2",
+              "s": "data2",
+              "value": "data2"
+            },
+            "value": {
+              "_type": "Subscript",
+              "col_offset": 24,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 38,
+              "end_lineno": 39,
+              "lineno": 39,
+              "slice": {
+                "_type": "Constant",
+                "col_offset": 36,
+                "end_col_offset": 37,
+                "end_lineno": 39,
+                "kind": null,
+                "lineno": 39,
+                "n": 1,
+                "s": 1,
+                "value": 1
+              },
+              "value": {
+                "_type": "Name",
+                "col_offset": 24,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 35,
+                "end_lineno": 39,
+                "id": "json_array2",
+                "lineno": 39
+              }
+            }
+          }
+        },
+        {
+          "_type": "Assign",
+          "col_offset": 4,
+          "end_col_offset": 24,
+          "end_lineno": 40,
+          "lineno": 40,
+          "targets": [
+            {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Store"
+              },
+              "end_col_offset": 15,
+              "end_lineno": 40,
+              "id": "json_array2",
+              "lineno": 40
+            }
+          ],
+          "type_comment": null,
+          "value": {
+            "_type": "List",
+            "col_offset": 18,
+            "ctx": {
+              "_type": "Load"
+            },
+            "elts": [
+              {
+                "_type": "Constant",
+                "col_offset": 19,
+                "end_col_offset": 20,
+                "end_lineno": 40,
+                "kind": null,
+                "lineno": 40,
+                "n": 1,
+                "s": 1,
+                "value": 1
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 22,
+                "end_col_offset": 23,
+                "end_lineno": 40,
+                "kind": null,
+                "lineno": 40,
+                "n": 2,
+                "s": 2,
+                "value": 2
+              }
+            ],
+            "end_col_offset": 24,
+            "end_lineno": 40,
+            "lineno": 40
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 27,
+          "end_lineno": 41,
+          "lineno": 41,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 26,
+                "end_lineno": 41,
+                "id": "json_array2_data",
+                "lineno": 41
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 27,
+            "end_lineno": 41,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 41,
+              "id": "print",
+              "lineno": 41
+            },
+            "keywords": [],
+            "lineno": 41
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 28,
+          "end_lineno": 42,
+          "lineno": 42,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 27,
+                "end_lineno": 42,
+                "id": "json_array2_data2",
+                "lineno": 42
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 28,
+            "end_lineno": 42,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 42,
+              "id": "print",
+              "lineno": 42
+            },
+            "keywords": [],
+            "lineno": 42
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 32,
+          "end_lineno": 43,
+          "lineno": 43,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 31,
+                "end_lineno": 43,
+                "id": "json_array2_data_size",
+                "lineno": 43
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 32,
+            "end_lineno": 43,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 43,
+              "id": "print",
+              "lineno": 43
+            },
+            "keywords": [],
+            "lineno": 43
+          }
+        },
+        {
+          "_type": "Expr",
+          "col_offset": 4,
+          "end_col_offset": 27,
+          "end_lineno": 44,
+          "lineno": 44,
+          "value": {
+            "_type": "Call",
+            "args": [
+              {
+                "_type": "Name",
+                "col_offset": 10,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 26,
+                "end_lineno": 44,
+                "id": "json_array2_size",
+                "lineno": 44
+              }
+            ],
+            "col_offset": 4,
+            "end_col_offset": 27,
+            "end_lineno": 44,
+            "func": {
+              "_type": "Name",
+              "col_offset": 4,
+              "ctx": {
+                "_type": "Load"
+              },
+              "end_col_offset": 9,
+              "end_lineno": 44,
+              "id": "print",
+              "lineno": 44
+            },
+            "keywords": [],
+            "lineno": 44
+          }
+        },
+        {
+          "_type": "Return",
+          "col_offset": 4,
+          "end_col_offset": 9,
+          "end_lineno": 58,
+          "lineno": 46,
+          "value": {
+            "_type": "Dict",
+            "col_offset": 11,
+            "end_col_offset": 9,
+            "end_lineno": 58,
+            "keys": [
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 33,
+                "end_lineno": 47,
+                "kind": null,
+                "lineno": 47,
+                "n": "updated_json_object",
+                "s": "updated_json_object",
+                "value": "updated_json_object"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 30,
+                "end_lineno": 48,
+                "kind": null,
+                "lineno": 48,
+                "n": "json_object_data",
+                "s": "json_object_data",
+                "value": "json_object_data"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 31,
+                "end_lineno": 49,
+                "kind": null,
+                "lineno": 49,
+                "n": "json_object_data2",
+                "s": "json_object_data2",
+                "value": "json_object_data2"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 31,
+                "end_lineno": 50,
+                "kind": null,
+                "lineno": 50,
+                "n": "json_object_data3",
+                "s": "json_object_data3",
+                "value": "json_object_data3"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 25,
+                "end_lineno": 51,
+                "kind": null,
+                "lineno": 51,
+                "n": "json_array1",
+                "s": "json_array1",
+                "value": "json_array1"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 27,
+                "end_lineno": 52,
+                "kind": null,
+                "lineno": 52,
+                "n": "json_array1_1",
+                "s": "json_array1_1",
+                "value": "json_array1_1"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 27,
+                "end_lineno": 53,
+                "kind": null,
+                "lineno": 53,
+                "n": "json_array1_2",
+                "s": "json_array1_2",
+                "value": "json_array1_2"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 31,
+                "end_lineno": 54,
+                "kind": null,
+                "lineno": 54,
+                "n": "json_array2_data2",
+                "s": "json_array2_data2",
+                "value": "json_array2_data2"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 35,
+                "end_lineno": 55,
+                "kind": null,
+                "lineno": 55,
+                "n": "json_array2_data_size",
+                "s": "json_array2_data_size",
+                "value": "json_array2_data_size"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 30,
+                "end_lineno": 56,
+                "kind": null,
+                "lineno": 56,
+                "n": "json_array2_size",
+                "s": "json_array2_size",
+                "value": "json_array2_size"
+              },
+              {
+                "_type": "Constant",
+                "col_offset": 12,
+                "end_col_offset": 30,
+                "end_lineno": 57,
+                "kind": null,
+                "lineno": 57,
+                "n": "json_array2_data",
+                "s": "json_array2_data",
+                "value": "json_array2_data"
+              }
+            ],
+            "lineno": 46,
+            "values": [
+              {
+                "_type": "Name",
+                "col_offset": 35,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 46,
+                "end_lineno": 47,
+                "id": "json_object",
+                "lineno": 47
+              },
+              {
+                "_type": "Name",
+                "col_offset": 32,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 48,
+                "end_lineno": 48,
+                "id": "json_object_data",
+                "lineno": 48
+              },
+              {
+                "_type": "Name",
+                "col_offset": 33,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 50,
+                "end_lineno": 49,
+                "id": "json_object_data2",
+                "lineno": 49
+              },
+              {
+                "_type": "Name",
+                "col_offset": 33,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 50,
+                "end_lineno": 50,
+                "id": "json_object_data3",
+                "lineno": 50
+              },
+              {
+                "_type": "Name",
+                "col_offset": 27,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 38,
+                "end_lineno": 51,
+                "id": "json_array1",
+                "lineno": 51
+              },
+              {
+                "_type": "Name",
+                "col_offset": 29,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 42,
+                "end_lineno": 52,
+                "id": "json_array1_1",
+                "lineno": 52
+              },
+              {
+                "_type": "Name",
+                "col_offset": 29,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 42,
+                "end_lineno": 53,
+                "id": "json_array1_2",
+                "lineno": 53
+              },
+              {
+                "_type": "Name",
+                "col_offset": 33,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 50,
+                "end_lineno": 54,
+                "id": "json_array2_data2",
+                "lineno": 54
+              },
+              {
+                "_type": "Name",
+                "col_offset": 37,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 58,
+                "end_lineno": 55,
+                "id": "json_array2_data_size",
+                "lineno": 55
+              },
+              {
+                "_type": "Name",
+                "col_offset": 32,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 48,
+                "end_lineno": 56,
+                "id": "json_array2_size",
+                "lineno": 56
+              },
+              {
+                "_type": "Name",
+                "col_offset": 32,
+                "ctx": {
+                  "_type": "Load"
+                },
+                "end_col_offset": 48,
+                "end_lineno": 57,
+                "id": "json_array2_data",
+                "lineno": 57
+              }
+            ]
+          }
+        }
+      ],
+      "col_offset": 0,
+      "decorator_list": [],
+      "end_col_offset": 9,
+      "end_lineno": 58,
+      "lineno": 3,
+      "name": "main",
+      "returns": null,
+      "type_comment": null
+    }
+  ],
+  "type_ignores": []
+}
