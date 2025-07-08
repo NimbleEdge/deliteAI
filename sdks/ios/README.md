@@ -13,7 +13,7 @@
     * [Installation](#-installation)
     * [Integrating DeliteAI iOS SDK in Code](#-integrating-deliteai-ios-sdk-in-code)
 * **Local Development & Testing**: If you want to run the iOS SDK locally via the example app or execute its unit tests.
-    * [Running the Example App Locally](./docs/DEVELOPMENT.md#-running-the-example-app-locally)
+    * [Running the Example App Locally](./docs/DEVELOPMENT.md#-running-the-sdk-locally-through-example-app)
     * [Running Unit Tests](./docs/DEVELOPMENT.md#-running-unit-tests)
 
 
