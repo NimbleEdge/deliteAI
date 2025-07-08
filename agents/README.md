@@ -1,6 +1,6 @@
 # DeliteAI Agents
 
-DeliteAI Agents are pre-built, on-device AI components that provide high-level APIs for common AI use cases, simplifying the integration of powerful AI into your applications.
+DeliteAI Agents are pre-built, on-device AI packages that provide high-level APIs for common agentic use cases, simplifying the integration of powerful AI into your applications.
 
 ## Index
 
