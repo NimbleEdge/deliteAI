@@ -7,7 +7,7 @@
 <div align="center">
   <a href="https://discord.gg/y8WkMncstk"><img src="https://img.shields.io/badge/Discord-Join%20Us-purple?logo=discord&logoColor=white&style=for-the-badge"
 alt="Join us on Discord"></a>
-  <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue"
+  <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
 alt="Try out fully on-device AI Assistant"></a>
   <hr>
 </div>
