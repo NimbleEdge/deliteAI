@@ -17,16 +17,16 @@ public struct NimbleNetConfig: Codable {
     public var cohortIds: [String]
     public var online: Bool
     public init(clientId: String = "",
-                    clientSecret: String = "",
-                    host: String = "",
-                    deviceId: String = "",
-                    debug: Bool = false,
-                    compatibilityTag:String = "",
-                    sessionId: String = "",
-                    maxDBSizeKBs: Float? = nil,
-                    maxEventsSizeKBs: Float? = nil,
-                    cohortIds: [String] = [],
-                    online: Bool = false) {
+                clientSecret: String = "",
+                host: String = "",
+                deviceId: String = "",
+                debug: Bool = false,
+                compatibilityTag:String = "",
+                sessionId: String = "",
+                maxDBSizeKBs: Float? = nil,
+                maxEventsSizeKBs: Float? = nil,
+                cohortIds: [String] = [],
+                online: Bool = false) {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.host = host
