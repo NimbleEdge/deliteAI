@@ -77,4 +77,4 @@ ASR Agent + LLM Execution + Summarizer + TTS Agent
 
 ## Examples
 
--   [Android Example App](examples/android/README.md) - A complete demo showcasing the integration of an agent in a real-world application.
+-   [Android Example App](examples/android/README.md) - A complete demo showcasing the integration of agents in a real-world application.
