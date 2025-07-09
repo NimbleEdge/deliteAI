@@ -20,22 +20,6 @@ target_source_repo="git@github.com:NimbleEdge/deliteAI-iOS.git"
 target_podspec_repo="git@github.com:NimbleEdge/deliteAI-iOS-Podspecs.git"
 target_dir_name="deliteAI-iOS"
 
-while [[ "$#" -gt 0 ]]; do
-    case "$1" in
-        --release)
-            target_branch="main"
-            target_source_repo="https://github.com/NimbleEdge-Assets/NimbleSDKiOSSource"
-            target_podspec_repo="https://github.com/NimbleEdge-Assets/deliteAI-iOS-Podspecs"
-            target_dir_name="NimbleSDKiOSSource"
-            shift
-            ;;
-        *)
-            echo "Invalid argument: $1"
-            usage
-            ;;
-    esac
-done
-
 yaml_file="$BASE_DIR/config.yml"
 sdk_version=$(grep "sdk_version:" "$yaml_file" | awk '{print $2}' | tr -d '"')
 
@@ -49,9 +33,10 @@ git clone "$target_podspec_repo"
 
 rm -rf "$SCRIPT_DIR/release/$target_dir_name/*"
 
-cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/sdks/ios/README.md $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
+cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/sdks/ios/docs/DEVELOPMENT.md $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
+mv "$target_dir_name/DEVELOPMENT.md" "$target_dir_name/README.md" #renaming DEVELOPMENT.md -> README.md
 
-sed -i "" "s#VERSION_TO_BE_INJECTED#$sdk_version#g" "$target_dir_name/DeliteAI.podspec"
+sed -i "" "s#0.0.1-local#$sdk_version#g" "$target_dir_name/DeliteAI.podspec"
 
 mkdir -p "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs/DeliteAI/$sdk_version"
 cp "$SCRIPT_DIR/release/$target_dir_name/DeliteAI.podspec" "$SCRIPT_DIR/release/deliteAI-iOS-Podspecs/DeliteAI/$sdk_version"
