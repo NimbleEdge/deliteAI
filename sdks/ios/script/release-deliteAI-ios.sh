@@ -33,8 +33,10 @@ git clone "$target_podspec_repo"
 
 rm -rf "$SCRIPT_DIR/release/$target_dir_name/*"
 
-cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/sdks/ios/docs/DEVELOPMENT.md $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
-mv "$target_dir_name/DEVELOPMENT.md" "$target_dir_name/README.md" #renaming DEVELOPMENT.md -> README.md
+cp -r $BASE_DIR/sdks/ios/deliteAI $BASE_DIR/LICENSE $BASE_DIR/sdks/ios/DeliteAI.podspec "$target_dir_name"
+
+cp $BASE_DIR/sdks/ios/README.md "$target_dir_name/README.md"
+sed -i "" '/^## Table of Contents/,/^[^* ]/d' "$target_dir_name/README.md" #then removing `Table of Contents` readme
 
 sed -i "" "s#0.0.1-local#$sdk_version#g" "$target_dir_name/DeliteAI.podspec"
 

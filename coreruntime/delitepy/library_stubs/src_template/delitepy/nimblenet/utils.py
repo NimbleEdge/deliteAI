@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from delitepy.nimblenet.tensor.tensor import Tensor
+from delitepy.nimblenet.tensor import Tensor
 
 def pow(base:int|float, exp:int|float) -> float:
     """

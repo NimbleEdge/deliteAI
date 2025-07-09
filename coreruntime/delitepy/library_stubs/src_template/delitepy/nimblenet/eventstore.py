@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from delitepy.nimblenet.tensor.tensor import Tensor
+from delitepy.nimblenet.tensor import Tensor
 from types import FunctionType
 
 class RawEventStore:
@@ -50,6 +50,7 @@ class EventProcessor:
         """
         Returns the aggregrated features of the columns which were defined in groupByColumns function.
         Suppose the eventProcessor was created with groupBy of two columns lets say categoryId and brand, then to fetch the aggregated value of the group, this function will be called with group=["Mobile", "Samsung"].
+        
         Parameters
         ----------
         group : list|Tensor
@@ -153,11 +154,11 @@ class Dataframe:
             ----------
             eventSchema : str
                 Event schema. For e.g.
-                {
-                    "column1": "int32",
-                    "column2": "float",
-                    "column3": "string"
-                }
+                >>> eventSchema = {
+                ...     "column1": "int32",
+                ...     "column2": "float",
+                ...     "column3": "string"
+                ... }
             """
             pass
 
@@ -211,3 +212,4 @@ class Dataframe:
         """
 
         pass
+

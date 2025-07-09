@@ -23,7 +23,7 @@ public class TensorInternal{
 public class NimbleNetOutput {
     public var array: [TensorInternal] = []
     public var numOutputs: Int = 0
-    private var map: [String: TensorInternal] = [:]
+    public var map: [String: TensorInternal] = [:]
     
     init(data: NSDictionary) {
         if let outputsDict = data["outputs"] as? [String: NSDictionary] {

@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/NimbleEdge/deliteAI'
   s.license          = { :type => 'Apache-2.0', :file => '../../LICENSE' }
   s.author           = { 'DeliteAI' => 'team-opensource@nimbleedgehq.ai' }
-  s.source           = { :git => 'https://github.com/NimbleEdge/deliteAI.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/NimbleEdge/deliteAI-iOS.git', :tag => s.version.to_s }
 
   # Platform and Swift Version
   s.swift_version    = '5.0'

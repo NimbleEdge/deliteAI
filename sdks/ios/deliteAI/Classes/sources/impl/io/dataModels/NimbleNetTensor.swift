@@ -7,9 +7,9 @@
 import Foundation
 
 public struct NimbleNetTensor {
-    var data: Any
-    var datatype: DataType
-    var shape: [Int]? //shape as null means singular input
+    public var data: Any
+    public var datatype: DataType
+    public var shape: [Int]? //shape as null means singular input
 
     public init(data: Any, datatype: DataType, shape: [Int]? = []) {
         self.data = data
