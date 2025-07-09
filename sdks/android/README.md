@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun initializeNimbleNet() {
-        val config = NimbleNetConfig(
+        val onlineConfig = NimbleNetConfig(
             clientId = "your-client-id",
             clientSecret = "your-client-secret",
             host = "https://your-api-endpoint.com",
@@ -232,9 +232,39 @@ class MainActivity : AppCompatActivity() {
             libraryVariant = NIMBLENET_VARIANTS.STATIC,
             online = true
         )
+        
+        val offlineConfig = NimbleNetConfig(online = false)
+        
+        // To initialize the SDK in offline mode place script and model in the assets folder and create the corresponding config
+        // To get started there are some sample scripts and models placed in mockserverAssets
+        val assetsJsonStr = """
+            [
+                {
+                    "name": "workflow_script",
+                    "version": "1.0.0",
+                    "type": "script",
+                    "location": {
+                        "path": "add_script.ast"
+                    }
+                },
+                {
+                    "name": "add_model",
+                    "version": "1.0.0",
+                    "type": "model",
+                    "location": {
+                        "path": "add_two_model.onnx"
+                    }
+                }
+          ]"""
+        
+        val assetsJson = JSONArray(assetsJsonStr)
 
         CoroutineScope(Dispatchers.Default).launch {
-            val result = NimbleNet.initialize(applicationContext, config)
+            // To initialize SDK in online mode
+            val result = NimbleNet.initialize(applicationContext, onlineConfig)
+            
+            // To initialize SDK in offline mode
+            // val result = NimbleNet.initialize(applicationContext, onlineConfig, assetsJson)
             
             if (result.status) {
                 Log.d("NimbleNet", "SDK initialized successfully")
