@@ -45,6 +45,11 @@ cp -R                                                                       \
     "${DL_WEBSITE_BUILD_DIR}/gen"                                           \
     ;
 
+# --- Create symlinks ----------------------------------------------------------
+ln -s "${DL_CORERUNTIME_DIR}" "${DL_WEBSITE_BUILD_DIR}/gen/DL_CORERUNTIME_DIR"
+ln -s "${DL_GIT_ROOT}/sdks" "${DL_WEBSITE_BUILD_DIR}/gen/DL_SDKS_DIR"
+ln -s "${DL_GIT_ROOT}/agents" "${DL_WEBSITE_BUILD_DIR}/gen/DL_AGENTS_DIR"
+
 # --- Build DelitePy Markdown documentation ------------------------------------
 readonly DL_DELITEPY_DOCS_BUILD_DIR="${DL_WEBSITE_BUILD_DIR}/gen/delitepy"
 
@@ -53,7 +58,7 @@ readonly DL_DELITEPY_DOCS_BUILD_DIR="${DL_WEBSITE_BUILD_DIR}/gen/delitepy"
 
 # --- Build Android SDK Markdown documentation ---------------------------------
 
-# TODO (jpuneet)
+# TODO (jpuneet): run "dokkaGfm" Gradle task in the Android SDK
 
 # --- Run Sphinx ---------------------------------------------------------------
 "${SPHINX_BUILD_EXECUTABLE_PATH}"                                           \

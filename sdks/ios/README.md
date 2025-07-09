@@ -10,24 +10,23 @@
 ## Table of Contents
 
 * **Integrating DeliteAI iOS SDK into your application**: If you want to integrate the DeliteAI iOS SDK into your existing application.
-    * [Installation](#installation)
-    * [Integrating DeliteAI iOS SDK in Code](#integrating-deliteai-ios-sdk-in-code)
+  * [Installation](#installation)
+  * [Integrating DeliteAI iOS SDK in Code](#integrating-deliteai-ios-sdk-in-code)
 * **Local Development & Testing**: If you want to run the iOS SDK locally via the example app or execute its unit tests.
-    * [Running the Example App Locally](./docs/DEVELOPMENT.md#running-the-sdk-locally-through-example-app)
-    * [Running Unit Tests](./docs/DEVELOPMENT.md#running-unit-tests)
+  * [Running the Example App Locally](./docs/DEVELOPMENT.md#running-the-sdk-locally-through-example-app)
+  * [Running Unit Tests](./docs/DEVELOPMENT.md#running-unit-tests)
 
-
-# Integrating DeliteAI iOS SDK into Your Project
+## Integrating DeliteAI iOS SDK into Your Project
 
 This section guides you through the process of adding the DeliteAI iOS SDK to your application and making your first API calls.
 
-## Installation
+### Installation
 
-### CocoaPods
+#### CocoaPods
 
 DeliteAI iOS SDK is available as a CocoaPod. To integrate it into your Xcode project:
 
-1.  Add the DeliteAI iOS SDK source and pod to your **Podfile**:
+1. Add the DeliteAI iOS SDK source and pod to your **Podfile**:
 
     ```ruby
     source 'git@github.com:NimbleEdge/deliteAI-iOS-Podspecs.git' # deliteAI source
@@ -42,19 +41,19 @@ DeliteAI iOS SDK is available as a CocoaPod. To integrate it into your Xcode pro
     end
     ```
 
-2.  Install the pod:
+2. Install the pod:
 
     ```bash
     pod install
     ```
 
-3.  Open the generated `.xcworkspace` file in Xcode.
+3. Open the generated `.xcworkspace` file in Xcode.
 
-## Integrating DeliteAI iOS SDK in Code
+### Integrating DeliteAI iOS SDK in Code
 
 Once you’ve installed the SDK, follow the steps below to integrate DeliteAI into your app code.
 
-1.  Import the Package
+1. Import the Package
 
     Import DeliteAI into your Swift files to access DeliteAI iOS SDK's core APIs
 
@@ -62,7 +61,7 @@ Once you’ve installed the SDK, follow the steps below to integrate DeliteAI in
     import DeliteAI
     ```
 
-2.  Initialize the SDK
+2. Initialize the SDK
 
     Before using any methods, you must initialize the SDK with your credentials and endpoint.
 
@@ -85,7 +84,7 @@ Once you’ve installed the SDK, follow the steps below to integrate DeliteAI in
     }
     ```
 
-3.  Check SDK Readiness
+3. Check SDK Readiness
 
     Always verify the SDK is ready before making further calls:
 
@@ -98,7 +97,7 @@ Once you’ve installed the SDK, follow the steps below to integrate DeliteAI in
     }
     ```
 
-4.  Record Restaurant Click Events
+4. Record Restaurant Click Events
 
     Track user clicks with the required fields:
 
@@ -119,7 +118,7 @@ Once you’ve installed the SDK, follow the steps below to integrate DeliteAI in
     }
     ```
 
-5.  Fetch Restaurant Rankings
+5. Fetch Restaurant Rankings
 
     Invoke the `rerank_restaurant` workflow to get top restaurants:
 

@@ -76,9 +76,9 @@ delitepy/docs/gen/docs/index.md
 :caption: SDK Integrations
 :hidden:
 
-iOS <https://github.com/NimbleEdge/deliteAI/blob/main/sdks/ios/README.md>
-Android <https://github.com/NimbleEdge/deliteAI/blob/main/sdks/android/README.md>
-android_api_docs_dokka
+DL_SDKS_DIR/ios/README.md
+DL_SDKS_DIR/android/README.md
+⬢ API reference <DL_SDKS_DIR/android/nimblenet_ktx/build/dokka/gfm/index.md>
 ```
 
 ```{toctree}
@@ -87,8 +87,8 @@ android_api_docs_dokka
 :hidden:
 
 coreruntime <https://github.com/NimbleEdge/deliteAI/blob/main/coreruntime/README.md>
-iOS <https://github.com/NimbleEdge/deliteAI/blob/main/sdks/ios/docs/DEVELOPMENT.md>
-Android (TBD) <https://github.com/NimbleEdge/deliteAI/blob/main/sdks/android/README.md>
+iOS <DL_SDKS_DIR/ios/docs/DEVELOPMENT.md>
+Android (TBD) <DL_SDKS_DIR/android/README.md>
 ```
 
 ```{toctree}
@@ -96,9 +96,9 @@ Android (TBD) <https://github.com/NimbleEdge/deliteAI/blob/main/sdks/android/REA
 :caption: Agent Marketplace
 :hidden:
 
-Agents <https://github.com/NimbleEdge/deliteAI/blob/main/agents/README.md>
-Notifications Summarizer <https://github.com/NimbleEdge/deliteAI/blob/main/agents/notifications_summarizer/README.md>
-⬢ Android Agent <https://github.com/NimbleEdge/deliteAI/blob/main/agents/notifications_summarizer/android/README.md>
+DL_AGENTS_DIR/README.md
+DL_AGENTS_DIR/notifications_summarizer/README.md
+⬢ Android Agent <DL_AGENTS_DIR/notifications_summarizer/android/README.md>
 ```
 
 ```{toctree}

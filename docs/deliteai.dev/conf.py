@@ -17,7 +17,7 @@ sys.path.insert(0, f"{os.environ['DL_DELITEPY_DIR']}/library_stubs/src_gen")
 project = "DeliteAI"
 copyright = "2025, DeliteAI Authors"
 author = "DeliteAI Authors"
-release = "0.1"                     # TODO (jpuneet): read from "config.yml"?
+release = "0.1.0-dev"               # TODO (jpuneet): read from "config.yml"?
 
 # -- General configuration ---------------------------------------------------
 
@@ -37,7 +37,11 @@ source_suffix = {
     ".md": "markdown",
 }
 
-exclude_patterns = []
+exclude_patterns = [
+    "**/android/nimblenet_core/src/main/cpp/coreruntime",
+    "**/android/nimblenet_core/src/main/cpp/onnx_builds",
+    "**/android/nimblenet_core/src/main/cpp/third_party",
+]
 
 # -- Options for HTML output -------------------------------------------------
 
