@@ -13,7 +13,7 @@ DeliteAI Agents are pre-built, on-device AI packages that provide high-level API
 
 ## Overview
 
-We're solving a significant challenge in the AI ecosystem: the lack of discoverability and reusability of AI components. Imagine finding an AI app with an outstanding feature, like high-quality text-to-speech, but needing to rebuild it from scratch because you can't isolate that one component.
+We're solving a significant challenge in the mobile applications AI ecosystem: the lack of discoverability and reusability of AI components. Imagine finding an AI app with an outstanding feature, like high-quality text-to-speech, but needing to rebuild it from scratch because you can't isolate that one component.
 
 DeliteAI Agents solve this by encapsulating complex AI functionalities into ready-to-use packages that run entirely on-device, ensuring privacy and performance.
 
