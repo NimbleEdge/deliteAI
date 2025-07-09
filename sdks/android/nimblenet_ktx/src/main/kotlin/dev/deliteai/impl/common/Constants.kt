@@ -15,6 +15,8 @@ internal object SDK_CONSTANTS {
     const val NIMBLE_SDK_LIBS_FOLDER_NAME = "nimbleSDKLibs"
     const val NUM_THREADS_FOR_PRIMARY_COROUTINE_SCOPE = 1
     const val NUM_THREADS_FOR_SECONDARY_COROUTINE_SCOPE = 1
+    const val DELITE_ASSETS_TEMP_STORAGE = "deliteAssets"
+    const val DELITE_ASSETS_TEMP_FILES_EXPIRY_IN_MILLIS = 7 * 24 * 60 * 60 * 1000L
 }
 
 internal object STATUS_CODES {

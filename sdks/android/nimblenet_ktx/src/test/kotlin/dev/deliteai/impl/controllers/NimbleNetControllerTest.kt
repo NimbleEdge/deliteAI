@@ -6,6 +6,8 @@
 
 package dev.deliteai.impl.controllers
 
+import android.app.Application
+import android.os.SystemClock
 import dev.deliteai.NimbleNet
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.datamodels.NimbleNetResult
@@ -20,8 +22,6 @@ import dev.deliteai.impl.loggers.RemoteLogger
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
 import dev.deliteai.testUtils.nnConfig
-import android.app.Application
-import android.os.SystemClock
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coVerify
@@ -86,7 +86,13 @@ class NimbleNetControllerTest {
         val resultSlot = slot<NimbleNetResult<Unit>>()
 
         every {
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), capture(resultSlot))
+            coreRuntimeInterfaceMocked.initializeNimbleNet(
+                any(),
+                any(),
+                any(),
+                any(),
+                capture(resultSlot),
+            )
         } answers { resultSlot.captured.status = true }
 
         nimbleNetController.initialize(nimbleNetConfigModified)
@@ -106,6 +112,7 @@ class NimbleNetControllerTest {
                 any(),
                 capture(capturedNimbleNetConfig),
                 any(),
+                any(),
                 any<NimbleNetResult<Unit>>(),
             )
         } just Runs
@@ -113,7 +120,7 @@ class NimbleNetControllerTest {
         nimbleNetController.initialize(nnConfig)
 
         verify(exactly = 1) {
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any())
+            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any(), any())
         }
 
         assertTrue(capturedNimbleNetConfig.isCaptured, "Captured slot should contain a value")
@@ -129,14 +136,20 @@ class NimbleNetControllerTest {
         val resultSlot = slot<NimbleNetResult<Unit>>()
 
         every {
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), capture(resultSlot))
+            coreRuntimeInterfaceMocked.initializeNimbleNet(
+                any(),
+                any(),
+                any(),
+                any(),
+                capture(resultSlot),
+            )
         } answers { resultSlot.captured.status = true }
 
         nimbleNetController.initialize(nnConfig)
 
         verifyOrder {
             fileUtilsMocked.getInternalStorageFolderSizes()
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any())
+            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any(), any())
             hardwareInfoMocked.listenToNetworkChanges(any())
             remoteLoggerMocked.writeMetric(METRIC_TYPE.STATIC_DEVICE_METRICS, any())
             remoteLoggerMocked.writeMetric(METRIC_TYPE.INTERNAL_STORAGE_METRIC, any())
@@ -148,14 +161,20 @@ class NimbleNetControllerTest {
         val resultSlot = slot<NimbleNetResult<Unit>>()
 
         every {
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), capture(resultSlot))
+            coreRuntimeInterfaceMocked.initializeNimbleNet(
+                any(),
+                any(),
+                any(),
+                any(),
+                capture(resultSlot),
+            )
         } answers { resultSlot.captured.status = false }
 
         nimbleNetController.initialize(nnConfig)
 
         verifyOrder {
             fileUtilsMocked.getInternalStorageFolderSizes()
-            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any())
+            coreRuntimeInterfaceMocked.initializeNimbleNet(any(), any(), any(), any(), any())
         }
 
         verify(exactly = 0) { hardwareInfoMocked.listenToNetworkChanges(any()) }

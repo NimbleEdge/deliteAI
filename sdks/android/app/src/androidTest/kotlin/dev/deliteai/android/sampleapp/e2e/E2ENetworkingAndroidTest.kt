@@ -8,6 +8,8 @@ package dev.deliteai.android.sampleapp.e2e
 
 import dev.deliteai.NimbleNet
 import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.impl.common.DATATYPE
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
@@ -16,6 +18,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
+import org.json.JSONArray
+import org.json.JSONObject
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -173,6 +177,153 @@ class E2ENetworkingAndroidTest {
         }
     }
 
+
+    @Test
+    fun initializeSDKInOfflineMode() = runBlocking {
+        MockServerHelper.resetExpectations()
+
+        // Provide paths relative to assets folder
+        val assetsJson = """
+        [
+            {
+                "name": "workflow_script",
+                "version": "1.0.0",
+                "type": "script",
+                "location": {
+                    "path": "e2e_test_assets/add_script.ast"
+                }
+            },
+            {
+                "name": "add_model",
+                "version": "1.0.0",
+                "type": "model",
+                "location": {
+                    "path": "e2e_test_assets/add_two_model.onnx"
+                }
+            }
+        ]
+    """.trimIndent()
+
+
+        val nimblenetConfig = NimbleNetConfig(
+            debug = true,
+            online = false
+        )
+
+        check(NimbleNet.initialize(context, nimblenetConfig, JSONArray(assetsJson)).status)
+
+        waitForIsReady()
+
+        // Do run method and its output assertion
+        val input = hashMapOf(
+            "num" to NimbleNetTensor(
+                data = longArrayOf(2),
+                datatype = DATATYPE.INT64,
+                shape = intArrayOf(1)
+            )
+        )
+
+        val output = NimbleNet.runMethod("add", input)
+        assert(output.status)
+        assert(output.payload?.size == 1)
+        assert((output.payload!!["output"]!!.data as LongArray)[0].toInt() == 4)
+
+        val historyJsonArray = MockServerHelper.getNetworkCallHistory()
+        assert(historyJsonArray.length() == 0)
+    }
+
+    @Test
+    fun runRetrieverInOfflineMode() = runBlocking {
+        MockServerHelper.resetExpectations()
+
+        // Provide paths relative to assets folder
+        val assetsJson = """
+        [
+            {
+                "name": "workflow_script",
+                "version": "1.0.0",
+                "type": "script",
+                "location": {
+                    "path": "retriever/retriever.ast"
+                }
+            },
+            {
+                "name": "GroceryRAG",
+                "version": "1.0.0",
+                "type": "retriever",
+                "arguments": [
+                    {
+                        "name": "embeddingModel",
+                        "version": "1.0.0",
+                        "type": "model",
+                        "location": {
+                            "path": "retriever/embedding_model.onnx"
+                        }
+                    },
+                    {
+                        "name": "embeddingStoreModel",
+                        "version": "1.0.0",
+                        "type": "model",
+                        "location": {
+                            "path": "retriever/embedding_store_model.onnx"
+                        }
+                    },
+                    {
+                        "name": "groceryItems",
+                        "version": "1.0.0",
+                        "type": "document",
+                        "location": {
+                            "path": "retriever/grocery.json"
+                        }
+                    }
+                ]
+            }
+        ]
+    """.trimIndent()
+
+        val nimblenetConfig = NimbleNetConfig(
+            debug = true,
+            online = false
+        )
+
+        check(NimbleNet.initialize(context, nimblenetConfig, JSONArray(assetsJson)).status)
+
+        waitForIsReady()
+
+        check(NimbleNet.runMethod("run_llm", hashMapOf()).status)
+
+        var output = NimbleNet.runMethod("get_description", hashMapOf())
+        assert(output.status)
+        assert(output.payload?.size == 1)
+        assert(output.payload!!["description"]!!.data as String == "this is a description")
+
+        val itemsList = mutableListOf<String>()
+
+        fun getItems() {
+            output = NimbleNet.runMethod("get_next_item", hashMapOf())
+            assert(output.status)
+            var item = (output.payload!!["item"]!!.data as JSONObject).get("ProductName") as String
+            itemsList.add(item)
+
+            while (true) {
+                output = NimbleNet.runMethod("get_next_item", hashMapOf())
+                assert(output.status)
+                if (!output.payload!!.containsKey("relevance_score")){break}
+                item = (output.payload!!["item"]!!.data as JSONObject).get("ProductName") as String
+                itemsList.add(item)
+            }
+        }
+
+        getItems()
+        check(itemsList.any { it.contains("milk", ignoreCase = true) }) { "No item contains 'milk'" }
+        check(itemsList.any { it.contains("paneer", ignoreCase = true) }) { "No item contains 'paneer'" }
+        check(itemsList.any { it.contains("noodles", ignoreCase = true) }) { "No item contains 'paneer'" }
+        check(itemsList.any { it.contains("eggs", ignoreCase = true) }) { "No item contains 'eggs'" }
+
+        val historyJsonArray = MockServerHelper.getNetworkCallHistory()
+        assert(historyJsonArray.length() == 0)
+    }
+
     private fun initializeNimbleNetForNetworkingTests() {
         val nimblenetConfig = NimbleNetConfig(
             clientId = "testclient",
@@ -182,7 +333,8 @@ class E2ENetworkingAndroidTest {
             debug = true,
             initTimeOutInMs = 3000000000,
             compatibilityTag = "MODEL_ADDITION",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC
+            libraryVariant = NIMBLENET_VARIANTS.STATIC,
+            online = true,
         )
 
         check(NimbleNet.initialize(context, nimblenetConfig).status)
