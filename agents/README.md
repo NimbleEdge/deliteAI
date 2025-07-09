@@ -1,6 +1,6 @@
 # DeliteAI Agents
 
-DeliteAI Agents are pre-built, on-device AI components that provide high-level APIs for common AI use cases, simplifying the integration of powerful AI into your applications.
+DeliteAI Agents are pre-built, on-device AI packages that provide high-level APIs for common agentic use cases, simplifying the integration of powerful AI into your applications.
 
 ## Index
 
@@ -77,4 +77,4 @@ ASR Agent + LLM Execution + Summarizer + TTS Agent
 
 ## Examples
 
--   [Android Example App](examples/android/README.md) - A complete demo showcasing the integration of an agent in a real-world application.
+-   [Android Example App](examples/android/README.md) - A complete demo showcasing the integration of agents in a real-world application.

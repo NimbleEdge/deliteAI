@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://www.android.com)
 [![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)](https://kotlinlang.org)
 
-The agent fetches device notifications, processes them using on-device language models, and generates summaries that can be retrieved by the host app. 
+The agent fetches device notifications, processes them using on-device LLMs, and generates summaries that can be retrieved by the host app. 
 It can operate in the background, at your scheduled timings and is designed to be privacy-centric by keeping all data on the device.
 
 ## Table of Contents
