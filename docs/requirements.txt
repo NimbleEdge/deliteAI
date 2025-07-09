@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+furo==2024.8.6
+myst-parser==4.0.1
+Sphinx==8.2.3
+-r ../coreruntime/delitepy/requirements.txt
