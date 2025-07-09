@@ -37,10 +37,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".swiggy.BenchmarkActivity"
-            android:exported="true"
-            android:enabled="true">
-        </activity>
+        
         <!-- workaround bug in profileinstaller 1.3.0-alpha02, remove when updating to alpha03+ -->
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"

@@ -2,11 +2,11 @@
 
 Example Android app demonstrating the Notifications Summarizer Agent integration.
 
-## Prerequisites
+## Agents integrated in the Example App.
 
-- Android Studio Arctic Fox or later
-- Android device with API 26+
-- DeliteAI credentials
+| Agent | README |
+|-------|--------|
+| Notifications Summarizer | [Android README](../../notifications_summarizer/android/README.md) |
 
 ## Setup
 
