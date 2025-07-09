@@ -11,7 +11,7 @@ android:
   cmake_args: "-DANDROID_STL=c++_shared -DEXECUTORCH_EXECUTOR=0 -DONNXBuild=1_21_0_full -DONNXgenai=0_7_0_onnx_genai -DONNXext=0_13_0_ort_extensions -DMINIMAL_BUILD=0 -DExecutorchgenai=d4906e21_executorch -DGEMINI=1"
 
 ios:
-  cmake_args: "-DIOS=1 -DONNXBuild=1_21_0_ios_full -DONNXgenai=0_7_0_ios_onnx-genai -DONNXext=0_13_0_ort_extension -DMINIMAL_BUILD=0"
+  cmake_args: "-DIOS=1 -DEXECUTORCH_EXECUTOR=0 -DONNXBuild=1_21_0_ios_full -DONNXgenai=0_7_0_ios_onnx-genai -DONNXext=0_13_0_ort_extension -DMINIMAL_BUILD=0 -DExecutorchgenai=d4906e21_executorch"
 
 react:
   ndk: "21.4.7075529"

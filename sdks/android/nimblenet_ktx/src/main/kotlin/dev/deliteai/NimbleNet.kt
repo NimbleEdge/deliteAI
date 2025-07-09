@@ -6,7 +6,9 @@
 
 package dev.deliteai
 
+import android.app.Application
 import dev.deliteai.datamodels.NimbleNetConfig
+import dev.deliteai.datamodels.NimbleNetError
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
@@ -16,7 +18,7 @@ import dev.deliteai.impl.common.toNimbleNetResult
 import dev.deliteai.impl.controllers.NimbleNetController
 import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
 import dev.deliteai.impl.loggers.LocalLogger
-import android.app.Application
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -32,7 +34,8 @@ import org.json.JSONObject
  *     host = "https://your-api-host.com",
  *     deviceId = "unique-device-id",
  *     compatibilityTag = "your-compatibility-tag",
- *     libraryVariant = NIMBLENET_VARIANTS.STATIC
+ *     libraryVariant = NIMBLENET_VARIANTS.STATIC,
+ *     online = true
  * )
  *
  * val initResult = NimbleNet.initialize(application, config)
@@ -90,10 +93,47 @@ object NimbleNet {
      *     host = "https://api.nimblenet.ai",
      *     deviceId = "device-${UUID.randomUUID()}",
      *     compatibilityTag = "v1.2.0",
-     *     libraryVariant = NIMBLENET_VARIANTS.STATIC
+     *     libraryVariant = NIMBLENET_VARIANTS.STATIC,
+     *     online = true
      * )
      *
+     * val offlineConfig = NimbleNetConfig(online = false)
+     *
+     * val assetsJson = [
+     *             {
+     *                 "name": "workflow_script",
+     *                 "version": "1.0.0",
+     *                 "type": "script",
+     *                 "location": {
+     *                     "path": "workflow script's ast location relative to assets"
+     *                 }
+     *             },
+     *             {
+     *                 "name": "add_model",
+     *                 "version": "1.0.0",
+     *                 "type": "model",
+     *                 "location": {
+     *                     "path": "model path relative to assets"
+     *                 }
+     *             }
+     *         ]
+     *
+     *  The assetsJSON represents a structured assets configuration for loading them from disk.
+     *
+     *  Each asset json object contains:
+     *  - `name`: A unique identifier for the asset.
+     *  - `version`: The version of the asset.
+     *  - `type`: Type of the asset (e.g., script, retriever, model, document, llm).
+     *  - `location` (optional): An object with a `path` field pointing to the file
+     *      location of the module asset. The path is relative to the assets folder.
+     *  - `arguments` (optional): In case an asset depends on other assets then they are
+     *       passed in arguments. For e.g. a retriever might have embedding model and document as its dependencies.
+     *
+     * // For online initialization
      * val result = NimbleNet.initialize(application, config)
+     *
+     * // For offline initialization
+     * val result = NimbleNet.initialize(application, offlineConfig, assetsJson)
      * if (result.status) {
      *     // SDK initialized successfully
      * } else {
@@ -103,6 +143,8 @@ object NimbleNet {
      *
      * @param application The Android application context
      * @param config The configuration object containing client credentials and settings
+     * @param assetsJson The assets configuration to initialize the SDK when assets such as
+     *  the workflow script, models etc are bundled with the app
      *
      * @return [NimbleNetResult]<[Unit]> indicating success or failure
      *
@@ -110,14 +152,37 @@ object NimbleNet {
      * @see NimbleNetConfig
      * @since 1.0.0
      */
-    fun initialize(application: Application, config: NimbleNetConfig): NimbleNetResult<Unit> {
+    fun initialize(
+        application: Application,
+        config: NimbleNetConfig,
+        assetsJson: JSONArray? = null,
+    ): NimbleNetResult<Unit> {
         val container = DependencyContainer.getInstance(application, config)
         controller = container.getNimbleNetController()
         localLogger = container.getLocalLogger()
 
-        return runCatching { controller.initialize(config) }
-            .onFailure(localLogger::e)
-            .getOrElse { it.toNimbleNetResult() }
+        // TODO: Move this logic to NimbleNetController
+        // Pass deliteAssets only if online flag is false, else pass it on as null
+        return if (config.online) {
+            runCatching { controller.initialize(config, null) }
+                .onFailure(localLogger::e)
+                .getOrElse { it.toNimbleNetResult() }
+        } else {
+            if (assetsJson == null) {
+                return NimbleNetResult<Unit>(
+                    false,
+                    null,
+                    NimbleNetError(
+                        code = -1,
+                        message =
+                            "deliteAssets cannot be null in case NimbleNetConfig has online flag set to false.",
+                    ),
+                )
+            }
+            runCatching { controller.initialize(config, assetsJson) }
+                .onFailure(localLogger::e)
+                .getOrElse { it.toNimbleNetResult() }
+        }
     }
 
     /**

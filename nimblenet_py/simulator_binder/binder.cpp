@@ -438,7 +438,7 @@ PYBIND11_MODULE(simulator, m) {
   m.def("cleanup", &cleanup, "Perform cleanup of the resources.");
 
   /** Usage:
-   *    from nimbleedge import simulator
+   *    from deliteai import simulator
    *    simulator.version.git_revision
    *    simulator.version.sdk_version
    */

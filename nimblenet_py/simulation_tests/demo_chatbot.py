@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from time import sleep
-from nimbleedge import simulator
+from deliteai import simulator
 import sys
 import os
 
@@ -18,7 +18,7 @@ context = """
   },
   {
     "type": "assistant",
-    "message": "I'm NimbleEdge AI assistant. How can I help you today?"
+    "message": "I'm DeliteAI assistant. How can I help you today?"
   },
   {
     "type": "user",

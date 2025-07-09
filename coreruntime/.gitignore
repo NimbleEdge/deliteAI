@@ -2,4 +2,4 @@ build/
 .vscode/
 coverage*
 dist/
-nimbleedge*
+deliteai*

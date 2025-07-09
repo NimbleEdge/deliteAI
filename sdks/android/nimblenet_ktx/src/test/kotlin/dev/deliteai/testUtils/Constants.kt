@@ -19,4 +19,5 @@ val nnConfig =
         initTimeOutInMs = 1000000000,
         compatibilityTag = "test",
         libraryVariant = NIMBLENET_VARIANTS.STATIC,
+        online = true
     )

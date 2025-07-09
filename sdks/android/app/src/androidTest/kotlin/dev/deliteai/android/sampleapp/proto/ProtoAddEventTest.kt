@@ -39,7 +39,8 @@ class ProtoAddEventTest {
                 debug = true,
                 initTimeOutInMs = 20000,
                 compatibilityTag = "ADD_EVENT_PROTO",
-                libraryVariant = NIMBLENET_VARIANTS.STATIC
+                libraryVariant = NIMBLENET_VARIANTS.STATIC,
+                online = true
             )
             val context =
                 InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
