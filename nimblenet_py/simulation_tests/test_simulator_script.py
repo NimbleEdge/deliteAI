@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from nimbleedge import simulator
+from deliteai import simulator
 import numpy as np
 import json
 import pytest

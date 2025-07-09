@@ -8,7 +8,7 @@ from delitepy import ne_re as re
 llm = nm.llm({"name": "llama-3"})
 text_stream = None
 
-SYSTEM_PROMPT = """<|start_header_id|>system<|end_header_id|>You are NimbleEdge AI, a chatbot running on device using NimbleEdge's platform. Respond to user's questions briefly<|eot_id|>\n"""
+SYSTEM_PROMPT = """<|start_header_id|>system<|end_header_id|>You are DeliteAI, a chatbot running on device using DeliteAI's platform. Respond to user's questions briefly<|eot_id|>\n"""
 USER_PROMPT_BEGIN = "<|start_header_id|>user<|end_header_id|>"
 SECTION_END = "<|eot_id|>\n"
 ASSISTANT_RESPONSE_BEGIN = "<|start_header_id|>assistant<|end_header_id|>"

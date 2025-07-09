@@ -21,9 +21,9 @@ class DistributionClass(Distribution):
 source_files = [file for file in glob.glob("build/bin/*") if os.path.isfile(file)]
 
 # package name
-destination_dir = "nimbleedge"
+destination_dir = "deliteai"
 
-# If nimbleedge directory not present, create a new one. This is required for installing the simulator locally.
+# If deliteai directory not present, create a new one. This is required for installing the simulator locally.
 if not os.path.isdir(destination_dir):
     os.makedirs(destination_dir)
 with open(f"{destination_dir}/__init__.py", "w") as f:
@@ -59,14 +59,14 @@ def get_version():
 
 
 setup(
-    name='nimbleedge',
+    name='deliteai',
     version=get_version(),
     author="DeliteAI Authors",
     author_email="team-opensource@nimbleedgehq.ai",
     description='Python package to simulate the functionailties of NimbleSDK',
     long_description="Python package to simulate the functionailties of NimbleSDK.",
     packages=find_packages(),
-    package_data={'nimbleedge': ['*']},
+    package_data={'deliteai': ['*']},
     include_package_data=True,
     python_requires=">=3.9",
     install_requires=["ast2json==0.3", "numpy>=1.26.0"],

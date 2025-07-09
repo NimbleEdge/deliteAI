@@ -4,7 +4,7 @@
 
 def get_config()->dict:
     """
-    Get the config defined during nimbleedge sdk initialization.
+    Get the config defined during deliteai sdk initialization.
     Returns a dict with two keys cohortIds and compatibilityTag.
 
     Returns
