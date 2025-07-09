@@ -1,5 +1,7 @@
 **/build/
 .vscode/
 .DS_Store
+third_party/runtime/
+!third_party/runtime/CMakeLists.txt
 __pycache__/
 .pytest_cache/
