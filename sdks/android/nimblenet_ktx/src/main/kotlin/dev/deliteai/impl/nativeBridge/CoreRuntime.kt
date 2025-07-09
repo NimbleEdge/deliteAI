@@ -10,11 +10,13 @@ import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
 import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
+import org.json.JSONArray
 
 internal interface CoreRuntime {
     fun initializeNimbleNet(
         context: Any,
         nimbleNetConfig: String,
+        assetsJson: JSONArray?,
         nimbleDirPath: String,
         nimbleNetResult: NimbleNetResult<Unit>,
     )

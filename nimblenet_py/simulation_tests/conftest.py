@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import pytest
-from nimbleedge import simulator
+from deliteai import simulator
 
 @pytest.fixture(autouse=True)
 def after_each():

@@ -34,7 +34,7 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
 @implementation NimbleNetController
 
 
--(NSDictionary*)initialize_nimblenet_controller:(NSString*)configJson {
+-(NSDictionary*)initialize_nimblenet_controller:(NSString*)configJson assetsJson:(NSString*)assetsJson{
     NSLog(@"init called  detected!");
     initClientFunctionPointers();
     
@@ -75,6 +75,21 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
             
         });
         nw_path_monitor_start(self.pathMonitor);
+        
+        if (assetsJson != nil) {
+                    NimbleNetStatus* status = load_modules([assetsJson UTF8String], [nimbleSdkDirectory UTF8String]);
+                    if (status != nil) {
+                        NSDictionary* res = @{
+                            @"status":@false,
+                            @"data":[NSNull null],
+                            @"error":@{
+                                @"code":@(status->code),
+                                @"message":@(status->message)
+                            }
+                        };
+                        return res;
+                    }
+                }
         
         NimbleNetStatus* status = initialize_nimblenet([configJson UTF8String], [nimbleSdkDirectory UTF8String]);
         self.hardwareInfo = [[HardwareInfo alloc] init];

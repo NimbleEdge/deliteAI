@@ -48,7 +48,8 @@ fun StressTestForMemDump() {
             debug = false,
             initTimeOutInMs = 1000000000,
             compatibilityTag = "test",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC
+            libraryVariant = NIMBLENET_VARIANTS.STATIC,
+            online = true
         )
 
         check(NimbleNet.initialize(application as Application, nimblenetConfig).status)

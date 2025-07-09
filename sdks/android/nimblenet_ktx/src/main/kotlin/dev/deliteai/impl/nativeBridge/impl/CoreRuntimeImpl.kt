@@ -11,11 +11,13 @@ import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
 import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
 import dev.deliteai.impl.nativeBridge.CoreRuntime
+import org.json.JSONArray
 
 internal class CoreRuntimeImpl : CoreRuntime {
     external override fun initializeNimbleNet(
         context: Any,
         nimbleNetConfig: String,
+        assetsJson: JSONArray?,
         nimbleDirPath: String,
         nimbleNetResult: NimbleNetResult<Unit>,
     )

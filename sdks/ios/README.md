@@ -73,7 +73,8 @@ Once you’ve installed the SDK, follow the steps below to integrate DeliteAI in
         host: "[https://your-server.com/](https://your-server.com/)",
         deviceId: "qs-iOS",
         debug: true,
-        compatibilityTag: "RankerV1"
+        compatibilityTag: "RankerV1",
+        online: true
     )
 
     let result = NimbleNetApi.initialize(config: nimbleNetConfig)

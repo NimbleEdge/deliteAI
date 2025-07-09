@@ -102,9 +102,9 @@ def main():
     # Simulation Mode
     if args.simulator:
         if not args.ci_build:
-            # re-install nimbleedge
-            subprocess.run(f"python{python_version} -m pip uninstall nimbleedge", shell=True, check=True)
-            subprocess.run("rm -rf dist nimbleedge*", shell=True, check=True)
+            # re-install deliteai
+            subprocess.run(f"python{python_version} -m pip uninstall deliteai", shell=True, check=True)
+            subprocess.run("rm -rf dist deliteai*", shell=True, check=True)
             subprocess.run(f"python{python_version} setup.py bdist_wheel", shell=True, check=True)
             subprocess.run(f"python{python_version} -m pip install dist/*", shell=True, check=True)
 

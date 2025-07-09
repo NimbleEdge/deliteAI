@@ -17,7 +17,7 @@ public class NimbleNetApi{
     public static func restartSessionWithId(sessionId: String){
         nimbleNetController.restartSession(withId: sessionId)
     }
-    public static func initialize(config:NimbleNetConfig)->NimbleNetResult<Void>{
+    public static func initialize(config:NimbleNetConfig, assetsJson: [[String: Any]]? = nil)->NimbleNetResult<Void>{
         
         var config = config
         var res:NSDictionary
@@ -25,9 +25,34 @@ public class NimbleNetApi{
             let encoder = JSONEncoder()
             let jsonData = try encoder.encode(config)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
+                if (config.online) {
+                    res = nimbleNetController.initialize_nimblenet_controller(jsonString, assetsJson: nil)! as NSDictionary
+                    return NimbleNetResult<Void>(data: NSDictionary(dictionary: res))
+                } else {
+                    if (assetsJson == nil) {
+                        return populateNimbleNetResultWithError(errorCode: 5000, errorMessage: "assetsJson cannot be nil in case online flag is set to false.");
+                    }
+                    // Also copy over assets logic will come here and the modified json string passed to nimblenetcontroller
+                    var modifiedAssetsJson = assetsJson
+                    do {
+                        try modifiedAssetsJson = FileIO.shared.processModules(assetsJson: &modifiedAssetsJson!)
+                    } catch let error as NSError {
+                        return populateNimbleNetResultWithError(
+                            errorCode: error.code != 0 ? error.code : 5000,
+                            errorMessage: error.localizedDescription
+                        )
+                    }
+                    // Encode modifiedAssetsJson into a JSON string
+                    let modifiedAssetsJsonData = try JSONSerialization.data(withJSONObject: modifiedAssetsJson, options: [])
+                    guard let modifiedAssetsJsonString = String(data: modifiedAssetsJsonData, encoding: .utf8) else {
+                        return populateNimbleNetResultWithError(errorCode: 5000, errorMessage: "Failed to convert modified assetsJson to String.")
+                    }
+
+                    // Call the controller with both JSON strings
+                    res = nimbleNetController.initialize_nimblenet_controller(jsonString, assetsJson: modifiedAssetsJsonString)! as NSDictionary
+                    return NimbleNetResult<Void>(data: NSDictionary(dictionary: res))
+                }
                 
-                res = nimbleNetController.initialize_nimblenet_controller(jsonString)! as NSDictionary
-                return NimbleNetResult<Void>(data: NSDictionary(dictionary: res))
             }
             else{
                 return populateNimbleNetResultWithError(errorCode: 5000, errorMessage: "invalid nimblenet config")
@@ -39,14 +64,14 @@ public class NimbleNetApi{
         
     }
     
-    public static func initialize(config:String) -> NimbleNetResult<Void>{
+    public static func initialize(config:String, assetsJson: [[String: Any]]?) -> NimbleNetResult<Void>{
         
         if let jsonData = config.data(using: .utf8) {
             do {
                 
                 let nimbleNetConfig = try JSONDecoder().decode(NimbleNetConfig.self, from: jsonData)
                 
-                return initialize(config: nimbleNetConfig)
+                return initialize(config: nimbleNetConfig, assetsJson: assetsJson)
                 
             } catch {
                 return populateNimbleNetResultWithError(errorCode: 5000, errorMessage: "exception: initNimbleNet \(error)")
