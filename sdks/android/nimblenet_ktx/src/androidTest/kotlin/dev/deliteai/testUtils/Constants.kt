@@ -18,5 +18,6 @@ val nnConfig = NimbleNetConfig(
     debug = true,
     initTimeOutInMs = 20000,
     compatibilityTag = "android-output-verification",
-    libraryVariant = NIMBLENET_VARIANTS.STATIC
+    libraryVariant = NIMBLENET_VARIANTS.STATIC,
+    online = true,
 )

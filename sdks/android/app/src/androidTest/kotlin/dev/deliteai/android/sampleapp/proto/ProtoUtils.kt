@@ -29,7 +29,8 @@ val config = NimbleNetConfig(
     debug = true,
     initTimeOutInMs = 20000,
     compatibilityTag = "proto-test",
-    libraryVariant = NIMBLENET_VARIANTS.STATIC
+    libraryVariant = NIMBLENET_VARIANTS.STATIC,
+    online = true
 )
 
 val typeRegistry = JsonFormat.TypeRegistry.newBuilder()

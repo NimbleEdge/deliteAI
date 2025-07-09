@@ -76,8 +76,8 @@ void initContext(JNIEnv *env, jobject ctx) {
 
 extern "C" {
 void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initializeNimbleNet(
-    JNIEnv *env, jobject thiz, jobject ctx, jstring jnimble_net_config, jstring jnimble_net_dir,
-    jobject nimblenet_result_android) {
+    JNIEnv *env, jobject thiz, jobject ctx, jstring jnimble_net_config, jobject assetsJson,
+    jstring jnimble_net_dir, jobject nimblenet_result_android) {
   auto initialLocalRefsAllowed = getMaxLocalRefsAllowedInTheCurrentFrame(env);
   attachCrashReporter();
 
@@ -99,6 +99,18 @@ void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initialize
 #ifdef GEMINI
     geminiNanoHandlerShadow = GeminiNanoHandlerShadow(env);
 #endif  // GEMINI
+
+    if (assetsJson != nullptr) {
+        OpReturnType assets = convertJSONArrayToOpReturnType(env, assetsJson);
+        NimbleNetStatus *loadModulesStatus =
+            nimblenet::load_modules(assets, JniString::jstringToStdString(env, jnimble_net_dir));
+        // In case of an error while loading modules return without initializing
+        if (loadModulesStatus != nullptr) {
+            populateNimbleNetResult(env, nimblenet_result_android, loadModulesStatus, nullptr, nullptr);
+            checkForUndeletedLocalReferences(env, initialLocalRefsAllowed, "initNimbleNet()");
+            return;
+        }
+    }
 
     NimbleNetStatus *nimbleNetStatus =
         nimblenet::initialize_nimblenet(JniString::jstringToStdString(env, jnimble_net_config),
