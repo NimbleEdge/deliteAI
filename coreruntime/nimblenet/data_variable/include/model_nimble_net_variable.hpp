@@ -18,7 +18,7 @@ class CommandCenter;
 
 /*
 DELITEPY_DOC_BLOCK_BEGIN
-from delitepy.nimblenet.tensor.tensor import Tensor
+from delitepy.nimblenet.tensor import Tensor
 
 class Model:
     """
@@ -54,8 +54,8 @@ class ModelNimbleNetVariable final : public DataVariable {
 
         Parameters
         ----------
-        input : *Tensor
-            Inputs tensors to the model in the order they are expected in the model.
+        args : *Tensor
+            Input tensors to the model in the order they are expected in the model.
 
         Returns
         ----------
