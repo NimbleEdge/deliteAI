@@ -1,0 +1,76 @@
+name: Build and Publish Docs
+
+on:
+  workflow_dispatch:
+
+env:
+  S3_BUCKET: deliteai.dev
+  CLOUDFRONT_DIST_ID: EMNMVB8Y3G0BE
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    env:
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.DOCS_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DOCS_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Generate dummy local.properties
+        working-directory: sdks/android
+        run: |
+          cat <<EOF > local.properties
+          sdk.dir=/usr/local/lib/android/sdk
+          storeFile=/path/to/keystore.jks
+          storePassword=your_store_password
+          keyPassword=your_key_password
+          keyAlias=your_key_alias
+          ANDROID_DEV_AWS_ACCESS_KEY_ID=your_aws_key
+          ANDROID_DEV_AWS_SECRET_ACCESS_KEY=your_aws_secret
+          ANDROID_DEV_AWS_S3_URL=your_s3_url
+          OSS_USER=your_maven_user
+          OSS_PASSWORD=your_maven_password
+          ANDROID_TEST_CLIENT_ID=test_client_id
+          ANDROID_TEST_CLIENT_SECRET=test_client_secret
+          ANDROID_TEST_HOST=https://test-api-endpoint.com
+          REMOTE_LOGGER_KEY=your_logger_key
+          REMOTE_LOGGER_URL=https://your-logging-endpoint.com
+          EOF
+
+      - name: Generate Dokka docs
+        working-directory: sdks/android
+        run: ./gradlew dokkaGfm
+
+      - name: Build site
+        working-directory: docs
+        run: |
+          pip install -r requirements.txt
+          ./scripts/run build_website
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync ./docs/build/deliteai.dev/html s3://$S3_BUCKET --delete
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "$CLOUDFRONT_DIST_ID" \
+            --paths "/*"
