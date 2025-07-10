@@ -9,7 +9,7 @@
 alt="Join us on Discord"></a>
   <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
 alt="Try out fully on-device AI Assistant"></a>
-  <a href="https://deliteai.dev"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=F44336&style=for-the-badge" alt="Check out DeliteAI  documentation"></a>
+  <a href="https://deliteai.dev"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=FFE599&style=for-the-badge" alt="Check out DeliteAI  documentation"></a>
 
   <hr>
 </div>
