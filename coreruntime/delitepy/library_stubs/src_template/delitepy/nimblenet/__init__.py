@@ -22,9 +22,8 @@ def get_config()->dict:
 
     Example
     ----------
-    config = nm.get_config()
-
-    tag = config["compatibilityTag"] # Will return the compatibilityTag
+    >>> config = nm.get_config()
+    >>> tag = config["compatibilityTag"] # Will return the compatibilityTag
     """
     pass
 

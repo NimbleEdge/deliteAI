@@ -239,7 +239,7 @@ class LLM:
 
         Examples
         --------
-        >>> llm.add_context("\\<\\|start_header_id\\|\\>system\\<\\|end_header_id\\|\\>You are a helpful assistant.\\<\\|eot_id\\|\\>")
+        >>> llm.add_context("<|start_header_id|>system<|end_header_id|>You are a helpful assistant.<|eot_id|>")
         """
         pass
 
