@@ -8,13 +8,15 @@
         --output mockserver/mockserver_assets/llama-3 \
         --archive_output True
     ```
-2. Start/Stop services using docker compose:-
+2. Start services using docker compose:
     ```
     cd mockserver
     docker compose up --build -d
+    ```
+3. To stop the mockserver:
+    ```
     docker compose down -v
     ```
-
 **Points to note**
 * The above command runs an instance of Postgres, Mock Model Distribution Service (MDS), Mock Dashboard Management Services (DMS), Ingestion service and mock proxy server.
 * Mock server runs on http://localhost:8080 by default.
