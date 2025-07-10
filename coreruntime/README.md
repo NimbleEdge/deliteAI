@@ -58,7 +58,7 @@ python3 -m pytest
 ```
 
 ## Get Coverage data
-Pre-requisite: For linux since we are using clang for compilation, appropriate gcov needs to be used. First identify the clang version being used using `clang --version`. Then pass this extra argument in all the above gcov commands `--gcov-executable="/usr/lib/llvm-{clang version}/bin/llvm-cov gcov"`
+Pre-requisite: For linux since we are using Clang for compilation, appropriate gcov needs to be used. First identify the clang version being used using `clang --version`. Then pass this extra argument in all the above gcov commands `--gcov-executable="/usr/lib/llvm-{clang version}/bin/llvm-cov gcov"`
 
 ### Run for nimbletest:
 ```sh
