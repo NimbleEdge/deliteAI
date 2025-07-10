@@ -4,6 +4,7 @@
 
 from delitepy.nimblenet.tensor import Tensor
 from types import FunctionType
+from typing import Dict
 
 class RawEventStore:
     def __init__(self, eventType: str, eventExpiryType: str, eventExpiry: int)->'RawEventStore':
@@ -144,7 +145,7 @@ class FilteredDataframe:
         pass
 
 class Dataframe:
-    def __init__(self, eventSchema: dict)->'Dataframe':
+    def __init__(self, eventSchema: Dict[str, str])->'Dataframe':
             """
             An object of Dataframe class can be used to interact with the on-device event store in which the events are being populated by frontend interactions of the user. Dataframe object can be used for the following
             1. fetch events using filter_all or filter_by_function functions.
@@ -152,13 +153,12 @@ class Dataframe:
 
             Parameters
             ----------
-            eventSchema : str
-                Event schema. For e.g.
-                >>> eventSchema = {
-                ...     "column1": "int32",
-                ...     "column2": "float",
-                ...     "column3": "string"
-                ... }
+            eventSchema : Dict[str, str]
+
+            Examples
+            --------
+            >>> eventSchema = {"column1": "int32", "column2": "float", "column3": "string"}
+            >>> df = Dataframe(eventSchema)
             """
             pass
 
