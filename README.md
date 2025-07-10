@@ -9,12 +9,14 @@
 alt="Join us on Discord"></a>
   <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
 alt="Try out fully on-device AI Assistant"></a>
+  <a href="https://deliteai.dev"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=48C4C4&style=for-the-badge" alt="Check out DeliteAI  documentation"></a>
+
   <hr>
 </div>
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
-across multiple platforms and devices.
+on mobile devices.
 
 ## Key Features
 
@@ -47,8 +49,7 @@ Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it
 all in action.
 
 ## Documentation
-
-[Coming Soon]
+Explore our documentation at [deliteai.dev](https://deliteai.dev)
 
 ## Community engagement
 We welcome any feedback or suggestions - please join our
