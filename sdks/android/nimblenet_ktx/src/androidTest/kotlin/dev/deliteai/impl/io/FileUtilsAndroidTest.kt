@@ -310,4 +310,51 @@ class FileUtilsAndroidTest {
             assertTrue("$relativePath should exist in copied LLM directory", copiedFile.exists())
         }
     }
+
+    @Test
+    fun copyAssetsAndUpdatePathShouldNotOverwriteExistingFiles() {
+        val assetsJsonStr = """
+        [
+            {
+                "name": "workflow_script",
+                "version": "1.0.0",
+                "type": "script",
+                "location": {
+                    "path": "misc/add_script.ast"
+                }
+            }
+        ]
+        """.trimIndent()
+
+        val firstAssetsJson = JSONArray(assetsJsonStr)
+
+        // First copy
+        fileUtils.copyAssetsAndUpdatePath(firstAssetsJson)
+
+        val destPath = firstAssetsJson.getJSONObject(0)
+            .getJSONObject("location")
+            .getString("path")
+
+        val destFile = File(destPath)
+        assertTrue(destFile.exists())
+
+        val lastModifiedFirst = destFile.lastModified()
+
+        // Wait briefly to ensure timestamp would change if file were overwritten
+        Thread.sleep(500)
+
+        // Second copy attempt
+        val secondAssetsJson = JSONArray(assetsJsonStr)
+        fileUtils.copyAssetsAndUpdatePath(secondAssetsJson)
+
+        val destPathSecond = secondAssetsJson.getJSONObject(0)
+            .getJSONObject("location")
+            .getString("path")
+
+        val destFileSecond = File(destPathSecond)
+        val lastModifiedSecond = destFileSecond.lastModified()
+
+        // The file should remain unchanged (not overwritten)
+        assertEquals(lastModifiedFirst, lastModifiedSecond)
+    }
 }
