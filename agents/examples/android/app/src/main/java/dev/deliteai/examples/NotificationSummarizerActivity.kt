@@ -6,8 +6,6 @@
 
 package dev.deliteai.examples
 
-import dev.deliteai.examples.ui.theme.ExamplesTheme
-import dev.deliteai.notifications_summarizer.NotificationsSummarizerAgent
 import android.Manifest
 import android.app.AlarmManager
 import android.app.Application
@@ -47,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import dev.deliteai.examples.ui.theme.ExamplesTheme
+import dev.deliteai.notifications_summarizer.NotificationsSummarizerAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,9 +54,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.time.LocalDate
 
-val HOST_TAG = "NE-HOST"
 
-class MainActivity : ComponentActivity() {
+class NotificationSummarizerActivity : ComponentActivity() {
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -256,101 +255,101 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-//will schedule a job that will go off in the next 10 seconds for demo
-private suspend fun scheduleNotificationJob(): String {
-    return runCatching {
-        val timeInMillis = System.currentTimeMillis() + 10_000L
-        NotificationsSummarizerAgent.scheduleNotificationSummaryJob(timeInMillis)
-        "scheduleNotificationSummaryJob returned"
-    }.getOrElse {
-        "scheduleNotificationSummaryJob failed: ${it.message}"
-    }
-}
-
-private suspend fun getCurrentNotificationSummary(): String {
-    return runCatching {
-        val summary = NotificationsSummarizerAgent.getSummaryOfCurrentNotification()
-        summary.toString()
-    }.getOrElse {
-        "getSummaryOfCurrentNotification failed: ${it.message}"
-    }
-}
-
-private suspend fun getSummaryById(id: String): String {
-    return runCatching {
-        val summary = NotificationsSummarizerAgent.getSummary(id)
-        summary.toString()
-    }.getOrElse {
-        "getSummary(id) failed: ${it.message}"
-    }
-}
-
-private suspend fun getSummariesForToday(): String {
-    return runCatching {
-        val today = LocalDate.now()
-        val list = NotificationsSummarizerAgent.getSummary(today).payload!!
-        list.joinToString("\n")
-    }.getOrElse {
-        "getSummary(date) failed: ${it.message}"
-    }
-}
-
-private suspend fun getSummariesForLast7Days(): String {
-    return runCatching {
-        val endDate = LocalDate.now()
-        val startDate = endDate.minusDays(7)
-        val list = NotificationsSummarizerAgent.getSummary(startDate, endDate).payload!!
-        list.joinToString("\n")
-    }.getOrElse {
-        "getSummaries(range) failed: ${it.message}"
-    }
-}
-
-suspend fun copyEspeakDataIfNeeded(context: Context, assetPath: String) {
-    val prefs = context.getSharedPreferences(assetPath, Context.MODE_PRIVATE)
-    val alreadyCopied = prefs.getBoolean(assetPath, false)
-
-    if (alreadyCopied) return
-
-    withContext(Dispatchers.IO) {
-        try {
-            val assetFolder = "espeak-ng-data"
-            val outputFolder = File(context.filesDir, "nimbleSDK")
-
-            copyAssetFolder(context, assetFolder, outputFolder)
-
-            prefs.edit().putBoolean(assetPath, true).apply()
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private suspend fun getCurrentNotificationSummary(): String {
+        return runCatching {
+            val summary = NotificationsSummarizerAgent.getSummaryOfCurrentNotification()
+            summary.toString()
+        }.getOrElse {
+            "getSummaryOfCurrentNotification failed: ${it.message}"
         }
     }
-}
 
-private fun copyAssetFolder(context: Context, assetPath: String, outDir: File) {
-    val assetManager = context.assets
-    val assets = assetManager.list(assetPath) ?: return
-
-    if (!outDir.exists()) {
-        outDir.mkdirs()
+    private suspend fun getSummaryById(id: String): String {
+        return runCatching {
+            val summary = NotificationsSummarizerAgent.getSummary(id)
+            summary.toString()
+        }.getOrElse {
+            "getSummary(id) failed: ${it.message}"
+        }
     }
 
-    for (asset in assets) {
-        val subPath = "$assetPath/$asset"
-        val outFile = File(outDir, asset)
+    private suspend fun getSummariesForToday(): String {
+        return runCatching {
+            val today = LocalDate.now()
+            val list = NotificationsSummarizerAgent.getSummary(today).payload!!
+            list.joinToString("\n")
+        }.getOrElse {
+            "getSummary(date) failed: ${it.message}"
+        }
+    }
 
-        val subAssets = assetManager.list(subPath)
-        if (subAssets.isNullOrEmpty()) {
-            if (!outFile.exists()) {
-                assetManager.open(subPath).use { inputStream ->
-                    FileOutputStream(outFile).use { outputStream ->
-                        inputStream.copyTo(outputStream)
+    private suspend fun getSummariesForLast7Days(): String {
+        return runCatching {
+            val endDate = LocalDate.now()
+            val startDate = endDate.minusDays(7)
+            val list = NotificationsSummarizerAgent.getSummary(startDate, endDate).payload!!
+            list.joinToString("\n")
+        }.getOrElse {
+            "getSummaries(range) failed: ${it.message}"
+        }
+    }
+
+    suspend fun copyEspeakDataIfNeeded(context: Context, assetPath: String) {
+        val prefs = context.getSharedPreferences(assetPath, Context.MODE_PRIVATE)
+        val alreadyCopied = prefs.getBoolean(assetPath, false)
+
+        if (alreadyCopied) return
+
+        withContext(Dispatchers.IO) {
+            try {
+                val assetFolder = "espeak-ng-data"
+                val outputFolder = File(context.filesDir, "nimbleSDK")
+
+                copyAssetFolder(context, assetFolder, outputFolder)
+
+                prefs.edit().putBoolean(assetPath, true).apply()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun copyAssetFolder(context: Context, assetPath: String, outDir: File) {
+        val assetManager = context.assets
+        val assets = assetManager.list(assetPath) ?: return
+
+        if (!outDir.exists()) {
+            outDir.mkdirs()
+        }
+
+        for (asset in assets) {
+            val subPath = "$assetPath/$asset"
+            val outFile = File(outDir, asset)
+
+            val subAssets = assetManager.list(subPath)
+            if (subAssets.isNullOrEmpty()) {
+                if (!outFile.exists()) {
+                    assetManager.open(subPath).use { inputStream ->
+                        FileOutputStream(outFile).use { outputStream ->
+                            inputStream.copyTo(outputStream)
+                        }
                     }
                 }
+            } else {
+                copyAssetFolder(context, subPath, outFile)
             }
-        } else {
-            copyAssetFolder(context, subPath, outFile)
+        }
+    }
+
+    //will schedule a job that will go off in the next 10 seconds for demo
+    private suspend fun scheduleNotificationJob(): String {
+        return runCatching {
+            val timeInMillis = System.currentTimeMillis() + 10_000L
+            NotificationsSummarizerAgent.scheduleNotificationSummaryJob(timeInMillis)
+            "scheduleNotificationSummaryJob returned"
+        }.getOrElse {
+            "scheduleNotificationSummaryJob failed: ${it.message}"
         }
     }
 }
