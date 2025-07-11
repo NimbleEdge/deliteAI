@@ -149,3 +149,17 @@ enum class NIMBLENET_VARIANTS {
     STATIC,
     GOOGLE_PLAY_FEATURE_DYNAMIC,
 }
+
+enum class ASSET_TYPE {
+    MODEL,
+    SCRIPT,
+    LLM,
+    RETRIEVER,
+    DOCUMENT;
+
+    companion object {
+        fun fromString(type: String): ASSET_TYPE =
+            values().firstOrNull { it.name.equals(type, ignoreCase = true) }
+                ?: throw IllegalArgumentException("Unknown ASSET_TYPE: $type")
+    }
+}

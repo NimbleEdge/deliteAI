@@ -44,6 +44,7 @@ import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,8 +152,33 @@ fun initDeliteAi(
     outputText: MutableState<String>,
     coroutineScope: CoroutineScope
 ) {
-    val nimbleNetResult = NimbleNet.initialize(applicationContext, nimblenetConfig)
-    outputText.value = nimbleNetResult.toString()
+    val nimbleConfig = NimbleNetConfig(
+        debug = true,
+        online = false
+    )
+
+    val assets = listOf(
+        mapOf(
+            "name" to "workflow_script",
+            "version" to "1.0.0",
+            "type" to "script",
+            "location" to mapOf(
+                "path" to "main.ast"
+            )
+        ),
+        mapOf(
+            "name" to "llama-3",
+            "version" to "1.0.0",
+            "type" to "llm",
+            "location" to mapOf(
+                "path" to "llama"
+            )
+        )
+    )
+
+    val res = NimbleNet.initialize(applicationContext, nimbleConfig, JSONArray(assets))
+
+    outputText.value = res.toString()
 }
 
 fun addEvent() = NimbleNet.addEvent(

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package dev.deliteai.examples.gmail_assistant
+package dev.deliteai.examples
 
 import android.accounts.AccountManager
 import android.app.Application
@@ -52,10 +52,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-const val HOST_TAG = "GMAIL_AGENT"
 
-class GmailActivity : ComponentActivity() {
-
+class GmailAssistantActivity : ComponentActivity() {
     private val RC_SIGN_IN = 1001
     private val REQUEST_AUTHORIZATION = 1002
 

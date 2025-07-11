@@ -1,4 +1,1 @@
 package dev.deliteai.examples
-
-class MainActivity {
-}
