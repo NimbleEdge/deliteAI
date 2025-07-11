@@ -8,7 +8,6 @@ package dev.deliteai
 
 import android.app.Application
 import dev.deliteai.datamodels.NimbleNetConfig
-import dev.deliteai.datamodels.NimbleNetError
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
@@ -73,9 +72,11 @@ import org.json.JSONObject
  */
 object NimbleNet {
 
-    @Volatile private lateinit var controller: NimbleNetController
+    @Volatile
+    private lateinit var controller: NimbleNetController
 
-    @Volatile private lateinit var localLogger: LocalLogger
+    @Volatile
+    private lateinit var localLogger: LocalLogger
 
     /**
      * Initializes the NimbleNet SDK with the provided configuration.
@@ -161,28 +162,9 @@ object NimbleNet {
         controller = container.getNimbleNetController()
         localLogger = container.getLocalLogger()
 
-        // TODO: Move this logic to NimbleNetController
-        // Pass deliteAssets only if online flag is false, else pass it on as null
-        return if (config.online) {
-            runCatching { controller.initialize(config, null) }
-                .onFailure(localLogger::e)
-                .getOrElse { it.toNimbleNetResult() }
-        } else {
-            if (assetsJson == null) {
-                return NimbleNetResult<Unit>(
-                    false,
-                    null,
-                    NimbleNetError(
-                        code = -1,
-                        message =
-                            "deliteAssets cannot be null in case NimbleNetConfig has online flag set to false.",
-                    ),
-                )
-            }
-            runCatching { controller.initialize(config, assetsJson) }
-                .onFailure(localLogger::e)
-                .getOrElse { it.toNimbleNetResult() }
-        }
+        return runCatching { controller.initialize(config, assetsJson) }
+            .onFailure(localLogger::e)
+            .getOrElse { it.toNimbleNetResult() }
     }
 
     /**

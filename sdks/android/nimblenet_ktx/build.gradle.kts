@@ -67,6 +67,13 @@ android {
         sourceSets["main"].java.srcDir("src/gemini/kotlin")
     }
 
+    // Package androidTest assets into the app APK under test
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDir("src/androidTest/assets")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
