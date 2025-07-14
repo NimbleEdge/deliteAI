@@ -7,17 +7,14 @@
 package dev.deliteai.impl.io
 
 import android.app.Application
-import android.content.Context
+import dev.deliteai.impl.common.ASSET_TYPE
 import dev.deliteai.impl.common.SDK_CONSTANTS
-import dev.deliteai.impl.common.SDK_CONSTANTS.DELITE_ASSETS_TEMP_FILES_EXPIRY_IN_MILLIS
 import dev.deliteai.impl.common.SDK_CONSTANTS.DELITE_ASSETS_TEMP_STORAGE
 import dev.deliteai.impl.loggers.LocalLogger
-import java.io.File
-import java.io.FileOutputStream
-import java.nio.file.Files
-import java.nio.file.attribute.BasicFileAttributes
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 
 internal class FileUtils(
     private val application: Application,
@@ -25,26 +22,26 @@ internal class FileUtils(
 ) {
     fun getInternalStorageFolderSizes(): String? =
         runCatching {
-                val parent = application.filesDir.resolve(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME)
-                val sizes = buildMap {
-                    put(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME, parent.folderSize())
-                    listOf("metrics", "logs").forEach { name ->
-                        put(name, parent.resolve(name).takeIf(File::exists)?.folderSize() ?: 0L)
-                    }
+            val parent = application.filesDir.resolve(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME)
+            val sizes = buildMap {
+                put(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME, parent.folderSize())
+                listOf("metrics", "logs").forEach { name ->
+                    put(name, parent.resolve(name).takeIf(File::exists)?.folderSize() ?: 0L)
                 }
-                JSONObject(sizes).toString()
             }
+            JSONObject(sizes).toString()
+        }
             .onFailure { localLogger.e(it) }
             .getOrNull()
 
     fun moveFile(source: File, dest: File): Boolean =
         runCatching {
-                source.inputStream().use { it.copyTo(dest.outputStream()) }
-                if (!source.delete()) {
-                    localLogger.d("Failed to delete the source file")
-                }
-                true
+            source.inputStream().use { it.copyTo(dest.outputStream()) }
+            if (!source.delete()) {
+                localLogger.d("Failed to delete the source file")
             }
+            true
+        }
             .onFailure { localLogger.e(it) }
             .getOrDefault(false)
 
@@ -56,68 +53,86 @@ internal class FileUtils(
 
     private fun File.folderSize(): Long = walk().filter { it.isFile }.sumOf { it.length() }
 
-    // TODO: Break this function
-    fun processModules(context: Context, assetsJson: JSONArray): JSONArray {
-        // Create target directory in internal storage
-        val targetDir =
-            File(getSDKDirPath(), DELITE_ASSETS_TEMP_STORAGE).apply { if (!exists()) mkdirs() }
+    fun copyAssetsAndUpdatePath(assetsJson: JSONArray?) {
+        if (assetsJson == null) return
 
-        val retainedFiles = mutableSetOf<String>()
+        for (idx in 0 until assetsJson.length()) {
+            val assetInfo = assetsJson.getJSONObject(idx)
+            val name = assetInfo.getString("name")
+            val version = assetInfo.getString("version")
+            val type = ASSET_TYPE.fromString(assetInfo.getString("type"))
 
-        fun processModuleObject(module: JSONObject) {
-            if (module.has("location")) {
-                val location = module.getJSONObject("location")
-                val assetPath = location.getString("path")
-                val fileExt = File(assetPath).extension
-                val fileName =
-                    "${module.getString("name")}_${module.getString("version")}" +
-                        if (fileExt.isNotBlank()) ".$fileExt" else ""
-                retainedFiles += fileName
-                val outputFile = File(targetDir, fileName)
+            val locationObject = assetInfo.optJSONObject("location")
+            val assetPath = locationObject?.optString("path")
+            val arguments = assetInfo.optJSONArray("arguments")
 
-                // Only copy if file doesn't exist
-                if (!outputFile.exists()) {
-                    context.assets.open(assetPath).use { input ->
-                        FileOutputStream(outputFile).use { output -> input.copyTo(output) }
+            when (type) {
+                ASSET_TYPE.MODEL, ASSET_TYPE.SCRIPT, ASSET_TYPE.DOCUMENT -> {
+                    if (assetPath == null) throw Exception("missing key: location")
+
+                    val targetFile = constructTargetFile(assetPath, name, version)
+                    copyAssetFile(assetPath, targetFile)
+                    locationObject.put("path", targetFile.absolutePath)
+                }
+
+                ASSET_TYPE.LLM -> {
+                    if (assetPath == null) throw Exception("missing key: location")
+
+                    val targetFile = constructTargetFile(assetPath, name, version)
+                    copyAssetFolderRecursively(assetPath, targetFile)
+                    locationObject.put("path", targetFile.absolutePath)
+                }
+
+                ASSET_TYPE.RETRIEVER -> {
+                    if (arguments == null) throw Exception("missing key: arguments")
+
+                    copyAssetsAndUpdatePath(arguments)
+                }
+            }
+        }
+    }
+
+    private fun constructTargetFile(src: String, name: String, version: String): File {
+        val targetBase = File(getSDKDirPath(), DELITE_ASSETS_TEMP_STORAGE)
+            .apply { if (!exists()) mkdirs() }
+        val ext = File(src).extension
+        val filename = "${name}_${version}" + if (ext.isNotBlank()) ".$ext" else ""
+        return File(targetBase, filename)
+    }
+
+    private fun copyAssetFile(src: String, target: File) {
+        val assetManager = application.assets
+
+        if (!target.exists()) {
+            assetManager.open(src).use { input ->
+                FileOutputStream(target).use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+    }
+
+    private fun copyAssetFolderRecursively(
+        src: String,
+        target: File
+    ) {
+        val assetManager = application.assets
+        val children = assetManager.list(src) ?: return
+        for (child in children) {
+            val childAssetPath = if (src.isEmpty()) child else "$src/$child"
+            val childTarget = File(target, child)
+            if (assetManager.list(childAssetPath)?.isNotEmpty() == true) {
+                // nested folder
+                copyAssetFolderRecursively(childAssetPath, childTarget)
+            } else {
+                // single file
+                childTarget.parentFile?.mkdirs()
+                assetManager.open(childAssetPath).use { input ->
+                    FileOutputStream(childTarget).use { output ->
+                        input.copyTo(output)
                     }
                 }
-
-                // Update path in JSON
-                location.put("path", outputFile.absolutePath)
-            }
-
-            // Recursively process nested arguments if present
-            if (module.has("arguments")) {
-                val argumentsArray = module.getJSONArray("arguments")
-                for (j in 0 until argumentsArray.length()) {
-                    processModuleObject(argumentsArray.getJSONObject(j))
-                }
             }
         }
-
-        for (i in 0 until assetsJson.length()) {
-            processModuleObject(assetsJson.getJSONObject(i))
-        }
-
-        // Delete files not modified in last 7 days
-        targetDir.listFiles()?.forEach { file ->
-            if (file.name !in retainedFiles) {
-                try {
-                    val path = file.toPath()
-                    val attrs = Files.readAttributes(path, BasicFileAttributes::class.java)
-                    val lastAccessTime = attrs.lastAccessTime().toMillis()
-
-                    if (
-                        System.currentTimeMillis() - lastAccessTime >
-                            DELITE_ASSETS_TEMP_FILES_EXPIRY_IN_MILLIS
-                    ) {
-                        file.delete()
-                    }
-                } catch (e: Exception) {
-                    file.delete()
-                }
-            }
-        }
-        return assetsJson
     }
 }
