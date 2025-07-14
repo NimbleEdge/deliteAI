@@ -22,12 +22,15 @@ if (propertiesFile.exists()) {
 
 android {
     signingConfigs {
-        externalRelease {
-            storeFile file(localProperties.getProperty('storeFile'))
-            storePassword localProperties.getProperty('storePassword')
-            keyPassword localProperties.getProperty('keyPassword')
-            keyAlias localProperties.getProperty('keyAlias')
-        }
+
+//        Uncomment for sample app release build:
+//
+//        externalRelease {
+//            storeFile file(localProperties.getProperty('storeFile'))
+//            storePassword localProperties.getProperty('storePassword')
+//            keyPassword localProperties.getProperty('keyPassword')
+//            keyAlias localProperties.getProperty('keyAlias')
+//        }
     }
 
     namespace 'dev.deliteai.android.sampleapp'
@@ -41,7 +44,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.externalRelease
+
         vectorDrawables {
             useSupportLibrary true
         }
@@ -53,7 +56,9 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.externalRelease
+//            Uncomment for sample app release build:
+//            signingConfig signingConfigs.externalRelease
+            
             minifyEnabled true
             shrinkResources true
             debuggable false

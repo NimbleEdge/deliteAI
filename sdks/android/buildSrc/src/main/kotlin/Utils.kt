@@ -28,7 +28,7 @@ fun Project.getLocalProperty(key: String): String {
     val propsFile = rootProject.file("local.properties")
     val props = Properties().apply { if (propsFile.exists()) load(propsFile.inputStream()) }
     return props.getProperty(key)
-        ?: throw GradleException("Missing local property: $key")
+        ?: ""
 }
 
 fun fetchLocalProperties(rootDir: File) =
