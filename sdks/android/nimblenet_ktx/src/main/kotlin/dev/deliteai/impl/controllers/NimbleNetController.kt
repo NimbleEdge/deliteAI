@@ -10,7 +10,6 @@ import android.app.Application
 import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import dev.deliteai.datamodels.NimbleNetConfig
-import dev.deliteai.datamodels.NimbleNetError
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
@@ -25,10 +24,10 @@ import dev.deliteai.impl.io.FileUtils
 import dev.deliteai.impl.loggers.RemoteLogger
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.concurrent.atomic.AtomicBoolean
 
 internal class NimbleNetController(
     private val application: Application,
@@ -46,29 +45,29 @@ internal class NimbleNetController(
     @Synchronized
     fun initialize(config: NimbleNetConfig, assetsJson: JSONArray? = null): NimbleNetResult<Unit> =
         runBlocking(deliteAiScope.secondary.coroutineContext) {
+            if (!config.online && assetsJson == null) throw Exception(
+                "assetsJson can't be null during offline mode"
+            )
+
             val result = NimbleNetResult<Unit>(payload = null)
             val storageInfo = fileUtils.getInternalStorageFolderSizes()
+            val sdkDir = fileUtils.getSDKDirPath()
 
             config.setInternalDeviceId(hardwareInfo.getInternalDeviceId())
             moduleInstaller.execute()
-            var modifiedAssetsJson = assetsJson
-            if (assetsJson != null) {
-                try {
-                    modifiedAssetsJson = fileUtils.processModules(application, assetsJson)
-                } catch (e: Exception) {
-                    return@runBlocking NimbleNetResult<Unit>(
-                        false,
-                        null,
-                        NimbleNetError(1, "Loading of modules failed with the error: " + e.message),
-                    )
-                }
-            }
+
+            //deep copy so that the user's assetsJson doesn't change
+            val modifiedAssetsJson = assetsJson
+                ?.let { JSONArray(it.toString()) }
+
+            //no-op during assetJson == null
+            fileUtils.copyAssetsAndUpdatePath(modifiedAssetsJson)
 
             coreRuntime.initializeNimbleNet(
                 application,
                 config.toString(),
                 modifiedAssetsJson,
-                fileUtils.getSDKDirPath(),
+                sdkDir,
                 result,
             )
 
