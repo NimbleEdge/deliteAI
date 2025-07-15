@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup docker and start mock server
         run: |
-          sudo apt install -y docker-ce docker-ce-cli
+          python3 coreruntime/tests/utils/download_from_s3.py --default_bucket deliteai --prefix build-dependencies/llama-3.2-1B/onnx --output mockserver/mockserver_assets/llama-3 --archive_output True
           cd mockserver
           docker compose up --build -d
 
