@@ -35,4 +35,3 @@ jobs:
         with:
           name: unit-test-report
           path: sdks/android/nimblenet_ktx/build/reports/tests/testExternalDebugUnitTest/
-          

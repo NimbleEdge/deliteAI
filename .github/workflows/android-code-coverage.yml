@@ -36,4 +36,3 @@ jobs:
           path: |
             sdks/android/nimblenet_ktx/build/reports/jacoco/externalDebug/html
             sdks/android/nimblenet_ktx/build/reports/jacoco/externalDebug/jacoco.xml
-            

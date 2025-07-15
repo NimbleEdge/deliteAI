@@ -26,4 +26,3 @@ jobs:
 
       - name: Run ktlint (lint test)
         run: cd sdks/android && ./gradlew ktfmtCheck --quiet
-        
