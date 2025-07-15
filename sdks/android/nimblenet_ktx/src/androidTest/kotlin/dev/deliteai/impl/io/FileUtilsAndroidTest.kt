@@ -124,7 +124,7 @@ class FileUtilsAndroidTest {
     }
 
     @Test
-    fun copyAssetsAndUpdatePathShouldCopyModelScriptAndDocument() {
+    fun copyAssetsAndUpdatePathShouldCopyFiles() {
         val assetsJsonStr = """
         [
             {
@@ -132,7 +132,7 @@ class FileUtilsAndroidTest {
                 "version": "1.0.0",
                 "type": "script",
                 "location": {
-                    "path": "misc/add_script.ast"
+                    "path": "fl1/f1"
                 }
             },
             {
@@ -140,15 +140,7 @@ class FileUtilsAndroidTest {
                 "version": "1.0.0",
                 "type": "model",
                 "location": {
-                    "path": "misc/add_two_model.onnx"
-                }
-            },
-            {
-                "name": "groceryItems",
-                "version": "1.0.0",
-                "type": "document",
-                "location": {
-                    "path": "retriever/grocery.json"
+                    "path": "fl1/f2"
                 }
             }
         ]
@@ -172,7 +164,7 @@ class FileUtilsAndroidTest {
     }
 
     @Test
-    fun copyAssetsAndUpdatePathShouldCopyNestedRetrieverAssets() {
+    fun copyAssetsAndUpdatePathShouldCopyNestedAssets() {
         val assetsJsonStr = """
         [
             {
@@ -180,7 +172,7 @@ class FileUtilsAndroidTest {
                 "version": "1.0.0",
                 "type": "script",
                 "location": {
-                    "path": "retriever/retriever.ast"
+                    "path": "fl1/f1"
                 }
             },
             {
@@ -189,19 +181,11 @@ class FileUtilsAndroidTest {
                 "type": "retriever",
                 "arguments": [
                     {
-                        "name": "embeddingModel",
-                        "version": "1.0.0",
-                        "type": "model",
-                        "location": {
-                            "path": "retriever/embedding_model.onnx"
-                        }
-                    },
-                    {
                         "name": "embeddingStoreModel",
                         "version": "1.0.0",
                         "type": "model",
                         "location": {
-                            "path": "retriever/embedding_store_model.onnx"
+                            "path": "fl2/f1"
                         }
                     },
                     {
@@ -209,7 +193,7 @@ class FileUtilsAndroidTest {
                         "version": "1.0.0",
                         "type": "document",
                         "location": {
-                            "path": "retriever/grocery.json"
+                            "path": "fl2/f2"
                         }
                     }
                 ]
@@ -242,23 +226,15 @@ class FileUtilsAndroidTest {
     }
 
     @Test
-    fun copyAssetsAndUpdatePathShouldCopyLLMFolderRecursively() {
+    fun copyAssetsAndUpdatePathShouldCopyFolderRecursively() {
         val assetsJsonStr = """
         [
-            {
-                "name": "workflow_script",
-                "version": "1.0.0",
-                "type": "script",
-                "location": {
-                    "path": "misc/add_script.ast"
-                }
-            },
             {
                 "name": "llama-3",
                 "version": "1.0.0",
                 "type": "llm",
                 "location": {
-                    "path": "llm"
+                    "path": "fl1"
                 }
             }
         ]
@@ -268,15 +244,8 @@ class FileUtilsAndroidTest {
 
         fileUtils.copyAssetsAndUpdatePath(assetsJson)
 
-        // Validate script asset copied
-        val scriptAsset = assetsJson.getJSONObject(0)
-        val scriptFilePath = scriptAsset.getJSONObject("location").getString("path")
-        val scriptFile = File(scriptFilePath)
-        assertTrue(scriptFile.isAbsolute)
-        assertTrue(scriptFile.exists())
-
         // Validate LLM folder copied recursively
-        val llmAsset = assetsJson.getJSONObject(1)
+        val llmAsset = assetsJson.getJSONObject(0)
         val llmPath = llmAsset.getJSONObject("location").getString("path")
         val llmDir = File(llmPath)
         assertTrue(llmDir.isAbsolute)
@@ -302,7 +271,7 @@ class FileUtilsAndroidTest {
             return paths
         }
 
-        val expectedFiles = collectAssetPaths("llm")
+        val expectedFiles = collectAssetPaths("fl1")
         assertTrue("LLM assets should not be empty", expectedFiles.isNotEmpty())
 
         expectedFiles.forEach { relativePath ->
@@ -320,7 +289,7 @@ class FileUtilsAndroidTest {
                 "version": "1.0.0",
                 "type": "script",
                 "location": {
-                    "path": "misc/add_script.ast"
+                    "path": "fl1/f1"
                 }
             }
         ]
