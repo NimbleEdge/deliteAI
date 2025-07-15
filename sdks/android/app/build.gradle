@@ -10,10 +10,6 @@ plugins {
     id "org.jetbrains.kotlin.plugin.compose"
 }
 
-def executedTask = gradle.startParameter.taskNames.toString()
-def localProps = new Properties()
-localProps.load(new FileInputStream(rootProject.file("local.properties")))
-
 Properties localProperties = new Properties()
 def propertiesFile = project.rootProject.file('local.properties')
 if (propertiesFile.exists()) {
@@ -22,12 +18,15 @@ if (propertiesFile.exists()) {
 
 android {
     signingConfigs {
-        externalRelease {
-            storeFile file(localProperties.getProperty('storeFile'))
-            storePassword localProperties.getProperty('storePassword')
-            keyPassword localProperties.getProperty('keyPassword')
-            keyAlias localProperties.getProperty('keyAlias')
-        }
+
+//        Uncomment for sample app release build:
+//
+//        externalRelease {
+//            storeFile file(localProperties.getProperty('storeFile'))
+//            storePassword localProperties.getProperty('storePassword')
+//            keyPassword localProperties.getProperty('keyPassword')
+//            keyAlias localProperties.getProperty('keyAlias')
+//        }
     }
 
     namespace 'dev.deliteai.android.sampleapp'
@@ -41,19 +40,21 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.externalRelease
+
         vectorDrawables {
             useSupportLibrary true
         }
 
-        buildConfigField "String", "APP_CLIENT_ID", "\"${localProps['APP_CLIENT_ID']}\""
-        buildConfigField "String", "APP_CLIENT_SECRET", "\"${localProps['APP_CLIENT_SECRET']}\""
-        buildConfigField "String", "APP_HOST", "\"${localProps['APP_HOST']}\""
+        buildConfigField "String", "APP_CLIENT_ID", "\"${localProperties['APP_CLIENT_ID']}\""
+        buildConfigField "String", "APP_CLIENT_SECRET", "\"${localProperties['APP_CLIENT_SECRET']}\""
+        buildConfigField "String", "APP_HOST", "\"${localProperties['APP_HOST']}\""
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.externalRelease
+//            Uncomment for sample app release build:
+//            signingConfig signingConfigs.externalRelease
+
             minifyEnabled true
             shrinkResources true
             debuggable false

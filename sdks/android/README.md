@@ -132,6 +132,13 @@ keyPassword=your_key_password
 keyAlias=your_key_alias
 ```
 
+#### 6. External Dependencies 
+
+Run the following command to download all the required dependencies:
+
+```bash
+cd $(git rev-parse --show-toplevel) && ./setup.sh --sdk android
+```
 ## Quick Start
 
 Follow these steps to get the sample application running in minutes.
