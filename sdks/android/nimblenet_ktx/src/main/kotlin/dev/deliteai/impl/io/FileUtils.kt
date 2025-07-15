@@ -12,12 +12,12 @@ import dev.deliteai.impl.common.SDK_CONSTANTS
 import dev.deliteai.impl.common.SDK_CONSTANTS.DELITE_ASSETS_TEMP_FILES_EXPIRY_IN_MILLIS
 import dev.deliteai.impl.common.SDK_CONSTANTS.DELITE_ASSETS_TEMP_STORAGE
 import dev.deliteai.impl.loggers.LocalLogger
-import org.json.JSONArray
-import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
+import org.json.JSONArray
+import org.json.JSONObject
 
 internal class FileUtils(
     private val application: Application,
@@ -60,9 +60,11 @@ internal class FileUtils(
 
     fun copyAssetsAndUpdatePath(assetsJson: JSONArray?) {
         if (assetsJson == null) return
-        val filesToRetain = mutableSetOf<File>()
+
         val targetDir = File(getSDKDirPath(), DELITE_ASSETS_TEMP_STORAGE)
             .apply { if (!exists()) mkdirs() }
+
+        val filesToRetain = mutableSetOf<File>()
 
         for (idx in 0 until assetsJson.length()) {
             val assetInfo = assetsJson.getJSONObject(idx)
@@ -85,7 +87,6 @@ internal class FileUtils(
                     copyAssetFile(assetPath, targetFile)
                 }
                 locationObject.put("path", targetFile.absolutePath)
-
             } else {
                 throw Exception("Both arguments & assetPath are null")
             }
@@ -116,13 +117,13 @@ internal class FileUtils(
         src: String,
         target: File
     ) {
-        if(!target.exists()) target.mkdirs()
+        if (!target.exists()) target.mkdirs()
 
         val children = assetManager.list(src) ?: return
         for (child in children) {
             val childAssetPath = if (src.isEmpty()) child else "$src/$child"
             val childTarget = File(target, child)
-            if (assetManager.list(childAssetPath)?.isNotEmpty() == true) {
+            if (isAssetDir(childAssetPath)) {
                 copyAssetFolderRecursively(childAssetPath, childTarget)
             } else {
                 copyAssetFile(childAssetPath, childTarget)
