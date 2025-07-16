@@ -30,8 +30,8 @@ import org.json.JSONObject
  * - [maxEventsSizeKBs]: Event data storage limit in kilobytes
  * - [cohortIds]: Array of cohort identifiers for A/B testing
  * - [showDownloadProgress]: Display download progress indicators for models in the notification bar
- * - [online]: Flag to control whether the SDK should connect to cloud to download assets
- *             or if the assets already bundled with the app
+ * - [online]: Flag to control whether the SDK should connect to cloud to download assets or if the
+ *   assets already bundled with the app
  *
  * ## Usage Examples
  *
@@ -62,18 +62,14 @@ import org.json.JSONObject
  * - Use [debug] = false in production for optimal performance
  *
  * @param clientId Unique client identifier provided by NimbleNet platform. Must be a non-empty
- *   string obtained from your NimbleNet account.
- *   Default: "" (empty string)
+ *   string obtained from your NimbleNet account. Default: "" (empty string)
  * @param clientSecret Authentication secret key for API access. Keep this value secure and never
- *   expose it in logs or client-side code.
- *   Default: "" (empty string)
+ *   expose it in logs or client-side code. Default: "" (empty string)
  * @param host The base URL of the NimbleNet platform API endpoint. Must be a valid HTTPS URL (e.g.,
- *   "https://api.nimblenet.ai").
- *   Default: "" (empty string)
+ *   "https://api.nimblenet.ai"). Default: "" (empty string)
  * @param deviceId Unique identifier for this device or application installation. Can be a UUID,
  *   device fingerprint, or custom identifier. Should remain consistent across app sessions for the
- *   same device.
- *   Default: "" (empty string)
+ *   same device. Default: "" (empty string)
  * @param debug Enable debug mode for detailed logging and diagnostics. Set to false in production
  *   builds for optimal performance. Default: false
  * @param initTimeOutInMs Maximum time in milliseconds to wait for SDK initialization. Default:
@@ -95,9 +91,8 @@ import org.json.JSONObject
  *   based on your app distribution and size requirements. Default: NIMBLENET_VARIANTS.STATIC
  * @param showDownloadProgress Whether to display progress indicators during model downloads.
  *   Default: false
- *  @param online Whether the assets will be downloaded from cloud or they are
- *   already bundled with the app
- *   Default: false
+ *     @param online Whether the assets will be downloaded from cloud or they are already bundled
+ *       with the app Default: false
  * @see NIMBLENET_VARIANTS
  * @see SDK_CONSTANTS
  * @since 1.0.0

@@ -6,10 +6,10 @@
 
 package dev.deliteai.impl.controllers
 
+import android.app.Application
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.impl.io.FileUtils
 import dev.deliteai.impl.nativeBridge.CoreRuntime
-import android.app.Application
 
 internal class InternalTaskController(
     private val application: Application,

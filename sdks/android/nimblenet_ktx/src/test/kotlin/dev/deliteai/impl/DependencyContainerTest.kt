@@ -6,6 +6,10 @@
 
 package dev.deliteai.impl
 
+import android.app.Application
+import android.app.DownloadManager
+import android.content.Context
+import android.content.SharedPreferences
 import dev.deliteai.impl.common.HardwareInfo
 import dev.deliteai.impl.controllers.InternalTaskController
 import dev.deliteai.impl.controllers.NimbleNetController
@@ -15,10 +19,6 @@ import dev.deliteai.impl.io.Networking
 import dev.deliteai.impl.loggers.LocalLogger
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.testUtils.nnConfig
-import android.app.Application
-import android.app.DownloadManager
-import android.content.Context
-import android.content.SharedPreferences
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk

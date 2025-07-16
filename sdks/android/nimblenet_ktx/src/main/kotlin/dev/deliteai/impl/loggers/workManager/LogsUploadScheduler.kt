@@ -6,9 +6,6 @@
 
 package dev.deliteai.impl.loggers.workManager
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.impl.common.WORK_MANAGER
-import dev.deliteai.impl.common.WORK_MANAGER.WM_LOGS_UPLOAD_PAYLOAD_ID
 import android.app.Application
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -18,6 +15,9 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.WORK_MANAGER
+import dev.deliteai.impl.common.WORK_MANAGER.WM_LOGS_UPLOAD_PAYLOAD_ID
 import java.util.concurrent.TimeUnit
 
 internal class LogsUploadScheduler(private val application: Application) {

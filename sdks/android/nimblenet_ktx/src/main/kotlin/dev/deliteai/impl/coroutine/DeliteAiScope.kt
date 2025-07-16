@@ -6,8 +6,8 @@
 
 package dev.deliteai.impl.coroutine
 
-import dev.deliteai.impl.common.SDK_CONSTANTS
 import androidx.annotation.VisibleForTesting
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
@@ -17,10 +17,7 @@ internal class DeliteAiScope {
     val primary =
         getScope("primaryDeliteAiScope", SDK_CONSTANTS.NUM_THREADS_FOR_PRIMARY_COROUTINE_SCOPE)
     val secondary =
-        getScope(
-            "secondaryDeliteAiScope",
-            SDK_CONSTANTS.NUM_THREADS_FOR_SECONDARY_COROUTINE_SCOPE,
-        )
+        getScope("secondaryDeliteAiScope", SDK_CONSTANTS.NUM_THREADS_FOR_SECONDARY_COROUTINE_SCOPE)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun getScope(name: String, numThreads: Int): CoroutineScope {

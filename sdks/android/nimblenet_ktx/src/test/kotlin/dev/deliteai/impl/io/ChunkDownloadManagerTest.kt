@@ -6,14 +6,14 @@
 
 package dev.deliteai.impl.io
 
-import dev.deliteai.impl.common.STATUS_CODES
-import dev.deliteai.impl.io.datamodels.DownloadManagerCursor
-import dev.deliteai.impl.io.datamodels.DownloadTask
-import dev.deliteai.impl.loggers.LocalLogger
 import android.app.Application
 import android.app.DownloadManager
 import android.database.Cursor
 import android.os.Environment
+import dev.deliteai.impl.common.STATUS_CODES
+import dev.deliteai.impl.io.datamodels.DownloadManagerCursor
+import dev.deliteai.impl.io.datamodels.DownloadTask
+import dev.deliteai.impl.loggers.LocalLogger
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot

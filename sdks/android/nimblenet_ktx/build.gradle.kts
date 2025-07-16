@@ -41,7 +41,7 @@ android {
                 "REMOTE_LOGGER_KEY",
                 "REMOTE_LOGGER_URL",
             ),
-            project
+            project,
         )
     }
 
@@ -68,11 +68,7 @@ android {
     }
 
     // Package androidTest assets into the app APK under test
-    sourceSets {
-        getByName("androidTest") {
-            assets.srcDir("src/androidTest/assets")
-        }
-    }
+    sourceSets { getByName("androidTest") { assets.srcDir("src/androidTest/assets") } }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -187,7 +183,7 @@ tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
             documentedVisibilities.set(
                 setOf(
                     org.jetbrains.dokka.DokkaConfiguration.Visibility.PUBLIC,
-                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED,
                 )
             )
 
@@ -212,7 +208,7 @@ tasks.named<DokkaTask>("dokkaGfm") {
             documentedVisibilities.set(
                 setOf(
                     org.jetbrains.dokka.DokkaConfiguration.Visibility.PUBLIC,
-                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED
+                    org.jetbrains.dokka.DokkaConfiguration.Visibility.PROTECTED,
                 )
             )
             perPackageOption {

@@ -6,11 +6,11 @@
 
 package dev.deliteai.impl.delitePy.proto.impl
 
+import com.google.protobuf.Descriptors
+import com.google.protobuf.Descriptors.FieldDescriptor.JavaType
 import dev.deliteai.impl.common.DATATYPE
 import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
 import dev.deliteai.impl.delitePy.proto.ProtoObject
-import com.google.protobuf.Descriptors
-import com.google.protobuf.Descriptors.FieldDescriptor.JavaType
 
 class ProtoPrimitiveWrapper(val value: Any?, override var modified: Boolean = false) :
     ProtoMemberExtender {

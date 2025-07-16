@@ -6,13 +6,13 @@
 
 package dev.deliteai
 
+import android.app.Application
 import dev.deliteai.impl.DependencyContainer
 import dev.deliteai.impl.common.MESSAGES
 import dev.deliteai.impl.controllers.NimbleNetController
 import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
 import dev.deliteai.impl.loggers.LocalLogger
 import dev.deliteai.testUtils.nnConfig
-import android.app.Application
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every

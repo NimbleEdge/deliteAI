@@ -6,6 +6,12 @@
 
 package dev.deliteai.impl.io
 
+import android.annotation.SuppressLint
+import android.app.Application
+import android.app.DownloadManager
+import android.net.Uri
+import android.os.Environment
+import androidx.annotation.VisibleForTesting
 import dev.deliteai.impl.common.ERROR_CODES.DM_UNABLE_TO_CREATE_REQUEST
 import dev.deliteai.impl.common.STATUS_CODES
 import dev.deliteai.impl.common.utils.jsonStringToHeaders
@@ -13,12 +19,6 @@ import dev.deliteai.impl.io.datamodels.DownloadManagerCursor
 import dev.deliteai.impl.io.datamodels.DownloadTask
 import dev.deliteai.impl.io.datamodels.FileDownloadStateTransition
 import dev.deliteai.impl.loggers.LocalLogger
-import android.annotation.SuppressLint
-import android.app.Application
-import android.app.DownloadManager
-import android.net.Uri
-import android.os.Environment
-import androidx.annotation.VisibleForTesting
 import java.io.File
 
 internal class ChunkDownloadManager(

@@ -11,9 +11,9 @@ import dev.deliteai.impl.common.ERROR_CODES
 /**
  * Represents error information for failed NimbleNet operations.
  *
- * This class encapsulates error details returned by the NimbleNet SDK when operations fail.
- * It provides both a numeric error code for programmatic handling and a human-readable
- * message for debugging and logging purposes.
+ * This class encapsulates error details returned by the NimbleNet SDK when operations fail. It
+ * provides both a numeric error code for programmatic handling and a human-readable message for
+ * debugging and logging purposes.
  *
  * ## Usage Example
  *
@@ -25,11 +25,9 @@ import dev.deliteai.impl.common.ERROR_CODES
  * }
  * ```
  *
- * @param code Numeric error code identifying the specific type of error.
- *            Defaults to [ERROR_CODES.KOTLIN_ERROR] if not specified.
- * @param message Human-readable description of the error.
- *               May be empty if not specified.
- *
+ * @param code Numeric error code identifying the specific type of error. Defaults to
+ *   [ERROR_CODES.KOTLIN_ERROR] if not specified.
+ * @param message Human-readable description of the error. May be empty if not specified.
  * @see ERROR_CODES
  * @see NimbleNetResult
  * @since 1.0.0
@@ -54,9 +52,9 @@ class NimbleNetError(var code: Int = ERROR_CODES.KOTLIN_ERROR, var message: Stri
 /**
  * Generic result wrapper for all NimbleNet SDK operations.
  *
- * This class provides a consistent way to handle both successful and failed operations
- * across the entire NimbleNet SDK. It encapsulates success status, payload data,
- * and error information in a single object.
+ * This class provides a consistent way to handle both successful and failed operations across the
+ * entire NimbleNet SDK. It encapsulates success status, payload data, and error information in a
+ * single object.
  *
  * ## Result States
  *
@@ -86,11 +84,10 @@ class NimbleNetError(var code: Int = ERROR_CODES.KOTLIN_ERROR, var message: Stri
  *
  * @param T The type of data contained in the payload when the operation succeeds
  * @param status Boolean indicating whether the operation succeeded (true) or failed (false).
- * @param payload The actual result data when the operation succeeds.
- *               Will be null for failed operations.
- * @param error Detailed error information when the operation fails.
- *             Will be null for successful operations.
- *
+ * @param payload The actual result data when the operation succeeds. Will be null for failed
+ *   operations.
+ * @param error Detailed error information when the operation fails. Will be null for successful
+ *   operations.
  * @see NimbleNetError
  * @since 1.0.0
  */

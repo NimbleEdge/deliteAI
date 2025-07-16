@@ -6,12 +6,12 @@
 
 package dev.deliteai.impl.io
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.impl.common.SDK_CONSTANTS
-import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import android.os.Environment
 import androidx.test.core.app.ApplicationProvider
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.SDK_CONSTANTS
+import dev.deliteai.testUtils.nnConfig
 import java.io.File
 import org.json.JSONArray
 import org.json.JSONObject
@@ -125,7 +125,8 @@ class FileUtilsAndroidTest {
 
     @Test
     fun copyAssetsAndUpdatePathShouldCopyFiles() {
-        val assetsJsonStr = """
+        val assetsJsonStr =
+            """
         [
             {
                 "name": "workflow_script",
@@ -144,7 +145,8 @@ class FileUtilsAndroidTest {
                 }
             }
         ]
-        """.trimIndent()
+        """
+                .trimIndent()
 
         val assetsJson = JSONArray(assetsJsonStr)
 
@@ -165,7 +167,8 @@ class FileUtilsAndroidTest {
 
     @Test
     fun copyAssetsAndUpdatePathShouldCopyNestedAssets() {
-        val assetsJsonStr = """
+        val assetsJsonStr =
+            """
         [
             {
                 "name": "workflow_script",
@@ -199,7 +202,8 @@ class FileUtilsAndroidTest {
                 ]
             }
         ]
-        """.trimIndent()
+        """
+                .trimIndent()
 
         val assetsJson = JSONArray(assetsJsonStr)
 
@@ -227,7 +231,8 @@ class FileUtilsAndroidTest {
 
     @Test
     fun copyAssetsAndUpdatePathShouldCopyFolderRecursively() {
-        val assetsJsonStr = """
+        val assetsJsonStr =
+            """
         [
             {
                 "name": "llama-3",
@@ -238,7 +243,8 @@ class FileUtilsAndroidTest {
                 }
             }
         ]
-        """.trimIndent()
+        """
+                .trimIndent()
 
         val assetsJson = JSONArray(assetsJsonStr)
 
@@ -282,7 +288,8 @@ class FileUtilsAndroidTest {
 
     @Test
     fun copyAssetsAndUpdatePathShouldNotOverwriteExistingFiles() {
-        val assetsJsonStr = """
+        val assetsJsonStr =
+            """
         [
             {
                 "name": "workflow_script",
@@ -293,16 +300,15 @@ class FileUtilsAndroidTest {
                 }
             }
         ]
-        """.trimIndent()
+        """
+                .trimIndent()
 
         val firstAssetsJson = JSONArray(assetsJsonStr)
 
         // First copy
         fileUtils.copyAssetsAndUpdatePath(firstAssetsJson)
 
-        val destPath = firstAssetsJson.getJSONObject(0)
-            .getJSONObject("location")
-            .getString("path")
+        val destPath = firstAssetsJson.getJSONObject(0).getJSONObject("location").getString("path")
 
         val destFile = File(destPath)
         assertTrue(destFile.exists())
@@ -316,9 +322,8 @@ class FileUtilsAndroidTest {
         val secondAssetsJson = JSONArray(assetsJsonStr)
         fileUtils.copyAssetsAndUpdatePath(secondAssetsJson)
 
-        val destPathSecond = secondAssetsJson.getJSONObject(0)
-            .getJSONObject("location")
-            .getString("path")
+        val destPathSecond =
+            secondAssetsJson.getJSONObject(0).getJSONObject("location").getString("path")
 
         val destFileSecond = File(destPathSecond)
         val lastModifiedSecond = destFileSecond.lastModified()

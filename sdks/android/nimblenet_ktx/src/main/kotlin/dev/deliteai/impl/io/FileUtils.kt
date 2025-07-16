@@ -27,26 +27,26 @@ internal class FileUtils(
 
     fun getInternalStorageFolderSizes(): String? =
         runCatching {
-            val parent = application.filesDir.resolve(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME)
-            val sizes = buildMap {
-                put(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME, parent.folderSize())
-                listOf("metrics", "logs").forEach { name ->
-                    put(name, parent.resolve(name).takeIf(File::exists)?.folderSize() ?: 0L)
+                val parent = application.filesDir.resolve(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME)
+                val sizes = buildMap {
+                    put(SDK_CONSTANTS.NIMBLE_SDK_FOLDER_NAME, parent.folderSize())
+                    listOf("metrics", "logs").forEach { name ->
+                        put(name, parent.resolve(name).takeIf(File::exists)?.folderSize() ?: 0L)
+                    }
                 }
+                JSONObject(sizes).toString()
             }
-            JSONObject(sizes).toString()
-        }
             .onFailure { localLogger.e(it) }
             .getOrNull()
 
     fun moveFile(source: File, dest: File): Boolean =
         runCatching {
-            source.inputStream().use { it.copyTo(dest.outputStream()) }
-            if (!source.delete()) {
-                localLogger.d("Failed to delete the source file")
+                source.inputStream().use { it.copyTo(dest.outputStream()) }
+                if (!source.delete()) {
+                    localLogger.d("Failed to delete the source file")
+                }
+                true
             }
-            true
-        }
             .onFailure { localLogger.e(it) }
             .getOrDefault(false)
 
@@ -61,8 +61,8 @@ internal class FileUtils(
     fun copyAssetsAndUpdatePath(assetsJson: JSONArray?) {
         if (assetsJson == null) return
 
-        val targetDir = File(getSDKDirPath(), DELITE_ASSETS_TEMP_STORAGE)
-            .apply { if (!exists()) mkdirs() }
+        val targetDir =
+            File(getSDKDirPath(), DELITE_ASSETS_TEMP_STORAGE).apply { if (!exists()) mkdirs() }
 
         val filesToRetain = mutableSetOf<File>()
 
@@ -95,8 +95,12 @@ internal class FileUtils(
         pruneStaleAssets(targetDir, filesToRetain)
     }
 
-    private fun constructTargetFile(targetDir: File, src: String, name: String, version: String):
-        File {
+    private fun constructTargetFile(
+        targetDir: File,
+        src: String,
+        name: String,
+        version: String,
+    ): File {
 
         val ext = File(src).extension
         val filename = "${name}_${version}" + if (ext.isNotBlank()) ".$ext" else ""
@@ -106,17 +110,12 @@ internal class FileUtils(
     private fun copyAssetFile(src: String, target: File) {
         if (!target.exists()) {
             assetManager.open(src).use { input ->
-                FileOutputStream(target).use { output ->
-                    input.copyTo(output)
-                }
+                FileOutputStream(target).use { output -> input.copyTo(output) }
             }
         }
     }
 
-    private fun copyAssetFolderRecursively(
-        src: String,
-        target: File
-    ) {
+    private fun copyAssetFolderRecursively(src: String, target: File) {
         if (!target.exists()) target.mkdirs()
 
         val children = assetManager.list(src) ?: return

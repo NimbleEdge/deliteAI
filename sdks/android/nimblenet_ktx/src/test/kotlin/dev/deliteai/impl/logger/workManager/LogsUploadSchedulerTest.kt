@@ -6,11 +6,6 @@
 
 package dev.deliteai.impl.logger.workManager
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.impl.common.WORK_MANAGER
-import dev.deliteai.impl.loggers.LocalLogger
-import dev.deliteai.impl.loggers.workManager.LogsUploadScheduler
-import dev.deliteai.impl.loggers.workManager.LogsUploadWorker
 import android.app.Application
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -18,6 +13,11 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.common.WORK_MANAGER
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.impl.loggers.workManager.LogsUploadScheduler
+import dev.deliteai.impl.loggers.workManager.LogsUploadWorker
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
