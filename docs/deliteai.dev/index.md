@@ -43,7 +43,7 @@ Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it al
 
 ## Documentation
 
-[Coming Soon]
+Explore our documentation at [deliteai.dev](https://deliteai.dev)
 
 ## Community engagement
 
