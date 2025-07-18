@@ -24,6 +24,7 @@ pip3 install -r requirements.txt
 ### Build Coreruntime
 Navigate to `$GIT_ROOT/coreruntime` and run:
 ```sh
+export GIT_ROOT=$(git rev-parse --show-toplevel)
 python3 build.py
 ```
 This will compile an executable `build/nimble_client/nimble_client` from `main.cpp`.
