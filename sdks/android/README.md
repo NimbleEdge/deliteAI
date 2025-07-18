@@ -3,20 +3,19 @@
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://www.android.com)
 [![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)](https://kotlinlang.org)
 
-*A powerful On-Device Android SDK for creating real-time AI-powered experiences natively integrated in your applications.*
-
+_A powerful On-Device Android SDK for creating real-time AI-powered experiences natively integrated in your applications._
 
 ## Table of Contents
 
-- [Android Project Overview](#android-project-overview)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Integrating DeliteAI Android SDK into your App](#integrating-deliteai-android-sdk-into-your-app)
-- [Configuration](#configuration)
-- [Integration Example](#integration-example)
-- [Detailed Documentation](#detailed-documentation)
-- [Running Tests](#running-tests)
-- [API Reference](#api-reference)
+-   [Android Project Overview](#android-project-overview)
+-   [Prerequisites](#prerequisites)
+-   [Quick Start](#quick-start)
+-   [Integrating DeliteAI Android SDK into your App](#integrating-deliteai-android-sdk-into-your-app)
+-   [Configuration](#configuration)
+-   [Integration Example](#integration-example)
+-   [Detailed Documentation](#detailed-documentation)
+-   [Running Tests](#running-tests)
+-   [API Reference](#api-reference)
 
 ## Android Project Overview
 
@@ -36,65 +35,78 @@ sdks/android/
 ### Modules
 
 #### 1. `buildSrc`
+
 Contains centralized Gradle dependencies, versions, and build tasks shared across all modules. This ensures consistent dependency management and build configuration.
 
 #### 2. `nimblenet_ktx`
+
 The primary Kotlin SDK module that developers interact with. It provides:
-- High-level Kotlin APIs for AI model execution
-- Event tracking and analytics
-- Configuration management
-- Coroutine-based asynchronous operations
+
+-   High-level Kotlin APIs for AI model execution
+-   Event tracking and analytics
+-   Configuration management
+-   Coroutine-based asynchronous operations
 
 #### 3. `nimblenet_core`
+
 The native bridge module that contains:
-- JNI bindings to the C++ core runtime
-- Native library management
-- Performance-critical operations
-- Symlinked core runtime components
+
+-   JNI bindings to the C++ core runtime
+-   Native library management
+-   Performance-critical operations
+-   Symlinked core runtime components
 
 #### 4. `benchmarking`
+
 Performance measurement tools including:
-- Python scripts for SDK benchmarking
-- Memory usage analysis
-- Latency measurement utilities
+
+-   Python scripts for SDK benchmarking
+-   Memory usage analysis
+-   Latency measurement utilities
 
 ### Build Flavors
 
 The SDK supports two build flavors to accommodate different use cases:
 
 #### 1. `External` (Release)
-- Standard production-ready build
-- Optimized for performance and size
-- Contains all essential LLM and AI capabilities
-- Recommended for production applications
+
+-   Standard production-ready build
+-   Optimized for performance and size
+-   Contains all essential LLM and AI capabilities
+-   Recommended for production applications
 
 #### 2. `Internal` (Debug)
-- Extended debugging capabilities over External flavor
-- Development utilities (database reset, cache management)
+
+-   Extended debugging capabilities over External flavor
+-   Development utilities (database reset, cache management)
 
 ## Prerequisites
 
 Before you begin, ensure your development environment meets the following requirements:
 
 #### 1. Android Studio
-- **Version**: Arctic Fox (2020.3.1) or later
-- **Gradle**: 7.4 or later
-- **Build Tools**: 33.0.0 or later
+
+-   **Version**: Arctic Fox (2020.3.1) or later
+-   **Gradle**: 7.4 or later
+-   **Build Tools**: 33.0.0 or later
 
 #### 2. Java Development Kit (JDK)
-- **Version**: JDK 11 or later
-- Ensure `JAVA_HOME` environment variable is properly set
+
+-   **Version**: JDK 11 or later
+-   Ensure `JAVA_HOME` environment variable is properly set
 
 #### 3. Android Debug Bridge (ADB)
-- Required for device testing and debugging
-- Usually installed with Android SDK Platform Tools
-- Verify installation: `adb version`
+
+-   Required for device testing and debugging
+-   Usually installed with Android SDK Platform Tools
+-   Verify installation: `adb version`
 
 #### 4. Device Requirements
-- **Minimum API Level**: 21 (Android 5.0)
-- **Architecture**: ARM64 (arm64-v8a) recommended
-- **RAM**: 4GB minimum, 8GB recommended
-- **Storage**: 2GB free space for models and cache
+
+-   **Minimum API Level**: 21 (Android 5.0)
+-   **Architecture**: ARM64 (arm64-v8a) recommended
+-   **RAM**: 4GB minimum, 8GB recommended
+-   **Storage**: 2GB free space for models and cache
 
 #### 5. Project Configuration
 
@@ -132,13 +144,14 @@ keyPassword=your_key_password
 keyAlias=your_key_alias
 ```
 
-#### 6. External Dependencies 
+#### 6. External Dependencies
 
 Run the following command to download all the required dependencies:
 
 ```bash
 cd $(git rev-parse --show-toplevel) && ./setup.sh --sdk android
 ```
+
 ## Quick Start
 
 Follow these steps to get the sample application running in minutes.
@@ -146,12 +159,14 @@ Follow these steps to get the sample application running in minutes.
 ### Run Sample Application
 
 #### Using Android Studio
+
 1. Open `deliteAI/sdks/android` in Android Studio
 2. Wait for Gradle sync to complete
 3. Select the `app` module
 4. Click **Run** or press `Ctrl+R` (Windows/Linux) / `Cmd+R` (Mac)
 
 #### Using Command Line
+
 ```bash
 cd deliteAI/sdks/android
 
@@ -193,20 +208,20 @@ The SDK's native behavior is controlled by `deliteAI/config.yml`.
 
 ```yaml
 common:
-  sdk_version: "1.0.0"
-  cmake_args: "-DONNX_EXECUTOR=1 -DONNXGENAI_EXECUTOR=1 -DCMAKE_BUILD_TYPE=Release -DSCRIPTING=1"
+    sdk_version: "1.0.0"
+    cmake_args: "-DONNX_EXECUTOR=1 -DONNXGENAI_EXECUTOR=1 -DCMAKE_BUILD_TYPE=Release -DSCRIPTING=1"
 
 android:
-  ndk: "25.1.8937393"
-  cmake_args: "-DANDROID_STL=c++_shared -DEXECUTORCH_EXECUTOR=0 -DONNXBuild=1_21_0_full"
+    ndk: "25.1.8937393"
+    cmake_args: "-DANDROID_STL=c++_shared -DEXECUTORCH_EXECUTOR=0 -DONNXBuild=1_21_0_full"
 ```
 
 #### Configuration Options
 
-- **sdk_version**: Defines the SDK version for release builds.
-- **common.cmake_args**: Common CMake arguments applied across all platforms (Android, iOS).
-- **android.cmake_args**: Additional CMake arguments applied only to the Android build.
-- **android.ndk**: Specifies the Android NDK version used for native C++ compilation.
+-   **sdk_version**: Defines the SDK version for release builds.
+-   **common.cmake_args**: Common CMake arguments applied across all platforms (Android, iOS).
+-   **android.cmake_args**: Additional CMake arguments applied only to the Android build.
+-   **android.ndk**: Specifies the Android NDK version used for native C++ compilation.
 
 (TODO: replace with working link) For a complete list of supported flags, refer to our [Core Runtime Documentation](../../coreruntime/README.md).
 
@@ -225,10 +240,10 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         initializeNimbleNet()
     }
-    
+
     private fun initializeNimbleNet() {
         val onlineConfig = NimbleNetConfig(
             clientId = "your-client-id",
@@ -239,9 +254,9 @@ class MainActivity : AppCompatActivity() {
             libraryVariant = NIMBLENET_VARIANTS.STATIC,
             online = true
         )
-        
+
         val offlineConfig = NimbleNetConfig(online = false)
-        
+
         // To initialize the SDK in offline mode place script and model in the assets folder and create the corresponding config
         // To get started there are some sample scripts and models placed in mockserverAssets
         val assetsJsonStr = """
@@ -263,16 +278,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
           ]"""
-        
+
         val assetsJson = JSONArray(assetsJsonStr)
 
         CoroutineScope(Dispatchers.Default).launch {
             // To initialize SDK in online mode
             val result = NimbleNet.initialize(applicationContext, onlineConfig)
-            
+
             // To initialize SDK in offline mode
             // val result = NimbleNet.initialize(applicationContext, onlineConfig, assetsJson)
-            
+
             if (result.status) {
                 Log.d("NimbleNet", "SDK initialized successfully")
                 // SDK is ready, you can now track events or run models
@@ -290,7 +305,7 @@ class MainActivity : AppCompatActivity() {
 ```kotlin
 private fun checkSDKReadiness() {
     val readyStatus = NimbleNet.isReady()
-    
+
     if (readyStatus.status) {
         Log.d("NimbleNet", "SDK is ready for use")
         // Safe to call other NimbleNet methods
@@ -362,7 +377,7 @@ private fun getPersonalizedRecommendations() {
             if (result.status) {
                 val outputs = result.data!!
                 val recommendations = outputs["recommended_items"]?.data as? Array<Int>
-                
+
                 Log.d("NimbleNet", "Recommendations: ${recommendations?.joinToString()}")
                 // Update UI with new recommendations
             } else {
@@ -395,9 +410,10 @@ Run instrumented tests on a connected device or emulator:
 ```
 
 **Prerequisites for Android Tests:**
-- Connected Android device or running emulator
-- Device meets the minimum requirements listed in [Prerequisites](#-prerequisites)
-- Proper configuration in `local.properties`
+
+-   Connected Android device or running emulator
+-   Device meets the minimum requirements listed in [Prerequisites](#prerequisites)
+-   Proper configuration in `local.properties`
 
 ## API Reference
 
