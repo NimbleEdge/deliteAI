@@ -37,7 +37,7 @@ on mobile devices.
 
 ### Extensibility
 - Easy integration of custom Python operators
-- Flexible runtime support (ONNX or ExecuTorch)
+- Flexible runtime support ([ONNX](https://onnx.ai/) or ExecuTorch)
 
 ## Getting Started
 To get started you can:
