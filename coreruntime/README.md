@@ -26,7 +26,7 @@ Navigate to `$GIT_ROOT/coreruntime` and run:
 ```sh
 python3 build.py
 ```
-This will compile an executable `build/nimbleclient` from `main.cpp`.
+This will compile an executable `build/nimble_client/nimble_client` from `main.cpp`.
 
 ### Build python SDK
 Pre-requisite:
