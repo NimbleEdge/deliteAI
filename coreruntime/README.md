@@ -22,7 +22,6 @@ pip3 install -r requirements.txt
 ## Build Instructions
 
 ### Build Coreruntime
-
 Navigate to `$GIT_ROOT/coreruntime` and run:
 ```sh
 export GIT_ROOT=$(git rev-parse --show-toplevel)
