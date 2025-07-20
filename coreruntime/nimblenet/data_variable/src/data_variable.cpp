@@ -103,6 +103,13 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"clear_context", MemberFuncType::CLEAR_CONTEXT},
     {"add_context", MemberFuncType::ADD_CONTEXT},
     {"list_compatible_llms", MemberFuncType::LIST_COMPATIBLE_LLMS},
+    {"from_pretrained", MemberFuncType::TOKENIZERS_FROM_PRETRAINED},
+    {"from_file", MemberFuncType::TOKENIZERS_FROM_FILE},
+    {"from_json", MemberFuncType::TOKENIZERS_FROM_JSON},
+    {"from_sentencepiece", MemberFuncType::TOKENIZERS_FROM_SENTENCEPIECE},
+    {"encode", MemberFuncType::TOKENIZERS_ENCODE},
+    {"decode", MemberFuncType::TOKENIZERS_DECODE},
+    {"get_vocab_size", MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE},
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -191,6 +198,13 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::CLEAR_CONTEXT, "clear_context"},
     {MemberFuncType::ADD_CONTEXT, "add_context"},
     {MemberFuncType::LIST_COMPATIBLE_LLMS, "list_compatible_llms"},
+    {MemberFuncType::TOKENIZERS_FROM_PRETRAINED, "from_pretrained"},
+    {MemberFuncType::TOKENIZERS_FROM_FILE, "from_file"},
+    {MemberFuncType::TOKENIZERS_FROM_JSON, "from_json"},
+    {MemberFuncType::TOKENIZERS_FROM_SENTENCEPIECE, "from_sentencepiece"},
+    {MemberFuncType::TOKENIZERS_ENCODE, "encode"},
+    {MemberFuncType::TOKENIZERS_DECODE, "decode"},
+    {MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE, "get_vocab_size"},
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {

@@ -121,5 +121,7 @@ OpReturnType ResourceLoader::load_asset(std::shared_ptr<Asset> asset,
     case AssetType::LLM:
       return load_llm(asset);
 #endif  // GENAI
+    default:
+      return nullptr;
   }
 }

@@ -191,8 +191,8 @@ def get_current_time(timezone: str = "UTC") -> dict:
 @tool
 def get_current_location() -> dict:
     """
-    Get the real location and timezone of the user. The user has given permission to share his location via this tool. 
-    Use this function when the user didn't provide an explicit location. Default to his location
+    Get the real location and timezone of the user. You don't need to ask the user for permission to use this tool. 
+    Use this function when the user didn't provide an explicit location. Default to this location
     """
     return {
         "location": "Tokyo",

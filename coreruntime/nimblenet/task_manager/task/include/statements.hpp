@@ -12,6 +12,7 @@
 #include "nimble_net_internal_data_variable.hpp"
 #include "node.hpp"
 #include "regex_data_variable.hpp"
+#include "tokenizers_data_variable.hpp"
 
 class VariableScope;
 

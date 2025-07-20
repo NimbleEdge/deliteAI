@@ -51,7 +51,7 @@ def main():
         if "-DCMAKE_BUILD_TYPE=Release" in cmake_args:
             STRIP = 1
 
-    CMAKE_CXX_FLAGS = ""
+    CMAKE_CXX_FLAGS = "-Wno-unused-member-function -Wno-implicit-fallthrough "
     if args.testing:
         cmake_args += " -DTESTING=1 "
 
@@ -61,16 +61,20 @@ def main():
     COMMON_FLAGS = (
         f"-B{os.getcwd()}/build/ "
         f"{cmake_args} "
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5 "
+        "-DCMAKE_CXX_FLAGS_RELEASE='-Wno-unused-function -Wno-implicit-fallthrough -DNDEBUG -O3' "
+        "-DCMAKE_CXX_FLAGS_DEBUG='-Wno-unused-function -Wno-implicit-fallthrough -g' "
     )
 
     # Determine compiler settings based on architecture
     if arch == "arm":
         cmake_command = f"cmake CMakeLists.txt {COMMON_FLAGS} -DCMAKE_CXX_COMPILER=g++ -DMACOS=1 -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_CXX_FLAGS='{CMAKE_CXX_FLAGS}'"
     elif arch == "x86_64":
-        CMAKE_CXX_FLAGS += " -stdlib=libstdc++ "
+        # Replace clang-specific flags with g++ compatible ones
+        CMAKE_CXX_FLAGS = CMAKE_CXX_FLAGS.replace("-Wno-unused-member-function", "-Wno-unused-function")
         cmake_command = (
             f"cmake CMakeLists.txt {COMMON_FLAGS} "
-            f"-DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS='{CMAKE_CXX_FLAGS}'"
+            f"-DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_FLAGS='{CMAKE_CXX_FLAGS}'"
         )
     else:
         cmake_command = f"cmake CMakeLists.txt {COMMON_FLAGS} -DMACOS=1"

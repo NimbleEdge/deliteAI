@@ -262,9 +262,9 @@ TaskONNXModel::TaskONNXModel(const std::string& plan, const std::string& version
   Ort::ThrowOnError(ortApi.GetAllocatorWithDefaultOptions(&_allocator));
 
   initialize_model();
-  if (_runDummyInference) {
-    run_dummy_inference();
-  }
+  // if (_runDummyInference) {
+  //   run_dummy_inference();
+  // }
 }
 
 void TaskONNXModel::run_dummy_inference() {

@@ -403,6 +403,9 @@ StatRetType* ImportStatement::execute(CallStack& stack) {
         stack.set_variable(stackLocation, OpReturnType(new RegexDataVariable()));
       }
 #endif
+      else if (importName == "tokenizers") {
+        stack.set_variable(stackLocation, OpReturnType(new TokenizersDataVariable()));
+      }
       else {
         THROW("Cannot import=%s from module=%s at lineno=%d", importName.c_str(),
               moduleName.c_str(), get_line());

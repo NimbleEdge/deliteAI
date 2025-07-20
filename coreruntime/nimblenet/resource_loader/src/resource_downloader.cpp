@@ -63,6 +63,8 @@ InternetJob<Location>::Status ResourceDownloader::enqueue_download_asset(
     case FileDownloadStatus::DOWNLOAD_FAILURE:
     case FileDownloadStatus::DOWNLOAD_UNKNOWN:
       return InternetJob<Location>::Status::RETRY;
+    default:
+      return InternetJob<Location>::Status::RETRY;
   }
 };
 
@@ -96,5 +98,7 @@ std::optional<Location> ResourceDownloader::get_asset_offline(std::shared_ptr<As
       return {};
     }
 #endif  // GENAI
+    default:
+      return {};
   }
 }
