@@ -22,6 +22,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        //Init for notification summarizer must happen from the Application class
         val res = initializeAgent(applicationContext as Application)
         Log.i("TOP-LEVEL", "onCreate: $res")
     }
@@ -30,7 +31,7 @@ class App : Application() {
         return@runBlocking runCatching {
             val config = NotificationSummarizerConfig(
                 onScheduledSummaryReady = { notificationSummary ->
-                    Log.i(HOST_TAG, "initializeAgent: $notificationSummary")
+                    Log.i("AGENTS-EXAMPLE", "initializeAgent: $notificationSummary")
                 }
             )
 
