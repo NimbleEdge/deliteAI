@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+default: true
+extends: null
+
+line-length:
+  line_length: 100
+  code_block_line_length: 100

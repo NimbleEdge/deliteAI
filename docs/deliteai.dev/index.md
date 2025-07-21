@@ -4,7 +4,7 @@
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
-across multiple platforms and devices.
+on mobile devices.
 
 ## Key Features
 
@@ -29,25 +29,29 @@ across multiple platforms and devices.
 ### Extensibility
 
 - Easy integration of custom Python operators
-- Flexible runtime support ([ONNX](https://onnx.ai/) or ExecuTorch)
+- Flexible runtime support ([ONNX](https://onnx.ai/) or [ExecuTorch](https://docs.pytorch.org/executorch-overview))
 
 ## Getting Started
 
 To get started, you can:
 
-- Follow the steps in [coreruntime](https://github.com/NimbleEdge/deliteAI/blob/main/coreruntime/README.md) to build and test the core C++ SDK with Python bindings
-- Build and try out the [Android](https://github.com/NimbleEdge/deliteAI/blob/main/sdks/android/README.md) and [iOS](https://github.com/NimbleEdge/deliteAI/blob/main/sdks/ios/README.md) SDK and sample app
-- Explore the available agents in the [agents](https://github.com/NimbleEdge/deliteAI/blob/main/agents) directory.
+- Follow the steps in [coreruntime](https://github.com/NimbleEdge/deliteAI/blob/main/coreruntime/README.md)
+  to build and test the core C++ SDK along with its Python bindings
+- Build and try out the [Android](https://github.com/NimbleEdge/deliteAI/blob/main/sdks/android/README.md)
+  and [iOS](https://github.com/NimbleEdge/deliteAI/blob/main/sdks/ios/README.md) SDK and sample app
+- Explore the available agents in the [agents](https://github.com/NimbleEdge/deliteAI/blob/main/agents)
+  directory.
 
 Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it all in action.
 
 ## Documentation
 
-Explore our documentation at [deliteai.dev](https://deliteai.dev)
+Explore our documentation at [deliteai.dev](https://deliteai.dev/).
 
 ## Community engagement
 
-We welcome any feedback or suggestions - please join our [Discord](https://discord.gg/y8WkMncstk) to engage with the community.
+We welcome any feedback or suggestions - please join our
+[Discord](https://discord.gg/y8WkMncstk) to engage with the community.
 
 ## Contributing
 
@@ -58,11 +62,13 @@ We welcome contributions from the community! Whether you're interested in:
 - Improving documentation
 - Reporting bugs or suggesting features
 
-Please read our [Contributing Guidelines](https://github.com/NimbleEdge/deliteAI/blob/main/CONTRIBUTING.md) to get started.
+Please read our [Contributing Guidelines](https://github.com/NimbleEdge/deliteAI/blob/main/CONTRIBUTING.md)
+to get started.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/NimbleEdge/deliteAI/blob/main/LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/NimbleEdge/deliteAI/blob/main/LICENSE)
+file for details.
 
 ```{toctree}
 :maxdepth: 1

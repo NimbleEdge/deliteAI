@@ -1,3 +1,4 @@
+<!-- markdownlint-disable first-line-h1 no-inline-html -->
 <div align="center">
   <h1 align="center">DeliteAI</h1>
   <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="200">
@@ -5,14 +6,21 @@
 </div>
 
 <div align="center">
-  <a href="https://discord.gg/y8WkMncstk"><img src="https://img.shields.io/badge/Discord-Join%20Us-purple?logo=discord&logoColor=white&style=for-the-badge"
-alt="Join us on Discord"></a>
-  <a href="https://github.com/NimbleEdge/assistant"><img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
-alt="Try out fully on-device AI Assistant"></a>
-  <a href="https://deliteai.dev"><img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=FFE599&style=for-the-badge" alt="Check out DeliteAI  documentation"></a>
-
+  <a href="https://discord.gg/y8WkMncstk">
+    <img src="https://img.shields.io/badge/Discord-Join%20Us-purple?logo=discord&logoColor=white&style=for-the-badge"
+         alt="Join us on Discord">
+  </a>
+  <a href="https://github.com/NimbleEdge/assistant">
+    <img src="https://img.shields.io/badge/Explore-AI Assistant-blue?style=for-the-badge"
+         alt="Try out fully on-device AI Assistant">
+  </a>
+  <a href="https://deliteai.dev/">
+    <img src="https://img.shields.io/badge/Documentation-000?logo=googledocs&logoColor=FFE599&style=for-the-badge"
+         alt="Check out DeliteAI documentation">
+  </a>
   <hr>
 </div>
+<!-- markdownlint-enable first-line-h1 no-inline-html -->
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
@@ -21,43 +29,53 @@ on mobile devices.
 ## Key Features
 
 ### Developer Productivity
+
 - Unified and simplified APIs for seamless AI agents integration in Android/iOS applications
 - Python interface for orchestrating complex AI agentic workflows via tool calling, memory and LLMs on-device
 - Streamlined development process for both new and existing applications
 
 ### Portability & Small Form Factor
+
 - Cross-platform compatibility across operating systems
 - Support for various compute platforms and runtimes
 - Abstracted development layer for the fragmented device landscape
 - Optimized for resource-constrained environments with efficient CPU/memory usage
 
 ### Security & Privacy
+
 - Privacy-first approach with on-device processing
 - Hardware-accelerated model execution
 
 ### Extensibility
+
 - Easy integration of custom Python operators
 - Flexible runtime support ([ONNX](https://onnx.ai/) or [ExecuTorch](https://docs.pytorch.org/executorch-overview))
 
 ## Getting Started
-To get started you can:
-- Follow the steps in [coreruntime](coreruntime/README.md) to build and test the core C++ SDK with Python bindings
-- Build and try out the [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) SDK and sample app
+
+To get started, you can:
+
+- Follow the steps in [coreruntime](coreruntime/README.md) to build and test the core C++ SDK along
+  with its Python bindings
+- Build and try out the [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) SDK and
+  sample app
 - Explore the available agents in the [agents](agents) directory.
 
-Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it
-all in action.
+Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it all in action.
 
 ## Documentation
-Explore our documentation at [deliteai.dev](https://deliteai.dev)
+
+Explore our documentation at [deliteai.dev](https://deliteai.dev/).
 
 ## Community engagement
+
 We welcome any feedback or suggestions - please join our
 [Discord](https://discord.gg/y8WkMncstk) to engage with the community.
 
 ## Contributing
 
 We welcome contributions from the community! Whether you're interested in:
+
 - Adding new Python operators
 - Enhancing runtime support
 - Improving documentation
