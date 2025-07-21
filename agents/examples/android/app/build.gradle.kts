@@ -20,14 +20,15 @@ if (propertiesFile.exists()) {
 }
 
 android {
-    signingConfigs {
-        create("release") {
-            storeFile = file(localProperties["storeFile"] as String)
-            storePassword = localProperties["storePassword"] as String
-            keyPassword = localProperties["keyPassword"] as String
-            keyAlias = localProperties["keyAlias"] as String
-        }
-    }
+//    TODO: uncomment when building for release
+//    signingConfigs {
+//        create("release") {
+//            storeFile = file(localProperties["storeFile"] as String)
+//            storePassword = localProperties["storePassword"] as String
+//            keyPassword = localProperties["keyPassword"] as String
+//            keyAlias = localProperties["keyAlias"] as String
+//        }
+//    }
     lint {
         disable += "NullSafeMutableLiveData"
     }
@@ -42,6 +43,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Resolve NimbleNet external flavor for missing dimension
+        missingDimensionStrategy("default", "external")
     }
 
     buildTypes {
@@ -51,7 +55,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+//            TODO: uncomment when building for release
+//            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

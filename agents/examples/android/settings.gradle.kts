@@ -22,6 +22,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
+    }
+}
+
+// Include the SDK as a composite build
+includeBuild("../../../sdks/android") {
+    dependencySubstitution {
+        substitute(module("dev.deliteai:nimblenet_ktx")).using(project(":nimblenet_ktx"))
+        substitute(module("dev.deliteai:nimblenet_core")).using(project(":nimblenet_core"))
     }
 }
 

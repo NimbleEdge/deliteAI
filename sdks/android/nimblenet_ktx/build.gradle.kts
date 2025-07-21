@@ -218,3 +218,6 @@ tasks.named<DokkaTask>("dokkaGfm") {
         }
     }
 }
+
+// Set the Maven group ID so that composite build substitution matches coordinates
+group = "dev.deliteai"

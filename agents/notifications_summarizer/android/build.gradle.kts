@@ -19,6 +19,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // Choose external flavor of NimbleNet when variant ambiguity arises
+        missingDimensionStrategy("default", "external")
     }
 
     buildTypes {
@@ -28,6 +31,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            matchingFallbacks += "externalRelease"
+        }
+        debug {
+            matchingFallbacks += "externalRelease"
         }
     }
     compileOptions {
@@ -41,7 +48,7 @@ android {
 
 dependencies {
     val roomVersion = "2.6.1"
-    
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -50,8 +57,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    api("dev.deliteai:nimblenet_ktx:5.0.0-dev")
-    api("dev.deliteai:nimblenet_core:5.0.0-dev")
+    api("dev.deliteai:nimblenet_ktx:+")
+    api("dev.deliteai:nimblenet_core:+")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
