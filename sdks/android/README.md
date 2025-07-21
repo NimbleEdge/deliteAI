@@ -396,7 +396,7 @@ Run instrumented tests on a connected device or emulator:
 
 **Prerequisites for Android Tests:**
 - Connected Android device or running emulator
-- Device meets the minimum requirements listed in [Prerequisites](#-prerequisites)
+- Device meets the minimum requirements listed in [Prerequisites](#prerequisites)
 - Proper configuration in `local.properties`
 
 ## API Reference

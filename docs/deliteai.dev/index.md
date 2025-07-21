@@ -29,7 +29,7 @@ across multiple platforms and devices.
 ### Extensibility
 
 - Easy integration of custom Python operators
-- Flexible runtime support (ONNX or ExecuTorch)
+- Flexible runtime support ([ONNX](https://onnx.ai/) or ExecuTorch)
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it al
 
 ## Documentation
 
-[Coming Soon]
+Explore our documentation at [deliteai.dev](https://deliteai.dev)
 
 ## Community engagement
 
@@ -88,7 +88,7 @@ DL_SDKS_DIR/android/README.md
 
 coreruntime <https://github.com/NimbleEdge/deliteAI/blob/main/coreruntime/README.md>
 iOS <DL_SDKS_DIR/ios/docs/DEVELOPMENT.md>
-Android (TBD) <DL_SDKS_DIR/android/README.md>
+Android <DL_SDKS_DIR/android/README.md>
 ```
 
 ```{toctree}
