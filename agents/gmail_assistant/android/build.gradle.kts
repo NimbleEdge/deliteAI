@@ -53,17 +53,17 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    api("androidx.room:room-runtime:$roomVersion")
-    api("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     api("dev.deliteai:nimblenet_ktx:0.1.0-dev")
     api("dev.deliteai:nimblenet_core:0.1.0-dev")
 
-    api("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     api("com.google.api-client:google-api-client-android:1.34.0")
     api("com.google.apis:google-api-services-gmail:v1-rev110-1.25.0")
-    api("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
