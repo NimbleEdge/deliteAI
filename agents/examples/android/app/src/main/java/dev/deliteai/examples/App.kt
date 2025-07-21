@@ -10,7 +10,7 @@ import dev.deliteai.NimbleNet
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.notifications_summarizer.NotificationsSummarizerAgent
 import dev.deliteai.notifications_summarizer.dataModels.NotificationSummarizerConfig
-import dev.deliteai.utils.NIMBLENET_VARIANTS
+import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import android.app.Application
 import android.util.Log
 import kotlinx.coroutines.delay
