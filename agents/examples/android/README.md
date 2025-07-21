@@ -10,16 +10,36 @@ Example Android app demonstrating the Notifications Summarizer Agent integration
 
 ## Setup
 
-1. **Add Credentials in Code**
-   Open `app/src/main/java/dev/deliteai/examples/App.kt` and replace the placeholder values in the `NimbleNetConfig` block (`YOUR_CLIENT_ID`, `YOUR_HOST`, `YOUR_CLIENT_SECRET`) with your own credentials.
+1. **Run the following commands**
 
-2. **Open in Android Studio**
+   **Change to repo root**
+   ```bash
+   cd "$(git rev-parse --show-toplevel)"
+   ```
+
+2. **Download Llama ONNX assets**
+   ```bash
+   python3 coreruntime/tests/utils/download_from_s3.py \
+     --default_bucket deliteai \
+     --prefix build-dependencies/llama-3.2-1B/onnx \
+     --output agents/examples/android/app/src/main/assets/llama-3 \
+     --archive_output True
+   ```
+
+3. **Generate Python AST and move it into your Android assets**
+   ```bash
+   python3 coreruntime/scripts/gen_python_ast.py \
+     agents/notifications_summarizer/delitepyAssets/main.py \
+     && mv "${_%.py}.ast" agents/examples/android/app/src/main/assets/
+   ```
+
+4. **Open in Android Studio**
    ```bash
    cd deliteAI/agents/examples/android
    ```
    Open this directory in Android Studio.
 
-3. **Sync and Build**
+5. **Sync and Build**  
    Let Gradle sync, then build the project.
 
 ## Running the App

@@ -5,7 +5,7 @@ hardware_info = nm.get_hardware_info()
 num_cores = int(hardware_info["numCores"])
 nm.set_xnnpack_num_threads(int(num_cores / 2 + 1))
 
-llm = nm.llm("llama-3")
+llm = nm.llm({"name": "llama-3"})
 
 # System / user prompts
 SYSTEM_PROMPT_BEGIN = "<|start_header_id|>system<|end_header_id|>"
