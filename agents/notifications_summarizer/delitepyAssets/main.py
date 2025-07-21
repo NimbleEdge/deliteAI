@@ -159,3 +159,4 @@ def summarize_notification(inp):
     except Exception as e:
         print("Error processing notifications:", e)
         return {"output": "Error: " + str(e)}
+
