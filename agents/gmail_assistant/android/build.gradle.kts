@@ -57,8 +57,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    api("dev.deliteai:nimblenet_ktx:0.1.0-dev")
-    api("dev.deliteai:nimblenet_core:0.1.0-dev")
+    api("dev.deliteai:nimblenet_ktx:+")
+    api("dev.deliteai:nimblenet_core:+")
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     api("com.google.api-client:google-api-client-android:1.34.0")

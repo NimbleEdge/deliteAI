@@ -48,7 +48,7 @@ android {
 
 dependencies {
     val roomVersion = "2.6.1"
-    
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -57,8 +57,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    api("dev.deliteai:nimblenet_ktx:0.1.0-dev")
-    api("dev.deliteai:nimblenet_core:0.1.0-dev")
+    api("dev.deliteai:nimblenet_ktx:+")
+    api("dev.deliteai:nimblenet_core:+")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
