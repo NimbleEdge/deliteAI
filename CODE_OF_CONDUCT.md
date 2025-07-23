@@ -1,3 +1,9 @@
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+```{eval-rst}
+:orphan:
+```
+DL_DOCS::WEBSITE_BLOCK_END -->
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge

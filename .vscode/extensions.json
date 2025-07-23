@@ -1,6 +1,9 @@
 {
     "recommendations": [
         "editorconfig.editorconfig",
-        "davidanson.vscode-markdownlint"
+        "davidanson.vscode-markdownlint",
+        "charliermarsh.ruff",
+        "executablebookproject.myst-highlight",
+        "github.vscode-github-actions"
     ]
 }
