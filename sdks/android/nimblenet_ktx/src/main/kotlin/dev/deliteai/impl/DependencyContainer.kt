@@ -6,6 +6,11 @@
 
 package dev.deliteai.impl
 
+import android.app.Application
+import android.app.DownloadManager
+import android.content.Context
+import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.impl.common.HardwareInfo
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
@@ -25,11 +30,6 @@ import dev.deliteai.impl.moduleInstallers.impl.GoogleDynamicModuleInstaller
 import dev.deliteai.impl.moduleInstallers.impl.StaticModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
 import dev.deliteai.impl.nativeBridge.impl.CoreRuntimeImpl
-import android.app.Application
-import android.app.DownloadManager
-import android.content.Context
-import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import okhttp3.OkHttpClient
 
 internal class DependencyContainer

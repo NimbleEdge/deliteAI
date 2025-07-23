@@ -6,10 +6,10 @@
 
 package dev.deliteai.impl.loggers
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.testUtils.nnConfig
 import org.json.JSONObject
 import org.junit.Assert.assertTrue
 import org.junit.Before

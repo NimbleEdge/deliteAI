@@ -8,7 +8,6 @@ package dev.deliteai
 
 import android.app.Application
 import dev.deliteai.datamodels.NimbleNetConfig
-import dev.deliteai.datamodels.NimbleNetError
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.datamodels.NimbleNetTensor
 import dev.deliteai.datamodels.UserEventData
@@ -80,9 +79,8 @@ object NimbleNet {
     /**
      * Initializes the NimbleNet SDK with the provided configuration.
      *
-     * This method must be called before any other NimbleNet operations.
-     * After calling this method, use [isReady] to check when the SDK is
-     * fully initialized and ready for model execution.
+     * This method must be called before any other NimbleNet operations. After calling this method,
+     * use [isReady] to check when the SDK is fully initialized and ready for model execution.
      *
      * ## Example
      *
@@ -143,11 +141,9 @@ object NimbleNet {
      *
      * @param application The Android application context
      * @param config The configuration object containing client credentials and settings
-     * @param assetsJson The assets configuration to initialize the SDK when assets such as
-     *  the workflow script, models etc are bundled with the app
-     *
+     * @param assetsJson The assets configuration to initialize the SDK when assets such as the
+     *   workflow script, models etc are bundled with the app
      * @return [NimbleNetResult]<[Unit]> indicating success or failure
-     *
      * @see isReady
      * @see NimbleNetConfig
      * @since 1.0.0
@@ -161,28 +157,9 @@ object NimbleNet {
         controller = container.getNimbleNetController()
         localLogger = container.getLocalLogger()
 
-        // TODO: Move this logic to NimbleNetController
-        // Pass deliteAssets only if online flag is false, else pass it on as null
-        return if (config.online) {
-            runCatching { controller.initialize(config, null) }
-                .onFailure(localLogger::e)
-                .getOrElse { it.toNimbleNetResult() }
-        } else {
-            if (assetsJson == null) {
-                return NimbleNetResult<Unit>(
-                    false,
-                    null,
-                    NimbleNetError(
-                        code = -1,
-                        message =
-                            "deliteAssets cannot be null in case NimbleNetConfig has online flag set to false.",
-                    ),
-                )
-            }
-            runCatching { controller.initialize(config, assetsJson) }
-                .onFailure(localLogger::e)
-                .getOrElse { it.toNimbleNetResult() }
-        }
+        return runCatching { controller.initialize(config, assetsJson) }
+            .onFailure(localLogger::e)
+            .getOrElse { it.toNimbleNetResult() }
     }
 
     /**
@@ -205,9 +182,7 @@ object NimbleNet {
      *
      * @param eventMap A map containing the event data
      * @param eventType A string identifier for the type of event
-     *
      * @return [NimbleNetResult]<[UserEventData]> with event processing results
-     *
      * @since 1.0.0
      */
     fun addEvent(eventMap: Map<String, Any>, eventType: String): NimbleNetResult<UserEventData> =
@@ -234,9 +209,7 @@ object NimbleNet {
      *
      * @param serializedEventMap A JSON string representing the event data
      * @param eventType A string identifier for the type of event
-     *
      * @return [NimbleNetResult]<[UserEventData]> with event processing results
-     *
      * @since 1.0.0
      */
     fun addEvent(serializedEventMap: String, eventType: String): NimbleNetResult<UserEventData> =
@@ -256,9 +229,7 @@ object NimbleNet {
      *
      * @param protoEvent A [ProtoObjectWrapper] containing the Protocol Buffer message
      * @param eventType A string identifier for the type of event
-     *
      * @return [NimbleNetResult]<[UserEventData]> with event processing results
-     *
      * @see ProtoObjectWrapper
      * @since 1.0.0
      */
@@ -270,8 +241,8 @@ object NimbleNet {
     /**
      * Executes a function from a workflow script written in Python.
      *
-     * The workflow script is either uploaded via the NimbleNet dashboard or loaded
-     * offline using the offline initialization capabilities.
+     * The workflow script is either uploaded via the NimbleNet dashboard or loaded offline using
+     * the offline initialization capabilities.
      *
      * ## Example
      *
@@ -299,9 +270,7 @@ object NimbleNet {
      *
      * @param methodName The name of the Python function to execute from the workflow script
      * @param inputs A map of input tensors. Can be null for functions that don't require inputs.
-     *
      * @return [NimbleNetResult]<[HashMap]<[String], [NimbleNetTensor]>> with function outputs
-     *
      * @see NimbleNetTensor
      * @since 1.0.0
      */
@@ -328,7 +297,6 @@ object NimbleNet {
      * ```
      *
      * @return [NimbleNetResult]<[Unit]> indicating if SDK is ready
-     *
      * @see initialize
      * @since 1.0.0
      */
@@ -341,9 +309,9 @@ object NimbleNet {
      */
     fun restartSession() {
         runCatching {
-            checkInit()
-            controller.restartSession("")
-        }
+                checkInit()
+                controller.restartSession("")
+            }
             .onFailure(localLogger::e)
     }
 
@@ -351,36 +319,31 @@ object NimbleNet {
      * Restarts the session with a specific session identifier.
      *
      * @param sessionId A unique identifier for the new session
-     *
      * @since 1.0.0
      */
     fun restartSessionWithId(sessionId: String) {
         runCatching {
-            checkInit()
-            controller.restartSession(sessionId)
-        }
+                checkInit()
+                controller.restartSession(sessionId)
+            }
             .onFailure(localLogger::e)
     }
 
-    /**
-     * Validates that the SDK has been properly initialized.
-     */
+    /** Validates that the SDK has been properly initialized. */
     private fun checkInit() {
         if (!this::controller.isInitialized || !controller.isNimbleNetInitialized()) {
             throw IllegalStateException(MESSAGES.SDK_NOT_INITIALIZED)
         }
     }
 
-    /**
-     * Executes a block of code with proper error handling and initialization checks.
-     */
+    /** Executes a block of code with proper error handling and initialization checks. */
     private inline fun <T> safeCall(
         crossinline block: () -> NimbleNetResult<T>
     ): NimbleNetResult<T> =
         runCatching {
-            checkInit()
-            block()
-        }
+                checkInit()
+                block()
+            }
             .onFailure(localLogger::e)
             .getOrElse { it.toNimbleNetResult() }
 }

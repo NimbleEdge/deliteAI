@@ -6,9 +6,9 @@
 
 package dev.deliteai
 
+import android.app.Application
 import dev.deliteai.datamodels.NimbleNetResult
 import dev.deliteai.impl.DependencyContainer
-import android.app.Application
 import dev.deliteai.impl.controllers.InternalTaskController
 
 object NimbleNetInternal {

@@ -6,6 +6,10 @@
 
 package dev.deliteai.impl.logger.workManager
 
+import android.app.Application
+import androidx.work.Data
+import androidx.work.ListenableWorker.Result
+import androidx.work.WorkerParameters
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.impl.DependencyContainer
 import dev.deliteai.impl.common.WORK_MANAGER.WM_LOGS_UPLOAD_PAYLOAD_ID
@@ -13,10 +17,6 @@ import dev.deliteai.impl.controllers.InternalTaskController
 import dev.deliteai.impl.loggers.workManager.LogsUploadWorker
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.testUtils.nnConfig
-import android.app.Application
-import androidx.work.Data
-import androidx.work.ListenableWorker.Result
-import androidx.work.WorkerParameters
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery

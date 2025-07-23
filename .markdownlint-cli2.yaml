@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# https://github.com/DavidAnson/markdownlint-cli2
+
+config:
+  extends: ./.markdownlint.yaml
+
+gitignore: true

@@ -6,13 +6,13 @@
 
 package dev.deliteai.impl.delitePy.proto.impl
 
-import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
-import dev.deliteai.impl.delitePy.proto.ProtoObject
 import com.google.protobuf.Descriptors
 import com.google.protobuf.Descriptors.FieldDescriptor
 import com.google.protobuf.Message
 import com.google.protobuf.MessageOrBuilder
 import com.google.protobuf.util.JsonFormat
+import dev.deliteai.impl.delitePy.proto.ProtoMemberExtender
+import dev.deliteai.impl.delitePy.proto.ProtoObject
 import java.util.concurrent.ConcurrentHashMap
 
 class ProtoObjectWrapper(

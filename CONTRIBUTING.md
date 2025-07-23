@@ -1,6 +1,7 @@
 # Contributing to DeliteAI
 
-Thank you for your interest in contributing to DeliteAI! This document provides guidelines and instructions for contributing to this project.
+Thank you for your interest in contributing to DeliteAI! This document provides guidelines and
+instructions for contributing to this project.
 
 ## Development Workflow
 
@@ -16,6 +17,7 @@ We follow a fork and pull request workflow for all contributions. Here's how it 
 1. **Fork the Repository**
    - Click the "Fork" button on the top right of the repository page
    - Clone your fork locally:
+
      ```bash
      git clone https://github.com/YOUR-USERNAME/deliteAI.git
      cd deliteAI
@@ -23,6 +25,7 @@ We follow a fork and pull request workflow for all contributions. Here's how it 
 
 2. **Create a Branch**
    - Create a new branch for your changes:
+
      ```bash
      git checkout -b feature/your-feature-name
      ```
@@ -39,18 +42,22 @@ We follow a fork and pull request workflow for all contributions. Here's how it 
 
 ## Developer Certificate of Origin (DCO)
 
-This project requires all contributors to sign off on their commits. This is done through the Developer Certificate of Origin (DCO). The DCO is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project.
+This project requires all contributors to sign off on their commits. This is done through the
+Developer Certificate of Origin (DCO). The DCO is a lightweight way for contributors to certify that
+they wrote or otherwise have the right to submit the code they are contributing to the project.
 
 ### How to Sign Off
 
-Each commit message must include a Signed-off-by line with your name and email address. You can add this automatically using the `-s` flag when committing:
+Each commit message must include a Signed-off-by line with your name and email address. You can add
+this automatically using the `-s` flag when committing:
 
 ```bash
 git commit -s -m "Your commit message"
 ```
 
 The sign-off line should look like this:
-```
+
+```text
 Signed-off-by: Your Name <your.email@example.com>
 ```
 
@@ -77,6 +84,7 @@ For more information about the DCO, please visit [DCO App Documentation](https:/
 ## Getting Help
 
 If you need help or have questions:
+
 - Open an issue
 - Join our community discussions
 - Reach out to the maintainers

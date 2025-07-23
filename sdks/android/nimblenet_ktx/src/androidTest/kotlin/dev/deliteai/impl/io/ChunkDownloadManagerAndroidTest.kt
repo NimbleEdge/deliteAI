@@ -6,15 +6,15 @@
 
 package dev.deliteai.impl.io
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.impl.loggers.LocalLogger
-import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
 import android.os.Environment
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.testUtils.nnConfig
 import java.io.File
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

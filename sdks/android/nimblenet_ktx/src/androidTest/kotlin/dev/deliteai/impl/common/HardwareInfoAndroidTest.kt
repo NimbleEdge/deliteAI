@@ -6,13 +6,13 @@
 
 package dev.deliteai.impl.common
 
-import dev.deliteai.impl.DependencyContainer
-import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.deliteai.impl.DependencyContainer
+import dev.deliteai.testUtils.nnConfig
 import io.mockk.MockKAnnotations
 import org.json.JSONObject
 import org.junit.Assert.assertNotNull

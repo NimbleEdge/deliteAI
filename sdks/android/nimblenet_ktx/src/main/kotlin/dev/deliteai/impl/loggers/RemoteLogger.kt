@@ -6,12 +6,11 @@
 
 package dev.deliteai.impl.loggers
 
+import android.annotation.SuppressLint
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.impl.common.HardwareInfo
-import dev.deliteai.impl.common.SDK_CONSTANTS
 import dev.deliteai.impl.io.Networking
 import dev.deliteai.impl.nativeBridge.CoreRuntime
-import android.annotation.SuppressLint
 import dev.deliteai.nimblenet_ktx.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.Collections

@@ -3,10 +3,13 @@ name: nimblenet_ktx code coverage
 on:
   pull_request_review:
     types: [submitted]
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-test:
-    if: ${{ github.event.review.state == 'approved' }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

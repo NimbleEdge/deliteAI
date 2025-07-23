@@ -6,8 +6,8 @@
 
 package dev.deliteai.impl.coroutine
 
-import dev.deliteai.impl.common.SDK_CONSTANTS
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import dev.deliteai.impl.common.SDK_CONSTANTS
 import java.util.concurrent.ThreadPoolExecutor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExecutorCoroutineDispatcher

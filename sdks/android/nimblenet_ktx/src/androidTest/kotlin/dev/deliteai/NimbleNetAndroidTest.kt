@@ -6,12 +6,12 @@
 
 package dev.deliteai
 
-import dev.deliteai.datamodels.NimbleNetTensor
-import dev.deliteai.impl.common.DATATYPE
-import dev.deliteai.testUtils.nnConfig
 import android.app.Application
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.impl.common.DATATYPE
+import dev.deliteai.testUtils.nnConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.json.JSONArray

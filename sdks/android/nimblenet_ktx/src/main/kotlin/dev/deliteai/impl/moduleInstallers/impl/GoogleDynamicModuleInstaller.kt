@@ -6,6 +6,11 @@
 
 package dev.deliteai.impl.moduleInstallers.impl
 
+import android.os.SystemClock
+import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.google.android.play.core.splitinstall.SplitInstallRequest
+import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import dev.deliteai.impl.common.METRIC_TYPE
 import dev.deliteai.impl.common.SDK_CONSTANTS
 import dev.deliteai.impl.common.SHARED_PREFERENCES
@@ -14,11 +19,6 @@ import dev.deliteai.impl.io.AppPreferencesStore
 import dev.deliteai.impl.loggers.LocalLogger
 import dev.deliteai.impl.loggers.RemoteLogger
 import dev.deliteai.impl.moduleInstallers.ModuleInstaller
-import android.os.SystemClock
-import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.google.android.play.core.splitinstall.SplitInstallRequest
-import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
-import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 
 internal class GoogleDynamicModuleInstaller(
     private val splitInstallManager: SplitInstallManager,

@@ -6,8 +6,8 @@
 
 package dev.deliteai.impl.loggers
 
-import dev.deliteai.impl.common.SDK_CONSTANTS
 import android.util.Log
+import dev.deliteai.impl.common.SDK_CONSTANTS
 
 internal class LocalLogger {
     fun d(msg: String) {

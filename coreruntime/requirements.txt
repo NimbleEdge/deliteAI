@@ -9,4 +9,5 @@ cibuildwheel==2.17.0
 pytest
 psutil==6.1.0
 boto3==1.35.99
+pybind11[global]==2.13.5
 -r delitepy/requirements.txt

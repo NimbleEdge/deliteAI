@@ -1,5 +1,6 @@
 **/build/
-.vscode/
+.vscode/*
+!/.vscode/extensions.json
 .DS_Store
 third_party/runtime/
 !third_party/runtime/CMakeLists.txt

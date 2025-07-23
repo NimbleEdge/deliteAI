@@ -6,6 +6,8 @@
 
 package dev.deliteai.impl.io
 
+import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
 import dev.deliteai.impl.common.STATUS_CODES
 import dev.deliteai.impl.common.utils.jsonStringToHeaders
 import dev.deliteai.impl.io.datamodels.FileDownloadStateTransition
@@ -13,8 +15,6 @@ import dev.deliteai.impl.io.datamodels.NetworkResponse
 import dev.deliteai.impl.io.datamodels.emptyNetworkResponse
 import dev.deliteai.impl.io.datamodels.toNetworkResponse
 import dev.deliteai.impl.loggers.LocalLogger
-import android.annotation.SuppressLint
-import androidx.annotation.VisibleForTesting
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.delay
 import okhttp3.Headers

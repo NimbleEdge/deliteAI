@@ -6,9 +6,6 @@
 
 package dev.deliteai.impl.common
 
-import dev.deliteai.impl.common.utils.EnvironmentDelegate
-import dev.deliteai.impl.loggers.LocalLogger
-import dev.deliteai.testUtils.Reflection
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
@@ -21,6 +18,9 @@ import android.system.Os
 import android.system.OsConstants
 import android.telephony.TelephonyManager
 import androidx.core.content.ContextCompat
+import dev.deliteai.impl.common.utils.EnvironmentDelegate
+import dev.deliteai.impl.loggers.LocalLogger
+import dev.deliteai.testUtils.Reflection
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.every

@@ -1,13 +1,16 @@
 name: Run Android Instrumentation Tests on Linux
 
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request_target:
+    types: [labeled, synchronize]
 
 jobs:
   test:
-    if: github.event.review.state == 'approved'
+    if: contains(github.event.pull_request.labels.*.name, 'ready-for-test')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       matrix:
         api-level: [31]
@@ -15,10 +18,13 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup docker and start mock server
         run: |
-          sudo apt install -y docker-ce docker-ce-cli
+          python3 coreruntime/tests/utils/download_from_s3.py --default_bucket deliteai --prefix build-dependencies/llama-3.2-1B/onnx --output mockserver/mockserver_assets/llama-3 --archive_output True
           cd mockserver
           docker compose up --build -d
 
@@ -55,6 +61,20 @@ jobs:
           cores: 4
           script: echo "Generated AVD snapshot for caching."
 
+      - name: Download external dependencies
+        run: ./setup.sh --sdk android
+
+      - name: Configure Android test secrets
+        env:
+          ANDROID_TEST_CLIENT_ID: ${{ secrets.ANDROID_TEST_CLIENT_ID }}
+          ANDROID_TEST_CLIENT_SECRET: ${{ secrets.ANDROID_TEST_CLIENT_SECRET }}
+          ANDROID_TEST_HOST: ${{ secrets.ANDROID_TEST_HOST }}
+        run: |
+          echo '#nimbleNetConfig:androidTest' > sdks/android/local.properties
+          echo "ANDROID_TEST_CLIENT_ID=$ANDROID_TEST_CLIENT_ID" >> sdks/android/local.properties
+          echo "ANDROID_TEST_CLIENT_SECRET=$ANDROID_TEST_CLIENT_SECRET" >> sdks/android/local.properties
+          echo "ANDROID_TEST_HOST=$ANDROID_TEST_HOST" >> sdks/android/local.properties
+
       - name: Run tests
         timeout-minutes: 60
         uses: reactivecircus/android-emulator-runner@v2
@@ -68,15 +88,19 @@ jobs:
           disable-animations: true
           cores: 4
           script: |
+            # Fail fast on any command error and ensure cleanup of crashpad_handler.
+            set -e
+            trap "killall -INT crashpad_handler || true" EXIT
+
             ./gradlew clean assembleExternalDebug
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkInIdealNetworkConditions && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkAfterInitialServerFailure && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldNeverWorkAfterThreeServerFailure && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onServerFailuresAssetDownloadShouldExactlyTryThreeTimes && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onSuccessCodeSDKShouldNotMakeExtraNetworkCalls && killall -INT crashpad_handler || true
-            ./gradlew :nimblenet_ktx:connectedExternalDebugAndroidTest && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoTest && killall -INT crashpad_handler || true
-            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoAddEventTest && killall -INT crashpad_handler || true
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkInIdealNetworkConditions
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldWorkAfterInitialServerFailure
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#assetDownloadShouldNeverWorkAfterThreeServerFailure
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onServerFailuresAssetDownloadShouldExactlyTryThreeTimes
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.e2e.E2ENetworkingAndroidTest#onSuccessCodeSDKShouldNotMakeExtraNetworkCalls
+            ./gradlew :nimblenet_ktx:connectedExternalDebugAndroidTest
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoTest
+            ./gradlew :app:connectedExternalDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=dev.deliteai.android.sampleapp.proto.ProtoAddEventTest
 
       - name: Upload Test Reports (Failure Only)
         if: failure()

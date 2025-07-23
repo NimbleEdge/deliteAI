@@ -1,17 +1,15 @@
 name: Kotlin Lint Test
 
 on:
+  pull_request_review:
+    types: [submitted]
   push:
-    paths:
-      - '**/*.kt'
-      - '**/*.kts'
-  pull_request:
-    paths:
-      - '**/*.kt'
-      - '**/*.kts'
+    branches:
+      - main
 
 jobs:
   ktlint-lint:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
     name: Run ktlintCheck
     runs-on: ubuntu-latest
 

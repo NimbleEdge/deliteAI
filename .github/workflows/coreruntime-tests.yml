@@ -1,0 +1,30 @@
+name: Run coreruntime tests
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  build:
+    if: github.event.review.state == 'approved'
+    name: Run coreruntime unit tests on pull request
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-env
+
+    - name: Install Gtest
+      run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp lib/*.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+
+    - name: Build nimbletest
+      working-directory: coreruntime
+      run: ./build.py --testing
+
+    - name: Run nimbletest
+      working-directory: coreruntime/build
+      run: ./nimbletest

@@ -6,6 +6,9 @@
 
 package dev.deliteai.impl.delitePy.proto
 
+import com.google.protobuf.Descriptors
+import com.google.protobuf.MessageOrBuilder
+import com.google.protobuf.util.JsonFormat.TypeRegistry
 import dev.deliteai.impl.common.DATATYPE
 import dev.deliteai.impl.delitePy.proto.impl.ProtoAnyWrapper
 import dev.deliteai.impl.delitePy.proto.impl.ProtoListWrapper
@@ -13,9 +16,6 @@ import dev.deliteai.impl.delitePy.proto.impl.ProtoMapWrapper
 import dev.deliteai.impl.delitePy.proto.impl.ProtoNullWrapper
 import dev.deliteai.impl.delitePy.proto.impl.ProtoObjectWrapper
 import dev.deliteai.impl.delitePy.proto.impl.ProtoPrimitiveWrapper
-import com.google.protobuf.Descriptors
-import com.google.protobuf.MessageOrBuilder
-import com.google.protobuf.util.JsonFormat.TypeRegistry
 import org.json.JSONArray
 import org.json.JSONObject
 

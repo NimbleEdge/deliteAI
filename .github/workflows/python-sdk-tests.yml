@@ -1,0 +1,27 @@
+name: Run Python SDK tests
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  build:
+    if: github.event.review.state == 'approved'
+    name: Run Python SDK unit tests on pull request
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup test environment
+      uses: ./.github/actions/setup-test-env
+
+    - name: Build Python SDK
+      working-directory: coreruntime
+      run: ./build.py --simulator
+
+    - name: Run Python SDK tests
+      working-directory: nimblenet_py/simulation_tests
+      run: python3 -m pytest

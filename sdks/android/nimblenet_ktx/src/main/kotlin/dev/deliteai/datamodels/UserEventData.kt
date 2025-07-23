@@ -9,9 +9,8 @@ package dev.deliteai.datamodels
 /**
  * Data container for user event information returned by the NimbleNet SDK.
  *
- * This data class encapsulates information about events that have been
- * processed by the NimbleNet platform. It contains the event type and
- * the serialized event data.
+ * This data class encapsulates information about events that have been processed by the NimbleNet
+ * platform. It contains the event type and the serialized event data.
  *
  * ## Usage Example
  *
@@ -34,7 +33,6 @@ package dev.deliteai.datamodels
  *
  * @param eventType The classification or category of the recorded event.
  * @param eventJsonString The serialized JSON representation of the event data.
- *
  * @see NimbleNet.addEvent
  * @see NimbleNetResult
  * @since 1.0.0

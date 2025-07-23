@@ -1,0 +1,46 @@
+name: Setup test environment
+description: Sets up the environment for testing
+runs:
+  using: composite
+  steps:
+    - name: Setup CMake
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: '3.18.x'
+        useLocalCache: true
+
+    - name: Setup libstdc++, zlib, curl
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install libstdc++6
+        sudo ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/libstdc++.so
+        sudo apt-get install zlib1g-dev
+        sudo apt-get install libstdc++-12-dev
+        sudo apt-get install libcurl4-openssl-dev
+        sudo apt-get install curl
+        sudo ln -s /usr/lib/x86_64-linux-gnu/libcurl.so.4 /usr/lib/libcurl.so
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    - name: Install Python dependencies
+      working-directory: coreruntime
+      shell: bash
+      run: python3 -m pip install -r requirements.txt
+
+    - name: Install pre-requisites for mock server
+      shell: bash
+      run: |
+        python3 coreruntime/tests/utils/download_from_s3.py --default_bucket deliteai --prefix build-dependencies/llama-3.2-1B/onnx --output mockserver/mockserver_assets/llama-3 --archive_output True
+
+    - name: Setup external libs
+      shell: bash
+      run: ./setup.sh --sdk python
+
+    - name: Start mock server
+      working-directory: mockserver
+      shell: bash
+      run: docker compose up --build -d
