@@ -165,7 +165,7 @@ class BaseBinOp {
  * Ensures the result has the same sign as the divisor when possible.
  */
 template <typename T,
-          typename = std::enable_if_t<ne::is_one_of_v<T, float, int32_t, double, int64_t>>>
+          typename = std::enable_if_t<ne::is_one_of_v<T, float, int32_t, double, int64_t, uint16_t>>>
 struct ModOperator {
   /**
    * @brief Computes modulo operation with proper sign handling
@@ -187,10 +187,10 @@ struct ModOperator {
  * @brief Template class for numeric binary operations
  *
  * Provides implementations of all binary operations (add, sub, mult, div, pow, mod)
- * for numeric types (float, int32_t, double, int64_t).
+ * for numeric types (float, int32_t, double, int64_t, uint16_t).
  */
 template <typename T,
-          typename = std::enable_if_t<ne::is_one_of_v<T, float, int32_t, double, int64_t>>>
+          typename = std::enable_if_t<ne::is_one_of_v<T, float, int32_t, double, int64_t, uint16_t>>>
 class NumericBinOp : public BaseBinOp {
  public:
   /** @brief Adds two numeric values */
@@ -301,6 +301,10 @@ class BinaryOperators {
       switch (returnType) {
         case DATATYPE::FLOAT: {
           NumericBinOp<float> n;
+          return n.perform_operation(v1, v2, opType);
+        }
+        case DATATYPE::FLOAT16: {
+          NumericBinOp<uint16_t> n;
           return n.perform_operation(v1, v2, opType);
         }
         case DATATYPE::INT32: {

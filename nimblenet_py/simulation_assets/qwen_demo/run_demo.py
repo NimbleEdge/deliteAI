@@ -14,11 +14,12 @@ def main():
     print("=== Running Qwen Demo ===")
     print("This demo shows Qwen model and tool calling capabilities\n")
 
+    base_dir = "../../../models/Qwen3-1.7B/data"
     model_name = "qwen3-1.7b"
-    vocab_file = "./qwen/vocab.json"
-    merges_file = "./qwen/merges.txt"
-    config_file = "./qwen/config.json"
-    tokenizer_config_file = "./qwen/tokenizer.json"
+    vocab_file = base_dir+"/vocab.json"
+    merges_file = base_dir+"/merges.txt"
+    config_file = base_dir+"/config.json"
+    tokenizer_config_file = base_dir+"/tokenizer.json"
 
     # Module configuration for simulator
     modules = [
@@ -39,7 +40,7 @@ def main():
         "version": "1.0.0",
         "type": "model",
         "location": {
-            "path": "./qwen/onnx/model_q4f16.onnx"
+            "path": base_dir+"/onnx/model_enhanced.onnx"
         }
     })
     print(f"Added model: {model_name}")

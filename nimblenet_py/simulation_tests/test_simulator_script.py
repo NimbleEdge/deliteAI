@@ -672,7 +672,164 @@ def test_tokenizers():
 
     print("All tokenizer tests passed!")
 
+def test_model_dictionary_interface():
+    """Test the new dictionary-based model interface alongside traditional tensor interface."""
+
+    # First, create a proper test ONNX model with supported data types
+    import onnx
+    from onnx import helper, TensorProto
+    import os
+
+    def create_add_sub_model():
+        """Create an ONNX model that takes X, Y and returns sum, difference."""
+        # Define inputs
+        X = helper.make_tensor_value_info('X', TensorProto.FLOAT, [1, 1])
+        Y = helper.make_tensor_value_info('Y', TensorProto.FLOAT, [1, 1])
+
+        # Define outputs
+        sum_output = helper.make_tensor_value_info('sum', TensorProto.FLOAT, [1, 1])
+        diff_output = helper.make_tensor_value_info('difference', TensorProto.FLOAT, [1, 1])
+
+        # Create addition node: sum = X + Y
+        add_node = helper.make_node(
+            'Add',
+            inputs=['X', 'Y'],
+            outputs=['sum'],
+            name='add_node'
+        )
+
+        # Create subtraction node: difference = X - Y
+        sub_node = helper.make_node(
+            'Sub',
+            inputs=['X', 'Y'],
+            outputs=['difference'],
+            name='sub_node'
+        )
+
+        # Create the graph
+        graph = helper.make_graph(
+            nodes=[add_node, sub_node],
+            name='AddSubGraph',
+            inputs=[X, Y],
+            outputs=[sum_output, diff_output]
+        )
+
+        # Create the model
+        model = helper.make_model(graph)
+        model.opset_import[0].version = 9  # Use opset 9 for IR version 10 compatibility
+        model.ir_version = 6  # Explicitly set IR version to 6 for compatibility
+
+        # Check and save the model
+        onnx.checker.check_model(model)
+
+        # Determine correct path based on current working directory
+        current_dir = os.getcwd()
+        if "simulation_tests" in current_dir:
+            # Running from simulation_tests directory
+            model_path = "../simulation_assets/test_add_sub_model.onnx"
+            module_path = "../simulation_assets/test_add_sub_model.onnx"
+        else:
+            # Running from nimblenet_py directory (pytest)
+            model_path = "simulation_assets/test_add_sub_model.onnx"
+            module_path = "simulation_assets/test_add_sub_model.onnx"
+
+        onnx.save(model, model_path)
+
+        print(f"✅ Created test model: {model_path}")
+        print("📋 Model details:")
+        print("   Inputs: X (float32 [1,1]), Y (float32 [1,1])")
+        print("   Outputs: sum (X+Y), difference (X-Y)")
+
+        return module_path
+
+    # Create the test model
+    module_path = create_add_sub_model()
+
+    script_path = "../simulation_assets/dict_model_test.py"
+
+    modules = [
+        {
+            "name": "test_dict_model",
+            "version": "1.0.0",
+            "type": "script",
+            "location": {
+                "path": script_path
+            }
+        },
+        {
+            "name": "test_model",
+            "version": "1.0.0",
+            "type": "model",
+            "location": {
+                "path": module_path
+            }
+        }
+    ]
+
+    assert simulator.initialize('''{"debug": true, "online": false}''', modules)
+
+    # Test traditional tensor interface
+    tensor_results = simulator.run_method("test_tensor_interface", {})
+    print(f"Tensor interface test results: {tensor_results}")
+
+    assert tensor_results["status"] == "success"
+    assert "model_loaded" in tensor_results
+    assert tensor_results["model_loaded"] is not None
+
+    # Check if actual inference was performed
+    if "inference_successful" in tensor_results and tensor_results["inference_successful"]:
+        assert "sum_output" in tensor_results
+        assert "diff_output" in tensor_results
+        print(f"  ✅ Tensor interface inference successful!")
+        print(f"     Sum result: {tensor_results.get('sum_output')}")
+        print(f"     Diff result: {tensor_results.get('diff_output')}")
+    else:
+        assert "tensor_created" in tensor_results
+        assert tensor_results["tensor_created"] == True
+
+    # Test dictionary interface
+    dict_results = simulator.run_method("test_dictionary_interface", {})
+    print(f"Dictionary interface test results: {dict_results}")
+
+    assert dict_results["status"] == "success"
+    assert "model_loaded" in dict_results
+    assert dict_results["model_loaded"] is not None
+
+    # Check if actual inference was performed
+    if "inference_successful" in dict_results and dict_results["inference_successful"]:
+        assert "sum_output" in dict_results
+        assert "diff_output" in dict_results
+        print(f"  ✅ Dictionary interface inference successful!")
+        print(f"     Sum result: {dict_results.get('sum_output')}")
+        print(f"     Diff result: {dict_results.get('diff_output')}")
+    else:
+        assert "dict_created" in dict_results
+        assert dict_results["dict_created"] == True
+
+    # Test interface equivalence
+    equivalence_results = simulator.run_method("test_interface_equivalence", {})
+    print(f"Interface equivalence test results: {equivalence_results}")
+
+    assert equivalence_results["status"] == "success"
+
+    # Check if actual inference comparison was performed
+    if "both_interfaces_equivalent" in equivalence_results:
+        assert equivalence_results["both_interfaces_equivalent"] == True
+        print(f"  ✅ Both interfaces successfully performed inference and produced equivalent results!")
+    else:
+        assert False
+
+    print("All model dictionary interface tests passed!")
+
+    # Clean up the created model file
+    try:
+        os.remove(module_path)
+        print(f"🧹 Cleaned up test model: {module_path}")
+    except Exception as cleanup_error:
+        print(f"Could not clean up model file: {cleanup_error}")
+
 if __name__ == "__main__":
     test_simulator()
     test_python_modules()
     test_tokenizers()
+    test_model_dictionary_interface()

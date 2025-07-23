@@ -35,6 +35,12 @@ constexpr inline bool is_numeric<int32_t>() {
 }
 
 template <>
+constexpr inline bool is_numeric<uint16_t>() {
+  // fp16 is numeric
+  return true;
+}
+
+template <>
 constexpr inline bool is_numeric<bool>() {
   return false;
 }
@@ -75,6 +81,12 @@ constexpr inline bool is_integer<int32_t>() {
 }
 
 template <>
+constexpr inline bool is_integer<uint16_t>() {
+  // fp16 is not an integer type
+  return false;
+}
+
+template <>
 constexpr inline bool is_integer<bool>() {
   return false;
 }
@@ -105,6 +117,11 @@ constexpr inline int get_dataType_enum<int64_t>() {
 }
 
 template <>
+constexpr inline int get_dataType_enum<uint16_t>() {
+  return DATATYPE::FLOAT16;
+}
+
+template <>
 constexpr inline int get_dataType_enum<double>() {
   return DATATYPE::DOUBLE;
 }
@@ -132,6 +149,13 @@ inline int32_t DataVariable::get<int32_t>() {
 template <>
 inline float DataVariable::get<float>() {
   return get_float();
+}
+
+template <>
+inline uint16_t DataVariable::get<uint16_t>() {
+  // For fp16, we return the raw uint16_t representation
+  // The caller can convert this to actual fp16 if needed
+  return get_uint16();
 }
 
 template <>

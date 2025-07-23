@@ -310,6 +310,8 @@ static inline int get_field_size_from_data_type(int dataType) {
   switch (dataType) {
     case DATATYPE::STRING:
       return 1;
+    case DATATYPE::FLOAT16:
+      return 2;
     case DATATYPE::FLOAT:
     case DATATYPE::INT32:
       return 4;
@@ -423,6 +425,9 @@ auto call_function_for_dataType(Func func, DATATYPE dataType, Ts&&... ts) {
       return func(double{}, std::forward<Ts>(ts)...);
     case DATATYPE::FLOAT:
       return func(float{}, std::forward<Ts>(ts)...);
+    case DATATYPE::FLOAT16:
+      // Use uint16_t as the underlying representation for fp16
+      return func(uint16_t{}, std::forward<Ts>(ts)...);
     case DATATYPE::INT64:
       return func(int64_t{}, std::forward<Ts>(ts)...);
     case DATATYPE::BOOLEAN:

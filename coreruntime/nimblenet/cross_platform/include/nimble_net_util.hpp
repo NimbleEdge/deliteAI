@@ -71,6 +71,7 @@ enum DATATYPE {
   EXCEPTION = 685,
   UNKNOWN = 0,
   FLOAT = 1,
+  FLOAT16 = 2,
   BOOLEAN = 9,
   INT32 = 6,
   INT64 = 7,

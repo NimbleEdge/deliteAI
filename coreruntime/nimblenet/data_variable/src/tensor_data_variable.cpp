@@ -33,6 +33,8 @@ int BaseTypedTensorVariable::get_elem_size(DATATYPE dataType) {
       return sizeof(int64_t);
     case FLOAT:
       return sizeof(float);
+    case FLOAT16:
+      return sizeof(uint16_t);  // 16-bit float stored as uint16_t
     case DOUBLE:
       return sizeof(double);
     case BOOLEAN:
@@ -63,6 +65,8 @@ std::string BaseTypedTensorVariable::print() {
   switch (get_dataType_enum()) {
     case DATATYPE::FLOAT:
       return util::recursive_string<float>(shape, 0, (float*)get_raw_ptr(), 0, numElements);
+    case DATATYPE::FLOAT16:
+      return util::recursive_string<uint16_t>(shape, 0, (uint16_t*)get_raw_ptr(), 0, numElements);
     case DATATYPE::DOUBLE:
       return util::recursive_string<double>(shape, 0, (double*)get_raw_ptr(), 0, numElements);
     case DATATYPE::INT64:

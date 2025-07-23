@@ -31,6 +31,8 @@ const char* get_string_from_enum(int dataType) {
       return "None";
     case DATATYPE::FLOAT:
       return "float";
+    case DATATYPE::FLOAT16:
+      return "float16";
     case DATATYPE::BOOLEAN:
       return "bool";
     case DATATYPE::INT32:
@@ -80,6 +82,7 @@ const char* get_string_from_enum(int dataType) {
 
 int get_enum_from_string(const char* type) {
   static std::map<std::string, int> typeMap = {{"float", DATATYPE::FLOAT},
+                                               {"float16", DATATYPE::FLOAT16},
                                                {"double", DATATYPE::DOUBLE},
                                                {"bool", DATATYPE::BOOLEAN},
                                                {"int32", DATATYPE::INT32},

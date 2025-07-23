@@ -54,13 +54,24 @@ class ModelNimbleNetVariable final : public DataVariable {
 
         Parameters
         ----------
-        args : *Tensor
+        args : *Tensor or dict
             Input tensors to the model in the order they are expected in the model.
+            Alternatively, can accept a single dictionary mapping input names to tensors.
 
         Returns
         ----------
-        modelOutput : tuple[Tensor, ...]
-            Returns the output tensors of model as a tuple. The order of tensors is the same as defined during model construction.
+        modelOutput : tuple[Tensor, ...] or dict
+            Returns the output tensors of model as a tuple when using tensor arguments.
+            Returns a dictionary mapping output names to tensors when using dictionary input.
+
+        Examples
+        --------
+        # Traditional tensor arguments
+        >>> output = model.run(input1, input2)
+
+        # Dictionary input (new feature)
+        >>> input_dict = {"input1": tensor1, "input2": tensor2}
+        >>> output_dict = model.run(input_dict)
         """
         pass
   DELITEPY_DOC_BLOCK_END

@@ -518,6 +518,7 @@ OpReturnType DataVariable::create_tensor(int dType, const std::vector<int64_t>& 
 
   switch (dType) {
     case DATATYPE::FLOAT:
+    case DATATYPE::FLOAT16:
     case DATATYPE::DOUBLE:
     case DATATYPE::INT32:
     case DATATYPE::INT64:

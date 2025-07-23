@@ -99,6 +99,14 @@ constexpr inline bool is_integer();
     }                                                                                         \
   } while (0)
 
+#define THROW_OPTIONAL_ARGUMENTS_NOT_MATCH_FUNCTION_NAME(argsSize, expectedSize1, expectedSize2, functionName) \
+  do {                                                                                                         \
+    if ((argsSize) != (expectedSize1) && (argsSize) != (expectedSize2)) {                                      \
+      THROW("%s expects %d or %d argument(s), %d provided",                                                    \
+            functionName, expectedSize1, expectedSize2, argsSize);                                             \
+    }                                                                                                          \
+  } while (0)
+
 #define THROW_ARGUMENT_DATATYPE_NOT_MATCH(dataType, expectedDataType, argIndex, funcIndex)       \
   do {                                                                                           \
     if (dataType != expectedDataType) {                                                          \
@@ -178,6 +186,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
   virtual bool is_integer() { return false; }
 
   virtual bool is_none() { return false; }
+  
+  virtual bool is_iterable() const { return false; }
 
   const char* get_containerType_string() const;
 
@@ -258,6 +268,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
 
   virtual uint8_t cast_uint8() { return get_uint8(); }
 
+  virtual uint16_t cast_uint16() { return get_uint16(); }
+
   virtual int8_t cast_int8() { return get_int8(); }
 
   virtual int32_t get_int32() { THROW_UNSUPPORTED("get_int32"); }
@@ -271,6 +283,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
   virtual int8_t get_int8() { THROW_UNSUPPORTED("get_int8"); }
 
   virtual uint8_t get_uint8() { THROW_UNSUPPORTED("get_uint8"); }
+
+  virtual uint16_t get_uint16() { THROW_UNSUPPORTED("get_uint16"); }
 
   virtual std::string get_string() const { THROW_UNSUPPORTED("get_string"); }
 
