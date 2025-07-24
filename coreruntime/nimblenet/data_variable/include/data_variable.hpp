@@ -99,6 +99,14 @@ constexpr inline bool is_integer();
     }                                                                                         \
   } while (0)
 
+#define THROW_OPTIONAL_ARGUMENTS_NOT_MATCH_FUNCTION_NAME(argsSize, expectedSize1, expectedSize2, functionName) \
+  do {                                                                                                         \
+    if ((argsSize) != (expectedSize1) && (argsSize) != (expectedSize2)) {                                      \
+      THROW("%s expects %d or %d argument(s), %d provided",                                                    \
+            functionName, expectedSize1, expectedSize2, argsSize);                                             \
+    }                                                                                                          \
+  } while (0)
+
 #define THROW_ARGUMENT_DATATYPE_NOT_MATCH(dataType, expectedDataType, argIndex, funcIndex)       \
   do {                                                                                           \
     if (dataType != expectedDataType) {                                                          \
@@ -178,6 +186,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
   virtual bool is_integer() { return false; }
 
   virtual bool is_none() { return false; }
+  
+  virtual bool is_iterable() const { return false; }
 
   const char* get_containerType_string() const;
 

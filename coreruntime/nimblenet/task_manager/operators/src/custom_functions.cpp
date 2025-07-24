@@ -6,6 +6,7 @@
 
 #include "custom_functions.hpp"
 
+#include "enumerate_data_variable.hpp"
 #include "exception_data_variable.hpp"
 #include "statements.hpp"
 
@@ -22,6 +23,8 @@ std::map<std::string, CustomFuncPtr> CustomFunctions::_customFuncMap = {
     {"add_event", CustomFunctions::add_event},
     {"pre_add_event", CustomFunctions::pre_add_event_hook},
     {"Exception", CustomFunctions::create_exception},
+    {"next", CustomFunctions::next},
+    {"enumerate", CustomFunctions::enumerate},
 };
 
 OpReturnType CustomFunctions::concurrent(const std::vector<OpReturnType>& arguments,
@@ -91,4 +94,31 @@ OpReturnType CustomFunctions::add_event(const std::vector<OpReturnType>& rawStor
     return arguments[0];
   };
   return OpReturnType(new CustomFuncDataVariable(std::move(myLambda)));
+}
+
+OpReturnType CustomFunctions::next(const std::vector<OpReturnType>& args, CallStack& stack) {
+  THROW_ARGUMENTS_MISMATCH_FUNCTION_NAME(args.size(), 1, "next");
+
+  if (args[0]->is_iterable()) {
+    try {
+      return args[0]->next(stack);
+    } catch (const std::runtime_error& e) {
+      if (std::string(e.what()) == "StopIteration") return nullptr;
+      throw;
+    }
+  }
+  THROW("next expects an iterable argument, provided %s", args[0]->get_containerType_string());
+}
+
+OpReturnType CustomFunctions::enumerate(const std::vector<OpReturnType>& args, CallStack& stack) {
+  THROW_OPTIONAL_ARGUMENTS_NOT_MATCH_FUNCTION_NAME(args.size(), 1, 2, "enumerate");
+
+  OpReturnType iterable = args[0];
+
+  int startIndex = 0;
+  if (args.size() == 2) {
+    startIndex = args[1]->get_int32();
+  }
+
+  return OpReturnType(new EnumerateDataVariable(iterable, startIndex));
 }
