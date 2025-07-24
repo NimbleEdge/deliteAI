@@ -19,7 +19,7 @@ keeping all data on the device.
 1. **Installation**\
     Add the agent dependency to your app's `build.gradle.kts` or `build.gradle` file:
 
-    ```gradle
+    ```kotlin
     dependencies {
         implementation("dev.deliteai.agents:notification_summarizer:x.x.x")
     }

@@ -1,3 +1,9 @@
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+```{eval-rst}
+:orphan:
+```
+DL_DOCS::WEBSITE_BLOCK_END -->
+
 # Contributing to DeliteAI
 
 Thank you for your interest in contributing to DeliteAI! This document provides guidelines and

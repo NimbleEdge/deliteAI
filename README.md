@@ -1,3 +1,9 @@
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+# DeliteAI documentation
+
+## Introduction
+DL_DOCS::WEBSITE_BLOCK_END -->
+<!-- DL_DOCS::GITHUB_BLOCK_START -->
 <!-- markdownlint-disable first-line-h1 no-inline-html -->
 <div align="center">
   <h1 align="center">DeliteAI</h1>
@@ -20,7 +26,8 @@
   </a>
   <hr>
 </div>
-<!-- markdownlint-enable first-line-h1 no-inline-html -->
+<!-- markdownlint-restore -->
+<!-- DL_DOCS::GITHUB_BLOCK_END -->
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
@@ -59,7 +66,13 @@ To get started, you can:
   with its Python bindings
 - Build and try out the [Android](sdks/android/README.md) and [iOS](sdks/ios/README.md) SDK and
   sample app
+<!-- DL_DOCS::GITHUB_BLOCK_START -->
 - Explore the available agents in the [agents](agents) directory.
+<!-- DL_DOCS::GITHUB_BLOCK_END -->
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+- Explore the available agents in the
+  [agents](https://github.com/NimbleEdge/deliteAI/tree/main/agents) directory.
+DL_DOCS::WEBSITE_BLOCK_END -->
 
 Visit the [assistant](https://github.com/NimbleEdge/assistant) repo to see it all in action.
 
@@ -86,3 +99,60 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+```{toctree}
+:maxdepth: 1
+:hidden:
+
+coreruntime/delitepy/build/docs/gen/docs/index.md
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: SDK Integrations
+:hidden:
+
+sdks/ios/README.md
+sdks/android/README.md
+⬢ API reference <sdks/android/nimblenet_ktx/build/dokka/gfm/index.md>
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Developer Docs
+:hidden:
+
+coreruntime/README.md
+sdks/ios/docs/DEVELOPMENT.md
+sdks/android/README.md
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Agent Marketplace
+:hidden:
+
+agents/README.md
+agents/notifications_summarizer/README.md
+⬢ Android Agent <agents/notifications_summarizer/android/README.md>
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Indices
+:hidden:
+
+genindex
+modindex
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Project Links
+:hidden:
+
+GitHub <https://github.com/NimbleEdge/deliteAI>
+Discord <https://discord.gg/y8WkMncstk>
+```
+DL_DOCS::WEBSITE_BLOCK_END -->

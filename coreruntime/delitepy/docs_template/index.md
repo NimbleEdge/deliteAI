@@ -15,6 +15,6 @@ statements.md
 builtins.md
 modules.md
 
-genindex
-modindex
+/genindex
+/modindex
 ```

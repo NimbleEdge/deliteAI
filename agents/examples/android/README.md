@@ -1,3 +1,9 @@
+<!-- DL_DOCS::WEBSITE_BLOCK_START
+```{eval-rst}
+:orphan:
+```
+DL_DOCS::WEBSITE_BLOCK_END -->
+
 # DeliteAI Agents Android Example
 
 Example Android app demonstrating the Notifications Summarizer Agent integration.
