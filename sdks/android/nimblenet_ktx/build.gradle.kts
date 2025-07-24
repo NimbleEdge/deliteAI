@@ -1,10 +1,10 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-
 /*
  * SPDX-FileCopyrightText: (C) 2025 DeliteAI Authors
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
+import org.jetbrains.dokka.gradle.DokkaTask
 
 val neGradleConfig = NEGradleConfig(project.extra)
 val localProperties = fetchLocalProperties(rootDir)
@@ -22,6 +22,9 @@ plugins {
 jacoco { toolVersion = Versions.JACOCO }
 
 apply(plugin = Deps.Plugins.KOTLIN_ANDROID)
+
+// Set the Maven group ID so that composite build substitution matches coordinates
+group = "dev.deliteai"
 
 android {
     namespace = "dev.deliteai.nimblenet_ktx"
@@ -218,6 +221,3 @@ tasks.named<DokkaTask>("dokkaGfm") {
         }
     }
 }
-
-// Set the Maven group ID so that composite build substitution matches coordinates
-group = "dev.deliteai"
