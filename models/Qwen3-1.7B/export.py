@@ -217,8 +217,8 @@ def add_argmax_node(model, temperature=0.3):
     print(f"✅ ArgMax node with temperature scaling ({temperature}) and correct output shape [1,1] added successfully")
     return model
 
-def add_generation_logic(model, eos_token_id=151645):
-    """Add generation loop logic to the model."""
+def add_generation_logic_simple(model, eos_token_id=151645):
+    """Add generation logic with PROPER attention mask handling (fixed version)."""
     print(f"🔄 Adding generation logic with EOS token ID: {eos_token_id}")
 
     # Create constant for EOS token as scalar - will broadcast to match next_token_id
@@ -241,15 +241,18 @@ def add_generation_logic(model, eos_token_id=151645):
         outputs=['is_eos']
     )
 
-    # Create nodes for updating attention mask with dynamic batch size
-    # Get the batch size from attention_mask shape
+    # FIXED ATTENTION MASK LOGIC
+    # The key insight: we need to extend the CURRENT attention_mask, not concatenate with past
+    # Current attention_mask is the input for this generation step
+    # We extend it by 1 for the newly generated token
+
+    # Get batch size from attention_mask shape
     batch_shape = helper.make_node(
         'Shape',
         inputs=['attention_mask'],
         outputs=['attention_mask_shape']
     )
 
-        # Create zero index constant for Gather
     zero_index = helper.make_node(
         'Constant',
         inputs=[],
@@ -262,21 +265,12 @@ def add_generation_logic(model, eos_token_id=151645):
         )
     )
 
-    # Extract batch size (first dimension)
     batch_size_scalar = helper.make_node(
         'Gather',
         inputs=['attention_mask_shape', 'zero_index'],
         outputs=['batch_size_scalar']
     )
 
-    # Convert batch size to 1D tensor for concatenation
-    batch_size_unsqueeze = helper.make_node(
-        'Unsqueeze',
-        inputs=['batch_size_scalar', 'zero_axis'],
-        outputs=['batch_size']
-    )
-
-    # Create zero axis constant for Unsqueeze
     zero_axis = helper.make_node(
         'Constant',
         inputs=[],
@@ -289,28 +283,31 @@ def add_generation_logic(model, eos_token_id=151645):
         )
     )
 
-    # Create shape [batch_size, 1] for ones tensor
-    ones_shape = helper.make_node(
-        'Concat',
-        inputs=['batch_size', 'one_constant'],
-        outputs=['ones_shape_tensor'],
-        axis=0
+    batch_size_unsqueeze = helper.make_node(
+        'Unsqueeze',
+        inputs=['batch_size_scalar', 'zero_axis'],
+        outputs=['batch_size_1d']
     )
 
-    # Create constant for value 1
-    one_constant = helper.make_node(
+    one_constant_1d = helper.make_node(
         'Constant',
         inputs=[],
-        outputs=['one_constant'],
+        outputs=['one_constant_1d'],
         value=helper.make_tensor(
-            name='one_constant_value',
+            name='one_constant_1d_value',
             data_type=TensorProto.INT64,
             dims=[1],
             vals=[1]
         )
     )
 
-    # Create ones tensor with dynamic batch size
+    ones_shape = helper.make_node(
+        'Concat',
+        inputs=['batch_size_1d', 'one_constant_1d'],
+        outputs=['ones_shape_tensor'],
+        axis=0
+    )
+
     ones_tensor = helper.make_node(
         'ConstantOfShape',
         inputs=['ones_shape_tensor'],
@@ -323,17 +320,17 @@ def add_generation_logic(model, eos_token_id=151645):
         )
     )
 
-    # Concatenate attention mask with ones
-    concat_attention = helper.make_node(
+    # CORRECT: Extend current attention_mask with one new token
+    # This grows linearly: [1,1,1] -> [1,1,1,1] -> [1,1,1,1,1]
+    updated_attention_mask = helper.make_node(
         'Concat',
         inputs=['attention_mask', 'ones_tensor'],
         outputs=['updated_attention_mask'],
         axis=-1
     )
 
-    # Create nodes for updating position_ids
-    # Create constants for slice parameters to get the last position
-    slice_starts = helper.make_node(
+    # Add position increment logic (simplified)
+    pos_slice_starts = helper.make_node(
         'Constant',
         inputs=[],
         outputs=['pos_slice_starts'],
@@ -345,7 +342,7 @@ def add_generation_logic(model, eos_token_id=151645):
         )
     )
 
-    slice_ends = helper.make_node(
+    pos_slice_ends = helper.make_node(
         'Constant',
         inputs=[],
         outputs=['pos_slice_ends'],
@@ -353,11 +350,11 @@ def add_generation_logic(model, eos_token_id=151645):
             name='pos_ends_value',
             data_type=TensorProto.INT64,
             dims=[1],
-            vals=[2147483647]  # Max int
+            vals=[2147483647]
         )
     )
 
-    slice_axes = helper.make_node(
+    slice_axes_pos = helper.make_node(
         'Constant',
         inputs=[],
         outputs=['pos_slice_axes'],
@@ -369,26 +366,15 @@ def add_generation_logic(model, eos_token_id=151645):
         )
     )
 
-    # Slice position_ids to get last position
     slice_position = helper.make_node(
         'Slice',
         inputs=['position_ids', 'pos_slice_starts', 'pos_slice_ends', 'pos_slice_axes'],
         outputs=['last_position']
     )
 
-    # Add one to last position to get the next position value
     add_one = helper.make_node(
         'Add',
-        inputs=['last_position', 'one_constant'],
-        outputs=['next_position_value']
-    )
-
-    # For generation, we only need the next position ID, not the full concatenated sequence
-    # The next_position should be [batch_size, 1] containing just the next position
-    # This is what the model expects for the next iteration
-    identity_position = helper.make_node(
-        'Identity',
-        inputs=['next_position_value'],
+        inputs=['last_position', 'one_constant_1d'],
         outputs=['next_position']
     )
 
@@ -396,33 +382,32 @@ def add_generation_logic(model, eos_token_id=151645):
     model.graph.node.extend([
         eos_constant,
         eos_check,
-        zero_index,
-        zero_axis,
         batch_shape,
+        zero_index,
         batch_size_scalar,
+        zero_axis,
         batch_size_unsqueeze,
-        one_constant,
+        one_constant_1d,
         ones_shape,
         ones_tensor,
-        concat_attention,
-        slice_starts,
-        slice_ends,
-        slice_axes,
+        updated_attention_mask,
+        pos_slice_starts,
+        pos_slice_ends,
+        slice_axes_pos,
         slice_position,
-        add_one,
-        identity_position
+        add_one
     ])
 
-    # Add output tensors with dynamic batch sizes
+    # Add output tensors
     outputs_to_add = [
-        helper.make_tensor_value_info('is_eos', TensorProto.BOOL, [None, 1]),  # Dynamic batch size, 1 sequence element
-        helper.make_tensor_value_info('updated_attention_mask', TensorProto.INT64, [None, None]),  # Dynamic batch and sequence
-        helper.make_tensor_value_info('next_position', TensorProto.INT64, [None, 1])  # Dynamic batch size, 1 position element
+        helper.make_tensor_value_info('is_eos', TensorProto.BOOL, [None, 1]),
+        helper.make_tensor_value_info('updated_attention_mask', TensorProto.INT64, [None, None]),
+        helper.make_tensor_value_info('next_position', TensorProto.INT64, [None, 1])
     ]
 
     model.graph.output.extend(outputs_to_add)
 
-    print("✅ Generation logic with dynamic batch sizes added successfully")
+    print("✅ Generation logic with FIXED attention mask handling added successfully")
     return model
 
 def save_enhanced_model(model, output_path="./data/onnx/model_enhanced.onnx"):
@@ -477,10 +462,10 @@ def main():
         model = load_and_analyze_model(base_model_path)
 
         # Step 3: Add argmax node with temperature scaling
-        model = add_argmax_node(model, temperature=0.3)
+        model = add_argmax_node(model, temperature=0.8)
 
         # Step 4: Add generation logic
-        model = add_generation_logic(model)
+        model = add_generation_logic_simple(model)
 
         # Step 5: Save enhanced model
         save_enhanced_model(model)
@@ -507,3 +492,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

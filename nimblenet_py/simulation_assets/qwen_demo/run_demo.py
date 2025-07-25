@@ -8,6 +8,7 @@ sys.path.append('../../../')
 
 from deliteai import simulator
 import json
+import time
 
 def main():
     """Run the Qwen demo"""
@@ -15,9 +16,7 @@ def main():
     print("This demo shows Qwen model and tool calling capabilities\n")
 
     base_dir = "../../../models/Qwen3-1.7B/data"
-    model_name = "qwen3-1.7b"
-    vocab_file = base_dir+"/vocab.json"
-    merges_file = base_dir+"/merges.txt"
+    model_name = "qwen3_1_7b_onnx"
     config_file = base_dir+"/config.json"
     tokenizer_config_file = base_dir+"/tokenizer.json"
 
@@ -45,61 +44,41 @@ def main():
     })
     print(f"Added model: {model_name}")
 
-
-    with open(vocab_file, encoding="utf-8") as vocab_handle:
-        vocab = json.load(vocab_handle)
-
-    bpe_merges = []
-    with open(merges_file, encoding="utf-8") as merges_handle:
-        i = 0
-        for line in merges_handle:
-            line = line.strip()
-            if (i == 0 and line.startswith("#version:")) or not line:
-                i = i + 1
-                continue
-            bpe_merges.append(tuple(line.split()))
-            i = i + 1
-
-    with open(config_file, encoding="utf-8") as config_handle:
-        config_dict = json.load(config_handle)
-
-    with open(tokenizer_config_file, encoding="utf-8") as tokenizer_config_handle:
-        tokenizer_config_dict = json.load(tokenizer_config_handle)
-
     # Initialize simulator
     print("\nInitializing simulator...")
-    config = {"debug": True, "online": False}
+    config =  {"online": False, "debug": True}
 
     # Initialize with modules
     if not simulator.initialize(json.dumps(config), modules):
         print("Failed to initialize simulator")
         return
-
+    while not simulator.is_ready():
+        time.sleep(1)
     print("Simulator initialized successfully")
 
+    with open(tokenizer_config_file, "r") as f:
+        tokenizer_config = json.load(f)
+    with open(config_file, "r") as f:
+        config = json.load(f)
     # Run the main function
     print("\nRunning Qwen workflow...\n")
+    result = simulator.run_method("init_generation_mixin", {
+        "tokenizer_config": tokenizer_config,
+        "generation_config": config,
+    })
+    print(result)
+
+    def output_stream_callback(input):
+        print(input["token_stream"])
+        return {"success": True}
+
     result = simulator.run_method(
-        "run_tool_calling_demo",
-        {
-            "vocab": vocab,
-            "merges": bpe_merges,
-            "config_dict": config_dict,
-            "tokenizer_config_dict": tokenizer_config_dict,
-            "model_name": model_name
+        "prompt_for_tool_calling", {
+            "prompt": "How is the weather here?",
+            "output_stream_callback": output_stream_callback
         }
     )
-
     print("\n=== Demo Complete ===")
-    if result.get("success"):
-        print("✅ Demo completed successfully!")
-        if result.get("model_loaded"):
-            print("   Model was loaded and inference attempted")
-        else:
-            print("   Tool demonstrations completed")
-    else:
-        print(f"❌ Demo failed: {result.get('error', 'Unknown error')}")
-
 
 if __name__ == "__main__":
     main()

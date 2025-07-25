@@ -107,14 +107,14 @@ def main():
     if args.simulator:
         if not args.ci_build:
             # re-install deliteai
-            subprocess.run(f"python{python_version} -m pip uninstall deliteai", shell=True, check=True)
+            subprocess.run(f"python{python_version} -m pip uninstall -y deliteai", shell=True, check=True)
             subprocess.run("rm -rf dist deliteai*", shell=True, check=True)
             subprocess.run(f"python{python_version} setup.py bdist_wheel", shell=True, check=True)
             subprocess.run(f"python{python_version} -m pip install dist/*", shell=True, check=True)
 
             # re-install delitepy-library-stubs
             subprocess.run(
-                f"python{python_version} -m pip uninstall delitepy-library-stubs",
+                f"python{python_version} -m pip uninstall -y delitepy-library-stubs",
                 shell=True,
                 check=True,
             )

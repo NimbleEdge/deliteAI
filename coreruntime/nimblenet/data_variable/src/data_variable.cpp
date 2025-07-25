@@ -186,7 +186,7 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::RETRIEVER, "Retriever"},
     {MemberFuncType::POP, "pop"},
     {MemberFuncType::KEYS, "keys"},
-    {MemberFuncType::JSON_DOCUMENT, "jsonDocument"},
+    {MemberFuncType::JSON_DOCUMENT, "JsonDocument"},
     {MemberFuncType::MAX_INPUT_NUM_TOKENS, "max_input_num_tokens"},
     {MemberFuncType::CONSTRUCTOR, "__init__"},
     {MemberFuncType::UNICODE, "unicode"},

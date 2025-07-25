@@ -183,13 +183,8 @@ else()
 	target_compile_definitions(nimblenet PUBLIC -DIOS_PLATFORM="mac")
 	add_subdirectory(platform/unix) # produces ${CLIENT_INCLUDES}
 	add_subdirectory("../third_party/runtime" "${CMAKE_BINARY_DIR}/third_party/runtime") # -> produces ${BACKEND_LIBS} ${BACKEND_DIR} ${BACKED_INCLUDES}
-	# Add conda environment library directory to search path
-	if(DEFINED ENV{CONDA_PREFIX})
-		link_directories($ENV{CONDA_PREFIX}/lib)
-		target_link_libraries(nimblenet ${VISIBILITY} $ENV{CONDA_PREFIX}/lib/libcurl.so)
-	else()
-		target_link_libraries(nimblenet ${VISIBILITY} curl)
-	endif()
+	# Use system curl library instead of conda environment
+	target_link_libraries(nimblenet ${VISIBILITY} curl)
 
 	# target_link_libraries(nimblenet ${VISIBILITY} clientlib)
 endif()
