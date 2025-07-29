@@ -15,6 +15,8 @@ std::map<std::string, CompareFuncPtr> CompareOperators::_compareOpMap = {
     {"In", CompareOperators::in},
     {"NotEq", CompareOperators::operate<NotEqualOp>},
     {"NotIn", CompareOperators::notIn},
+    {"Is", CompareOperators::is},
+    {"IsNot", CompareOperators::isNot},
 };
 
 CompareFuncPtr CompareOperators::get_operator(const std::string& opType) {
