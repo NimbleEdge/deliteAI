@@ -9,6 +9,7 @@
 #include "regex_data_variable.hpp"
 
 #include <climits>
+#include <string_view>
 
 #include "match_object_data_variable.hpp"
 #include "single_variable.hpp"
@@ -247,7 +248,6 @@ OpReturnType RegexDataVariable::regex_subn(const std::vector<OpReturnType>& argu
   return OpReturnType(new TupleDataVariable(std::move(list)));
 }
 
-
 OpReturnType RegexDataVariable::regex_escape(const std::vector<OpReturnType>& args, CallStack& stack) {
   THROW_ARGUMENTS_NOT_MATCH(args.size(), 1, MemberFuncType::REGEX_ESCAPE);
   THROW_ARGUMENT_DATATYPE_NOT_MATCH(args[0]->get_dataType_enum(), DATATYPE::STRING, 0,
@@ -255,9 +255,9 @@ OpReturnType RegexDataVariable::regex_escape(const std::vector<OpReturnType>& ar
 
   const std::string input = args[0]->get_string();
   std::string escaped;
-  const std::string metacharacters = R"(\.^$*+?()[]{}|\\)";
+  const std::string_view metacharacters = R"(\.^$*+?()[]{}|\\)";
   for (char c : input) {
-    if (metacharacters.find(c) != std::string::npos) {
+    if (metacharacters.find(c) != std::string_view::npos) {
       escaped.push_back('\\');
     }
     escaped.push_back(c);
