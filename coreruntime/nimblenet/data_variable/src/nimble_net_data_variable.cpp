@@ -459,6 +459,14 @@ OpReturnType NimbleNetDataVariable::create_retriever(const std::vector<OpReturnT
 #endif  // GENAI
 }
 
+OpReturnType NimbleNetDataVariable::get_hardware_info(const std::vector<OpReturnType>& arguments,
+                                                      CallStack& stack) {
+  THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 0, MemberFuncType::GET_HARDWARE_INFO);
+
+  nlohmann::json j = nativeinterface::get_hardware_info();
+  return DataVariable::get_map_from_json_object(std::move(j));
+}
+
 /*
  * 1. Get device tier
  * 2. Get the LLMs in deployment from asset manager in cloud
@@ -584,6 +592,8 @@ OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
       return create_json_document(arguments, stack);
     case MemberFuncType::LIST_COMPATIBLE_LLMS:
       return list_compatible_llms(arguments);
+    case MemberFuncType::GET_HARDWARE_INFO:
+      return get_hardware_info(arguments, stack);
 #ifdef IOS
     case MemberFuncType::CONVERT_TEXT_TO_PHONEMES:
       // TODO (jpuneet): Should this be a part of another DelitePy module?

@@ -9,7 +9,9 @@
 #ifdef GENAI
 #include "miniz.h"
 #endif  // GENAI
+
 #include <sys/stat.h>
+#include <zlib.h>
 
 #include <cerrno>
 #include <cstring>
@@ -20,7 +22,6 @@
 #include "logger.hpp"
 #include "resource_manager_constants.hpp"
 #include "util.hpp"
-#include "zlib.h"
 
 using namespace std;
 
@@ -49,6 +50,7 @@ static inline std::string save_file_on_device(std::string&& content,
 }
 
 namespace nativeinterface {
+
 std::string HOMEDIR;
 
 const std::shared_ptr<NetworkResponse> send_request(const string& body, const string& header,
@@ -407,7 +409,15 @@ void create_symlink(const fs::path& target, const std::string& link) {
   }
 }
 
+nlohmann::json get_hardware_info() {
+  char* hardware_info = ::get_hardware_info();
+  auto hardware_info_json = nlohmann::json::parse(hardware_info);
+  free(hardware_info);
+  return hardware_info_json;
+}
+
 #ifdef IOS
 const char* get_phonemes(const char* text) { return ::get_phonemes(text); }
 #endif  // IOS
+
 }  // namespace nativeinterface
