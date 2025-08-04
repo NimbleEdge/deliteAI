@@ -11,6 +11,7 @@
 
 #include "core_utils/fmt.hpp"
 #include "data_variable.hpp"
+#include "single_variable.hpp"
 
 /**
  * @brief DataVariable implementation for regex match objects
