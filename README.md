@@ -8,7 +8,7 @@ DL_DOCS::WEBSITE_BLOCK_END -->
 <div align="center">
   <h1 align="center">DeliteAI</h1>
   <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="200">
-  <h2 align="center">On-Device AI platform for creating delightful experiences</h2>
+  <h2 align="center">On-Device AI platform for Software 3.0 on Mobile</h2>
 </div>
 
 <div align="center">

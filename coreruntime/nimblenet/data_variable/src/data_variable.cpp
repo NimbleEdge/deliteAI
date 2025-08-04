@@ -103,6 +103,9 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"clear_context", MemberFuncType::CLEAR_CONTEXT},
     {"add_context", MemberFuncType::ADD_CONTEXT},
     {"list_compatible_llms", MemberFuncType::LIST_COMPATIBLE_LLMS},
+#ifdef IOS
+    {"convert_text_to_phonemes", MemberFuncType::CONVERT_TEXT_TO_PHONEMES},
+#endif  // IOS
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -191,6 +194,9 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::CLEAR_CONTEXT, "clear_context"},
     {MemberFuncType::ADD_CONTEXT, "add_context"},
     {MemberFuncType::LIST_COMPATIBLE_LLMS, "list_compatible_llms"},
+#ifdef IOS
+    {MemberFuncType::CONVERT_TEXT_TO_PHONEMES, "convert_text_to_phonemes"},
+#endif  // IOS
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {

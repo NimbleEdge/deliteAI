@@ -232,4 +232,8 @@ void set_thread_priority_max();
  */
 bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinutesIfFailed,
                           const char* workManagerConfigJsonChar);
+
+#ifdef IOS
+const char* get_phonemes(const char* text);
+#endif  // IOS
 }  // namespace nativeinterface

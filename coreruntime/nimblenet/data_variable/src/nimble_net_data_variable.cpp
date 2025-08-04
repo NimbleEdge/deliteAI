@@ -25,6 +25,212 @@
 #include "retriever.hpp"
 #endif  // GENAI
 
+#ifdef IOS
+// TODO (jpuneet): move this chunk to a separate file
+namespace {
+// UTF-8 helper function to determine if byte is a continuation byte
+bool is_utf8_continuation(unsigned char byte) { return (byte & 0xC0) == 0x80; }
+
+// UTF-8 helper function to get next character and advance pointer
+char32_t get_next_utf8_char(const char*& p) {
+  const unsigned char* up = reinterpret_cast<const unsigned char*>(p);
+
+  // Single byte (ASCII)
+  if (up[0] < 0x80) {
+    char32_t result = up[0];
+    p++;
+    return result;
+  }
+
+  // 2-byte sequence
+  if ((up[0] & 0xE0) == 0xC0) {
+    if ((up[1] & 0xC0) == 0x80) {
+      char32_t result = ((up[0] & 0x1F) << 6) | (up[1] & 0x3F);
+      p += 2;
+      return result;
+    }
+  }
+
+  // 3-byte sequence
+  if ((up[0] & 0xF0) == 0xE0) {
+    if ((up[1] & 0xC0) == 0x80 && (up[2] & 0xC0) == 0x80) {
+      char32_t result = ((up[0] & 0x0F) << 12) | ((up[1] & 0x3F) << 6) | (up[2] & 0x3F);
+      p += 3;
+      return result;
+    }
+  }
+
+  // 4-byte sequence
+  if ((up[0] & 0xF8) == 0xF0) {
+    if ((up[1] & 0xC0) == 0x80 && (up[2] & 0xC0) == 0x80 && (up[3] & 0xC0) == 0x80) {
+      char32_t result =
+          ((up[0] & 0x07) << 18) | ((up[1] & 0x3F) << 12) | ((up[2] & 0x3F) << 6) | (up[3] & 0x3F);
+      p += 4;
+      return result;
+    }
+  }
+
+  // Invalid sequence, skip one byte
+  p++;
+  return 0xFFFD;  // Unicode replacement character
+}
+
+#if 0
+// Function to write a UTF-8 character to a buffer
+void append_utf8_char(char32_t ch, char*& buffer) {
+  if (ch < 0x80) {
+    // 1-byte sequence
+    *buffer++ = static_cast<char>(ch);
+  } else if (ch < 0x800) {
+    // 2-byte sequence
+    *buffer++ = static_cast<char>(0xC0 | (ch >> 6));
+    *buffer++ = static_cast<char>(0x80 | (ch & 0x3F));
+  } else if (ch < 0x10000) {
+    // 3-byte sequence
+    *buffer++ = static_cast<char>(0xE0 | (ch >> 12));
+    *buffer++ = static_cast<char>(0x80 | ((ch >> 6) & 0x3F));
+    *buffer++ = static_cast<char>(0x80 | (ch & 0x3F));
+  } else if (ch < 0x110000) {
+    // 4-byte sequence
+    *buffer++ = static_cast<char>(0xF0 | (ch >> 18));
+    *buffer++ = static_cast<char>(0x80 | ((ch >> 12) & 0x3F));
+    *buffer++ = static_cast<char>(0x80 | ((ch >> 6) & 0x3F));
+    *buffer++ = static_cast<char>(0x80 | (ch & 0x3F));
+  }
+}
+#endif  // 0
+
+// Function to check if a Unicode character is a stress marker
+bool is_stress_marker(char32_t ch) {
+  // Unicode code points for stress markers
+  return ch == 0x02C8 ||             // U+02C8 MODIFIER LETTER VERTICAL LINE (ˈ)
+         ch == 0x02CC || ch == '_';  // U+02CC MODIFIER LETTER LOW VERTICAL LINE (ˌ)
+
+  // Add any other stress markers here if needed
+}
+
+// UTF-8 aware string replacement function
+std::string replace_substring(const std::string& str, const std::string& from,
+                              const std::string& to) {
+  if (from.empty()) return str;
+
+  std::string result;
+  result.reserve(str.length());  // Pre-allocate memory to avoid reallocations
+
+  size_t pos = 0;
+  size_t lastPos = 0;
+
+  // Use a searching algorithm that respects UTF-8 character boundaries
+  while ((pos = str.find(from, lastPos)) != std::string::npos) {
+    // Verify we're at a character boundary by checking the byte isn't a UTF-8 continuation byte
+    bool validBoundary = true;
+    if (pos > 0 && is_utf8_continuation(static_cast<unsigned char>(str[pos]))) {
+      validBoundary = false;
+    }
+
+    if (validBoundary) {
+      // Append characters from lastPos to pos
+      result.append(str, lastPos, pos - lastPos);
+      // Append the replacement
+      result.append(to);
+      lastPos = pos + from.length();
+    } else {
+      // This is a false match (within a multi-byte character) - skip one byte forward
+      pos++;
+      continue;
+    }
+  }
+
+  // Append any remaining characters
+  result.append(str, lastPos, std::string::npos);
+  return result;
+}
+
+// Alternative UTF-8 aware string replacement function using our character-by-character parsing
+std::string replace_substring_robust(const std::string& str, const std::string& from,
+                                     const std::string& to) {
+  if (from.empty()) return str;
+
+  std::string result;
+  result.reserve(str.length());  // Reserve space for efficiency
+
+  // Check if we're processing multi-byte characters
+  bool hasMultibyteChars = false;
+  for (unsigned char c : from) {
+    if (c >= 0x80) {
+      hasMultibyteChars = true;
+      break;
+    }
+  }
+
+  // For ASCII-only patterns, we can use the standard method
+  if (!hasMultibyteChars) {
+    return replace_substring(str, from, to);
+  }
+
+  // For patterns with multi-byte characters, use character-by-character comparison
+  const char* strData = str.c_str();
+  size_t strPos = 0;
+
+  while (strData[strPos]) {
+    if (str.compare(strPos, from.length(), from) == 0) {
+      // Found a match
+      result.append(to);
+      strPos += from.length();
+    } else {
+      // No match, copy the current character
+      const char* current = strData + strPos;
+      char32_t ch = get_next_utf8_char(current);
+
+      // Append the original bytes for this character
+      result.append(strData + strPos, current - (strData + strPos));
+      strPos = current - strData;
+    }
+  }
+
+  return result;
+}
+
+// Function to apply phoneme transformations for eSpeak output
+std::string transform_phonemes(const std::string& phonemes) {
+  // Define the E2M replacements
+  const std::vector<std::pair<std::string, std::string>> E2M = {
+      {"a^ɪ", "I"}, {"a^ʊ", "W"}, {"d^z", "ʣ"}, {"d^ʒ", "ʤ"},   {"e^ɪ", "A"}, {"o^ʊ", "O"},
+      {"s^s", "S"}, {"t^s", "ʦ"}, {"t^ʃ", "ʧ"}, {"ɔ^ɪ", "Y"},   {"ə^ʊ", "Q"}, {"ɜːɹ", "ɜɹ"},
+      {"ɔː", "ɔɹ"}, {"ɪə", "iə"}, {"^", ""},    {"and", "ænd"}, {":", ""}};
+
+  // Apply E2M replacements
+  std::string result = phonemes;
+  for (const auto& pair : E2M) {
+    result = replace_substring_robust(result, pair.first, pair.second);
+  }
+  return result;
+}
+
+// Combined function to remove stress markers and apply phoneme transformations
+std::string process_phonemes(const char* phonemes) {
+  if (!phonemes) return "";
+
+  // First, remove stress markers
+  std::string without_stress;
+  const char* src = phonemes;
+
+  while (*src != '\0') {
+    const char* current = src;
+    char32_t ch = get_next_utf8_char(src);
+
+    if (!is_stress_marker(ch)) {
+      // Append the original bytes for this character
+      without_stress.append(current, src - current);
+    }
+  }
+
+  // Then apply phoneme transformations
+  return transform_phonemes(without_stress);
+}
+}  // anonymous namespace
+#endif  // IOS
+
 OpReturnType NimbleNetDataVariable::create_tensor(const std::vector<OpReturnType>& arguments) {
   THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 2, MemberFuncType::CREATETENSOR);
 
@@ -308,6 +514,22 @@ OpReturnType NimbleNetDataVariable::set_threads(const std::vector<OpReturnType>&
 #endif  // MINIMAL_BUILD
 }
 
+#ifdef IOS
+OpReturnType NimbleNetDataVariable::convert_text_to_phonemes(
+    const std::vector<OpReturnType>& arguments) {
+  THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 1, MemberFuncType::CONVERT_TEXT_TO_PHONEMES);
+
+  std::string text = arguments[0]->get_string();
+  const char* textCStr = text.c_str();
+  const char* phonemesCStr = nativeinterface::get_phonemes(textCStr);
+  std::string phonemes = process_phonemes(phonemesCStr);
+  if (phonemesCStr) {
+    free((void*)phonemesCStr);
+  }
+  return std::make_shared<SingleVariable<std::string>>(phonemes);
+}
+#endif  // IOS
+
 OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
                                                   const std::vector<OpReturnType>& arguments,
                                                   CallStack& stack) {
@@ -362,6 +584,11 @@ OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
       return create_json_document(arguments, stack);
     case MemberFuncType::LIST_COMPATIBLE_LLMS:
       return list_compatible_llms(arguments);
+#ifdef IOS
+    case MemberFuncType::CONVERT_TEXT_TO_PHONEMES:
+      // TODO (jpuneet): Should this be a part of another DelitePy module?
+      return convert_text_to_phonemes(arguments);
+#endif  // IOS
   }
   THROW("%s not implemented for nimblenet", DataVariable::get_member_func_string(memberFuncIndex));
 }

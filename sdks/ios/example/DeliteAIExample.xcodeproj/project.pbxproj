@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05F18F4E7DA2F25FC69CACCF /* Pods_NimbleNetExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FCEA74EEEB0E964DAAA3EB5 /* Pods_NimbleNetExample.framework */; };
+		26B9CF408BD07B2069DA9DFB /* Pods_DeliteAIExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F40CF57EC8F659A1FC1D26 /* Pods_DeliteAIExample.framework */; };
+		396684460079E48AD972F328 /* Pods_DeliteAIExample_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECFAE9E341EFB5936373962 /* Pods_DeliteAIExample_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACD81AFB9204008FA782 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ChatViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* RuntaskInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* RuntaskInstrumentation.swift */; };
 		894C59422E164D8A001CF7CA /* BundleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C59412E164D8A001CF7CA /* BundleConfig.swift */; };
 		894C59432E164EB2001CF7CA /* BundleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C59412E164D8A001CF7CA /* BundleConfig.swift */; };
-		D9D1C4B790D0C04DF3A45FCD /* Pods_NimbleNetExample_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6ED17F51459EFD0732BE8D /* Pods_NimbleNetExample_Tests.framework */; };
+		89CD9EC02E36B62000BFAA23 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD9EBF2E36B61D00BFAA23 /* MessageCell.swift */; };
 		F12F6B802D6F389900A17447 /* company_proto.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */; };
 		F145718C2D5DCE75008E3AA0 /* Keychaintest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F145718B2D5DCE75008E3AA0 /* Keychaintest.swift */; };
 		F151DB8D2D82AAD800D4C397 /* Prototest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F151DB8C2D82AAD800D4C397 /* Prototest.swift */; };
@@ -47,27 +48,31 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		37F40CF57EC8F659A1FC1D26 /* Pods_DeliteAIExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeliteAIExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample_Tests.release.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4F98A08D52D67F85C49C33B3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		53C0DE2D56DD10C721CBA2CE /* Pods-NimbleNetExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample.debug.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample.debug.xcconfig"; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* NimbleNetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbleNetExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* DeliteAIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeliteAIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* NimbleNetExample_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbleNetExample_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* DeliteAIExample_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeliteAIExample_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* RuntaskInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntaskInstrumentation.swift; sourceTree = "<group>"; };
+		63F5DBE489A17DC490E5FB90 /* Pods-DeliteAIExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliteAIExample.debug.xcconfig"; path = "Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample.debug.xcconfig"; sourceTree = "<group>"; };
 		894C59412E164D8A001CF7CA /* BundleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleConfig.swift; sourceTree = "<group>"; };
-		894C59642E1818E4001CF7CA /* NimbleNetExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NimbleNetExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		89709EC52E1C537D00AC6E95 /* DeliteAI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = DeliteAI.podspec; path = ../DeliteAI.podspec; sourceTree = SOURCE_ROOT; };
 		89709EC82E1C53A300AC6E95 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/nimbleedgeadmin/Desktop/NimbleEdge/folk/deliteAI/LICENSE; sourceTree = "<absolute>"; };
+		89CD9EBF2E36B61D00BFAA23 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		8ECFAE9E341EFB5936373962 /* Pods_DeliteAIExample_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeliteAIExample_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NimbleNetExample.release.xcconfig"; path = "Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample.release.xcconfig"; sourceTree = "<group>"; };
-		9FCEA74EEEB0E964DAAA3EB5 /* Pods_NimbleNetExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF6ED17F51459EFD0732BE8D /* Pods_NimbleNetExample_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NimbleNetExample_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB619045593387E6CE472905 /* Pods-DeliteAIExample_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliteAIExample_Tests.debug.xcconfig"; path = "Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		AFF83851746815C3639ABC57 /* Pods-DeliteAIExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliteAIExample.release.xcconfig"; path = "Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample.release.xcconfig"; sourceTree = "<group>"; };
+		E72ED322C5D26672A683F164 /* Pods-DeliteAIExample_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliteAIExample_Tests.release.xcconfig"; path = "Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = company_proto.pb.swift; sourceTree = "<group>"; };
 		F13F5E8B2DB77874005B44F0 /* nimblenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nimblenet.xcframework; path = ../nimblenet_ios/Assets/nimblenet.xcframework; sourceTree = "<group>"; };
 		F13F5E8D2DB7788D005B44F0 /* CrashReporter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CrashReporter.xcframework; path = ../nimblenet_ios/Assets/CrashReporter.xcframework; sourceTree = "<group>"; };
@@ -87,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05F18F4E7DA2F25FC69CACCF /* Pods_NimbleNetExample.framework in Frameworks */,
+				26B9CF408BD07B2069DA9DFB /* Pods_DeliteAIExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9D1C4B790D0C04DF3A45FCD /* Pods_NimbleNetExample_Tests.framework in Frameworks */,
+				396684460079E48AD972F328 /* Pods_DeliteAIExample_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +114,10 @@
 				92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */,
 				3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */,
 				4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */,
+				63F5DBE489A17DC490E5FB90 /* Pods-DeliteAIExample.debug.xcconfig */,
+				AFF83851746815C3639ABC57 /* Pods-DeliteAIExample.release.xcconfig */,
+				AB619045593387E6CE472905 /* Pods-DeliteAIExample_Tests.debug.xcconfig */,
+				E72ED322C5D26672A683F164 /* Pods-DeliteAIExample_Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -117,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* NimbleNetExample */,
+				607FACD21AFB9204008FA782 /* DeliteAIExample */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				A468A82C7A37DD62AFD7EF85 /* Frameworks */,
@@ -128,26 +137,26 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* NimbleNetExample.app */,
-				607FACE51AFB9204008FA782 /* NimbleNetExample_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* DeliteAIExample.app */,
+				607FACE51AFB9204008FA782 /* DeliteAIExample_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* NimbleNetExample */ = {
+		607FACD21AFB9204008FA782 /* DeliteAIExample */ = {
 			isa = PBXGroup;
 			children = (
+				89CD9EBF2E36B61D00BFAA23 /* MessageCell.swift */,
 				894C59412E164D8A001CF7CA /* BundleConfig.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				F12F6B7F2D6F389900A17447 /* company_proto.pb.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD71AFB9204008FA782 /* ChatViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				894C59642E1818E4001CF7CA /* NimbleNetExample-Bridging-Header.h */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			path = NimbleNetExample;
+			path = DeliteAIExample;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
@@ -199,8 +208,8 @@
 				F13F5E8B2DB77874005B44F0 /* nimblenet.xcframework */,
 				F18CB11A2CF4AAA7003664D8 /* CoreGraphics.framework */,
 				F1D5040C2CB6A5F300735D71 /* CrashReporter.xcframework */,
-				9FCEA74EEEB0E964DAAA3EB5 /* Pods_NimbleNetExample.framework */,
-				CF6ED17F51459EFD0732BE8D /* Pods_NimbleNetExample_Tests.framework */,
+				37F40CF57EC8F659A1FC1D26 /* Pods_DeliteAIExample.framework */,
+				8ECFAE9E341EFB5936373962 /* Pods_DeliteAIExample_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -208,9 +217,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* NimbleNetExample */ = {
+		607FACCF1AFB9204008FA782 /* DeliteAIExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NimbleNetExample" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DeliteAIExample" */;
 			buildPhases = (
 				A4AC73D3C64F3295DBF84693 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -224,14 +233,14 @@
 			);
 			dependencies = (
 			);
-			name = NimbleNetExample;
+			name = DeliteAIExample;
 			productName = nimblenet_ios;
-			productReference = 607FACD01AFB9204008FA782 /* NimbleNetExample.app */;
+			productReference = 607FACD01AFB9204008FA782 /* DeliteAIExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* NimbleNetExample_Tests */ = {
+		607FACE41AFB9204008FA782 /* DeliteAIExample_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NimbleNetExample_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DeliteAIExample_Tests" */;
 			buildPhases = (
 				ED56D5B1ACEB50F94BBA5595 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
@@ -245,9 +254,9 @@
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = NimbleNetExample_Tests;
+			name = DeliteAIExample_Tests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* NimbleNetExample_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* DeliteAIExample_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -262,18 +271,18 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 55Y9L3Q9HP;
+						DevelopmentTeam = 74SCV562N5;
 						LastSwiftMigration = 1430;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 55Y9L3Q9HP;
+						DevelopmentTeam = 74SCV562N5;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "NimbleNetExample" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "DeliteAIExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -287,8 +296,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* NimbleNetExample */,
-				607FACE41AFB9204008FA782 /* NimbleNetExample_Tests */,
+				607FACCF1AFB9204008FA782 /* DeliteAIExample */,
+				607FACE41AFB9204008FA782 /* DeliteAIExample_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -320,7 +329,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PLCrashReporter/PLCrashReporter.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -329,7 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		205F9C0D2015EB4C30BD4AB3 /* [CP] Copy Pods Resources */ = {
@@ -338,7 +347,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PLCrashReporter/PLCrashReporter.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -347,7 +356,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		872BCDDCDF40E59CAE2FC90B /* [CP] Embed Pods Frameworks */ = {
@@ -356,7 +365,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/onnxruntime-genai.framework/onnxruntime-genai",
@@ -371,7 +380,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample/Pods-NimbleNetExample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample/Pods-DeliteAIExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A4AC73D3C64F3295DBF84693 /* [CP] Check Pods Manifest.lock */ = {
@@ -389,7 +398,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NimbleNetExample-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-DeliteAIExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -402,7 +411,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DeliteAI/onnxruntime-genai.framework/onnxruntime-genai",
@@ -417,7 +426,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NimbleNetExample_Tests/Pods-NimbleNetExample_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DeliteAIExample_Tests/Pods-DeliteAIExample_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ED56D5B1ACEB50F94BBA5595 /* [CP] Check Pods Manifest.lock */ = {
@@ -435,7 +444,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NimbleNetExample_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-DeliteAIExample_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -449,7 +458,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				607FACD81AFB9204008FA782 /* ChatViewController.swift in Sources */,
+				89CD9EC02E36B62000BFAA23 /* MessageCell.swift in Sources */,
 				F12F6B802D6F389900A17447 /* company_proto.pb.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				894C59422E164D8A001CF7CA /* BundleConfig.swift in Sources */,
@@ -473,7 +483,7 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* NimbleNetExample */;
+			target = 607FACCF1AFB9204008FA782 /* DeliteAIExample */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -605,12 +615,12 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53C0DE2D56DD10C721CBA2CE /* Pods-NimbleNetExample.debug.xcconfig */;
+			baseConfigurationReference = 63F5DBE489A17DC490E5FB90 /* Pods-DeliteAIExample.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
+				DEVELOPMENT_TEAM = 74SCV562N5;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -623,18 +633,19 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/nimblenet_ios/nimblenet_ios.framework/Headers\"",
 					"$(SRCROOT)/Pods/**",
 				);
-				INFOPLIST_FILE = NimbleNetExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12;
+				INFOPLIST_FILE = DeliteAIExample/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeliteAI Example";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.demo.nimblenet-ios-Example1111";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "org.cocoapods.demo.nimblenet-ios-Example1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.delite.ai.example;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.delite.ai.example.ios;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.delite.ai.example.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "NimbleNetExample/NimbleNetExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -643,12 +654,12 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92ABF01D11C14E7EEC4B65A3 /* Pods-NimbleNetExample.release.xcconfig */;
+			baseConfigurationReference = AFF83851746815C3639ABC57 /* Pods-DeliteAIExample.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
+				DEVELOPMENT_TEAM = 74SCV562N5;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -661,18 +672,19 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/nimblenet_ios/nimblenet_ios.framework/Headers\"",
 					"$(SRCROOT)/Pods/**",
 				);
-				INFOPLIST_FILE = NimbleNetExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12;
+				INFOPLIST_FILE = DeliteAIExample/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "DeliteAI Example";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.demo.nimblenet-ios-Example1111";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "org.cocoapods.demo.nimblenet-ios-Example1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.delite.ai.example;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.delite.ai.example.ios;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.delite.ai.example.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "NimbleNetExample/NimbleNetExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
@@ -680,10 +692,10 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A3AE996B56207742C9AF5AC /* Pods-NimbleNetExample_Tests.debug.xcconfig */;
+			baseConfigurationReference = AB619045593387E6CE472905 /* Pods-DeliteAIExample_Tests.debug.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
+				DEVELOPMENT_TEAM = 74SCV562N5;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -697,23 +709,24 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.nimblenet-ios-Testswejik3e";
+				PRODUCT_BUNDLE_IDENTIFIER = com.delite.ai.example.test;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.delite.ai.example.test.ios;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.delite.ai.example.test.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample.app/NimbleNetExample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeliteAIExample.app/DeliteAIExample";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4040DA4B7B8F7A3945B9ADFF /* Pods-NimbleNetExample_Tests.release.xcconfig */;
+			baseConfigurationReference = E72ED322C5D26672A683F164 /* Pods-DeliteAIExample_Tests.release.xcconfig */;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				DEVELOPMENT_TEAM = 55Y9L3Q9HP;
+				DEVELOPMENT_TEAM = 74SCV562N5;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -723,21 +736,22 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_bundle;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.nimblenet-ios-Testswejik3e";
+				PRODUCT_BUNDLE_IDENTIFIER = com.delite.ai.example.test;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.delite.ai.example.test.ios;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.delite.ai.example.test.macOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NimbleNetExample.app/NimbleNetExample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeliteAIExample.app/DeliteAIExample";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "NimbleNetExample" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "DeliteAIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -746,7 +760,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NimbleNetExample" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DeliteAIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -755,7 +769,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NimbleNetExample_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DeliteAIExample_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
