@@ -26,6 +26,7 @@
 #include "../coreruntime/nimblenet/llm_executors/include/gemini_nano_executor.hpp"
 #include "file_download_state_transition_shadow.h"
 #include "mutable_map_shadow.h"
+#include "native_request_receiver_shadow.hpp"
 #include "nimble_net_error_shadow.h"
 #include "nimble_net_result_shadow.h"
 #include "user_event_data_shadow.h"
@@ -96,7 +97,7 @@ void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initialize
     FileDownloadStateTransitionShadow::init(env);
     HardwareInfoShadow::init(env);
     LogsUploadSchedulerShadow::init(env);
-    NativeRequest
+    NativeRequestReceiverShadow::init(env);
 #ifdef GEMINI
     geminiNanoHandlerShadow = GeminiNanoHandlerShadow(env);
 #endif  // GEMINI

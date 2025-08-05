@@ -14,7 +14,6 @@
 #include "logs_upload_scheduler_shadow.hpp"
 #include "native_request_receiver_shadow.hpp"
 #include "nimble_net_util.hpp"
-#include "../../../../jni/utils/jni_string.h"
 
 JavaVM *globalJvm;
 
@@ -314,6 +313,25 @@ bool deallocate_frontend_tensors(CTensors cTensors) { return true; }
 
 bool free_frontend_function_context(void *context) { return true; }
 
+/**
+ * @brief Private helper function to convert jstring to persistent C string.
+ *
+ * @param env JNI environment pointer.
+ * @param jStr Java string to convert.
+ * @return char* Persistent C string (caller must free), or nullptr on failure.
+ */
+static char* jstring_to_cstring(JNIEnv* env, jstring jStr) {
+  if (!jStr) return nullptr;
+  
+  const char* chars = env->GetStringUTFChars(jStr, nullptr);
+  if (!chars) return nullptr;
+  
+  char* result = strdup(chars);
+  env->ReleaseStringUTFChars(jStr, chars);
+  
+  return result;
+}
+
 char* get_phonemes(const char* text) {
   if (!text) {
     return nullptr;
@@ -335,7 +353,7 @@ char* get_phonemes(const char* text) {
     }
   }
 
-  jstring jText = JniString::cStringToJstring(env, text);
+  jstring jText = env->NewStringUTF(text);
   if (!jText) {
     if (attached) {
       globalJvm->DetachCurrentThread();
@@ -349,7 +367,7 @@ char* get_phonemes(const char* text) {
 
   char* phonemes = nullptr;
   if (result) {
-    phonemes = JniString::jstringToCString(env, (jstring)result);
+    phonemes = jstring_to_cstring(env, (jstring)result);
     env->DeleteLocalRef(result);
   }
 
@@ -359,7 +377,5 @@ char* get_phonemes(const char* text) {
 
   return phonemes;
 }
-
-
 
   

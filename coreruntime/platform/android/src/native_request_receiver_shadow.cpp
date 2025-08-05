@@ -9,7 +9,7 @@
 #include <cstdarg>
 #include <string>
 
-#include "../../../../jni/utils/jni_logger.h"
+#include "../../jni/utils/jni_logger.h"
 #include "client.h"
 #include "dependency_container_shadow.hpp"
 
