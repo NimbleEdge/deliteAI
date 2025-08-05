@@ -30,7 +30,9 @@ OpReturnType MatchObjectDataVariable::match_group(const std::vector<OpReturnType
   // If only one or no argument then return that match
   if (arguments.size() <= 1) {
     if (_smatch[index].matched) {
-      return OpReturnType(new SingleVariable<std::string>(_smatch.str(index)));
+      // Use character position aware extraction
+      std::string match_str = get_char_match(index);
+      return OpReturnType(new SingleVariable<std::string>(match_str));
     } else {
       return OpReturnType(new NoneVariable());
     }
@@ -40,7 +42,9 @@ OpReturnType MatchObjectDataVariable::match_group(const std::vector<OpReturnType
   for (int i = 0; i < arguments.size(); i++) {
     index = arguments[i]->get_int32();
     if (_smatch[index].matched) {
-      groups.push_back(OpReturnType(new SingleVariable<std::string>(_smatch.str(index))));
+      // Use character position aware extraction for each group
+      std::string match_str = get_char_match(index);
+      groups.push_back(OpReturnType(new SingleVariable<std::string>(match_str)));
     } else {
       groups.push_back(OpReturnType(new NoneVariable()));
     }
@@ -67,7 +71,9 @@ OpReturnType MatchObjectDataVariable::match_groups(const std::vector<OpReturnTyp
   std::vector<OpReturnType> matched_groups;
   for (int i = 0; i < _smatch.size(); i++) {
     if (_smatch[i].matched) {
-      matched_groups.push_back(OpReturnType(new SingleVariable<std::string>(_smatch.str(i))));
+      // Use character position aware extraction for each group
+      std::string match_str = get_char_match(i);
+      matched_groups.push_back(OpReturnType(new SingleVariable<std::string>(match_str)));
     } else {
       // If no default value then return None
       if (arguments.size() == 0) {
@@ -97,7 +103,9 @@ OpReturnType MatchObjectDataVariable::match_start(const std::vector<OpReturnType
   if (!_smatch[index].matched) {
     return OpReturnType(new SingleVariable<int32_t>(-1));
   }
-  return OpReturnType(new SingleVariable<int32_t>(_smatch.position(index)));
+  // Convert byte position to character position
+  int char_pos = byte_to_char_pos(_smatch.position(index));
+  return OpReturnType(new SingleVariable<int32_t>(char_pos));
 }
 
 OpReturnType MatchObjectDataVariable::match_end(const std::vector<OpReturnType>& arguments,
@@ -113,7 +121,10 @@ OpReturnType MatchObjectDataVariable::match_end(const std::vector<OpReturnType>&
   if (!_smatch[index].matched) {
     return OpReturnType(new SingleVariable<int32_t>(-1));
   }
-  return OpReturnType(new SingleVariable<int32_t>(_smatch.position(index) + _smatch.length(index)));
+  // Convert byte position to character position
+  int byte_end = _smatch.position(index) + _smatch.length(index);
+  int char_pos = byte_to_char_pos(byte_end);
+  return OpReturnType(new SingleVariable<int32_t>(char_pos));
 }
 
 OpReturnType MatchObjectDataVariable::match_span(const std::vector<OpReturnType>& arguments,
@@ -132,9 +143,14 @@ OpReturnType MatchObjectDataVariable::match_span(const std::vector<OpReturnType>
     span.push_back(OpReturnType(new SingleVariable<int32_t>(-1)));
     span.push_back(OpReturnType(new SingleVariable<int32_t>(-1)));
   } else {
-    span.push_back(OpReturnType(new SingleVariable<int32_t>(_smatch.position(index))));
-    span.push_back(
-        OpReturnType(new SingleVariable<int32_t>(_smatch.position(index) + _smatch.length(index))));
+    // Convert byte positions to character positions
+    int byte_start = _smatch.position(index);
+    int byte_end = byte_start + _smatch.length(index);
+    int char_start = byte_to_char_pos(byte_start);
+    int char_end = byte_to_char_pos(byte_end);
+
+    span.push_back(OpReturnType(new SingleVariable<int32_t>(char_start)));
+    span.push_back(OpReturnType(new SingleVariable<int32_t>(char_end)));
   }
   return OpReturnType(new TupleDataVariable(span));
 }
@@ -159,4 +175,41 @@ OpReturnType MatchObjectDataVariable::call_function(int memberFuncIndex,
       THROW("%s not implemented for RegexMatchObject",
             DataVariable::get_member_func_string(memberFuncIndex));
   }
+}
+
+// Private helper methods for MatchObjectDataVariable
+SingleVariable<std::string>* MatchObjectDataVariable::get_string_var() const {
+  return static_cast<SingleVariable<std::string>*>(_input_string.get());
+}
+
+int MatchObjectDataVariable::byte_to_char_pos(int byte_pos) const {
+  auto string_var = get_string_var();
+  if (!string_var) return -1;
+  int char_count = string_var->get_char_count();
+  for (int char_idx = 0; char_idx < char_count; char_idx++) {
+    int curr_byte_pos = string_var->char_idx_to_byte_pos(char_idx);
+    if (curr_byte_pos >= byte_pos) {
+      return char_idx;
+    }
+  }
+  return char_count;
+}
+
+std::string MatchObjectDataVariable::get_char_match(int index) const {
+  if (!_smatch[index].matched) {
+    return "";
+  }
+  auto string_var = get_string_var();
+  if (!string_var) return "";
+  int byte_start = _smatch.position(index);
+  int byte_end = byte_start + _smatch.length(index);
+  int char_start = byte_to_char_pos(byte_start);
+  int char_end = byte_to_char_pos(byte_end);
+  if (char_start == char_end) return "";
+  std::string result;
+  for (int i = char_start; i < char_end; i++) {
+    int byte_pos = string_var->char_idx_to_byte_pos(i);
+    result += util::utf8::extract_char(string_var->get_string(), byte_pos);
+  }
+  return result;
 }

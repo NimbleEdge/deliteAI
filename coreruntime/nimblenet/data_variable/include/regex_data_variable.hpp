@@ -106,6 +106,15 @@ class RegexDataVariable : public DataVariable {
   OpReturnType regex_subn(const std::vector<OpReturnType>& arguments, CallStack& stack);
 
   /**
+   * @brief Escapes all special regex metacharacters in a string
+   *
+   * @param args Vector containing a single string argument to escape
+   * @param stack Current call stack for execution context
+   * @return SingleVariable containing the escaped string
+   */
+  OpReturnType regex_escape(const std::vector<OpReturnType>& args, CallStack& stack);
+
+  /**
    * @brief Dispatches regex function calls based on member function index
    * @param memberFuncIndex Index identifying which regex operation to perform
    * @param arguments Arguments for the regex operation
@@ -120,5 +129,4 @@ class RegexDataVariable : public DataVariable {
 
   std::string print() override { return fallback_print(); }
 };
-
-#endif
+#endif  // REGEX_ENABLED
