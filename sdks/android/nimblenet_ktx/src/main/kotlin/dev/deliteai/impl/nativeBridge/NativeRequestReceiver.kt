@@ -4,7 +4,7 @@ import dev.deliteai.client.TextToSpeech
 
 internal class NativeRequestReceiver(private val textToSpeech: TextToSpeech?) {
     fun dispatch(functionName: String, vararg args: Any?): Any? = when (functionName) {
-        "get_phonemes" -> handleGetPhonemes(*args)
+        "getPhonemes" -> handleGetPhonemes(*args)
 
         else -> throw IllegalArgumentException("Unknown function: $functionName")
     }
