@@ -96,6 +96,7 @@ void JNICALL Java_dev_deliteai_impl_nativeBridge_impl_CoreRuntimeImpl_initialize
     FileDownloadStateTransitionShadow::init(env);
     HardwareInfoShadow::init(env);
     LogsUploadSchedulerShadow::init(env);
+    NativeRequest
 #ifdef GEMINI
     geminiNanoHandlerShadow = GeminiNanoHandlerShadow(env);
 #endif  // GEMINI

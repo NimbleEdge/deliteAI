@@ -114,9 +114,7 @@ def zeros(shape: list[int], dtype: str) -> Tensor:
 
   OpReturnType set_threads(const std::vector<OpReturnType>& arguments);
 
-#ifdef IOS
   OpReturnType convert_text_to_phonemes(const std::vector<OpReturnType>& arguments);
-#endif  // IOS
 
   OpReturnType call_function(int memberFuncIndex, const std::vector<OpReturnType>& arguments,
                              CallStack& stack) override;

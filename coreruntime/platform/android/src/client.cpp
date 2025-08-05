@@ -7,11 +7,14 @@
 #include "client.h"
 
 #include <string>
+#include <cstdarg>
 
 #include "file_download_state_transition_shadow.h"
 #include "hardware_info_shadow.hpp"
 #include "logs_upload_scheduler_shadow.hpp"
+#include "native_request_receiver_shadow.hpp"
 #include "nimble_net_util.hpp"
+#include "../../../../jni/utils/jni_string.h"
 
 JavaVM *globalJvm;
 
@@ -310,3 +313,53 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
 bool deallocate_frontend_tensors(CTensors cTensors) { return true; }
 
 bool free_frontend_function_context(void *context) { return true; }
+
+char* get_phonemes(const char* text) {
+  if (!text) {
+    return nullptr;
+  }
+
+  JNIEnv *env;
+  bool attached = false;
+  int getEnvStatus = globalJvm->GetEnv((void **)&env, JNI_VERSION_1_6);
+
+  if (getEnvStatus == JNI_EDETACHED) {
+    attached = true;
+    JavaVMAttachArgs args;
+    args.version = JNI_VERSION_1_6;
+    args.name = NULL;
+    args.group = NULL;
+
+    if (globalJvm->AttachCurrentThread(&env, NULL) != 0) {
+      return nullptr;
+    }
+  }
+
+  jstring jText = JniString::cStringToJstring(env, text);
+  if (!jText) {
+    if (attached) {
+      globalJvm->DetachCurrentThread();
+    }
+    return nullptr;
+  }
+
+  jobject result = NativeRequestReceiverShadow::dispatch(env, "getPhonemes", 1, jText);
+  
+  env->DeleteLocalRef(jText);
+
+  char* phonemes = nullptr;
+  if (result) {
+    phonemes = JniString::jstringToCString(env, (jstring)result);
+    env->DeleteLocalRef(result);
+  }
+
+  if (attached) {
+    globalJvm->DetachCurrentThread();
+  }
+
+  return phonemes;
+}
+
+
+
+  

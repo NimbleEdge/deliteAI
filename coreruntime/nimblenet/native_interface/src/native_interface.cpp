@@ -407,7 +407,5 @@ void create_symlink(const fs::path& target, const std::string& link) {
   }
 }
 
-#ifdef IOS
 const char* get_phonemes(const char* text) { return ::get_phonemes(text); }
-#endif  // IOS
 }  // namespace nativeinterface
