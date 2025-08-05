@@ -7,8 +7,11 @@
 #pragma once
 
 #include <regex>
+#include <utility>
 
+#include "core_utils/fmt.hpp"
 #include "data_variable.hpp"
+#include "single_variable.hpp"
 
 /**
  * @brief DataVariable implementation for regex match objects
@@ -22,7 +25,7 @@
  */
 class MatchObjectDataVariable : public DataVariable {
   std::smatch _smatch; /**< The regex match results containing all matched groups */
-  std::shared_ptr<std::string> _input; /**< Shared pointer to the original input string that was matched */
+  OpReturnType _input_string; /**< SingleVariable<std::string> containing the original input string */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
@@ -49,10 +52,19 @@ class MatchObjectDataVariable : public DataVariable {
   /**
    * @brief Constructs a MatchObjectDataVariable with regex match results
    * @param smatch The regex match results (moved)
-   * @param input Shared pointer to the original input string (moved)
+   * @param input_string The input string as an OpReturnType (SingleVariable<std::string>)
    */
-  MatchObjectDataVariable(std::smatch&& smatch, std::shared_ptr<std::string> input)
-      : _smatch(std::move(smatch)), _input(std::move(input)) {}
+  MatchObjectDataVariable(std::smatch&& smatch, const OpReturnType& input_string)
+      : _smatch(std::move(smatch)), _input_string(input_string) {
+    if (!input_string || input_string->get_dataType_enum() != DATATYPE::STRING) {
+      THROW("%s", "MatchObjectDataVariable requires a string variable");
+    }
+  }
 
   std::string print() override { return fallback_print(); }
+
+ private:
+  SingleVariable<std::string>* get_string_var() const;
+  int byte_to_char_pos(int byte_pos) const;
+  std::string get_char_match(int index) const;
 };
