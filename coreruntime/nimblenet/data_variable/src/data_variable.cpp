@@ -71,6 +71,7 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"start", MemberFuncType::REGEX_MATCHOBJECT_START},
     {"end", MemberFuncType::REGEX_MATCHOBJECT_END},
     {"span", MemberFuncType::REGEX_MATCHOBJECT_SPAN},
+    {"escape", MemberFuncType::REGEX_ESCAPE},
     {"upper", MemberFuncType::STRING_UPPER},
     {"lower", MemberFuncType::STRING_LOWER},
     {"strip", MemberFuncType::STRING_STRIP},
@@ -110,6 +111,10 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"encode", MemberFuncType::TOKENIZERS_ENCODE},
     {"decode", MemberFuncType::TOKENIZERS_DECODE},
     {"get_vocab_size", MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE},
+    {"get_hardware_info", MemberFuncType::GET_HARDWARE_INFO},
+#ifdef IOS
+    {"convert_text_to_phonemes", MemberFuncType::CONVERT_TEXT_TO_PHONEMES},
+#endif  // IOS
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -166,6 +171,7 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::REGEX_MATCHOBJECT_START, "start"},
     {MemberFuncType::REGEX_MATCHOBJECT_END, "end"},
     {MemberFuncType::REGEX_MATCHOBJECT_SPAN, "span"},
+    {MemberFuncType::REGEX_ESCAPE, "escape"},
     {MemberFuncType::STRING_UPPER, "upper"},
     {MemberFuncType::STRING_LOWER, "lower"},
     {MemberFuncType::STRING_STRIP, "strip"},
@@ -205,6 +211,10 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::TOKENIZERS_ENCODE, "encode"},
     {MemberFuncType::TOKENIZERS_DECODE, "decode"},
     {MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE, "get_vocab_size"},
+    {MemberFuncType::GET_HARDWARE_INFO, "get_hardware_info"},
+#ifdef IOS
+    {MemberFuncType::CONVERT_TEXT_TO_PHONEMES, "convert_text_to_phonemes"},
+#endif  // IOS
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {

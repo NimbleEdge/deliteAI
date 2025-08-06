@@ -9,7 +9,7 @@
 #include "base_llm_executor.hpp"
 #include "task.hpp"
 #ifdef EXECUTORCH_EXECUTOR
-#include "executorch/extension/llm/runner/runner.h"
+#include "executorch/extension/llm/runner/text_llm_runner.h"
 #endif  // EXECUTORCH_EXECUTOR
 #include "ne_fwd.hpp"
 #include "rigtorp/SPSCQueue.h"

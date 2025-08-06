@@ -44,7 +44,8 @@ class CommandCenter;
  * member function indices, providing a unified interface for script execution.
  */
 class NimbleNetDataVariable final : public DataVariable {
-  CommandCenter* _commandCenter = nullptr; /**< Pointer to the command center for system operations */
+  CommandCenter* _commandCenter =
+      nullptr; /**< Pointer to the command center for system operations */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
@@ -109,9 +110,15 @@ def zeros(shape: list[int], dtype: str) -> Tensor:
 
   OpReturnType list_compatible_llms(const std::vector<OpReturnType>& arguments);
 
+  OpReturnType get_hardware_info(const std::vector<OpReturnType>& arguments, CallStack& stack);
+
   OpReturnType create_concurrent_executor(const std::vector<OpReturnType>& arguments);
 
   OpReturnType set_threads(const std::vector<OpReturnType>& arguments);
+
+#ifdef IOS
+  OpReturnType convert_text_to_phonemes(const std::vector<OpReturnType>& arguments);
+#endif  // IOS
 
   OpReturnType call_function(int memberFuncIndex, const std::vector<OpReturnType>& arguments,
                              CallStack& stack) override;
