@@ -209,6 +209,13 @@ dependencies {
 
 ### SDK Configuration
 
+> **Note**: If you're using the pre-released version of the SDK from our repository, you can skip this section entirely.
+
+This section describes how to configure the SDK for development and release builds. It is primarily relevant for:
+- SDK maintainers and contributors
+- Organizations creating custom SDK builds
+- Developers who need to modify SDK behavior at build time
+
 The SDK's native behavior is controlled by `deliteAI/config.yml`.
 
 ```yaml
@@ -235,6 +242,29 @@ For a complete list of supported flags, refer to our
 ## Integration Example
 
 ### Initialize the SDK
+
+There are two ways to initialize the DeliteAI SDK:
+
+1. **Online Mode**: 
+   - On first launch, the SDK will automatically download all required assets (models, scripts, configurations) from the DeliteAI backend servers
+   - These assets are then cached locally on the device
+   - All subsequent app launches will use the cached assets, allowing the SDK to function offline
+   - The SDK will periodically check for and download updates to assets when online connectivity is available
+
+2. **Offline Mode**:
+   - This mode is for apps that need to work completely offline from the first launch
+   - All required assets must be bundled within your Android app's assets folder during build time
+   - No internet connectivity or backend communication is needed
+   - You'll need to manually update the bundled assets when new versions are available by rebuilding your app
+
+Choose the initialization mode that best fits your app's requirements for connectivity and asset management.
+
+NOTE:
+When using offline mode, you can't bundle the raw python file into the app. It first needs to be converted to AST and the generated file must be bundled. To do that run the following command:
+
+```bash
+cd "$(git rev-parse --show-toplevel)" && python3 coreruntime/scripts/gen_python_ast.py <your_python_script_location>
+```
 
 ```kotlin
 import dev.deliteai.NimbleNet
