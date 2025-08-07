@@ -11,6 +11,8 @@
 #include <optional>
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 #include "core_utils/fmt.hpp"
 #include "native_interface_constants.hpp"
 #include "native_interface_structs.hpp"
@@ -232,6 +234,13 @@ void set_thread_priority_max();
  */
 bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinutesIfFailed,
                           const char* workManagerConfigJsonChar);
+
+/**
+ * @brief Returns hardware information as a JSON object.
+ *
+ * @return JSON object containing hardware information
+ */
+nlohmann::json get_hardware_info();
 
 const char* get_phonemes(const char* text);
 }  // namespace nativeinterface
