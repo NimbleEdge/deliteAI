@@ -25,14 +25,6 @@ public:
         return env->NewStringUTF(str);
     }
 
-    static char* jstringToCString(JNIEnv *env, jstring jStr) {
-        if (!jStr) return nullptr;
-        const char *chars = env->GetStringUTFChars(jStr, nullptr);
-        char *result = strdup(chars);  // Create persistent copy
-        env->ReleaseStringUTFChars(jStr, chars);
-        return result;
-    }
-
     static std::string constCharToStdString(const char *str) {
         if (!str) return "";
         return std::string(str);
