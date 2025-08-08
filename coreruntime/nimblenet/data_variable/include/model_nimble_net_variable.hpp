@@ -108,7 +108,6 @@ class ModelNimbleNetVariable final : public DataVariable {
     THROW("%s not implemented for nimblenet",
           DataVariable::get_member_func_string(memberFuncIndex));
   }
-
   nlohmann::json to_json() const override { return "[Model]"; }
 
  public:
