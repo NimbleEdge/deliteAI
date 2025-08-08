@@ -590,11 +590,9 @@ OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
       return list_compatible_llms(arguments);
     case MemberFuncType::GET_HARDWARE_INFO:
       return get_hardware_info(arguments, stack);
-#ifdef IOS
     case MemberFuncType::CONVERT_TEXT_TO_PHONEMES:
       // TODO (jpuneet): Should this be a part of another DelitePy module?
       return convert_text_to_phonemes(arguments);
-#endif  // IOS
   }
   THROW("%s not implemented for nimblenet", DataVariable::get_member_func_string(memberFuncIndex));
 }
