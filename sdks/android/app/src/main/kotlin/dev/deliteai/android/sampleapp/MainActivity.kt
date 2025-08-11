@@ -168,7 +168,6 @@ fun addEvent() = NimbleNet.addEvent(
     ), "ContestJoinedClient"
 ).toString()
 
-
 class TextToSpeechImpl : TextToSpeech {
     override fun getPhonemes(text: String): String {
         Log.e("BRIDGE", "getPhonemes: Oh! yes! working!!1", )
