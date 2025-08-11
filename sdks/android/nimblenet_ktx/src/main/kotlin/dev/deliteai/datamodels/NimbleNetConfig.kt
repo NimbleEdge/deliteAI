@@ -6,9 +6,9 @@
 
 package dev.deliteai.datamodels
 
+import dev.deliteai.client.TextToSpeech
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import dev.deliteai.impl.common.SDK_CONSTANTS
-import dev.deliteai.client.TextToSpeech
 import org.json.JSONObject
 
 /**
@@ -116,7 +116,6 @@ class NimbleNetConfig(
     val showDownloadProgress: Boolean = false,
     val online: Boolean = false,
     val textToSpeechImpl: TextToSpeech? = null,
-    
 ) {
     private var internalDeviceId: String? = null
 
