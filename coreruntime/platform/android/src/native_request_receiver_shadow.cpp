@@ -50,9 +50,10 @@ jobject NativeRequestReceiverShadow::dispatch(JNIEnv* env, const std::string& fu
 
   jstring jFunctionName = env->NewStringUTF(functionName.c_str());
 
-  // Create array with the specified number of arguments
+  // Create an array with the specified number of arguments
   jclass objectClass = env->FindClass("java/lang/Object");
   jobjectArray argsArray = env->NewObjectArray(argCount, objectClass, nullptr);
+  env->DeleteLocalRef(objectClass);
 
   // Process variable arguments
   va_list args;
