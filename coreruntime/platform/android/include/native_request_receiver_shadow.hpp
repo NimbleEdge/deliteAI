@@ -9,7 +9,6 @@
 #include <jni.h>
 
 #include <string>
-#include <cstdarg>
 
 class NativeRequestReceiverShadow {
  public:
