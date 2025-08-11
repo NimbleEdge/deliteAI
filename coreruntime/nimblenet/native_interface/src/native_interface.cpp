@@ -417,4 +417,5 @@ nlohmann::json get_hardware_info() {
 }
 
 const char* get_phonemes(const char* text) { return ::get_phonemes(text); }
+
 }  // namespace nativeinterface
