@@ -105,7 +105,9 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"add_context", MemberFuncType::ADD_CONTEXT},
     {"list_compatible_llms", MemberFuncType::LIST_COMPATIBLE_LLMS},
     {"get_hardware_info", MemberFuncType::GET_HARDWARE_INFO},
+#if defined(__ANDROID__) || defined(IOS)
     {"convert_text_to_phonemes", MemberFuncType::CONVERT_TEXT_TO_PHONEMES},
+#endif  // defined(__ANDROID__) || defined(IOS)
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -196,7 +198,9 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::ADD_CONTEXT, "add_context"},
     {MemberFuncType::LIST_COMPATIBLE_LLMS, "list_compatible_llms"},
     {MemberFuncType::GET_HARDWARE_INFO, "get_hardware_info"},
+#if defined(__ANDROID__) || defined(IOS)
     {MemberFuncType::CONVERT_TEXT_TO_PHONEMES, "convert_text_to_phonemes"},
+#endif  // defined(__ANDROID__) || defined(IOS)
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {
