@@ -7,7 +7,6 @@
 #include "client.h"
 
 #include <string>
-#include <cstdarg>
 
 #include "file_download_state_transition_shadow.h"
 #include "hardware_info_shadow.hpp"
@@ -313,6 +312,8 @@ bool deallocate_frontend_tensors(CTensors cTensors) { return true; }
 
 bool free_frontend_function_context(void *context) { return true; }
 
+namespace {
+
 /**
  * @brief Private helper function to convert jstring to persistent C string.
  *
@@ -320,24 +321,26 @@ bool free_frontend_function_context(void *context) { return true; }
  * @param jStr Java string to convert.
  * @return char* Persistent C string (caller must free), or nullptr on failure.
  */
-static char* jstring_to_cstring(JNIEnv* env, jstring jStr) {
+char* jstring_to_cstring(JNIEnv* env, jstring jStr) {
   if (!jStr) return nullptr;
-  
+
   const char* chars = env->GetStringUTFChars(jStr, nullptr);
   if (!chars) return nullptr;
-  
+
   char* result = strdup(chars);
   env->ReleaseStringUTFChars(jStr, chars);
-  
+
   return result;
 }
+
+}  // namespace
 
 char* get_phonemes(const char* text) {
   if (!text) {
     return nullptr;
   }
 
-  JNIEnv *env;
+  JNIEnv* env;
   bool attached = false;
   int getEnvStatus = globalJvm->GetEnv((void **)&env, JNI_VERSION_1_6);
 
@@ -362,7 +365,7 @@ char* get_phonemes(const char* text) {
   }
 
   jobject result = NativeRequestReceiverShadow::dispatch(env, "getPhonemes", 1, jText);
-  
+
   env->DeleteLocalRef(jText);
 
   char* phonemes = nullptr;
@@ -377,5 +380,3 @@ char* get_phonemes(const char* text) {
 
   return phonemes;
 }
-
-  
