@@ -315,11 +315,8 @@ private fun initializeNimbleNet() {
     val assetsJson = JSONArray(assetsJsonStr)
 
     CoroutineScope(Dispatchers.Default).launch {
-        // Initialize SDK in online mode
-        val result = NimbleNet.initialize(applicationContext, onlineConfig)
-
-        // Initialize SDK in offline mode (uncomment the line below)
-        // val result = NimbleNet.initialize(applicationContext, offlineConfig, assetsJson)
+        // Initialize SDK in offline mode
+        val result = NimbleNet.initialize(applicationContext, offlineConfig, assetsJson)
 
         if (result.status) {
             Log.d("NimbleNet", "SDK initialized successfully")
