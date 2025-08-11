@@ -132,7 +132,6 @@ private constructor(
         NativeRequestReceiver(nimbleNetConfig.textToSpeechImpl)
     }
 
-
     // nimblenet_ktx
     fun getNimbleNetController(): NimbleNetController = nimbleNetControllerSingleton
 
