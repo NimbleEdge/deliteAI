@@ -16,7 +16,7 @@ internal class NativeRequestReceiver(private val textToSpeech: TextToSpeech?) {
     }
 
     private fun handleGetPhonemes(vararg args: Any?): String? {
-        if(textToSpeech == null) throw Exception("TextToSpeechImpl not found in NimbleNetConfig")
+        if (textToSpeech == null) throw Exception("TextToSpeechImpl not found in NimbleNetConfig")
 
         val txt = args.getOrNull(0) as? String
             ?: throw IllegalArgumentException("get_phonemes requires a String")
