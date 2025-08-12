@@ -281,7 +281,7 @@ Android assets cannot contain raw Python source files. Convert your script to AS
 
 ```bash
 cd "$(git rev-parse --show-toplevel)"
-python3 coreruntime/scripts/gen_python_ast.py path/to/your_script.py
+python3 coreruntime/scripts/gen_python_ast.py <path to deliteai_script.py>
 ```
 
 This generates `deliteai_script.ast`. Place this file in `app/src/main/assets/`.
