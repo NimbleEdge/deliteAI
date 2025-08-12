@@ -307,7 +307,7 @@ private fun initializeNimbleNet() {
                 "version": "1.0.0",
                 "type": "script",
                 "location": {
-                    "path": "your_script.ast"
+                    "path": "deliteai_script.ast"
                 }
             }
         ]"""
