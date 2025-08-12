@@ -284,7 +284,7 @@ cd "$(git rev-parse --show-toplevel)"
 python3 coreruntime/scripts/gen_python_ast.py path/to/your_script.py
 ```
 
-This generates `your_script.ast`. Place this file in `app/src/main/assets/`.
+This generates `deliteai_script.ast`. Place this file in `app/src/main/assets/`.
 
 ##### SDK Initialization Code
 
