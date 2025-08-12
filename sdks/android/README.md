@@ -266,7 +266,7 @@ The SDK supports two mutually exclusive initialization modes:
 
 ##### Example Python Script
 
-For offline mode, create a Python script with your AI workflow:
+For offline mode, create a Python script "deliteai_script.py" with your AI workflow:
 
 ```python
 def myFunction(inputMap):
