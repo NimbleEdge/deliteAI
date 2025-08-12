@@ -269,7 +269,7 @@ The SDK supports two mutually exclusive initialization modes:
 For offline mode, create a Python script with your AI workflow:
 
 ```python
-def function1(inputMap):
+def myFunction(inputMap):
     text = inputMap["input_key"]
     print(text)  # Visible in Logcat
     return {"output_key": text + "Output"}
