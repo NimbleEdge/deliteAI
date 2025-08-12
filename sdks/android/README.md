@@ -246,7 +246,7 @@ The integration workflow includes:
 
 1. **Initialize the SDK** - Configure and start the NimbleNet SDK
 2. **Check SDK readiness** - Verify the SDK is ready for use
-3. **Execute AI models** - Run Python workflows from Kotlin
+3. **Execute AI models** - Run Python workflow scripts and call Python methods with AI logic from Kotlin
 4. **Track events** - Optional analytics and event tracking
 
 ### 1. Initialize the SDK
