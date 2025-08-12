@@ -366,7 +366,7 @@ private fun runPyWorkflow() {
 
     CoroutineScope(Dispatchers.Default).launch {
         val result = NimbleNet.runMethod(
-            methodName = "function1",
+            methodName = "myFunction",
             inputs = inputs
         )
 
