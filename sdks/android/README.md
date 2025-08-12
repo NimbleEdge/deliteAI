@@ -386,7 +386,7 @@ private fun runPyWorkflow() {
 
 ### 4. Track Events (Optional)
 
-Track user interactions and custom analytics events:
+Track user interactions and custom analytics events in Python workflow scripts for use in your AI logic:
 
 ```kotlin
 private fun trackUserInteraction() {
