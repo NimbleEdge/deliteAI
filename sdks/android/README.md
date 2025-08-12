@@ -365,7 +365,7 @@ private fun runPyWorkflow() {
     )
 
     CoroutineScope(Dispatchers.Default).launch {
-        // The hashmap named inputs will be passed to the Python function named myFunction,
+        // The hashmap inputs (defined above) will be passed to the Python function named myFunction,
         // and the data can be accessed as "hello world" using inputs["input_key"]
         val result = NimbleNet.runMethod(
             methodName = "myFunction",
@@ -375,7 +375,7 @@ private fun runPyWorkflow() {
         withContext(Dispatchers.Main) {
             if (result.status) {
                 // A dictionary will be returned by the Python script and you can access the data
-                // using the key set in the Python script, in our example, that's output_key
+                // using the key set in the Python script, in our example, that's "output_key"
                 val outputs = result.payload!!
                 val output = outputs["output_key"]?.data as? String
 
