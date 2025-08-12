@@ -95,7 +95,8 @@ import org.json.JSONObject
  *   Default: false
  *     @param online Whether the assets will be downloaded from cloud or they are already bundled
  *       with the app Default: false
- *     @param textToSpeechImpl Optional TextToSpeech implementation for phoneme generation. Default: null
+ *     @param textToSpeechImpl Optional TextToSpeech implementation for phoneme generation. Default:
+ *       null
  * @see NIMBLENET_VARIANTS
  * @see SDK_CONSTANTS
  * @since 1.0.0
@@ -187,7 +188,8 @@ class NimbleNetConfig(
                 "internalDeviceId" to this.internalDeviceId,
                 "showDownloadProgress" to this.showDownloadProgress,
                 "online" to this.online,
-                // textToSpeechImpl is not serialized as it's used in the Kotlin layer and doesn't get passed to the core SDK
+                // textToSpeechImpl is not serialized as it's used in the Kotlin layer and doesn't
+                // get passed to the core SDK
             )
 
         // conditional entries
@@ -241,7 +243,8 @@ class NimbleNetConfig(
                         } ?: arrayOf(),
                     showDownloadProgress = jsonObject.optBoolean("showDownloadProgress", false),
                     online = jsonObject.optBoolean("online", false),
-                    // textToSpeechImpl is not deserialized as it's used in the Kotlin layer and doesn't get passed to the core SDK
+                    // textToSpeechImpl is not deserialized as it's used in the Kotlin layer and
+                    // doesn't get passed to the core SDK
                 )
                 .apply {
                     if (jsonObject.has("internalDeviceId")) {

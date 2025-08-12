@@ -163,8 +163,7 @@ private constructor(
     fun getCoreRuntime(): CoreRuntime = coreRuntimeInterfaceSingleton
 
     companion object {
-        @Volatile
-        private var instance: DependencyContainer? = null
+        @Volatile private var instance: DependencyContainer? = null
 
         @JvmStatic
         fun getInstance(
