@@ -28,7 +28,7 @@ Example Android app demonstrating the Notifications Summarizer Agent integration
 
 3. **Generate Python AST and move it into your Android assets**
    ```bash
-   python3 coreruntime/scripts/gen_python_ast.py \
+   coreruntime/scripts/gen_python_ast.py \
      agents/notifications_summarizer/delitepyAssets/main.py \
      && mv "${_%.py}.ast" agents/examples/android/app/src/main/assets/
    ```
