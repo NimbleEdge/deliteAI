@@ -12,6 +12,7 @@
 #include "dataframe_variable.hpp"
 #include "model_nimble_net_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "nlohmann/json_fwd.hpp"
 #include "pre_processor_nimble_net_variable.hpp"
 #include "raw_event_store_data_variable.hpp"
@@ -116,9 +117,9 @@ def zeros(shape: list[int], dtype: str) -> Tensor:
 
   OpReturnType set_threads(const std::vector<OpReturnType>& arguments);
 
-#if defined(__ANDROID__) || defined(IOS)
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   OpReturnType convert_text_to_phonemes(const std::vector<OpReturnType>& arguments);
-#endif  // defined(__ANDROID__) || defined(IOS)
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 
   OpReturnType call_function(int memberFuncIndex, const std::vector<OpReturnType>& arguments,
                              CallStack& stack) override;

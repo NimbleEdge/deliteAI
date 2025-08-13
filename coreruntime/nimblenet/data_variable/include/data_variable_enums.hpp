@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "nimble_net/config.h"
+
 /**
  * @file data_variable_enums.hpp
  * @brief Enumeration definitions for data variable container types and member function types
@@ -132,8 +134,8 @@ enum MemberFuncType {
   ADD_CONTEXT,
   LIST_COMPATIBLE_LLMS,
   GET_HARDWARE_INFO,
-#if defined(__ANDROID__) || defined(IOS)
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   CONVERT_TEXT_TO_PHONEMES,
-#endif  // defined(__ANDROID__) || defined(IOS)
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   LASTTYPE,  // should be last
 };
