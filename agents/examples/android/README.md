@@ -35,7 +35,7 @@ Example Android app demonstrating the Notifications Summarizer Agent integration
 
 4. **Open in Android Studio**
    ```bash
-   cd deliteAI/agents/examples/android
+   cd agents/examples/android
    ```
    Open this directory in Android Studio.
 
