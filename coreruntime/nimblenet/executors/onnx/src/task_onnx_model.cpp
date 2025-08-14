@@ -8,21 +8,18 @@
 
 #include "data_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "onnx_operators.hpp"
 #include "tensor_data_variable.hpp"
 
 #ifdef ORT_EXTENSIONS
-#ifdef __cplusplus
-extern "C" {
-#endif  // __cplusplus
+EXTERN_C_BEGIN
 
 OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
 
 int ORT_API_CALL GetActiveOrtAPIVersion();
 
-#ifdef __cplusplus
-}
-#endif  // __cplusplus
+EXTERN_C_END
 #endif  // ORT_EXTENSIONS
 
 // =================================================================================================
@@ -39,9 +36,11 @@ int xnnpack_intra_op_num_threads = 6;
  */
 void add_common_session_options(Ort::SessionOptions& sessionOptions) {
   sessionOptions.AddConfigEntry("session.use_ort_model_bytes_directly", "1");
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   sessionOptions.AppendExecutionProvider(
       "XNNPACK", {std::pair<std::string, std::string>(
                      "intra_op_num_threads", ne::fmt("%d", xnnpack_intra_op_num_threads).str)});
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 #ifdef ORT_EXTENSIONS
   Ort::ThrowOnError(RegisterCustomOps((OrtSessionOptions*)sessionOptions, OrtGetApiBase()));
 #endif  // ORT_EXTENSIONS
@@ -157,7 +156,7 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
   std::string configProviderName = epConfig.find("providerName") != epConfig.end()
                                        ? epConfig["providerName"].get<std::string>()
                                        : "";
-#if defined(__ANDROID__) && defined(NNAPI)
+#if DELITEAI_TARGET_OS_ANDROID && defined(NNAPI)
   if (configProviderName == "XNNPACK") {
     std::unordered_map<std::string, std::string> provider_options = {};
     if (epConfig.find("providerSettings") != epConfig.end()) {
@@ -172,7 +171,7 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
     }
     Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_Nnapi(sessionOptions, nnapi_flags));
   }
-#elif IOS
+#elif DELITEAI_TARGET_OS_IOS
 #endif
   if (epConfig.find("intraOpNumThreads") != epConfig.end()) {
     sessionOptions.SetIntraOpNumThreads(epConfig["intraOpNumThreads"].get<int>());
@@ -192,11 +191,11 @@ void TaskONNXModel::load_model_from_buffer() {
   Ort::CustomOpDomain deliteai_operator_domain{"dev.deliteai"};
   register_custom_onnx_operators(deliteai_operator_domain);
   nlohmann::json epConfigListToCheck = nlohmann::json::array();
-#if defined(__ANDROID__)
+#if DELITEAI_TARGET_OS_ANDROID
   if (_epConfig.contains("android")) {
     epConfigListToCheck = _epConfig.at("android");
   }
-#elif IOS
+#elif DELITEAI_TARGET_OS_IOS
   if (_epConfig.contains("ios")) {
     epConfigListToCheck = _epConfig.at("ios");
   }
