@@ -192,8 +192,8 @@ elif [[ "$sdk" == "ios" ]]; then
     fi
 
     if [[ $download_executorch -eq 1 ]]; then
-        mkdir -p third_party/runtime/executorch/ios/d4906e21_executorch
-        aws s3 cp s3://deliteai/build-dependencies/executorch-d4906e21/ios third_party/runtime/executorch/ios/d4906e21_executorch --recursive --no-sign-request
+        mkdir -p third_party/runtime/executorch/ios/e9c11a40_executorch
+        aws s3 cp s3://deliteai/build-dependencies/executorch-e9c11a40/ios third_party/runtime/executorch/ios/e9c11a40_executorch --recursive --no-sign-request
     fi
 fi
 

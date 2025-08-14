@@ -181,4 +181,11 @@ bool deallocate_frontend_tensors(CTensors cTensors);
  */
 bool free_frontend_function_context(void* context);
 
+/**
+ * @brief Return phonemes of the given string.
+ *
+ * @return char* Pointer to phoneme string.
+ */
+char* get_phonemes(const char* text);
+ 
 #pragma GCC visibility pop

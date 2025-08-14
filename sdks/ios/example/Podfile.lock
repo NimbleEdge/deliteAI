@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.10.2)
-  - DeliteAI (0.0.2):
+  - DeliteAI (0.0.1-local):
     - Alamofire (~> 5.0)
     - PLCrashReporter
     - SwiftProtobuf (~> 1.18)
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  DeliteAI: 0dea31baa282a1af2d1bfe9159c33fca1f215cd4
+  DeliteAI: 20dced73e512e66a0a92085da5df1c367a6b0720
   PLCrashReporter: db59ef96fa3d25f3650040d02ec2798cffee75f2
   SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
 

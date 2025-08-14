@@ -6,6 +6,7 @@
 
 #ifndef FunctionPointersImpl_h
 #define FunctionPointersImpl_h
+
 #import "nimble_net_util.hpp"
 #import "executor_structs.h"
 
@@ -22,6 +23,8 @@ struct FileDownloadInfo download_model_interop(const char *url, const char *head
 bool set_thread_priority_min_interop();
 bool set_thread_priority_max_interop();
 
+char *get_phonemes_interop(const char *text);
+
 NimbleNetStatus* get_ios_object_string_subscript(IosObject proto, const char* key, CTensor* child);
 NimbleNetStatus* get_ios_object_int_subscript(IosObject proto, int key, CTensor* child);
 void deallocate_ios_nimblenet_status(NimbleNetStatus* status);
@@ -35,4 +38,5 @@ NimbleNetStatus* ios_object_arrange(IosObject obj, const int* indices,int numInd
 NimbleNetStatus* in_ios_object(IosObject obj, const char* key, bool* result);
 NimbleNetStatus* release_ios_object(IosObject obj);
 NimbleNetStatus* get_keys_ios_object(IosObject obj, CTensor* result);
+
 #endif /* FunctionPointersImpl_h */

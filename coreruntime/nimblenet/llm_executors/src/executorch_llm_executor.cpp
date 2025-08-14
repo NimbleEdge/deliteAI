@@ -23,8 +23,8 @@ ExecutorchLLMExecutor::ExecutorchLLMExecutor(
   _temperature = temperature;
 
   try {
-    _runner = example::Runner::create(modelDirectoryPath + "/" + pteFileName + ".pte",
-                                      modelDirectoryPath + "/" + tokenizerFileName, std::nullopt,
+    _runner = executorch::extension::llm::create_text_llm_runner(modelDirectoryPath + "/" + pteFileName + ".pte",
+                                      executorch::extension::llm::load_tokenizer(modelDirectoryPath + "/" + tokenizerFileName), std::nullopt,
                                       temperature);
     _runner->load();
     if (!_runner->is_loaded()) {
@@ -42,6 +42,11 @@ std::shared_ptr<CharStream> ExecutorchLLMExecutor::run_prompt(const std::string&
   std::lock_guard<std::mutex> lock{_mutex};
 
   stop_inference_thread();
+  if (!_runner->is_loaded()) {
+      LOG_TO_CLIENT_ERROR("LLM Runner is not loaded");
+      _runner->load();
+  }
+
   // Creating these variables again to drop ones used by previous inference
   _charStream = CharStream::construct();
   _internalQueue = std::make_shared<Queue>(_executorConfig.internalQueueSize);
@@ -82,31 +87,31 @@ void ExecutorchLLMExecutor::run_inference(const std::string& prompt) {
   try {
     executorch::extension::llm::GenerationConfig config{
         .echo = false,
-        .seq_len = _executorConfig.maxInputNumTokens,
         .temperature = _temperature,
     };
-    auto status = _runner->generate_from_pos(prompt, config, _start_pos, token_callback, {});
+    if (!_runner->is_loaded()) {
+        _runner->load();
+    }
+    auto status = _runner->generate(prompt, config, token_callback, {});
     if (status != ::executorch::runtime::Error::Ok) {
       mark_end_of_stream();
-      LOG_TO_CLIENT_ERROR("Error while running inference on LLM using executorch.");
     }
   } catch (const std::exception& e) {
     mark_end_of_stream();
-    LOG_TO_CLIENT_ERROR("Error: %s while running inference on LLM using executorch.", e.what());
   }
 }
 
 void ExecutorchLLMExecutor::add_prompt(const std::string& prompt) {
   std::lock_guard<std::mutex> lock{_mutex};
   stop_inference_thread();
-  try {
-    auto status = _runner->prefill_prompt(prompt, _start_pos, 0, 0);
-    if (!status.ok()) {
-      LOG_TO_CLIENT_ERROR("Error while setting context in LLM using executorch.");
-    }
-  } catch (const std::exception& e) {
-    LOG_TO_CLIENT_ERROR("Error: %s while setting context in LLM using executorch.", e.what());
-  }
+  // try {
+  //   auto status = _runner->prefill_prompt(prompt, _start_pos, 0, 0);
+  //   if (!status.ok()) {
+  //     LOG_TO_CLIENT_ERROR("Error while setting context in LLM using executorch.");
+  //   }
+  // } catch (const std::exception& e) {
+  //   LOG_TO_CLIENT_ERROR("Error: %s while setting context in LLM using executorch.", e.what());
+  // }
 }
 
 void ExecutorchLLMExecutor::cancel() {

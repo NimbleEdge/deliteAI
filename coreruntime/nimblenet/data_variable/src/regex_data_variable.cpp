@@ -9,6 +9,7 @@
 #include "regex_data_variable.hpp"
 
 #include <climits>
+#include <string_view>
 
 #include "match_object_data_variable.hpp"
 #include "single_variable.hpp"
@@ -29,9 +30,9 @@ OpReturnType RegexDataVariable::regex_match(const std::vector<OpReturnType>& arg
   // to use match_continuous flag and regex_search
   std::string pattern = arguments[0]->get_string();
   std::regex re = std::regex(pattern);
-  auto input = std::make_shared<std::string>(arguments[1]->get_string());
-  if (std::regex_search(*input, match_result, re, std::regex_constants::match_continuous)) {
-    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), std::move(input)));
+  std::string input_str = arguments[1]->get_string();
+  if (std::regex_search(input_str, match_result, re, std::regex_constants::match_continuous)) {
+    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), arguments[1]));
   }
   return OpReturnType(new NoneVariable());
 }
@@ -46,10 +47,10 @@ OpReturnType RegexDataVariable::regex_search(const std::vector<OpReturnType>& ar
   // lookbehind assertion not supported like re.search("(?<=abc)def", "abcdef") by
   // std::regex_search
   std::smatch match_result;
-  auto input = std::make_shared<std::string>(arguments[1]->get_string());
+  std::string input_str = arguments[1]->get_string();
   std::regex re(arguments[0]->get_string());
-  if (std::regex_search(*input, match_result, re)) {
-    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), std::move(input)));
+  if (std::regex_search(input_str, match_result, re)) {
+    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), arguments[1]));
   }
   return OpReturnType(new NoneVariable());
 }
@@ -62,10 +63,10 @@ OpReturnType RegexDataVariable::regex_fullmatch(const std::vector<OpReturnType>&
   THROW_ARGUMENT_DATATYPE_NOT_MATCH(arguments[1]->get_dataType_enum(), DATATYPE::STRING, 1,
                                     MemberFuncType::REGEX_FULLMATCH);
   std::smatch match_result;
-  auto input = std::make_shared<std::string>(arguments[1]->get_string());
+  std::string input_str = arguments[1]->get_string();
   std::regex re(arguments[0]->get_string());
-  if (std::regex_match(*input, match_result, re)) {
-    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), std::move(input)));
+  if (std::regex_match(input_str, match_result, re)) {
+    return OpReturnType(new MatchObjectDataVariable(std::move(match_result), arguments[1]));
   }
   return OpReturnType(new NoneVariable());
 }
@@ -153,13 +154,13 @@ OpReturnType RegexDataVariable::regex_finditer(const std::vector<OpReturnType>& 
                                     MemberFuncType::REGEX_FINDITER);
 
   std::regex regex_pattern(arguments[0]->get_string());
-  auto input = std::make_shared<std::string>(arguments[1]->get_string());
-  auto words_begin = std::sregex_iterator(input->begin(), input->end(), regex_pattern);
+  std::string input_str = arguments[1]->get_string();
+  auto words_begin = std::sregex_iterator(input_str.begin(), input_str.end(), regex_pattern);
   auto words_end = std::sregex_iterator();
   std::vector<OpReturnType> result;
   for (std::sregex_iterator it = words_begin; it != words_end; it++) {
     std::smatch smatch = *it;
-    result.push_back(OpReturnType(new MatchObjectDataVariable(std::move(smatch), input)));
+    result.push_back(OpReturnType(new MatchObjectDataVariable(std::move(smatch), arguments[1])));
   }
   return OpReturnType(new ListDataVariable(std::move(result)));
 }
@@ -247,6 +248,23 @@ OpReturnType RegexDataVariable::regex_subn(const std::vector<OpReturnType>& argu
   return OpReturnType(new TupleDataVariable(std::move(list)));
 }
 
+OpReturnType RegexDataVariable::regex_escape(const std::vector<OpReturnType>& args, CallStack& stack) {
+  THROW_ARGUMENTS_NOT_MATCH(args.size(), 1, MemberFuncType::REGEX_ESCAPE);
+  THROW_ARGUMENT_DATATYPE_NOT_MATCH(args[0]->get_dataType_enum(), DATATYPE::STRING, 0,
+                                    MemberFuncType::REGEX_ESCAPE);
+
+  const std::string input = args[0]->get_string();
+  std::string escaped;
+  const std::string_view metacharacters = R"(\.^$*+?()[]{}|\\)";
+  for (char c : input) {
+    if (metacharacters.find(c) != std::string_view::npos) {
+      escaped.push_back('\\');
+    }
+    escaped.push_back(c);
+  }
+  return OpReturnType(new SingleVariable<std::string>(escaped));
+}
+
 OpReturnType RegexDataVariable::call_function(int memberFuncIndex,
                                               const std::vector<OpReturnType>& arguments,
                                               CallStack& stack) {
@@ -267,6 +285,8 @@ OpReturnType RegexDataVariable::call_function(int memberFuncIndex,
       return regex_sub(arguments, stack);
     case MemberFuncType::REGEX_SUBN:
       return regex_subn(arguments, stack);
+    case MemberFuncType::REGEX_ESCAPE:
+      return regex_escape(arguments, stack);
     default:
       THROW("%s not implemented for ne_re", DataVariable::get_member_func_string(memberFuncIndex));
   }

@@ -12,6 +12,7 @@
 #include "dataframe_variable.hpp"
 #include "model_nimble_net_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "nlohmann/json_fwd.hpp"
 #include "pre_processor_nimble_net_variable.hpp"
 #include "raw_event_store_data_variable.hpp"
@@ -44,7 +45,8 @@ class CommandCenter;
  * member function indices, providing a unified interface for script execution.
  */
 class NimbleNetDataVariable final : public DataVariable {
-  CommandCenter* _commandCenter = nullptr; /**< Pointer to the command center for system operations */
+  CommandCenter* _commandCenter =
+      nullptr; /**< Pointer to the command center for system operations */
 
   int get_containerType() const override { return CONTAINERTYPE::SINGLE; }
 
@@ -116,6 +118,10 @@ def zeros(shape: list[int], dtype: str) -> Tensor:
   OpReturnType create_concurrent_executor(const std::vector<OpReturnType>& arguments);
 
   OpReturnType set_threads(const std::vector<OpReturnType>& arguments);
+
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+  OpReturnType convert_text_to_phonemes(const std::vector<OpReturnType>& arguments);
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 
   OpReturnType call_function(int memberFuncIndex, const std::vector<OpReturnType>& arguments,
                              CallStack& stack) override;

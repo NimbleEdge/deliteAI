@@ -8,6 +8,7 @@ package dev.deliteai.android.sampleapp
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ScrollState
@@ -39,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.deliteai.NimbleNet
 import dev.deliteai.android.sampleapp.ui.theme.DeliteAiTheme
+import dev.deliteai.client.TextToSpeech
 import dev.deliteai.datamodels.NimbleNetConfig
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import kotlinx.coroutines.CoroutineScope
@@ -166,15 +168,11 @@ fun addEvent() = NimbleNet.addEvent(
     ), "ContestJoinedClient"
 ).toString()
 
-fun getDummyPreprocessorList() = List(30) {
-    mapOf(
-        "productid" to 800,
-        "contestType" to "special",
-        "roundid" to 97,
-        "winnerPercent" to 0.29,
-        "prizeAmount" to 900,
-        "entryFee" to 50
-    )
+class TextToSpeechImpl : TextToSpeech {
+    override fun getPhonemes(text: String): String {
+        Log.e("BRIDGE", "getPhonemes: Oh! yes! working!!1", )
+        return "dummy phonemes"
+    }
 }
 
 // Config
@@ -187,5 +185,6 @@ private val nimblenetConfig = NimbleNetConfig(
     initTimeOutInMs = 1000000000,
     compatibilityTag = "android-output-verification",
     libraryVariant = NIMBLENET_VARIANTS.STATIC,
-    online = true
+    online = true,
+    textToSpeechImpl = TextToSpeechImpl()
 )

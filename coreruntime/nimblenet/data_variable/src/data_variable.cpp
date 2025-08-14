@@ -12,6 +12,7 @@
 #include "list_data_variable.hpp"
 #include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "nlohmann/json.hpp"
 #include "single_variable.hpp"
 #include "tensor_data_variable.hpp"
@@ -71,6 +72,7 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"start", MemberFuncType::REGEX_MATCHOBJECT_START},
     {"end", MemberFuncType::REGEX_MATCHOBJECT_END},
     {"span", MemberFuncType::REGEX_MATCHOBJECT_SPAN},
+    {"escape", MemberFuncType::REGEX_ESCAPE},
     {"upper", MemberFuncType::STRING_UPPER},
     {"lower", MemberFuncType::STRING_LOWER},
     {"strip", MemberFuncType::STRING_STRIP},
@@ -105,6 +107,9 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"list_compatible_llms", MemberFuncType::LIST_COMPATIBLE_LLMS},
     {"get_hardware_info", MemberFuncType::GET_HARDWARE_INFO},
     {"set_xnnpack_num_threads", MemberFuncType::SET_XNNPACK_NUM_THREADS},
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+    {"convert_text_to_phonemes", MemberFuncType::CONVERT_TEXT_TO_PHONEMES},
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -161,6 +166,7 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::REGEX_MATCHOBJECT_START, "start"},
     {MemberFuncType::REGEX_MATCHOBJECT_END, "end"},
     {MemberFuncType::REGEX_MATCHOBJECT_SPAN, "span"},
+    {MemberFuncType::REGEX_ESCAPE, "escape"},
     {MemberFuncType::STRING_UPPER, "upper"},
     {MemberFuncType::STRING_LOWER, "lower"},
     {MemberFuncType::STRING_STRIP, "strip"},
@@ -195,6 +201,9 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::LIST_COMPATIBLE_LLMS, "list_compatible_llms"},
     {MemberFuncType::GET_HARDWARE_INFO, "get_hardware_info"},
     {MemberFuncType::SET_XNNPACK_NUM_THREADS, "set_xnnpack_num_threads"},
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+    {MemberFuncType::CONVERT_TEXT_TO_PHONEMES, "convert_text_to_phonemes"},
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {

@@ -416,4 +416,8 @@ nlohmann::json get_hardware_info() {
   return hardware_info_json;
 }
 
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+const char* get_phonemes(const char* text) { return ::get_phonemes(text); }
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+
 }  // namespace nativeinterface

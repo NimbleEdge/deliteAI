@@ -2,12 +2,12 @@ use_frameworks!
 use_modular_headers!
 platform :ios, '12.0'
 
-target 'NimbleNetExample' do
+target 'DeliteAIExample' do
   
   pod 'DeliteAI', :path => '../'
 end
 
-target 'NimbleNetExample_Tests' do
+target 'DeliteAIExample_Tests' do
   inherit! :search_paths
 
   pod 'DeliteAI', :path => '../'

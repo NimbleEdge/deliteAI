@@ -11,10 +11,9 @@ in your applications.*
 - [Android Project Overview](#android-project-overview)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
-- [Integrating DeliteAI Android SDK into your App](#integrating-deliteai-android-sdk-into-your-app)
 - [Configuration](#configuration)
+- [Integrating DeliteAI Android SDK into your App](#integrating-deliteai-android-sdk-into-your-app)
 - [Integration Example](#integration-example)
-<!-- - [Detailed Documentation](#detailed-documentation) -->
 - [Running Tests](#running-tests)
 - [API Reference](#api-reference)
 
@@ -183,31 +182,14 @@ cd deliteAI/sdks/android
 adb shell monkey -p dev.deliteai.android.sampleapp.debug -c android.intent.category.LAUNCHER 1
 ```
 
-## Integrating DeliteAI Android SDK into your App
-
-Add the following dependencies to your module-level `build.gradle.kts` or `build.gradle` file.
-
-### Gradle (Kotlin DSL)
-
-```kotlin
-dependencies {
-    implementation("dev.deliteai:nimblenet_ktx:1.0.0")
-    implementation("dev.deliteai:nimblenet_core:1.0.0")
-}
-```
-
-### Gradle (Groovy)
-
-```groovy
-dependencies {
-    implementation 'dev.deliteai:nimblenet_ktx:1.0.0'
-    implementation 'dev.deliteai:nimblenet_core:1.0.0'
-}
-```
-
 ## Configuration
 
-### SDK Configuration
+> **Note**: If you're using the pre-released version of the SDK from our repository, you can skip this section entirely.
+
+This section describes how to configure the SDK for development and release builds. It is primarily relevant for:
+- SDK maintainers and contributors
+- Organizations creating custom SDK builds
+- Developers who need to modify SDK behavior at build time
 
 The SDK's native behavior is controlled by `deliteAI/config.yml`.
 
@@ -232,9 +214,79 @@ android:
 For a complete list of supported flags, refer to our
 [CoreRuntime Documentation](../../coreruntime/README.md).
 
+## Integrating DeliteAI Android SDK into your App
+
+Add the following dependencies to your module-level `build.gradle.kts` or `build.gradle` file.
+
+### Gradle (Kotlin DSL)
+
+```kotlin
+dependencies {
+    implementation("dev.deliteai:nimblenet_ktx:x.y.z")
+    implementation("dev.deliteai:nimblenet_core:x.y.z")
+}
+```
+
+### Gradle (Groovy)
+
+```groovy
+dependencies {
+    implementation 'dev.deliteai:nimblenet_ktx:x.y.z'
+    implementation 'dev.deliteai:nimblenet_core:x.y.z'
+}
+```
+
 ## Integration Example
 
-### Initialize the SDK
+This section demonstrates a complete integration workflow for the DeliteAI Android SDK. Follow these steps to get started with implementing AI-powered functionality in your Android application.
+
+### Overview
+
+The integration workflow includes:
+
+1. **Initialize the SDK** - Configure and start the NimbleNet SDK
+2. **Check SDK readiness** - Verify the SDK is ready for use
+3. **Execute AI models** - Run Python workflow scripts and call Python methods with AI logic from Kotlin
+4. **Track events** - Optional analytics and event tracking
+
+### 1. Initialize the SDK
+
+The SDK supports two mutually exclusive initialization modes:
+
+#### Online Mode
+
+- Downloads all required assets (models, scripts, configuration) on first launch
+- Caches assets locally for subsequent offline use
+- Automatically checks for updates when online
+
+#### Offline Mode (Default)
+
+- Bundles all required assets in your app's `assets/` folder at build time
+- No network calls at runtime - perfect for fully offline deployments
+
+##### Example Python Script
+
+For offline mode, create a Python script "deliteai_script.py" with your AI workflow:
+
+```python
+def myFunction(inputMap):
+    text = inputMap["input_key"]
+    print(text)  # Visible in Logcat
+    return {"output_key": text + "Output"}
+```
+
+##### Convert Script to AST (Offline Only)
+
+Android assets cannot contain raw Python source files. Convert your script to AST format:
+
+```bash
+cd "$(git rev-parse --show-toplevel)"
+python3 coreruntime/scripts/gen_python_ast.py <path to deliteai_script.py>
+```
+
+This generates `deliteai_script.ast`. Place this file in `app/src/main/assets/`.
+
+##### SDK Initialization Code
 
 ```kotlin
 import dev.deliteai.NimbleNet
@@ -244,71 +296,42 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+private fun initializeNimbleNet() {
+    val offlineConfig = NimbleNetConfig(online = false)
 
-        initializeNimbleNet()
-    }
-
-    private fun initializeNimbleNet() {
-        val onlineConfig = NimbleNetConfig(
-            clientId = "your-client-id",
-            clientSecret = "your-client-secret",
-            host = "https://your-api-endpoint.com",
-            deviceId = "unique-device-identifier",
-            compatibilityTag = "YourModelVersion",
-            libraryVariant = NIMBLENET_VARIANTS.STATIC,
-            online = true
-        )
-
-        val offlineConfig = NimbleNetConfig(online = false)
-
-        // To initialize the SDK in offline mode, place script and model in the assets folder
-        // and create the corresponding config.
-        // To get started, there are some sample scripts and models placed in mockserverAssets.
-        val assetsJsonStr = """
-            [
-                {
-                    "name": "workflow_script",
-                    "version": "1.0.0",
-                    "type": "script",
-                    "location": {
-                        "path": "add_script.ast"
-                    }
-                },
-                {
-                    "name": "add_model",
-                    "version": "1.0.0",
-                    "type": "model",
-                    "location": {
-                        "path": "add_two_model.onnx"
-                    }
+    // Configuration for offline mode assets
+    val assetsJsonStr = """
+        [
+            {
+                "name": "workflow_script",
+                "version": "1.0.0",
+                "type": "script",
+                "location": {
+                    "path": "deliteai_script.ast"
                 }
-          ]"""
-
-        val assetsJson = JSONArray(assetsJsonStr)
-
-        CoroutineScope(Dispatchers.Default).launch {
-            // To initialize SDK in online mode
-            val result = NimbleNet.initialize(applicationContext, onlineConfig)
-
-            // To initialize SDK in offline mode
-            // val result = NimbleNet.initialize(applicationContext, onlineConfig, assetsJson)
-
-            if (result.status) {
-                Log.d("NimbleNet", "SDK initialized successfully")
-                // SDK is ready, you can now track events or run models
-            } else {
-                Log.e("NimbleNet", "Initialization failed: ${result.error?.message}")
-                // Handle failure, e.g., show an error message or retry
             }
+        ]"""
+
+    val assetsJson = JSONArray(assetsJsonStr)
+
+    CoroutineScope(Dispatchers.Default).launch {
+        // Initialize SDK in offline mode
+        val result = NimbleNet.initialize(applicationContext, offlineConfig, assetsJson)
+
+        if (result.status) {
+            Log.d("NimbleNet", "SDK initialized successfully")
+            // SDK is ready for use
+        } else {
+            Log.e("NimbleNet", "Initialization failed: ${result.error?.message}")
+            // Handle initialization failure
         }
     }
 }
 ```
 
-### Check SDK Readiness
+### 2. Check SDK Readiness
+
+Before using SDK functionality, verify it's ready:
 
 ```kotlin
 private fun checkSDKReadiness() {
@@ -324,7 +347,50 @@ private fun checkSDKReadiness() {
 }
 ```
 
-### Track Events
+### 3. Execute AI Models
+
+Run Python workflows from your Kotlin code:
+
+```kotlin
+import dev.deliteai.datamodels.NimbleNetTensor
+import dev.deliteai.impl.common.DATATYPE
+
+private fun runPyWorkflow() {
+    val inputs = hashMapOf(
+        "input_key" to NimbleNetTensor(
+            data = "hello world",
+            datatype = DATATYPE.STRING,
+            shape = intArrayOf() // Populate only if data is an array
+        )
+    )
+
+    CoroutineScope(Dispatchers.Default).launch {
+        // The hashmap inputs (defined above) will be passed to the Python function named myFunction,
+        // and the data can be accessed as "hello world" using inputs["input_key"]
+        val result = NimbleNet.runMethod(
+            methodName = "myFunction",
+            inputs = inputs
+        )
+
+        withContext(Dispatchers.Main) {
+            if (result.status) {
+                // A dictionary will be returned by the Python script and you can access the data
+                // using the key set in the Python script, in our example, that's "output_key"
+                val outputs = result.payload!!
+                val output = outputs["output_key"]?.data as? String
+
+                Log.d("NimbleNet", "Output: $output")
+            } else {
+                Log.e("NimbleNet", "Failed to get output: ${result.error?.message}")
+            }
+        }
+    }
+}
+```
+
+### 4. Track Events (Optional)
+
+Track user interactions and custom analytics events in Python workflow scripts for use in your AI logic:
 
 ```kotlin
 private fun trackUserInteraction() {
@@ -346,53 +412,6 @@ private fun trackUserInteraction() {
         Log.d("NimbleNet", "Event tracked successfully")
     } else {
         Log.e("NimbleNet", "Failed to track event: ${result.error?.message}")
-    }
-}
-```
-
-### Execute AI/ML Models
-
-```kotlin
-import dev.deliteai.ModelInput
-import dev.deliteai.DATATYPE
-
-private fun getPersonalizedRecommendations() {
-    val inputs = mapOf(
-        "user_id" to ModelInput(
-            data = 12345,
-            datatype = DATATYPE.INT,
-            shape = intArrayOf()
-        ),
-        "category" to ModelInput(
-            data = "electronics",
-            datatype = DATATYPE.STRING,
-            shape = intArrayOf()
-        ),
-        "limit" to ModelInput(
-            data = 10,
-            datatype = DATATYPE.INT,
-            shape = intArrayOf()
-        )
-    )
-
-    CoroutineScope(Dispatchers.IO).launch {
-        val result = NimbleNet.runMethod(
-            methodName = "get_recommendations",
-            inputs = inputs
-        )
-
-        withContext(Dispatchers.Main) {
-            if (result.status) {
-                val outputs = result.data!!
-                val recommendations = outputs["recommended_items"]?.data as? Array<Int>
-
-                Log.d("NimbleNet", "Recommendations: ${recommendations?.joinToString()}")
-                // Update UI with new recommendations
-            } else {
-                Log.e("NimbleNet", "Failed to get recommendations: ${result.error?.message}")
-                // Handle failure, e.g., show a default list or an error message
-            }
-        }
     }
 }
 ```

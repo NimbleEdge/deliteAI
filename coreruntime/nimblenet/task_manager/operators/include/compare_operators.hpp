@@ -154,6 +154,50 @@ class NotEqualOp {
 };
 
 /**
+ * @brief Identity comparison operator
+ *
+ * Checks if two operands refer to the same object.
+ * If both operands are None, returns true.
+ */
+class IsOp {
+ public:
+  /**
+   * @brief Performs identity comparison between two operands
+   *
+   * @param v1 First operand
+   * @param v2 Second operand
+   * @return Boolean result of v1 is v2
+   */
+  static OpReturnType operate(OpReturnType v1, OpReturnType v2) {
+    bool isIdentical = (v1 == v2);
+    bool bothNone = (v1->is_none() && v2->is_none());
+    return OpReturnType(new SingleVariable<bool>(isIdentical || bothNone));
+  }
+};
+
+/**
+ * @brief Identity negation comparison operator
+ *
+ * Checks if two operands do not refer to the same object.
+ * If both operands are None, returns false.
+ */
+class IsNotOp {
+ public:
+  /**
+   * @brief Performs negated identity comparison between two operands
+   *
+   * @param v1 First operand
+   * @param v2 Second operand
+   * @return Boolean result of v1 is not v2
+   */
+  static OpReturnType operate(OpReturnType v1, OpReturnType v2) {
+    bool isDifferent = (v1 != v2);
+    bool bothNone = (v1->is_none() && v2->is_none());
+    return OpReturnType(new SingleVariable<bool>(isDifferent && !bothNone));
+  }
+};
+
+/**
  * @brief Main class for comparison operations
  *
  * Provides a unified interface for all comparison operations including
@@ -224,6 +268,28 @@ class CompareOperators {
    */
   static OpReturnType notIn(OpReturnType v1, OpReturnType v2) {
     return OpReturnType(new SingleVariable<bool>(v2->notIn(v1)));
+  }
+
+  /**
+   * @brief Tests if the two operands refer to the same object.
+   *
+   * @param v1 First operand
+   * @param v2 Second operand
+   * @return Boolean result of v1 is v2
+   */
+  static OpReturnType is(OpReturnType v1, OpReturnType v2) { 
+    return IsOp::operate(v1, v2); 
+  }
+
+  /**
+   * @brief Tests if the two operands do not refer to the same object.
+   *
+   * @param v1 First operand
+   * @param v2 Second operand
+   * @return Boolean result of v1 is not v2
+   */
+  static OpReturnType isNot(OpReturnType v1, OpReturnType v2) { 
+    return IsNotOp::operate(v1, v2); 
   }
 };
 

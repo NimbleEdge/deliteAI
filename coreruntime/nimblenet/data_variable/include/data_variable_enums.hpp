@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "nimble_net/config.h"
+
 /**
  * @file data_variable_enums.hpp
  * @brief Enumeration definitions for data variable container types and member function types
@@ -98,6 +100,7 @@ enum MemberFuncType {
   REGEX_MATCHOBJECT_START,
   REGEX_MATCHOBJECT_END,
   REGEX_MATCHOBJECT_SPAN,
+  REGEX_ESCAPE,
   STRING_UPPER,
   STRING_LOWER,
   STRING_STRIP,
@@ -132,5 +135,8 @@ enum MemberFuncType {
   LIST_COMPATIBLE_LLMS,
   GET_HARDWARE_INFO,
   SET_XNNPACK_NUM_THREADS,
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+  CONVERT_TEXT_TO_PHONEMES,
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   LASTTYPE,  // should be last
 };

@@ -29,6 +29,7 @@ import dev.deliteai.impl.moduleInstallers.ModuleInstaller
 import dev.deliteai.impl.moduleInstallers.impl.GoogleDynamicModuleInstaller
 import dev.deliteai.impl.moduleInstallers.impl.StaticModuleInstaller
 import dev.deliteai.impl.nativeBridge.CoreRuntime
+import dev.deliteai.impl.nativeBridge.NativeRequestReceiver
 import dev.deliteai.impl.nativeBridge.impl.CoreRuntimeImpl
 import okhttp3.OkHttpClient
 
@@ -127,6 +128,10 @@ private constructor(
         Networking(okHttpClient, localLoggerSingleton, chunkDownloadManagerSingleton)
     }
 
+    private val nativeRequestReceiverSingleton: NativeRequestReceiver by lazy {
+        NativeRequestReceiver(nimbleNetConfig.textToSpeechImpl)
+    }
+
     // nimblenet_ktx
     fun getNimbleNetController(): NimbleNetController = nimbleNetControllerSingleton
 
@@ -146,6 +151,8 @@ private constructor(
     fun getHardwareInfo(): HardwareInfo = hardwareInfoSingleton
 
     fun getLogsUploadScheduler(): LogsUploadScheduler = logsUploadSchedulerSingleton
+
+    fun getNativeRequestReceiver(): NativeRequestReceiver = nativeRequestReceiverSingleton
 
     // integration test
     fun getFileUtils(): FileUtils = fileUtilitySingleton
