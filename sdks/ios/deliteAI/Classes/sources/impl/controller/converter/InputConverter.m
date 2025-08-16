@@ -367,7 +367,7 @@ void* convertProtoMapToVoidPointer(ProtoMapWrapper* wrappedClass) {
 
 void convertInt64ToCTensor(NSNumber* data, CTensor* req) {
     initialiseCTensor(req);
-    req->data = convertInt32ToVoidPointer(data);
+    req->data = convertInt64ToVoidPointer(data);
     req->dataType = INT64;
 }
 
