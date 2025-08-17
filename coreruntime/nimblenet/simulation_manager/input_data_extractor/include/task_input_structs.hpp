@@ -9,6 +9,7 @@
 #include "nlohmann/json_fwd.hpp"
 
 #include "executor_structs.h"
+#include "nimble_net/c_tensor.h"
 
 #pragma GCC visibility push(default)
 

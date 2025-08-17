@@ -18,6 +18,7 @@
 #include "ne_fwd.hpp"
 #include "ne_type_traits.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 #include "nlohmann/json_fwd.hpp"
 #include "util.hpp"
 
@@ -186,7 +187,7 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
   virtual bool is_integer() { return false; }
 
   virtual bool is_none() { return false; }
-  
+
   virtual bool is_iterable() const { return false; }
 
   const char* get_containerType_string() const;

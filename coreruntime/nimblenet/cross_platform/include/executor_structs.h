@@ -49,20 +49,6 @@ typedef struct InferenceReturn {
 } InferenceReturn;
 
 /**
- * @brief Represents a single tensor with its metadata.
- *
- * @note Use this struct to send data to run_method function only if C interop is present,
- * e.g., in iOS. For Android and nimblenet_py, directly use MapDataVariable.
- */
-typedef struct CTensor {
-  char* name;      /**< Name of the tensor. */
-  void* data;      /**< Pointer to the tensor data. */
-  int dataType;    /**< Data type of the tensor. */
-  int64_t* shape;  /**< Pointer to the tensor's shape dimensions. */
-  int shapeLength; /**< Number of dimensions in the shape. */
-} CTensor;
-
-/**
  * @brief Status structure used to indicate success or failure in all SDK APIs.
  */
 typedef struct NimbleNetStatus {
@@ -77,16 +63,6 @@ typedef struct CUserEventsData {
   char* eventType;       /**< Type of the event. */
   char* eventJsonString; /**< JSON string containing event data. */
 } CUserEventsData;
-
-/**
- * @brief Wrapper around an array of tensors.
- */
-typedef struct CTensors {
-  CTensor* tensors; /**< Pointer to an array of tensors. */
-  int numTensors;   /**< Number of tensors in the array. */
-  int outputIndex;  /**< In case this is an output tensor then index is used to deallocate
-                       memory later. */
-} CTensors;
 
 /**
  * @brief Represents JSON structured output exposed via C APIs in iOS.
@@ -159,15 +135,3 @@ __attribute__((visibility("default"))) static inline void deallocate_c_userevent
 #ifdef __cplusplus
 }
 #endif  // __cplusplus
-
-/**
- * @brief Function pointer type for invoking a frontend function as a callback from delitepy script.
- *
- * @param context Pointer to user-defined context.
- * @param input Struct containing input tensors.
- * @param output Pointer to struct where output tensors will be stored.
- *
- * @return NimbleNetStatus* Status pointer indicating the result of event handling.
- */
-typedef NimbleNetStatus* (*FrontendFunctionPtr)(void* context, const CTensors input,
-                                                CTensors* output);

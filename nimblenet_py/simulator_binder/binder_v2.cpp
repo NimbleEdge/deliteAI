@@ -13,6 +13,7 @@
 
 #include "client.h"
 #include "input_structs.hpp"
+#include "nimble_net/c_tensor.h"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
 #include "task_input_structs.hpp"

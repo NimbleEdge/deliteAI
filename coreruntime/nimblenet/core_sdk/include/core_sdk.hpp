@@ -22,6 +22,7 @@
 #include "job_scheduler.hpp"
 #include "log_sender.hpp"
 #include "map_data_variable.hpp"
+#include "nimble_net/c_tensor.h"
 #include "resource_loader.hpp"
 #include "resource_manager.hpp"
 #include "result.hpp"

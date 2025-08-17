@@ -7,8 +7,9 @@
 #ifndef FunctionPointersImpl_h
 #define FunctionPointersImpl_h
 
-#import "nimble_net_util.hpp"
 #import "executor_structs.h"
+#import "nimble_net_util.hpp"
+#import "nimble_net/c_tensor.h"
 
 void initClientFunctionPointers(void);
 CNetworkResponse send_request_interop(const char *body, const char *headers, const char *url,

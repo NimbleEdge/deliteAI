@@ -8,6 +8,7 @@
 
 #include "executor_structs.h"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 /**
  * @brief Function pointer type for getting a string subscript from an iOS object.

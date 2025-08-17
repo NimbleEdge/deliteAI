@@ -10,7 +10,6 @@
 #import "executor_structs.h"
 #import "InputConverter.h"
 
-
 @implementation InputConverter : NSObject 
 
 void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength, int dataType,void* json_alloc){
@@ -42,7 +41,6 @@ void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataTyp
             }
             return (void *)cArray;
         }
-            
         case INT32:{
             int *cArray = (int *)malloc(arrayLength * sizeof(int));
             for (NSUInteger i = 0; i < arrayLength; i++) {
@@ -85,7 +83,6 @@ void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataTyp
         }
         default:
             return nil;
-            
     }
 }
 
@@ -116,7 +113,7 @@ void* convertSingularInputtoVoidPointer(id data, int dataType, void* json_alloc)
 }
 
 NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
-    initialiseCTensor(child);
+    c_tensor_init(child);
     if ([data isKindOfClass:[NSString class]]) {
         convertStringToCTensor((NSString*)data, child);
     } else if ([data isKindOfClass:[NSNumber class]]) {
@@ -177,7 +174,6 @@ NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
 void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
     void* array = create_json_array(json_alloc);
     
-    
     NSInteger arrayLength = [(NSArray *)jsonArray count];
     for(int idx = 0; idx<arrayLength; idx++ ){
         id element = [(NSArray *)jsonArray objectAtIndex:idx];
@@ -186,7 +182,6 @@ void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
             // element wont be null
             const char *elementString = [element UTF8String];
             move_string_value_to_array(array, elementString);
-            
         } else if ([element isKindOfClass:[NSNumber class]]) {
             NSNumber *number = (NSNumber *)element;
             const char *type = [number objCType];
@@ -205,16 +200,12 @@ void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
             else{
                 NSLog(@"unknown type of member NSNumber class: %@", number);
             }
-            
-            
         } else if ([element isKindOfClass:[NSDictionary class]]) {
             void* newdict =  convertJsonDictToVoidPointer(element,json_alloc);
             move_json_object_or_array_to_array(array, newdict);
-            
         } else if ([element isKindOfClass:[NSArray class]]) {
             void* JsonArray = convertJsonArrayToVoidPointer(element,json_alloc);
             move_json_object_or_array_to_array(array, JsonArray);
-            
         } else if ([element isKindOfClass:[NSNull class]]) {
             move_null_value_to_array(array);
         }
@@ -226,7 +217,6 @@ void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
 }
 
 void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
-    
     void* json = create_json_object(json_alloc);
     [jsonDict enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL *stop) {
         const char *keyCstring = [key UTF8String];
@@ -249,11 +239,9 @@ void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
             else{
                 NSLog(@"unknown type of member NSNumber class: %@", value);
             }
-            
         } else if ([value isKindOfClass:[NSArray class]]) {
             void* nestedArray = convertJsonArrayToVoidPointer(value,json_alloc);
             add_json_object_to_json(keyCstring, nestedArray, json);
-            
         } else if ([value isKindOfClass:[NSDictionary class]]) {
             void* nestedDict = convertJsonDictToVoidPointer(value,json_alloc);
             add_json_object_to_json(keyCstring, nestedDict, json);
@@ -262,22 +250,13 @@ void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
         }
         else {
             NSLog(@"Value of an unknown type: %@, found in JsonDict for key : %@", value, key);
-            
         }
     }];
     return json;
 }
 
-
-void initialiseCTensor(CTensor* req) {
-    req->dataType = UNKNOWN;
-    req->shape = NULL;
-    req->name = NULL;
-    req->shapeLength = 0;
-}
-
 void convertStringToCTensor(NSString* str, CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data =  convertStringToVoidPointer(str);
     req->dataType = STRING;
 }
@@ -296,7 +275,7 @@ void* convertStringToVoidPointer(NSString* str) {
 }
 
 void convertBoolToCTensor(NSNumber *data,  CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data = convertBoolToVoidPointer(data);
     req->dataType = BOOLEAN;
 }
@@ -315,7 +294,7 @@ void* convertProtoObjectToVoidPointer(ProtoObjectWrapper* wrappedClass) {
 }
 
 void convertInt32ToCTensor(NSNumber* data,  CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data = convertInt32ToVoidPointer(data);
     req->dataType = INT32;
 }
@@ -366,19 +345,19 @@ void* convertProtoMapToVoidPointer(ProtoMapWrapper* wrappedClass) {
 }
 
 void convertInt64ToCTensor(NSNumber* data, CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data = convertInt64ToVoidPointer(data);
     req->dataType = INT64;
 }
 
 void convertFloatToCTensor(NSNumber* data, CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data = convertFloatToVoidPointer(data);
     req->dataType = FLOAT;
 }
 
 void convertDoubleToCTensor(NSNumber* data, CTensor* req) {
-    initialiseCTensor(req);
+    c_tensor_init(req);
     req->data = convertDoubleToVoidPointer(data);
     req->dataType = DOUBLE;
 }

@@ -9,6 +9,7 @@
 #include "asset_manager.hpp"
 #include "executor_structs.h"
 #include "json.hpp"
+#include "nimble_net/c_tensor.h"
 #include "tests_util_structs.hpp"
 
 class CommandCenter;

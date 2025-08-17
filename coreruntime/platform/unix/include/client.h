@@ -15,6 +15,7 @@
 
 #include "executor_structs.h"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 /**
  * @brief Sends a network request using libcurl and returns the response.

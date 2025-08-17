@@ -53,10 +53,12 @@ HEADER_FILES=(
     # Add more header file paths here, one per line
 )
 
-# # Copy header files to the exposed_header directory using a loop
+# Copy header files to the exposed_header directory using a loop
 for header_file in "${HEADER_FILES[@]}"; do
     cp "$header_file" "$EXPOSED_HEADERS_DIR"
 done
+
+cp -R "${BASE_DIR}/coreruntime/nimblenet/nimble_net/include/nimble_net" "${EXPOSED_HEADERS_DIR}"
 
 xcodebuild -create-xcframework \
     -library "$BASE_DIR/sdks/ios/script/build_os64/nimblenet/$CONFIG-iphoneos/libnimblenet.a" \
@@ -65,6 +67,5 @@ xcodebuild -create-xcframework \
     -headers "$EXPOSED_HEADERS_DIR" \
     -output nimblenet.xcframework
 
-
-cp -rf nimblenet.xcframework "$BASE_DIR/sdks/ios/deliteAI/Assets"
-rm -rf nimblenet.xcframework
+rm -rf "${BASE_DIR}/sdks/ios/deliteAI/Assets/nimblenet.xcframework"
+mv nimblenet.xcframework "${BASE_DIR}/sdks/ios/deliteAI/Assets"

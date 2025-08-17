@@ -6,10 +6,12 @@
 
 #ifndef NimbleNetController_h
 #define NimbleNetController_h
-#import "executor_structs.h"
-#import "nimble_net_util.hpp"
+
 #import <Foundation/Foundation.h>
 
+#import "executor_structs.h"
+#import "nimble_net_util.hpp"
+#import "nimble_net/c_tensor.h"
 
 @interface NimbleNetController : NSObject
 -(NSDictionary*)initialize_nimblenet_controller:(NSString *)configJson assetsJson:(NSString*)assetsJson;

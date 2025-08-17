@@ -16,6 +16,7 @@
 #include "jni.h"
 #include "networking_shadow.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 #pragma GCC visibility push(default)
 
@@ -187,5 +188,5 @@ bool free_frontend_function_context(void* context);
  * @return char* Pointer to phoneme string.
  */
 char* get_phonemes(const char* text);
- 
+
 #pragma GCC visibility pop

@@ -12,6 +12,7 @@
 #include "executor_structs.h"
 #include "ne_fwd.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 /**
  * @brief Helper class for iOS-specific tensor and object operations.

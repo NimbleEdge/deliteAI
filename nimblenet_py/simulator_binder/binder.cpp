@@ -14,6 +14,7 @@
 #include "client.h"
 #include "input_structs.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 #include "nimblejson.hpp"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
@@ -361,7 +362,7 @@ PYBIND11_MODULE(simulator, m) {
     Attributes :
     config (string) : String buffer with the configurations. It is optional field, if not provided nimblenet will initialize with default configs i.e. in offline mode with isTimeSimulated as true.
     moduleConfig(list): Module information to be loaded from disk in case of offline initialize
-    
+
     Return value :
     Int : If success then return 1.
 

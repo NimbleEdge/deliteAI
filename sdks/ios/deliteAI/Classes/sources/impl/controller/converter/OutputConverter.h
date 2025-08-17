@@ -5,7 +5,9 @@
  */
 
 #import <Foundation/Foundation.h>
+
 #import "executor_structs.h"
+#import "nimble_net/c_tensor.h"
 
 @interface OutputConverter : NSObject
 
