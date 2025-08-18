@@ -8,7 +8,7 @@ DL_DOCS::WEBSITE_BLOCK_END -->
 <div align="center">
   <h1 align="center">DeliteAI</h1>
   <img src="docs/static/images/delite-ai-blue-logo.png" alt="DeliteAI Logo" width="200">
-  <h2 align="center">On-Device AI platform for Software 3.0 on Mobile</h2>
+  <h2 align="center">On-Device AI platform for creating delightful experiences</h2>
 </div>
 
 <div align="center">
@@ -31,13 +31,13 @@ DL_DOCS::WEBSITE_BLOCK_END -->
 
 DeliteAI is a powerful on-device AI platform for building agentic workflows that enables developers
 to deliver secure, privacy-aware, and high-performance AI native experiences and applications
-on mobile devices.
+on mobiles, laptops, wearables, and automobiles.
 
 ## Key Features
 
 ### Developer Productivity
 
-- Unified and simplified APIs for seamless AI agents integration in Android/iOS applications
+- Unified and simplified APIs for seamless AI agents integration in Android/iOS/MacOS applications
 - Python interface for orchestrating complex AI agentic workflows via tool calling, memory and LLMs on-device
 - Streamlined development process for both new and existing applications
 
