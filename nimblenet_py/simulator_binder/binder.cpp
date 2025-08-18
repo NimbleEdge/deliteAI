@@ -213,14 +213,12 @@ bool deallocFrontendTensors(CTensors cTensors) {
       case DATATYPE::FUNCTION:
         TaskInputData::deallocate_OpReturnType(tensor.data);
         break;
-      case DATATYPE::STRING: {
-        char** data = static_cast<char**>(tensor.data);
-        free(*data);
-        free(data);
-        break;
+      default: {
+        const bool freed = c_tensor_delete_data(&tensor);
+        if (!freed) {
+          free(tensor.data);
+        }
       }
-      default:
-        free(tensor.data);
     }
   }
   delete[] cTensors.tensors;

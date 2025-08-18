@@ -10,7 +10,7 @@
 #import "executor_structs.h"
 #import "InputConverter.h"
 
-@implementation InputConverter : NSObject 
+@implementation InputConverter : NSObject
 
 void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength, int dataType,void* json_alloc){
     switch (dataType) {
@@ -91,17 +91,17 @@ void* convertSingularInputtoVoidPointer(id data, int dataType, void* json_alloc)
         case JSON:
             return convertJsonDictToVoidPointer((NSDictionary*)data, json_alloc);
         case STRING:
-            return convertStringToVoidPointer((NSString*)data);
+            return c_tensor_create_string_data(((NSString*)data).UTF8String);
         case BOOLEAN:
-            return convertBoolToVoidPointer((NSNumber*)data);
+            return c_tensor_create_boolean_data(((NSNumber*)data).boolValue);
         case INT32:
-            return convertInt32ToVoidPointer((NSNumber*)data);
+            return c_tensor_create_int32_data(((NSNumber*)data).intValue);
         case FLOAT:
-            return convertFloatToVoidPointer((NSNumber*)data);
+            return c_tensor_create_float_data(((NSNumber*)data).floatValue);
         case DOUBLE:
-            return convertDoubleToVoidPointer((NSNumber*)data);
+            return c_tensor_create_double_data(((NSNumber*)data).doubleValue);
         case INT64:
-            return convertInt64ToVoidPointer((NSNumber*)data);
+            return c_tensor_create_int64_data(((NSNumber*)data).longLongValue);
         case FE_OBJ:
             // Assuming that frontend will always send a proto object
             // and not a Any Object
@@ -119,7 +119,7 @@ NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
     } else if ([data isKindOfClass:[NSNumber class]]) {
         NSNumber *number = (NSNumber *)data;
         const char *type = [number objCType];
-        
+
         if (strcmp(type, @encode(char)) == 0 || strcmp(type, @encode(BOOL)) == 0) {
             convertBoolToCTensor(number,child);
         }
@@ -173,11 +173,11 @@ NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
 
 void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
     void* array = create_json_array(json_alloc);
-    
+
     NSInteger arrayLength = [(NSArray *)jsonArray count];
     for(int idx = 0; idx<arrayLength; idx++ ){
         id element = [(NSArray *)jsonArray objectAtIndex:idx];
-        
+
         if ([element isKindOfClass:[NSString class]]) {
             // element wont be null
             const char *elementString = [element UTF8String];
@@ -220,7 +220,7 @@ void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
     void* json = create_json_object(json_alloc);
     [jsonDict enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL *stop) {
         const char *keyCstring = [key UTF8String];
-        
+
         if ([value isKindOfClass:[NSString class]]) {
             const char *valueCstring = [value UTF8String];
             add_string_value(keyCstring,valueCstring, json);
@@ -257,33 +257,14 @@ void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
 
 void convertStringToCTensor(NSString* str, CTensor* req) {
     c_tensor_init(req);
-    req->data =  convertStringToVoidPointer(str);
+    req->data = c_tensor_create_string_data(str.UTF8String);
     req->dataType = STRING;
-}
-
-void* convertStringToVoidPointer(NSString* str) {
-    const char* utf8Str = [str UTF8String];
-    size_t length = strlen(utf8Str) + 1;
-    char** mallocStr = (char**)malloc(sizeof(char*));
-    if (mallocStr != NULL) {
-        *mallocStr = (char*)malloc(length);
-        if (*mallocStr != NULL) {
-            strcpy(*mallocStr, utf8Str);
-        }
-    }
-    return (void*)mallocStr;
 }
 
 void convertBoolToCTensor(NSNumber *data,  CTensor* req) {
     c_tensor_init(req);
-    req->data = convertBoolToVoidPointer(data);
+    req->data = c_tensor_create_boolean_data(data.boolValue);
     req->dataType = BOOLEAN;
-}
-
-void* convertBoolToVoidPointer(NSNumber* data) {
-    bool* ptr = malloc(sizeof(bool));
-    *ptr = [data boolValue];
-    return (void*)ptr;
 }
 
 void* convertProtoObjectToVoidPointer(ProtoObjectWrapper* wrappedClass) {
@@ -295,32 +276,8 @@ void* convertProtoObjectToVoidPointer(ProtoObjectWrapper* wrappedClass) {
 
 void convertInt32ToCTensor(NSNumber* data,  CTensor* req) {
     c_tensor_init(req);
-    req->data = convertInt32ToVoidPointer(data);
+    req->data = c_tensor_create_int32_data(data.intValue);
     req->dataType = INT32;
-}
-
-void* convertInt32ToVoidPointer(NSNumber* data) {
-    int32_t* ptr = malloc(sizeof(int32_t));
-    *ptr = [data intValue];
-    return (void*)ptr;
-}
-
-void* convertFloatToVoidPointer(NSNumber* data) {
-    float* ptr = malloc(sizeof(float));
-    *ptr = [data floatValue];
-    return (void*)ptr;
-}
-
-void* convertDoubleToVoidPointer(NSNumber* data) {
-    double* ptr = malloc(sizeof(double));
-    *ptr = [data doubleValue];
-    return (void*)ptr;
-}
-
-void* convertInt64ToVoidPointer(NSNumber* data) {
-    int64_t* ptr = malloc(sizeof(int64_t));
-    *ptr = [data longLongValue];
-    return (void*)ptr;
 }
 
 void* convertProtoAnyToVoidPointer(ProtoAnyWrapper* wrappedClass) {
@@ -346,19 +303,19 @@ void* convertProtoMapToVoidPointer(ProtoMapWrapper* wrappedClass) {
 
 void convertInt64ToCTensor(NSNumber* data, CTensor* req) {
     c_tensor_init(req);
-    req->data = convertInt64ToVoidPointer(data);
+    req->data = c_tensor_create_int64_data(data.longLongValue);
     req->dataType = INT64;
 }
 
 void convertFloatToCTensor(NSNumber* data, CTensor* req) {
     c_tensor_init(req);
-    req->data = convertFloatToVoidPointer(data);
+    req->data = c_tensor_create_float_data(data.floatValue);
     req->dataType = FLOAT;
 }
 
 void convertDoubleToCTensor(NSNumber* data, CTensor* req) {
     c_tensor_init(req);
-    req->data = convertDoubleToVoidPointer(data);
+    req->data = c_tensor_create_double_data(data.doubleValue);
     req->dataType = DOUBLE;
 }
 

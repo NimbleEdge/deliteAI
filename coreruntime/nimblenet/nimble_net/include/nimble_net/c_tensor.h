@@ -40,6 +40,37 @@ typedef struct CTensors {
 // =================================================================================================
 
 void c_tensor_init(CTensor* tensor);
+// void c_tensor_deinit(CTensor* tensor);
+
+// =================================================================================================
+
+bool* c_tensor_create_boolean_data(bool value);
+bool c_tensor_get_boolean_data(void* data);
+
+// =================================================================================================
+
+int32_t* c_tensor_create_int32_data(int32_t value);
+int32_t c_tensor_get_int32_data(void* data);
+
+// =================================================================================================
+
+int64_t* c_tensor_create_int64_data(int64_t value);
+int64_t c_tensor_get_int64_data(void* data);
+
+// =================================================================================================
+
+float* c_tensor_create_float_data(float value);
+float c_tensor_get_float_data(void* data);
+
+// =================================================================================================
+
+double* c_tensor_create_double_data(double value);
+double c_tensor_get_double_data(void* data);
+
+// =================================================================================================
+
+char** c_tensor_create_string_data(const char* str);
+char* c_tensor_get_string_data(void* data);
 
 // =================================================================================================
 
@@ -54,5 +85,9 @@ void c_tensor_init(CTensor* tensor);
  */
 typedef NimbleNetStatus* (*FrontendFunctionPtr)(void* context, const CTensors input,
                                                 CTensors* output);
+
+// =================================================================================================
+
+bool c_tensor_delete_data(CTensor* tensor);
 
 EXTERN_C_END

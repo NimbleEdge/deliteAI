@@ -486,17 +486,17 @@ OpReturnType DataVariable::create_tensor(const CTensor& c, CreateTensorType type
 OpReturnType DataVariable::create_single_variable(const CTensor& c) {
   switch (c.dataType) {
     case DATATYPE::FLOAT:
-      return OpReturnType(new SingleVariable<float>(c.data));
+      return OpReturnType(new SingleVariable<float>(c_tensor_get_float_data(c.data)));
     case DATATYPE::DOUBLE:
-      return OpReturnType(new SingleVariable<double>(c.data));
+      return OpReturnType(new SingleVariable<double>(c_tensor_get_double_data(c.data)));
     case DATATYPE::INT32:
-      return OpReturnType(new SingleVariable<int32_t>(c.data));
+      return OpReturnType(new SingleVariable<int32_t>(c_tensor_get_int32_data(c.data)));
     case DATATYPE::INT64:
-      return OpReturnType(new SingleVariable<int64_t>(c.data));
+      return OpReturnType(new SingleVariable<int64_t>(c_tensor_get_int64_data(c.data)));
     case DATATYPE::BOOLEAN:
-      return OpReturnType(new SingleVariable<bool>(c.data));
+      return OpReturnType(new SingleVariable<bool>(c_tensor_get_boolean_data(c.data)));
     case DATATYPE::STRING:
-      return OpReturnType(new SingleVariable<std::string>(((char**)c.data)[0]));
+      return OpReturnType(new SingleVariable<std::string>(c_tensor_get_string_data(c.data)));
     case DATATYPE::JSON:
     case DATATYPE::FUNCTION:
       return *(static_cast<OpReturnType*>(c.data));

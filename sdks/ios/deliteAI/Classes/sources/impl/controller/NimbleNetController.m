@@ -33,7 +33,6 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
 
 @implementation NimbleNetController
 
-
 -(NSDictionary*)initialize_nimblenet_controller:(NSString*)configJson assetsJson:(NSString*)assetsJson{
     NSLog(@"init called  detected!");
     initClientFunctionPointers();
@@ -57,11 +56,9 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
         
         __weak typeof(self) weakSelf = self;
         nw_path_monitor_set_update_handler(self.pathMonitor, ^(nw_path_t  _Nonnull path) {
-            
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             if (strongSelf) {
-                
                 nw_path_status_t status = nw_path_get_status(path);
                 
                 // Check the path status
@@ -70,9 +67,7 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
                 } else {
                     NSLog(@"No internet connection");
                 }
-                
             }
-            
         });
         nw_path_monitor_start(self.pathMonitor);
         
@@ -122,7 +117,6 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
             
         }
         return res;
-        
     }
     
     return populateErrorReturnObject(500, @"Error creating directory");
@@ -136,11 +130,9 @@ typedef struct SinglePreprocessorInput SinglePreprocessorInput;
 -(void)restartSessionWithId:(NSString*)sessionId{
     const char *csessionId = [sessionId UTF8String];
     update_session(csessionId);
-    
 };
 
 NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
-    
     NSString *eventType = data->eventType ? [NSString stringWithUTF8String:data->eventType] : nil;
     NSString *eventJsonString = data->eventJsonString ? [NSString stringWithUTF8String:data->eventJsonString] : nil;
     
@@ -153,7 +145,6 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
     }
     return dict;
 }
-
 
 -(NSDictionary*)add_event_controller:(NSString*)eventMapJsonString eventType:(NSString*)eventType{
     CUserEventsData cUserEventsData ;
@@ -260,7 +251,6 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
         }
     }
     
-    
     BOOL isCrashedThread = NO;
     NSString *threadPrefix = [NSString stringWithFormat:@"Thread %@", crashedThreadNumber];
     
@@ -305,7 +295,6 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
             
             // Append .000 for milliseconds
             dateTime = [dateTime stringByAppendingString:@".000"];
-            
         } else if ([line hasPrefix:@"Exception Type:"]) {
             exceptionType = [[line substringFromIndex:[@"Exception Type:" length]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         } else if ([line hasPrefix:@"Exception Codes:"]) {
@@ -359,18 +348,15 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
 -(NSDictionary*)run_task_controller:(NSString *)taskName
                modelInputsWithShape:(NSDictionary *)modelInputsWithShape
 {
-    
     void* json_alloc = create_json_allocator();
     NSMutableArray<CUserInputWrapper *> *userInputArray = [NSMutableArray array];
     
     NSUInteger modelInputsLength = [modelInputsWithShape count];
     
-    
     CTensors req;
     CTensors ret;
     req.numTensors = modelInputsLength;
     req.tensors = (CTensor*)malloc((req.numTensors) * sizeof(CTensor));
-    
     
     //model input transformer
     
@@ -394,14 +380,12 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
             inputDataType = [modelInputObjectData[@"type"] intValue];
             NSUInteger arrayLength = [arrayData count];
             voidCastedData = convertArraytoVoidPointerWithJsonAlloc(arrayData, arrayLength, inputDataType,json_alloc);
-            
         }
         else{
             id data = modelInputObjectData[@"data"];
             inputDataType = [modelInputObjectData[@"type"] intValue];
             voidCastedData = convertSingularInputtoVoidPointer(data, inputDataType,json_alloc);
         }
-        
         
         if(voidCastedData==nil){
             freeCTensors(&req,index);
@@ -437,7 +421,6 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
     
     NSDictionary *output = convertCTensorsToNSDictionary(nimbleNetStatus,ret,json_alloc);
     
-    
     freeCTensors(&req,req.numTensors);
     
     if(nimbleNetStatus!=NULL){
@@ -457,30 +440,19 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
 }
 
 //private functions
-void freeCTensor(CTensor* tensor){
-    if (tensor->dataType == STRING){
-        
-        int totalArrayLength = 1;
-        
-        for (int j = 0; j < tensor->shapeLength; j++) {
-            totalArrayLength*=tensor->shape[j];
+void freeCTensor(CTensor* tensor) {
+    if (tensor->dataType != JSON && tensor->dataType != JSON_ARRAY) {
+        const bool freed = c_tensor_delete_data(tensor);
+        if (!freed) {
+            free(tensor->data);
         }
-        
-        for(int k = 0; k<totalArrayLength;k++ ){
-            char ** stringArray = (char**) (tensor->data);
-            free(stringArray[k]);
-        }
-        free(tensor->data);
-    } else if (tensor->dataType != JSON && tensor->dataType != JSON_ARRAY){
-        free(tensor->data);
     }
-    
     if (tensor->shape != NULL) {
         free(tensor->shape);
     }
     free(tensor->name);
-
 }
+
 void freeCTensors(CTensors* req,NSUInteger index){
     for (int i = 0; i < index; i++) {
         freeCTensor(&req->tensors[i]);
@@ -498,7 +470,6 @@ NSString *getNimbleSdkDirectoryPath(void) {
 }
 
 NSString *createNimbleSdkDirectory(void) {
-    
     NSString *directoryPath = getNimbleSdkDirectoryPath();
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:directoryPath]) {
@@ -512,7 +483,6 @@ NSString *createNimbleSdkDirectory(void) {
     
     return nil;
 }
-
 
 // This function calculates the total size of a given folder (including its subdirectories).
 unsigned long long folderSizeAtPath(NSString *folderPath) {
