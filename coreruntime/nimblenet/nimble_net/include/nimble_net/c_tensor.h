@@ -11,7 +11,9 @@
 #include "executor_structs.h"
 #include "nimble_net/config.h"
 
-EXTERN_C_BEGIN
+DELITEAI_EXPORT_BEGIN
+
+DELITEAI_EXTERN_C_BEGIN
 
 /**
  * @brief Represents a single tensor with its metadata.
@@ -90,4 +92,6 @@ typedef NimbleNetStatus* (*FrontendFunctionPtr)(void* context, const CTensors in
 
 bool c_tensor_delete_data(CTensor* tensor);
 
-EXTERN_C_END
+DELITEAI_EXTERN_C_END
+
+DELITEAI_EXPORT_END

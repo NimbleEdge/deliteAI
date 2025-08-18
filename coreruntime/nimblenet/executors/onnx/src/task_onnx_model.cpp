@@ -13,13 +13,13 @@
 #include "tensor_data_variable.hpp"
 
 #ifdef ORT_EXTENSIONS
-EXTERN_C_BEGIN
+DELITEAI_EXTERN_C_BEGIN
 
 OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
 
 int ORT_API_CALL GetActiveOrtAPIVersion();
 
-EXTERN_C_END
+DELITEAI_EXTERN_C_END
 #endif  // ORT_EXTENSIONS
 
 // =================================================================================================

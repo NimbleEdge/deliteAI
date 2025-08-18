@@ -55,12 +55,22 @@
 
 // =================================================================================================
 
+#define DELITEAI_EXPORT         __attribute__((visibility("default")))
+
+// #pragma GCC visibility push(default)
+#define DELITEAI_EXPORT_BEGIN   _Pragma("GCC visibility push(default)")
+
+// #pragma GCC visibility pop
+#define DELITEAI_EXPORT_END     _Pragma("GCC visibility pop")
+
+// =================================================================================================
+
 #ifdef __cplusplus
-  #define EXTERN_C          extern "C"
-  #define EXTERN_C_BEGIN    extern "C" {
-  #define EXTERN_C_END      }  // extern "C"
+  #define DELITEAI_EXTERN_C         extern "C"
+  #define DELITEAI_EXTERN_C_BEGIN   extern "C" {
+  #define DELITEAI_EXTERN_C_END     }  // extern "C"
 #else
-  #define EXTERN_C
-  #define EXTERN_C_BEGIN
-  #define EXTERN_C_END
+  #define DELITEAI_EXTERN_C
+  #define DELITEAI_EXTERN_C_BEGIN
+  #define DELITEAI_EXTERN_C_END
 #endif  // __cplusplus
