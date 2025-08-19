@@ -77,16 +77,48 @@ char* c_tensor_get_string_data(void* data);
 // =================================================================================================
 
 /**
- * @brief Function pointer type for invoking a frontend function as a callback from delitepy script.
- *
- * @param context Pointer to user-defined context.
- * @param input Struct containing input tensors.
- * @param output Pointer to struct where output tensors will be stored.
- *
- * @return NimbleNetStatus* Status pointer indicating the result of event handling.
+ * @brief A marker type for the user-defined context for a foreign function.
  */
-typedef NimbleNetStatus* (*FrontendFunctionPtr)(void* context, const CTensors input,
-                                                CTensors* output);
+typedef struct CForeignFunctionContext CForeignFunctionContext;
+
+/**
+ * @brief Function pointer type for deleting a foreign function context.
+ */
+typedef void (*CForeignFunctionContextDeleter)(CForeignFunctionContext* context);
+
+/**
+ * @brief Function pointer type for a foreign function that can be invoked as a callback from a
+ *        DelitePy script.
+ *
+ * @param context The user-provided context pointer.
+ * @param input A struct containing the input tensors.
+ * @param output Pointer to a struct where the output tensors should be stored.
+ * @return NimbleNetStatus* Status of invoking the foreign function.
+ */
+typedef NimbleNetStatus* (*CForeignFunctionPtr)(CForeignFunctionContext* context,
+                                                const CTensors input, CTensors* output);
+
+/**
+ * @brief An opaque type encapsulating a `CForeignFunctionPtr`, a `CForeignFunctionContext*`,
+ *        and a `CForeignFunctionContextDeleter`.
+ */
+typedef struct CForeignFunctionObject CForeignFunctionObject;
+
+/**
+ * @brief Creates a CForeignFunctionObject instance encapsulating the provided inputs.
+ *
+ * The return value can be assigned to `CTensor::data`
+ * when the corresponding `CTensor::dataType` value is `DATATYPE::FUNCTION`.
+ * It can be deleted using `c_tensor_delete_data(CTensor*)`.
+ *
+ * @param fn A foreign function pointer.
+ * @param context A user-defined context pointer to be passed along to the foreign function.
+ * @param context_deleter A function pointer to delete the provided context.
+ * @return Pointer to the created CForeignFunctionObject instance.
+ */
+CForeignFunctionObject* c_tensor_create_function_data(
+    CForeignFunctionPtr fn, CForeignFunctionContext* context,
+    CForeignFunctionContextDeleter context_deleter);
 
 // =================================================================================================
 

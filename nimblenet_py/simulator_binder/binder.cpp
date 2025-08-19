@@ -210,7 +210,6 @@ bool deallocFrontendTensors(CTensors cTensors) {
     switch (tensor.dataType) {
       case DATATYPE::JSON:
       case DATATYPE::JSON_ARRAY:
-      case DATATYPE::FUNCTION:
         TaskInputData::deallocate_OpReturnType(tensor.data);
         break;
       default: {
@@ -222,11 +221,6 @@ bool deallocFrontendTensors(CTensors cTensors) {
     }
   }
   delete[] cTensors.tensors;
-  return true;
-}
-
-bool freeFrontendContext(void* context) {
-  delete (py::object*)context;
   return true;
 }
 
@@ -257,7 +251,6 @@ int initialize_simulator_nimblenet(const char* configInput, py::list moduleConfi
 
   // setting global cleanup functions
   globalDeallocate = deallocFrontendTensors;
-  globalFrontendContextFree = freeFrontendContext;
 
   // If no config provided prepare a default config
   if (configInput == nullptr) {

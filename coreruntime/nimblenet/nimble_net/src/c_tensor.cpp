@@ -8,7 +8,11 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <memory>
+#include <stdexcept>
 
+#include "custom_func_data_variable.hpp"
+#include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
 
 namespace {
@@ -43,6 +47,58 @@ void c_tensor_delete_string_data(CTensor* tensor) {
     free(str_arr[i]);
   }
   free(str_arr);
+}
+
+// =================================================================================================
+
+std::shared_ptr<MapDataVariable> create_foreign_function_arg_map(
+    const std::vector<OpReturnType>& args) {
+  if (args.size() != 1) {
+    THROW("calling foreign function: num args: expected = 1, actual = %zu", args.size());
+  }
+
+  const auto& arg = args[0];
+  if (arg->get_containerType() != CONTAINERTYPE::MAP) {
+    THROW("calling foreign function: arg container type: expected = \"Map\", actual = \"%s\"",
+          arg->get_containerType_string());
+  }
+  return std::dynamic_pointer_cast<MapDataVariable>(arg);
+}
+
+CustomFuncDataVariable create_foreign_function_data_variable(
+    CForeignFunctionPtr fn, CForeignFunctionContext* context,
+    CForeignFunctionContextDeleter context_deleter) {
+  auto sContext = std::shared_ptr<CForeignFunctionContext>(
+      context, [context_deleter](CForeignFunctionContext* ctx) {
+        if (context_deleter) {
+          context_deleter(ctx);
+        }
+      });
+  return CustomFuncDataVariable([fn, context = sContext](const std::vector<OpReturnType>& args,
+                                                         CallStack& stack) -> OpReturnType {
+    std::shared_ptr<MapDataVariable> fnInput = create_foreign_function_arg_map(args);
+    CTensors fnInTensors;
+    fnInput->convert_to_cTensors(&fnInTensors);
+
+    CTensors fnOutTensors;
+    auto status = fn(context.get(), fnInTensors, &fnOutTensors);
+    delete[] fnInTensors.tensors;
+
+    if (status != nullptr) {
+      auto fmtString = ne::fmt("Callback function failed with status code: '%d', error: '%s'",
+                               status->code, status->message);
+      deallocate_nimblenet_status(status);
+      throw std::runtime_error(fmtString.str);
+    }
+
+    auto fnOutput = std::make_shared<MapDataVariable>(fnOutTensors);
+    deallocate_frontend_tensors(fnOutTensors);
+    return fnOutput;
+  });
+}
+
+void c_tensor_delete_function_data(CForeignFunctionObject* data) {
+  delete reinterpret_cast<OpReturnType*>(data);
 }
 
 }  // namespace
@@ -121,6 +177,16 @@ char* c_tensor_get_string_data(void* data) { return static_cast<char**>(data)[0]
 
 // =================================================================================================
 
+CForeignFunctionObject* c_tensor_create_function_data(
+    CForeignFunctionPtr fn, CForeignFunctionContext* context,
+    CForeignFunctionContextDeleter context_deleter) {
+  auto fn_data_var = std::make_shared<CustomFuncDataVariable>(
+      create_foreign_function_data_variable(fn, context, context_deleter));
+  return reinterpret_cast<CForeignFunctionObject*>(new OpReturnType(fn_data_var));
+}
+
+// =================================================================================================
+
 bool c_tensor_delete_data(CTensor* tensor) {
   if (!tensor->data) {
     return true;
@@ -138,6 +204,11 @@ bool c_tensor_delete_data(CTensor* tensor) {
 
     case DATATYPE::STRING: {
       c_tensor_delete_string_data(tensor);
+      return true;
+    }
+
+    case DATATYPE::FUNCTION: {
+      c_tensor_delete_function_data(static_cast<CForeignFunctionObject*>(tensor->data));
       return true;
     }
 

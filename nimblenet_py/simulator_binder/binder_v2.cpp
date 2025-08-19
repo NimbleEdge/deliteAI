@@ -270,19 +270,20 @@ CTensor construct_singleVariable_input(const std::string& name, py::object item)
   } else if (py::isinstance<py::function>(item)) {
     cTensor.dataType = DATATYPE::FUNCTION;
 
-    // This lambda should be able to run the frontend Function.
-    // Context should store info related to running the frontend function, or the function itself
-    FrontendFunctionPtr myLambda = [](void* context, const CTensors input,
-                                      CTensors* output) -> NimbleNetStatus* {
-      auto pythonFunction = py::cast<py::function>(*(py::handle*)context);
+    auto context = reinterpret_cast<CForeignFunctionContext*>(new py::object(item));
+    CForeignFunctionContextDeleter context_deleter = [](CForeignFunctionContext* context) {
+      delete reinterpret_cast<py::object*>(context);
+    };
+    CForeignFunctionPtr fn = [](CForeignFunctionContext* context, const CTensors input,
+                                CTensors* output) -> NimbleNetStatus* {
+      auto pythonFunction = py::cast<py::function>(*reinterpret_cast<py::handle*>(context));
       auto inputForPythonFunction = convert_CTensors_to_pymap(input);
       auto returnObject = pythonFunction(inputForPythonFunction);
 
       *output = convert_pydict_to_CTensors(returnObject);
       return nullptr;
     };
-    void* context = new py::object(item);
-    cTensor.data = TaskInputData::create_function_data_variable(context, myLambda);
+    cTensor.data = c_tensor_create_function_data(fn, context, context_deleter);
   }
   return cTensor;
 }

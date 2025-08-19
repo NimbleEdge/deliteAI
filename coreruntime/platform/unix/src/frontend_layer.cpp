@@ -7,4 +7,3 @@
 #include "client.h"
 
 DeallocateFrontendType globalDeallocate __attribute__((visibility("default"))) = nullptr;
-FreeFrontendContextType globalFrontendContextFree __attribute__((visibility("default"))) = nullptr;

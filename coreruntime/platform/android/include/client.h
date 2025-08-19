@@ -175,14 +175,6 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
 bool deallocate_frontend_tensors(CTensors cTensors);
 
 /**
- * @brief Frees the memory for a frontend function context. (No-op on Android)
- *
- * @param context Pointer to the context to free.
- * @return bool Always returns true.
- */
-bool free_frontend_function_context(void* context);
-
-/**
  * @brief Return phonemes of the given string.
  *
  * @return char* Pointer to phoneme string.

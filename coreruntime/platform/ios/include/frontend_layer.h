@@ -135,11 +135,3 @@ extern get_keys_ios_object_type get_keys_ios_object_global; /**< Global function
  * @return bool True if successful.
  */
 bool deallocate_frontend_tensors(CTensors cTensors);
-
-/**
- * @brief Frees the memory for a frontend function context (iOS implementation).
- *
- * @param context Pointer to the context to free.
- * @return bool True if successful.
- */
-bool free_frontend_function_context(void* context);

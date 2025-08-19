@@ -310,8 +310,6 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
 
 bool deallocate_frontend_tensors(CTensors cTensors) { return true; }
 
-bool free_frontend_function_context(void *context) { return true; }
-
 namespace {
 
 /**

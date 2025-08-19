@@ -45,16 +45,6 @@ struct TaskInputData {
   static nlohmann::json get_json_from_OpReturnType(void* data);
 
   /**
-   * @brief Create a function data variable for use in simulation.
-   *
-   * @param context Pointer to the function context.
-   * @param frontEndFunctionPtr Function pointer to the frontend callback.
-   * @return Pointer to the created function data variable.
-   */
-  static void* create_function_data_variable(void* context,
-                                             FrontendFunctionPtr frontEndFunctionPtr);
-
-  /**
    * @brief Deallocate an OpReturnType pointer.
    *
    * @param data Pointer to OpReturnType to deallocate.
