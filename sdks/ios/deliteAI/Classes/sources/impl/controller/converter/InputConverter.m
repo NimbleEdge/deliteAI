@@ -4,32 +4,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#import <Foundation/Foundation.h>
-#import <DeliteAI/DeliteAI-Swift.h>
-#import "nimblejson.hpp"
-#import "executor_structs.h"
 #import "InputConverter.h"
+
+#import <DeliteAI/DeliteAI-Swift.h>
+#import <Foundation/Foundation.h>
+
+#import "executor_structs.h"
+#import "nimblejson.hpp"
 
 @implementation InputConverter : NSObject
 
-void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength, int dataType,void* json_alloc){
+void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength, int dataType,
+                                             void* json_alloc) {
     switch (dataType) {
         case JSON_ARRAY: {
-            return convertJsonArrayToVoidPointer(arrayData,json_alloc);
+            return convertJsonArrayToVoidPointer(arrayData, json_alloc);
         }
         default:
-            return convertArraytoVoidPointer(arrayData,arrayLength, dataType);
+            return convertArraytoVoidPointer(arrayData, arrayLength, dataType);
     }
 }
 
-void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataType){
-    switch(dataType){
+void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataType) {
+    switch (dataType) {
         case STRING: {
-            char **cArray = (char **)malloc(arrayLength * sizeof(char *));
+            char** cArray = (char**)malloc(arrayLength * sizeof(char*));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSString *string = [arrayData objectAtIndex:i];
+                NSString* string = [arrayData objectAtIndex:i];
                 if ([string isKindOfClass:[NSString class]]) {
-                    const char *cString = [string UTF8String];
+                    const char* cString = [string UTF8String];
                     if (cString) {
                         cArray[i] = strdup(cString);
                     } else {
@@ -39,47 +42,47 @@ void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataTyp
                     cArray[i] = NULL;
                 }
             }
-            return (void *)cArray;
+            return (void*)cArray;
         }
-        case INT32:{
-            int *cArray = (int *)malloc(arrayLength * sizeof(int));
+        case INT32: {
+            int* cArray = (int*)malloc(arrayLength * sizeof(int));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSNumber *number = [arrayData objectAtIndex:i];
+                NSNumber* number = [arrayData objectAtIndex:i];
                 cArray[i] = [number intValue];
             }
-            return (void*) cArray;
+            return (void*)cArray;
         }
         case BOOLEAN: {
-            bool *cArray = (bool *)malloc(arrayLength * sizeof(bool));
+            bool* cArray = (bool*)malloc(arrayLength * sizeof(bool));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSNumber *number = [arrayData objectAtIndex:i];
+                NSNumber* number = [arrayData objectAtIndex:i];
                 cArray[i] = [number boolValue];
             }
-            return (void *)cArray;
+            return (void*)cArray;
         }
-        case FLOAT:{
-            float *cArray = (float *)malloc(arrayLength * sizeof(float));
+        case FLOAT: {
+            float* cArray = (float*)malloc(arrayLength * sizeof(float));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSNumber *number = [arrayData objectAtIndex:i];
+                NSNumber* number = [arrayData objectAtIndex:i];
                 cArray[i] = [number floatValue];
             }
-            return (void*) cArray;
+            return (void*)cArray;
         }
-        case DOUBLE:{
-            double *cArray = (double *)malloc(arrayLength * sizeof(double));
+        case DOUBLE: {
+            double* cArray = (double*)malloc(arrayLength * sizeof(double));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSNumber *number = [arrayData objectAtIndex:i];
+                NSNumber* number = [arrayData objectAtIndex:i];
                 cArray[i] = [number doubleValue];
             }
-            return (void*) cArray;
+            return (void*)cArray;
         }
-        case INT64:{
-            int64_t *cArray = (long long *)malloc(arrayLength * sizeof(long long));
+        case INT64: {
+            int64_t* cArray = (long long*)malloc(arrayLength * sizeof(long long));
             for (NSUInteger i = 0; i < arrayLength; i++) {
-                NSNumber *number = [arrayData objectAtIndex:i];
+                NSNumber* number = [arrayData objectAtIndex:i];
                 cArray[i] = [number longLongValue];
             }
-            return (void*) cArray;
+            return (void*)cArray;
         }
         default:
             return nil;
@@ -112,30 +115,25 @@ void* convertSingularInputtoVoidPointer(id data, int dataType, void* json_alloc)
     }
 }
 
-NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
+NimbleNetStatus* convertSingularInputToCTensor(id data, CTensor* child) {
     c_tensor_init(child);
     if ([data isKindOfClass:[NSString class]]) {
         convertStringToCTensor((NSString*)data, child);
     } else if ([data isKindOfClass:[NSNumber class]]) {
-        NSNumber *number = (NSNumber *)data;
-        const char *type = [number objCType];
+        NSNumber* number = (NSNumber*)data;
+        const char* type = [number objCType];
 
         if (strcmp(type, @encode(char)) == 0 || strcmp(type, @encode(BOOL)) == 0) {
-            convertBoolToCTensor(number,child);
-        }
-        else if (strcmp(type, @encode(int)) == 0) {
-            convertInt32ToCTensor(number,child);
-        }
-        else if (strcmp(type, @encode(long)) == 0 || strcmp(type, @encode(long long)) == 0) {
-            convertInt64ToCTensor(number,child);
-        }
-        else if (strcmp(type, @encode(float)) == 0) {
-            convertFloatToCTensor(number,child);
-        }
-        else if (strcmp(type, @encode(double)) == 0) {
-            convertDoubleToCTensor(number,child);
-        }
-        else{
+            convertBoolToCTensor(number, child);
+        } else if (strcmp(type, @encode(int)) == 0) {
+            convertInt32ToCTensor(number, child);
+        } else if (strcmp(type, @encode(long)) == 0 || strcmp(type, @encode(long long)) == 0) {
+            convertInt64ToCTensor(number, child);
+        } else if (strcmp(type, @encode(float)) == 0) {
+            convertFloatToCTensor(number, child);
+        } else if (strcmp(type, @encode(double)) == 0) {
+            convertDoubleToCTensor(number, child);
+        } else {
             return createNimbleNetStatus(@"unknown type of member NSNumber class");
         }
     } else if ([data isKindOfClass:[NSDictionary class]]) {
@@ -154,16 +152,16 @@ NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
         child->data = NULL;
         child->dataType = NONE;
     } else if ([data isKindOfClass:[ProtoObjectWrapper class]]) {
-        child->data = convertProtoObjectToVoidPointer((ProtoObjectWrapper*) data);
+        child->data = convertProtoObjectToVoidPointer((ProtoObjectWrapper*)data);
         child->dataType = FE_OBJ;
     } else if ([data isKindOfClass:[ProtoAnyWrapper class]]) {
-        child->data = convertProtoAnyToVoidPointer((ProtoAnyWrapper*) data);
+        child->data = convertProtoAnyToVoidPointer((ProtoAnyWrapper*)data);
         child->dataType = FE_OBJ;
-    } else if ([data isKindOfClass:[ProtoListWrapper class]]){
-        child->data = convertProtoListToVoidPointer((ProtoListWrapper*) data);
+    } else if ([data isKindOfClass:[ProtoListWrapper class]]) {
+        child->data = convertProtoListToVoidPointer((ProtoListWrapper*)data);
         child->dataType = FE_OBJ;
-    } else if ([data isKindOfClass:[ProtoMapWrapper class]]){
-        child->data = convertProtoMapToVoidPointer((ProtoMapWrapper*) data);
+    } else if ([data isKindOfClass:[ProtoMapWrapper class]]) {
+        child->data = convertProtoMapToVoidPointer((ProtoMapWrapper*)data);
         child->dataType = FE_OBJ;
     } else {
         return createNimbleNetStatus(@"Could not parse data to a known datatype");
@@ -171,84 +169,79 @@ NimbleNetStatus* convertSingularInputToCTensor(id data,CTensor* child) {
     return NULL;
 }
 
-void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc){
+void* convertJsonArrayToVoidPointer(NSArray* jsonArray, void* json_alloc) {
     void* array = create_json_array(json_alloc);
 
-    NSInteger arrayLength = [(NSArray *)jsonArray count];
-    for(int idx = 0; idx<arrayLength; idx++ ){
-        id element = [(NSArray *)jsonArray objectAtIndex:idx];
+    NSInteger arrayLength = [(NSArray*)jsonArray count];
+    for (int idx = 0; idx < arrayLength; idx++) {
+        id element = [(NSArray*)jsonArray objectAtIndex:idx];
 
         if ([element isKindOfClass:[NSString class]]) {
             // element wont be null
-            const char *elementString = [element UTF8String];
+            const char* elementString = [element UTF8String];
             move_string_value_to_array(array, elementString);
         } else if ([element isKindOfClass:[NSNumber class]]) {
-            NSNumber *number = (NSNumber *)element;
-            const char *type = [number objCType];
+            NSNumber* number = (NSNumber*)element;
+            const char* type = [number objCType];
             if (strcmp(type, @encode(char)) == 0 || strcmp(type, @encode(BOOL)) == 0) {
                 bool boolValue = [number boolValue];
                 move_bool_value_to_array(array, boolValue);
-            }
-            else if (strcmp(type, @encode(int)) == 0 || strcmp(type, @encode(long)) == 0 || strcmp(type, @encode(long long)) == 0) {
+            } else if (strcmp(type, @encode(int)) == 0 || strcmp(type, @encode(long)) == 0 ||
+                       strcmp(type, @encode(long long)) == 0) {
                 int64_t longValue = [number longLongValue];
                 move_int64_value_to_array(array, longValue);
-            }
-            else if (strcmp(type, @encode(float)) == 0 || strcmp(type, @encode(double)) == 0) {
+            } else if (strcmp(type, @encode(float)) == 0 || strcmp(type, @encode(double)) == 0) {
                 double doubleValue = [number doubleValue];
                 move_double_value_to_array(array, doubleValue);
-            }
-            else{
+            } else {
                 NSLog(@"unknown type of member NSNumber class: %@", number);
             }
         } else if ([element isKindOfClass:[NSDictionary class]]) {
-            void* newdict =  convertJsonDictToVoidPointer(element,json_alloc);
+            void* newdict = convertJsonDictToVoidPointer(element, json_alloc);
             move_json_object_or_array_to_array(array, newdict);
         } else if ([element isKindOfClass:[NSArray class]]) {
-            void* JsonArray = convertJsonArrayToVoidPointer(element,json_alloc);
+            void* JsonArray = convertJsonArrayToVoidPointer(element, json_alloc);
             move_json_object_or_array_to_array(array, JsonArray);
         } else if ([element isKindOfClass:[NSNull class]]) {
             move_null_value_to_array(array);
-        }
-        else {
+        } else {
             NSLog(@"unknown type: %@", element);
         }
     }
     return array;
 }
 
-void* convertJsonDictToVoidPointer(NSDictionary* jsonDict,void* json_alloc){
+void* convertJsonDictToVoidPointer(NSDictionary* jsonDict, void* json_alloc) {
     void* json = create_json_object(json_alloc);
-    [jsonDict enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL *stop) {
-        const char *keyCstring = [key UTF8String];
+    [jsonDict enumerateKeysAndObjectsUsingBlock:^(NSString* key, id value, BOOL* stop) {
+        const char* keyCstring = [key UTF8String];
 
         if ([value isKindOfClass:[NSString class]]) {
-            const char *valueCstring = [value UTF8String];
-            add_string_value(keyCstring,valueCstring, json);
-        }
-        else if ([value isKindOfClass:[NSNumber class]]) {
-            const char *type = [value objCType];
+            const char* valueCstring = [value UTF8String];
+            add_string_value(keyCstring, valueCstring, json);
+        } else if ([value isKindOfClass:[NSNumber class]]) {
+            const char* type = [value objCType];
             if (strcmp(type, @encode(char)) == 0 || strcmp(type, @encode(BOOL)) == 0) {
                 add_bool_value(keyCstring, [value boolValue], json);
-            }
-            else if (strcmp([value objCType], @encode(int)) == 0 || strcmp([value objCType], @encode(long)) == 0 || strcmp([value objCType], @encode(long long)) == 0) {
+            } else if (strcmp([value objCType], @encode(int)) == 0 ||
+                       strcmp([value objCType], @encode(long)) == 0 ||
+                       strcmp([value objCType], @encode(long long)) == 0) {
                 add_int64_value(keyCstring, [value longLongValue], json);
-            }
-            else if (strcmp([value objCType], @encode(float)) == 0 || strcmp([value objCType], @encode(double)) == 0) {
+            } else if (strcmp([value objCType], @encode(float)) == 0 ||
+                       strcmp([value objCType], @encode(double)) == 0) {
                 add_double_value(keyCstring, [value doubleValue], json);
-            }
-            else{
+            } else {
                 NSLog(@"unknown type of member NSNumber class: %@", value);
             }
         } else if ([value isKindOfClass:[NSArray class]]) {
-            void* nestedArray = convertJsonArrayToVoidPointer(value,json_alloc);
+            void* nestedArray = convertJsonArrayToVoidPointer(value, json_alloc);
             add_json_object_to_json(keyCstring, nestedArray, json);
         } else if ([value isKindOfClass:[NSDictionary class]]) {
-            void* nestedDict = convertJsonDictToVoidPointer(value,json_alloc);
+            void* nestedDict = convertJsonDictToVoidPointer(value, json_alloc);
             add_json_object_to_json(keyCstring, nestedDict, json);
         } else if ([value isKindOfClass:[NSNull class]]) {
-            add_null_value(keyCstring,json);
-        }
-        else {
+            add_null_value(keyCstring, json);
+        } else {
             NSLog(@"Value of an unknown type: %@, found in JsonDict for key : %@", value, key);
         }
     }];
@@ -261,7 +254,7 @@ void convertStringToCTensor(NSString* str, CTensor* req) {
     req->dataType = STRING;
 }
 
-void convertBoolToCTensor(NSNumber *data,  CTensor* req) {
+void convertBoolToCTensor(NSNumber* data, CTensor* req) {
     c_tensor_init(req);
     req->data = c_tensor_create_boolean_data(data.boolValue);
     req->dataType = BOOLEAN;
@@ -274,7 +267,7 @@ void* convertProtoObjectToVoidPointer(ProtoObjectWrapper* wrappedClass) {
     return obj;
 }
 
-void convertInt32ToCTensor(NSNumber* data,  CTensor* req) {
+void convertInt32ToCTensor(NSNumber* data, CTensor* req) {
     c_tensor_init(req);
     req->data = c_tensor_create_int32_data(data.intValue);
     req->dataType = INT32;
