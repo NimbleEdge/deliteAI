@@ -190,8 +190,7 @@ public class NimbleNetApi {
 
         var inputDict: [String: [String: Any]] = [:]
         for (key, value) in inputs {
-            var shape: [Int] = []
-            inputDict[key] = convertToDictionary(value)
+            inputDict[key] = value.toDict()
         }
 
         var res = nimbleNetController.run_task_controller(
@@ -225,23 +224,6 @@ public class NimbleNetApi {
         }
 
         return NimbleNetResult<NimbleNetOutput>(data: NSDictionary(dictionary: res))
-
-        func convertToDictionary(_ input: NimbleNetTensor) -> [String: Any] {
-            if input.datatype.rawValue == DataType.FE_OBJ.rawValue {
-                var message = input.data as! (Message & _ProtoNameProviding)
-                var wrapper = ProtoObjectWrapper(message: message)
-                return [
-                    "data": wrapper,
-                    "type": input.datatype.value,
-                    "shape": input.shape,
-                ]
-            }
-            return [
-                "data": input.data,
-                "type": input.datatype.value,
-                "shape": input.shape,
-            ]
-        }
     }
 
     // utils
@@ -368,5 +350,24 @@ func verifyUserInputs(inputs: [String: NimbleNetTensor]) throws {
                 type: String(describing: type(of: data))
             )
         }
+    }
+}
+
+extension NimbleNetTensor {
+    fileprivate func toDict() -> [String: Any] {
+        if self.datatype.rawValue == DataType.FE_OBJ.rawValue {
+            let message = self.data as! (Message & _ProtoNameProviding)
+            let wrapper = ProtoObjectWrapper(message: message)
+            return [
+                "data": wrapper,
+                "type": self.datatype.value,
+                "shape": self.shape ?? NSNull(),
+            ]
+        }
+        return [
+            "data": self.data,
+            "type": self.datatype.value,
+            "shape": self.shape ?? NSNull(),
+        ]
     }
 }

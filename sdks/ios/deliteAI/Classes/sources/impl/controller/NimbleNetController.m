@@ -375,13 +375,9 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
 - (NSDictionary*)run_task_controller:(NSString*)taskName
                 modelInputsWithShape:(NSDictionary*)modelInputsWithShape {
     void* json_alloc = create_json_allocator();
-    NSMutableArray<CUserInputWrapper*>* userInputArray = [NSMutableArray array];
-
-    NSUInteger modelInputsLength = [modelInputsWithShape count];
 
     CTensors req;
-    CTensors ret;
-    req.numTensors = modelInputsLength;
+    req.numTensors = (int)modelInputsWithShape.count;
     req.tensors = (CTensor*)malloc((req.numTensors) * sizeof(CTensor));
 
     // model input transformer
@@ -390,13 +386,13 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
     for (NSUInteger index = 0; index < keys.count; index++) {
         NSString* inputName = keys[index];
         NSDictionary* modelInputObjectData = modelInputsWithShape[inputName];
-        NSArray* modelInputObjectShape = modelInputsWithShape[inputName][@"shape"];
-        int shapeArrayLength = 0;
         void* voidCastedData;
         int inputDataType;
         int64_t* int64ShapeArray = NULL;
-        if (modelInputObjectShape != [NSNull null]) {
-            shapeArrayLength = [modelInputObjectShape count];
+        int shapeArrayLength = 0;
+        if (modelInputObjectData[@"shape"] != [NSNull null]) {
+            NSArray* modelInputObjectShape = modelInputObjectData[@"shape"];
+            shapeArrayLength = (int)modelInputObjectShape.count;
             int64ShapeArray = (int64_t*)malloc(sizeof(int64_t) * shapeArrayLength);
             for (NSUInteger i = 0; i < shapeArrayLength; i++) {
                 int64ShapeArray[i] = [(NSNumber*)modelInputObjectShape[i] longLongValue];
@@ -431,12 +427,12 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
     }
 
     CFTimeInterval startTime = CACurrentMediaTime();
+    CTensors ret;
     NimbleNetStatus* nimbleNetStatus = run_method([taskName UTF8String], req, &ret);
     if (nimbleNetStatus == NULL) {
         CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
         long long int elapsedTimeinMicro = (long long int)(elapsedTime * 1000000);
-        const char* cString = [taskName UTF8String];
-        write_run_method_metric(cString, elapsedTimeinMicro);
+        write_run_method_metric(taskName.UTF8String, elapsedTimeinMicro);
     }
 
     bool status = false;
