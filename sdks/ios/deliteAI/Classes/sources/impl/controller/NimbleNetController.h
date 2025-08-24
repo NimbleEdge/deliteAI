@@ -31,8 +31,6 @@
 - (void)restartSession;
 - (void)restartSessionWithId:(NSString*)sessionId;
 
-void freeCTensor(CTensor* tensor);
-
 @end
 
 #endif

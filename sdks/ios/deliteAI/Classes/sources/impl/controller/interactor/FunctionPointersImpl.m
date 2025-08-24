@@ -252,7 +252,7 @@ void deallocate_ios_nimblenet_status(NimbleNetStatus* status){
 
 void deallocate_frontend_ctensor(CTensor* ctensor){
     if (ctensor == NULL) return;
-    freeCTensor(ctensor);
+    cTensorDelete(ctensor);
 }
 
 NimbleNetStatus* get_ios_object_size(IosObject proto, int* val)  {

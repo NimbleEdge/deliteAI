@@ -8,14 +8,87 @@
 
 #import <DeliteAI/DeliteAI-Swift.h>
 #import <Foundation/Foundation.h>
+#import <stdlib.h>
+#import <string.h>
 
 #import "executor_structs.h"
 #import "nimblejson.hpp"
 
+NSDictionary* cTensorsInitWithDict(CTensors* self_, NSDictionary* tensorsDict, void* json_alloc) {
+    self_->tensors = (CTensor*)malloc(sizeof(CTensor) * tensorsDict.count);
+    self_->numTensors = (int)tensorsDict.count;
+
+    NSArray* keys = tensorsDict.allKeys;
+    for (NSUInteger index = 0; index < keys.count; index++) {
+        NSString* tensorName = keys[index];
+        NSDictionary* tensorDict = tensorsDict[tensorName];
+
+        void* tensorData;
+        int tensorDataType = [tensorDict[@"type"] intValue];
+        int64_t* tensorShape = NULL;
+        int tensorShapeLength = 0;
+
+        if (tensorDict[@"shape"] != [NSNull null]) {
+            NSArray* tensorShapeArray = tensorDict[@"shape"];
+            tensorShape = (int64_t*)malloc(sizeof(int64_t) * tensorShapeArray.count);
+            for (NSUInteger i = 0; i < tensorShapeArray.count; i++) {
+                tensorShape[i] = [(NSNumber*)tensorShapeArray[i] longLongValue];
+            }
+            tensorShapeLength = (int)tensorShapeArray.count;
+
+            NSArray* arrayData = tensorDict[@"data"];
+            tensorData = convertArraytoVoidPointerWithJsonAlloc(arrayData, arrayData.count,
+                                                                tensorDataType, json_alloc);
+        } else {
+            id data = tensorDict[@"data"];
+            tensorData = convertSingularInputtoVoidPointer(data, tensorDataType, json_alloc);
+        }
+
+        if (tensorData == NULL) {
+            cTensorsDelete(self_, index);
+            if (tensorShape != NULL) {
+                free(tensorShape);
+                tensorShape = NULL;
+            }
+            return populateErrorReturnObject(5000, @"Datatype not yet supported");
+        }
+
+        self_->tensors[index].name = strdup(tensorName.UTF8String);
+        self_->tensors[index].data = tensorData;
+        self_->tensors[index].dataType = tensorDataType;
+        self_->tensors[index].shape = tensorShape;
+        self_->tensors[index].shapeLength = tensorShapeLength;
+    }
+
+    return nil;
+}
+
+void cTensorDelete(CTensor* self_) {
+    free(self_->name);
+    if (self_->dataType != JSON && self_->dataType != JSON_ARRAY) {
+        const bool freed = c_tensor_delete_data(self_);
+        if (!freed) {
+            free(self_->data);
+        }
+    }
+    if (self_->shape != NULL) {
+        free(self_->shape);
+    }
+}
+
+void cTensorsDelete(CTensors* self_, NSUInteger index) {
+    for (int i = 0; i < index; i++) {
+        cTensorDelete(&self_->tensors[i]);
+    }
+    free(self_->tensors);
+}
+
+// =================================================================================================
+
 @implementation InputConverter : NSObject
 
-void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength, int dataType,
-                                             void* json_alloc) {
+void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, NSUInteger arrayLength,
+                                             int dataType, void* json_alloc) {
     switch (dataType) {
         case JSON_ARRAY: {
             return convertJsonArrayToVoidPointer(arrayData, json_alloc);
@@ -25,7 +98,7 @@ void* convertArraytoVoidPointerWithJsonAlloc(NSArray* arrayData, int arrayLength
     }
 }
 
-void* convertArraytoVoidPointer(NSArray* arrayData, int arrayLength, int dataType) {
+void* convertArraytoVoidPointer(NSArray* arrayData, NSUInteger arrayLength, int dataType) {
     switch (dataType) {
         case STRING: {
             char** cArray = (char**)malloc(arrayLength * sizeof(char*));

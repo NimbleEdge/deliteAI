@@ -376,64 +376,24 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
                 modelInputsWithShape:(NSDictionary*)modelInputsWithShape {
     void* json_alloc = create_json_allocator();
 
-    CTensors req;
-    req.numTensors = (int)modelInputsWithShape.count;
-    req.tensors = (CTensor*)malloc((req.numTensors) * sizeof(CTensor));
-
-    // model input transformer
-
-    NSArray* keys = modelInputsWithShape.allKeys;
-    for (NSUInteger index = 0; index < keys.count; index++) {
-        NSString* inputName = keys[index];
-        NSDictionary* modelInputObjectData = modelInputsWithShape[inputName];
-        void* voidCastedData;
-        int inputDataType;
-        int64_t* int64ShapeArray = NULL;
-        int shapeArrayLength = 0;
-        if (modelInputObjectData[@"shape"] != [NSNull null]) {
-            NSArray* modelInputObjectShape = modelInputObjectData[@"shape"];
-            shapeArrayLength = (int)modelInputObjectShape.count;
-            int64ShapeArray = (int64_t*)malloc(sizeof(int64_t) * shapeArrayLength);
-            for (NSUInteger i = 0; i < shapeArrayLength; i++) {
-                int64ShapeArray[i] = [(NSNumber*)modelInputObjectShape[i] longLongValue];
-            }
-
-            NSArray* arrayData = modelInputObjectData[@"data"];
-            inputDataType = [modelInputObjectData[@"type"] intValue];
-            NSUInteger arrayLength = [arrayData count];
-            voidCastedData = convertArraytoVoidPointerWithJsonAlloc(arrayData, arrayLength,
-                                                                    inputDataType, json_alloc);
-        } else {
-            id data = modelInputObjectData[@"data"];
-            inputDataType = [modelInputObjectData[@"type"] intValue];
-            voidCastedData = convertSingularInputtoVoidPointer(data, inputDataType, json_alloc);
-        }
-
-        if (voidCastedData == nil) {
-            freeCTensors(&req, index);
-            if (int64ShapeArray != NULL) {
-                free(int64ShapeArray);
-                int64ShapeArray = NULL;
-            }
-            deallocate_json_allocator(json_alloc);
-            return populateErrorReturnObject(5000, @"Datatype not yet supported");
-        }
-
-        req.tensors[index].name = strdup([inputName UTF8String]);
-        req.tensors[index].data = voidCastedData;
-        req.tensors[index].dataType = inputDataType;
-        req.tensors[index].shape = int64ShapeArray;
-        req.tensors[index].shapeLength = shapeArrayLength;
+    CTensors inCTensors;
+    NSDictionary* inCTensorsInitStatus =
+        cTensorsInitWithDict(&inCTensors, modelInputsWithShape, json_alloc);
+    if (inCTensorsInitStatus != nil) {
+        deallocate_json_allocator(json_alloc);
+        return inCTensorsInitStatus;
     }
 
-    CFTimeInterval startTime = CACurrentMediaTime();
-    CTensors ret;
-    NimbleNetStatus* nimbleNetStatus = run_method([taskName UTF8String], req, &ret);
+    const CFTimeInterval startTime = CACurrentMediaTime();
+    CTensors outCTensors;
+    NimbleNetStatus* nimbleNetStatus = run_method(taskName.UTF8String, inCTensors, &outCTensors);
     if (nimbleNetStatus == NULL) {
-        CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-        long long int elapsedTimeinMicro = (long long int)(elapsedTime * 1000000);
+        const CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+        const long long int elapsedTimeinMicro = (long long int)(elapsedTime * 1000000);
         write_run_method_metric(taskName.UTF8String, elapsedTimeinMicro);
     }
+
+    cTensorsDelete(&inCTensors, inCTensors.numTensors);
 
     bool status = false;
 
@@ -441,14 +401,12 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
         status = true;
     }
 
-    NSDictionary* output = convertCTensorsToNSDictionary(nimbleNetStatus, ret, json_alloc);
-
-    freeCTensors(&req, req.numTensors);
+    NSDictionary* output = convertCTensorsToNSDictionary(nimbleNetStatus, outCTensors, json_alloc);
 
     if (nimbleNetStatus != NULL) {
         deallocate_nimblenet_status(nimbleNetStatus);
     } else {
-        deallocate_output_memory2(&ret);
+        deallocate_output_memory2(&outCTensors);
     }
 
     deallocate_json_allocator(json_alloc);
@@ -461,26 +419,6 @@ NSDictionary* convertCUserEventsDataToNSDictionary(CUserEventsData* data) {
 }
 
 // private functions
-void freeCTensor(CTensor* tensor) {
-    if (tensor->dataType != JSON && tensor->dataType != JSON_ARRAY) {
-        const bool freed = c_tensor_delete_data(tensor);
-        if (!freed) {
-            free(tensor->data);
-        }
-    }
-    if (tensor->shape != NULL) {
-        free(tensor->shape);
-    }
-    free(tensor->name);
-}
-
-void freeCTensors(CTensors* req, NSUInteger index) {
-    for (int i = 0; i < index; i++) {
-        freeCTensor(&req->tensors[i]);
-    }
-    free(req->tensors);
-}
-
 NSString* getNimbleSdkDirectoryPath(void) {
     NSArray* paths =
         NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
