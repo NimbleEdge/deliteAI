@@ -9,6 +9,7 @@
 #include "nlohmann/json_fwd.hpp"
 
 #include "executor_structs.h"
+#include "nimble_net/c_tensor.h"
 
 #pragma GCC visibility push(default)
 
@@ -42,16 +43,6 @@ struct TaskInputData {
    * @return JSON object representing the data.
    */
   static nlohmann::json get_json_from_OpReturnType(void* data);
-
-  /**
-   * @brief Create a function data variable for use in simulation.
-   *
-   * @param context Pointer to the function context.
-   * @param frontEndFunctionPtr Function pointer to the frontend callback.
-   * @return Pointer to the created function data variable.
-   */
-  static void* create_function_data_variable(void* context,
-                                             FrontendFunctionPtr frontEndFunctionPtr);
 
   /**
    * @brief Deallocate an OpReturnType pointer.

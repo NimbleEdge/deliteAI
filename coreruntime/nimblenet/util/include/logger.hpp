@@ -34,7 +34,7 @@ struct LogWritingConfig {
 
 /**
  * @brief Populates a LogWritingConfig from a JSON object.
- * 
+ *
  * @param j The JSON object.
  * @param config The LogWritingConfig to populate.
  */
@@ -58,7 +58,7 @@ static inline void from_json(const nlohmann::json& j, LogWritingConfig& config) 
 
 /**
  * @brief Serializes a LogWritingConfig to a JSON object.
- * 
+ *
  * @param j The JSON object to populate.
  * @param config The LogWritingConfig to serialize.
  */
@@ -73,7 +73,7 @@ static inline void to_json(nlohmann::json& j, const LogWritingConfig& config) {
 namespace ne {
 /**
  * @brief Gets the file size for a given file path.
- * 
+ *
  * @param fullFilePath The full path to the file.
  * @return File size in bytes, or 0 if not found or is a directory.
  */
@@ -112,7 +112,7 @@ class Logger {
  public:
   /**
    * @brief Constructs a Logger with a given log config.
-   * 
+   *
    * @param logConfig The log writing configuration.
    */
   Logger(const LogWritingConfig& logConfig) {
@@ -136,7 +136,7 @@ class Logger {
 
   /**
    * @brief Sets the maximum size limit for the log directory.
-   * 
+   *
    * @param maxSizeInKBs Maximum size in KB.
    */
   void set_max_size_limit(int64_t maxSizeInKBs) { _maxDirSize = maxSizeInKBs * 1024; }
@@ -388,7 +388,7 @@ class Logger {
  private:
   /**
    * @brief Breaks the current log file and returns the new file name (internal).
-   * 
+   *
    * @param newFileName The new file name.
    * @param logMutexUniqueLock Unique lock for thread safety.
    * @return The new log file name.

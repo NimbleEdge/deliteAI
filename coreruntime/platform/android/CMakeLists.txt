@@ -8,6 +8,7 @@ target_sources(nimblenet ${VISIBILITY}
   src/frontend_data_variable.cpp
   src/hardware_info_shadow.cpp
   src/logs_upload_scheduler_shadow.cpp
+  src/native_request_receiver_shadow.cpp
   src/networking_shadow.cpp
 )
 

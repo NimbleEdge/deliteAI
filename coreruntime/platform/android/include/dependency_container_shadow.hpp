@@ -48,6 +48,14 @@ class DependencyContainerShadow {
    */
   static jobject getLogsUploadSchedulerInstance(JNIEnv *env);
 
+  /**
+   * @brief Retrieves the NativeRequestReceiver instance from the DependencyContainer via JNI.
+   *
+   * @param env JNI environment pointer.
+   * @return jobject Java NativeRequestReceiver instance.
+   */
+  static jobject getNativeRequestReceiverInstance(JNIEnv *env);
+
  private:
   inline static jobject dependencyContainerInstance = nullptr; /**< Global reference to DependencyContainer instance. */
   inline static jmethodID getInstanceMethodId = nullptr; /**< Method ID for getInstance. */
@@ -55,6 +63,7 @@ class DependencyContainerShadow {
   inline static jmethodID getNetworkingMethodId = nullptr; /**< Method ID for getNetworking. */
   inline static jmethodID getHardwareInfoMethodId = nullptr; /**< Method ID for getHardwareInfo. */
   inline static jmethodID getLogsUploadSchedulerMethodId = nullptr; /**< Method ID for getLogsUploadScheduler. */
+  inline static jmethodID getNativeRequestReceiverMethodId = nullptr; /**< Method ID for getNativeRequestReceiver. */
 
   /**
    * @brief Sets the global DependencyContainer instance via JNI.

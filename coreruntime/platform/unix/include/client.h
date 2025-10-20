@@ -15,6 +15,7 @@
 
 #include "executor_structs.h"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 /**
  * @brief Sends a network request using libcurl and returns the response.
@@ -135,16 +136,8 @@ static inline bool schedule_logs_upload(long repeatIntervalInMinutes,
  * @return bool True if successful.
  */
 typedef bool (*DeallocateFrontendType)(CTensors cTensors);
-/**
- * @brief Function pointer type for freeing frontend function context.
- *
- * @param context Pointer to the context to free.
- * @return bool True if successful.
- */
-typedef bool (*FreeFrontendContextType)(void *context);
 
 extern DeallocateFrontendType globalDeallocate; /**< Global function pointer for tensor deallocation. */
-extern FreeFrontendContextType globalFrontendContextFree; /**< Global function pointer for context free. */
 
 /**
  * @brief Deallocates memory for frontend tensors (Unix implementation).
@@ -153,11 +146,3 @@ extern FreeFrontendContextType globalFrontendContextFree; /**< Global function p
  * @return bool True if successful.
  */
 bool deallocate_frontend_tensors(CTensors cTensors);
-
-/**
- * @brief Frees the memory for a frontend function context (Unix implementation).
- *
- * @param context Pointer to the context to free.
- * @return bool True if successful.
- */
-bool free_frontend_function_context(void *context);

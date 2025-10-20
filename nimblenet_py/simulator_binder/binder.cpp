@@ -14,6 +14,7 @@
 #include "client.h"
 #include "input_structs.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 #include "nimblejson.hpp"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
@@ -209,25 +210,17 @@ bool deallocFrontendTensors(CTensors cTensors) {
     switch (tensor.dataType) {
       case DATATYPE::JSON:
       case DATATYPE::JSON_ARRAY:
-      case DATATYPE::FUNCTION:
         TaskInputData::deallocate_OpReturnType(tensor.data);
         break;
-      case DATATYPE::STRING: {
-        char** data = static_cast<char**>(tensor.data);
-        free(*data);
-        free(data);
-        break;
+      default: {
+        const bool freed = c_tensor_delete_data(&tensor);
+        if (!freed) {
+          free(tensor.data);
+        }
       }
-      default:
-        free(tensor.data);
     }
   }
   delete[] cTensors.tensors;
-  return true;
-}
-
-bool freeFrontendContext(void* context) {
-  delete (py::object*)context;
   return true;
 }
 
@@ -258,7 +251,6 @@ int initialize_simulator_nimblenet(const char* configInput, py::list moduleConfi
 
   // setting global cleanup functions
   globalDeallocate = deallocFrontendTensors;
-  globalFrontendContextFree = freeFrontendContext;
 
   // If no config provided prepare a default config
   if (configInput == nullptr) {
@@ -361,7 +353,7 @@ PYBIND11_MODULE(simulator, m) {
     Attributes :
     config (string) : String buffer with the configurations. It is optional field, if not provided nimblenet will initialize with default configs i.e. in offline mode with isTimeSimulated as true.
     moduleConfig(list): Module information to be loaded from disk in case of offline initialize
-    
+
     Return value :
     Int : If success then return 1.
 

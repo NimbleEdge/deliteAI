@@ -5,12 +5,15 @@
  */
 
 #import <Foundation/Foundation.h>
+
 #import "executor_structs.h"
+#import "nimble_net/c_tensor.h"
 
 @interface OutputConverter : NSObject
 
-id castDataFromCTensor(CTensor *tensor);
-NSDictionary* convertCTensorsToNSDictionary(NimbleNetStatus* status,CTensors ctensors, void* json_alloc);
+id castDataFromCTensor(CTensor* tensor);
+NSDictionary* convertCTensorsToNSDictionary(NimbleNetStatus* status, CTensors ctensors,
+                                            void* json_alloc);
 NSMutableArray* convertvoidPointertoJSONArray(void* jsonIterator, void* json_alloc);
 
 @end

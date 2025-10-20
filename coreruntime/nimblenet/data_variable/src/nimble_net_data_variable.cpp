@@ -15,6 +15,7 @@
 #include "data_variable.hpp"
 #include "model_nimble_net_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "nlohmann/json_fwd.hpp"
 #include "pre_processor_nimble_net_variable.hpp"
 #include "raw_event_store_data_variable.hpp"
@@ -25,7 +26,7 @@
 #include "retriever.hpp"
 #endif  // GENAI
 
-#ifdef IOS
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 // TODO (jpuneet): move this chunk to a separate file
 namespace {
 // UTF-8 helper function to determine if byte is a continuation byte
@@ -229,7 +230,7 @@ std::string process_phonemes(const char* phonemes) {
   return transform_phonemes(without_stress);
 }
 }  // anonymous namespace
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 
 OpReturnType NimbleNetDataVariable::create_tensor(const std::vector<OpReturnType>& arguments) {
   THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 2, MemberFuncType::CREATETENSOR);
@@ -467,6 +468,14 @@ OpReturnType NimbleNetDataVariable::get_hardware_info(const std::vector<OpReturn
   return DataVariable::get_map_from_json_object(std::move(j));
 }
 
+OpReturnType NimbleNetDataVariable::set_xnnpack_num_threads(
+    const std::vector<OpReturnType>& arguments, CallStack& stack) {
+  THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 1, MemberFuncType::SET_XNNPACK_NUM_THREADS);
+
+  ModelNimbleNetVariable::set_xnnpack_intra_op_num_threads(arguments[0]->get_int32());
+  return std::make_shared<NoneVariable>();
+}
+
 /*
  * 1. Get device tier
  * 2. Get the LLMs in deployment from asset manager in cloud
@@ -522,7 +531,7 @@ OpReturnType NimbleNetDataVariable::set_threads(const std::vector<OpReturnType>&
 #endif  // MINIMAL_BUILD
 }
 
-#ifdef IOS
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 OpReturnType NimbleNetDataVariable::convert_text_to_phonemes(
     const std::vector<OpReturnType>& arguments) {
   THROW_ARGUMENTS_NOT_MATCH(arguments.size(), 1, MemberFuncType::CONVERT_TEXT_TO_PHONEMES);
@@ -536,7 +545,7 @@ OpReturnType NimbleNetDataVariable::convert_text_to_phonemes(
   }
   return std::make_shared<SingleVariable<std::string>>(phonemes);
 }
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 
 OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
                                                   const std::vector<OpReturnType>& arguments,
@@ -594,11 +603,13 @@ OpReturnType NimbleNetDataVariable::call_function(int memberFuncIndex,
       return list_compatible_llms(arguments);
     case MemberFuncType::GET_HARDWARE_INFO:
       return get_hardware_info(arguments, stack);
-#ifdef IOS
+    case MemberFuncType::SET_XNNPACK_NUM_THREADS:
+      return set_xnnpack_num_threads(arguments, stack);
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
     case MemberFuncType::CONVERT_TEXT_TO_PHONEMES:
       // TODO (jpuneet): Should this be a part of another DelitePy module?
       return convert_text_to_phonemes(arguments);
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
   }
   THROW("%s not implemented for nimblenet", DataVariable::get_member_func_string(memberFuncIndex));
 }

@@ -6,6 +6,7 @@
 
 package dev.deliteai.datamodels
 
+import dev.deliteai.client.TextToSpeech
 import dev.deliteai.impl.common.NIMBLENET_VARIANTS
 import dev.deliteai.impl.common.SDK_CONSTANTS
 import org.json.JSONObject
@@ -32,6 +33,7 @@ import org.json.JSONObject
  * - [showDownloadProgress]: Display download progress indicators for models in the notification bar
  * - [online]: Flag to control whether the SDK should connect to cloud to download assets or if the
  *   assets already bundled with the app
+ * - [textToSpeechImpl]: Optional TextToSpeech implementation for phoneme generation
  *
  * ## Usage Examples
  *
@@ -93,6 +95,8 @@ import org.json.JSONObject
  *   Default: false
  *     @param online Whether the assets will be downloaded from cloud or they are already bundled
  *       with the app Default: false
+ *     @param textToSpeechImpl Optional TextToSpeech implementation for phoneme generation. Default:
+ *       null
  * @see NIMBLENET_VARIANTS
  * @see SDK_CONSTANTS
  * @since 1.0.0
@@ -112,6 +116,7 @@ class NimbleNetConfig(
     val libraryVariant: NIMBLENET_VARIANTS = NIMBLENET_VARIANTS.STATIC,
     val showDownloadProgress: Boolean = false,
     val online: Boolean = false,
+    val textToSpeechImpl: TextToSpeech? = null,
 ) {
     private var internalDeviceId: String? = null
 
@@ -136,6 +141,7 @@ class NimbleNetConfig(
         libraryVariant: NIMBLENET_VARIANTS = this.libraryVariant,
         showDownloadProgress: Boolean = this.showDownloadProgress,
         online: Boolean = this.online,
+        textToSpeechImpl: TextToSpeech? = this.textToSpeechImpl,
     ): NimbleNetConfig {
         return NimbleNetConfig(
                 clientId = clientId,
@@ -152,6 +158,7 @@ class NimbleNetConfig(
                 libraryVariant = libraryVariant,
                 showDownloadProgress = showDownloadProgress,
                 online = online,
+                textToSpeechImpl = textToSpeechImpl,
             )
             .apply { this.internalDeviceId = this@NimbleNetConfig.internalDeviceId }
     }
@@ -181,6 +188,8 @@ class NimbleNetConfig(
                 "internalDeviceId" to this.internalDeviceId,
                 "showDownloadProgress" to this.showDownloadProgress,
                 "online" to this.online,
+                // textToSpeechImpl is not serialized as it's used in the Kotlin layer and doesn't
+                // get passed to the core SDK
             )
 
         // conditional entries
@@ -234,6 +243,8 @@ class NimbleNetConfig(
                         } ?: arrayOf(),
                     showDownloadProgress = jsonObject.optBoolean("showDownloadProgress", false),
                     online = jsonObject.optBoolean("online", false),
+                    // textToSpeechImpl is not deserialized as it's used in the Kotlin layer and
+                    // doesn't get passed to the core SDK
                 )
                 .apply {
                     if (jsonObject.has("internalDeviceId")) {

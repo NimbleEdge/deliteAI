@@ -20,5 +20,3 @@ release_ios_object_type release_ios_object_global = nullptr;
 get_keys_ios_object_type get_keys_ios_object_global = nullptr;
 
 bool deallocate_frontend_tensors(CTensors cTensors) { return true; }
-
-bool free_frontend_function_context(void *context) { return true; }

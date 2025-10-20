@@ -50,12 +50,51 @@
 #include "data_variable.hpp"
 #include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "onnx_operators.hpp"
 #include "tensor_data_variable.hpp"
 #include "tuple_data_variable.hpp"
 
+#ifdef ORT_EXTENSIONS
+DELITEAI_EXTERN_C_BEGIN
+
+OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
+
+int ORT_API_CALL GetActiveOrtAPIVersion();
+
+DELITEAI_EXTERN_C_END
+#endif  // ORT_EXTENSIONS
+
+// =================================================================================================
+
+namespace {
+
+// Number of threads for the XNNPACK backend
+int xnnpack_intra_op_num_threads = 6;
+
+/**
+ * @brief Configures common ONNX session options.
+ *
+ * @param sessionOptions Session options to configure.
+ */
+void add_common_session_options(Ort::SessionOptions& sessionOptions) {
+  sessionOptions.AddConfigEntry("session.use_ort_model_bytes_directly", "1");
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+  sessionOptions.AppendExecutionProvider(
+      "XNNPACK", {std::pair<std::string, std::string>(
+                     "intra_op_num_threads", ne::fmt("%d", xnnpack_intra_op_num_threads).str)});
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
+#ifdef ORT_EXTENSIONS
+  Ort::ThrowOnError(RegisterCustomOps((OrtSessionOptions*)sessionOptions, OrtGetApiBase()));
+#endif  // ORT_EXTENSIONS
+}
+
+}  // namespace
+
+// =================================================================================================
+
 Ort::Env TaskONNXModel::_myEnv =
-    Ort::Env(OrtLoggingLevel::ORT_LOGGING_LEVEL_FATAL, "ONNX  Inference Environment");
+    Ort::Env(OrtLoggingLevel::ORT_LOGGING_LEVEL_FATAL, "ONNX Inference Environment");
 
 int TaskONNXModel::create_input_tensor_and_set_data_ptr(const OpReturnType req, int modelInputIndex,
                                                         Ort::Value&& returnedInputTensor) {
@@ -287,7 +326,7 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
   std::string configProviderName = epConfig.find("providerName") != epConfig.end()
                                        ? epConfig["providerName"].get<std::string>()
                                        : "";
-#if defined(__ANDROID__) && defined(NNAPI)
+#if DELITEAI_TARGET_OS_ANDROID && defined(NNAPI)
   if (configProviderName == "XNNPACK") {
     std::unordered_map<std::string, std::string> provider_options = {};
     if (epConfig.find("providerSettings") != epConfig.end()) {
@@ -302,7 +341,7 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
     }
     Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_Nnapi(sessionOptions, nnapi_flags));
   }
-#elif IOS
+#elif DELITEAI_TARGET_OS_IOS
 #endif
   if (epConfig.find("intraOpNumThreads") != epConfig.end()) {
     sessionOptions.SetIntraOpNumThreads(epConfig["intraOpNumThreads"].get<int>());
@@ -318,36 +357,15 @@ Ort::SessionOptions TaskONNXModel::get_session_options_from_json(const nlohmann:
   return sessionOptions;
 }
 
-#ifdef ORT_EXTENSIONS
-#ifdef __cplusplus
-extern "C" {
-#endif  // __cplusplus
-
-OrtStatus* ORT_API_CALL RegisterCustomOps(OrtSessionOptions* options, const OrtApiBase* api);
-
-int ORT_API_CALL GetActiveOrtAPIVersion();
-
-#ifdef __cplusplus
-}
-#endif  // __cplusplus
-#endif  // ORT_EXTENSIONS
-
-void add_common_session_options(Ort::SessionOptions& sessionOptions) {
-  sessionOptions.AddConfigEntry("session.use_ort_model_bytes_directly", "1");
-#ifdef ORT_EXTENSIONS
-  Ort::ThrowOnError(RegisterCustomOps((OrtSessionOptions*)sessionOptions, OrtGetApiBase()));
-#endif  // ORT_EXTENSIONS
-}
-
 void TaskONNXModel::load_model_from_buffer() {
   Ort::CustomOpDomain deliteai_operator_domain{"dev.deliteai"};
   register_custom_onnx_operators(deliteai_operator_domain);
   nlohmann::json epConfigListToCheck = nlohmann::json::array();
-#if defined(__ANDROID__)
+#if DELITEAI_TARGET_OS_ANDROID
   if (_epConfig.contains("android")) {
     epConfigListToCheck = _epConfig.at("android");
   }
-#elif IOS
+#elif DELITEAI_TARGET_OS_IOS
   if (_epConfig.contains("ios")) {
     epConfigListToCheck = _epConfig.at("ios");
   }
@@ -417,6 +435,10 @@ void TaskONNXModel::load_model_meta_data() {
     outputName[nameSize] = 0;
     _outputNames.push_back(outputName);
   }
+}
+
+void TaskONNXModel::set_xnnpack_intra_op_num_threads(int num_threads) {
+  xnnpack_intra_op_num_threads = num_threads;
 }
 
 TaskONNXModel::TaskONNXModel(const std::string& plan, const std::string& version,

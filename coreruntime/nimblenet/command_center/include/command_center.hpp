@@ -10,6 +10,7 @@
 #include "config_manager.hpp"
 #include "core_sdk_structs.hpp"
 #include "job_scheduler.hpp"
+#include "nimble_net/c_tensor.h"
 #include "resource_downloader.hpp"
 #include "resource_loader.hpp"
 #include "resource_manager.hpp"

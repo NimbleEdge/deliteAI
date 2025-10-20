@@ -10,6 +10,8 @@
 #include <inttypes.h>
 #endif
 
+#include "nimble_net/c_tensor.h"
+
 #pragma GCC visibility push(default)
 
 #ifdef __cplusplus

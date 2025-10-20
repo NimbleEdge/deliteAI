@@ -13,6 +13,7 @@
 
 #include "client.h"
 #include "input_structs.hpp"
+#include "nimble_net/c_tensor.h"
 #include "nimblenet.h"
 #include "nlohmann/json.hpp"
 #include "task_input_structs.hpp"
@@ -130,22 +131,22 @@ std::map<std::string, py::object> convert_CTensors_to_pymap(const CTensors& ret)
     if (shape_length == 0) {
       switch (type) {
         case DATATYPE::INT64:
-          py_outputs[name] = py::int_(*(int64_t*)data);
+          py_outputs[name] = py::int_(c_tensor_get_int64_data(data));
           break;
         case DATATYPE::FLOAT:
-          py_outputs[name] = py::float_(*(float*)data);
+          py_outputs[name] = py::float_(c_tensor_get_float_data(data));
           break;
         case DATATYPE::BOOLEAN:
-          py_outputs[name] = py::bool_(*(bool*)data);
+          py_outputs[name] = py::bool_(c_tensor_get_boolean_data(data));
           break;
         case DATATYPE::INT32:
-          py_outputs[name] = py::int_(*(int32_t*)data);
+          py_outputs[name] = py::int_(c_tensor_get_int32_data(data));
           break;
         case DATATYPE::DOUBLE:
-          py_outputs[name] = py::float_(*(double*)data);
+          py_outputs[name] = py::float_(c_tensor_get_double_data(data));
           break;
         case DATATYPE::STRING: {
-          py_outputs[name] = py::str(((char**)data)[0]);
+          py_outputs[name] = py::str(c_tensor_get_string_data(data));
           break;
         }
         case DATATYPE::JSON: {
@@ -249,27 +250,19 @@ CTensor construct_singleVariable_input(const std::string& name, py::object item)
   cTensor.shape = nullptr;
   if (py::isinstance<py::bool_>(item)) {
     cTensor.dataType = DATATYPE::BOOLEAN;
-    bool* ptr = static_cast<bool*>(malloc(sizeof(bool)));
-    *ptr = py::cast<bool>(item);
-    cTensor.data = (void*)ptr;
+    cTensor.data = c_tensor_create_boolean_data(py::cast<bool>(item));
   } else if (py::isinstance<py::int_>(item)) {
     // pybind does not differentiate between int32 and int64, both are represented by py::int_,
     // hence creating int64_t
     cTensor.dataType = DATATYPE::INT64;
-    int64_t* val = static_cast<int64_t*>(malloc(sizeof(int64_t)));
-    *val = py::cast<int64_t>(item);
-    cTensor.data = (void*)val;
+    cTensor.data = c_tensor_create_int64_data(py::cast<int64_t>(item));
   } else if (py::isinstance<py::float_>(item)) {
     cTensor.dataType = DATATYPE::FLOAT;
-    float* val = static_cast<float*>(malloc(sizeof(float)));
-    *val = py::cast<float>(item);
-    cTensor.data = (void*)val;
+    cTensor.data = c_tensor_create_float_data(py::cast<float>(item));
   } else if (py::isinstance<py::str>(item)) {
     cTensor.dataType = DATATYPE::STRING;
-    std::string val = py::cast<std::string>(item);
-    char** input = static_cast<char**>(malloc(sizeof(char*)));
-    *input = strdup(val.c_str());
-    cTensor.data = (void*)input;
+    const std::string val = py::cast<std::string>(item);
+    cTensor.data = c_tensor_create_string_data(val.c_str());
   } else if (py::isinstance<py::dict>(item)) {
     cTensor.dataType = DATATYPE::JSON;
     nlohmann::json json = convert_py_dict_to_json(py::cast<py::dict>(item));
@@ -277,19 +270,20 @@ CTensor construct_singleVariable_input(const std::string& name, py::object item)
   } else if (py::isinstance<py::function>(item)) {
     cTensor.dataType = DATATYPE::FUNCTION;
 
-    // This lambda should be able to run the frontend Function.
-    // Context should store info related to running the frontend function, or the function itself
-    FrontendFunctionPtr myLambda = [](void* context, const CTensors input,
-                                      CTensors* output) -> NimbleNetStatus* {
-      auto pythonFunction = py::cast<py::function>(*(py::handle*)context);
+    auto context = reinterpret_cast<CForeignFunctionContext*>(new py::object(item));
+    CForeignFunctionContextDeleter context_deleter = [](CForeignFunctionContext* context) {
+      delete reinterpret_cast<py::object*>(context);
+    };
+    CForeignFunctionPtr fn = [](CForeignFunctionContext* context, const CTensors input,
+                                CTensors* output) -> NimbleNetStatus* {
+      auto pythonFunction = py::cast<py::function>(*reinterpret_cast<py::handle*>(context));
       auto inputForPythonFunction = convert_CTensors_to_pymap(input);
       auto returnObject = pythonFunction(inputForPythonFunction);
 
       *output = convert_pydict_to_CTensors(returnObject);
       return nullptr;
     };
-    void* context = new py::object(item);
-    cTensor.data = TaskInputData::create_function_data_variable(context, myLambda);
+    cTensor.data = c_tensor_create_function_data(fn, context, context_deleter);
   }
   return cTensor;
 }

@@ -212,7 +212,7 @@ CNetworkResponse send_request(const char *body, const char *headers_c, const cha
   response.body = s.ptr;
   response.bodyLength = s.len;
   response.headers = headerPointer;
-  
+
 #ifndef NDEBUG
   printf("%s status_code=%ld\n", buffer, http_code);
 #endif
@@ -267,13 +267,6 @@ FileDownloadInfo download_to_file_async(const char *url, const char *headers, co
 bool deallocate_frontend_tensors(CTensors cTensors) {
   if (globalDeallocate) {
     return globalDeallocate(cTensors);
-  }
-  return false;
-}
-
-bool free_frontend_function_context(void *context) {
-  if (globalFrontendContextFree) {
-    return globalFrontendContextFree(context);
   }
   return false;
 }

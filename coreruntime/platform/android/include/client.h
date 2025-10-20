@@ -16,6 +16,7 @@
 #include "jni.h"
 #include "networking_shadow.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/c_tensor.h"
 
 #pragma GCC visibility push(default)
 
@@ -174,11 +175,10 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
 bool deallocate_frontend_tensors(CTensors cTensors);
 
 /**
- * @brief Frees the memory for a frontend function context. (No-op on Android)
+ * @brief Return phonemes of the given string.
  *
- * @param context Pointer to the context to free.
- * @return bool Always returns true.
+ * @return char* Pointer to phoneme string.
  */
-bool free_frontend_function_context(void* context);
+char* get_phonemes(const char* text);
 
 #pragma GCC visibility pop

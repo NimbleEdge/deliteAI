@@ -84,6 +84,13 @@ class TaskONNXModel : public TaskBaseModel {
 
  public:
   /**
+   * @brief Sets the number of intra-op threads for the XNNPACK backend.
+   *
+   * @param num_threads Number of threads to use for intra-op parallelism
+   */
+  static void set_xnnpack_intra_op_num_threads(int num_threads);
+
+  /**
    * @brief Constructs a TaskONNXModel instance.
    *
    * @param plan Model plan string.

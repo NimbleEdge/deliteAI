@@ -20,6 +20,8 @@ void DependencyContainerShadow::setMethodIds(JNIEnv *env) {
                                              "()Ldev/deliteai/impl/common/HardwareInfo;");
   getLogsUploadSchedulerMethodId = env->GetMethodID(dependencyContainerClass, "getLogsUploadScheduler",
                                                  "()Ldev/deliteai/impl/loggers/workManager/LogsUploadScheduler;");
+  getNativeRequestReceiverMethodId = env->GetMethodID(dependencyContainerClass, "getNativeRequestReceiver",
+                                                    "()Ldev/deliteai/impl/nativeBridge/NativeRequestReceiver;");
 }
 
 void DependencyContainerShadow::setDependencyContainerInstance(JNIEnv *env) {
@@ -80,4 +82,15 @@ jobject DependencyContainerShadow::getLogsUploadSchedulerInstance(JNIEnv *env) {
   }
 
   return env->CallObjectMethod(dependencyContainerInstance, getLogsUploadSchedulerMethodId);
+}
+
+jobject DependencyContainerShadow::getNativeRequestReceiverInstance(JNIEnv *env) {
+  if (!getNativeRequestReceiverMethodId || !dependencyContainerClass) {
+    throw std::runtime_error("encountered nullptr in getNativeRequestReceiverInstance()");
+  }
+  if (!dependencyContainerInstance) {
+    throw std::runtime_error("dependencyContainerClass is not initialized");
+  }
+
+  return env->CallObjectMethod(dependencyContainerInstance, getNativeRequestReceiverMethodId);
 }

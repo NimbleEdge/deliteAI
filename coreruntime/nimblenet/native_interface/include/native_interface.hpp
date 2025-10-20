@@ -16,6 +16,7 @@
 #include "core_utils/fmt.hpp"
 #include "native_interface_constants.hpp"
 #include "native_interface_structs.hpp"
+#include "nimble_net/config.h"
 
 namespace fs = std::filesystem;
 
@@ -242,8 +243,8 @@ bool schedule_logs_upload(long repeatIntervalInMinutes, long retryIntervalInMinu
  */
 nlohmann::json get_hardware_info();
 
-#ifdef IOS
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 const char* get_phonemes(const char* text);
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 
 }  // namespace nativeinterface

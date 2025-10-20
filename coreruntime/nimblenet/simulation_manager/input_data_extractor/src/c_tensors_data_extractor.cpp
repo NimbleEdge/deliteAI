@@ -13,9 +13,7 @@
 #include "nlohmann/json.hpp"
 
 #include "client.h"
-#include "custom_func_data_variable.hpp"
 #include "data_variable.hpp"
-#include "map_data_variable.hpp"
 
 using json = nlohmann::json;
 
@@ -321,51 +319,6 @@ void* TaskInputData::get_map_from_json_object_for_simulator(nlohmann::json&& j) 
 
 nlohmann::json TaskInputData::get_json_from_OpReturnType(void* data) {
   return (static_cast<OpReturnType*>(data))->get()->to_json();
-}
-
-namespace {
-std::shared_ptr<MapDataVariable> create_foreign_function_arg_map(
-    const std::vector<OpReturnType>& args) {
-  if (args.size() != 1) {
-    THROW("calling foreign function: num args: expected = 1, actual = %zu", args.size());
-  }
-
-  const auto& arg = args[0];
-  if (arg->get_containerType() != CONTAINERTYPE::MAP) {
-    THROW("calling foreign function: arg container type: expected = \"Map\", actual = \"%s\"",
-          arg->get_containerType_string());
-  }
-  return std::dynamic_pointer_cast<MapDataVariable>(arg);
-}
-}  // anonymous namespace
-
-void* TaskInputData::create_function_data_variable(void* context,
-                                                   FrontendFunctionPtr frontEndFunctionPtr) {
-  auto sContext =
-      std::shared_ptr<void>(context, [](void* ctx) { free_frontend_function_context(ctx); });
-
-  return (void*)new OpReturnType(new CustomFuncDataVariable(
-      [context = sContext, frontEndFunctionPtr](const std::vector<OpReturnType>& arguments,
-                                                CallStack& stack) -> OpReturnType {
-        std::shared_ptr<MapDataVariable> fnInput = create_foreign_function_arg_map(arguments);
-        CTensors fnInTensors;
-        fnInput->convert_to_cTensors(&fnInTensors);
-
-        CTensors fnOutTensors;
-        auto status = frontEndFunctionPtr(context.get(), fnInTensors, &fnOutTensors);
-        delete[] fnInTensors.tensors;
-
-        if (status != nullptr) {
-          auto fmtString = ne::fmt("Callback function failed with status code %d error %s",
-                                   status->code, status->message);
-          deallocate_nimblenet_status(status);
-          throw std::runtime_error(fmtString.str);
-        }
-
-        auto fnOutput = std::make_shared<MapDataVariable>(fnOutTensors);
-        deallocate_frontend_tensors(fnOutTensors);
-        return fnOutput;
-      }));
 }
 
 void TaskInputData::deallocate_OpReturnType(void* data) { delete (OpReturnType*)data; }

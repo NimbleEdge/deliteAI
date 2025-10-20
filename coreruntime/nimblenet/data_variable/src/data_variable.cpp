@@ -12,6 +12,7 @@
 #include "list_data_variable.hpp"
 #include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
+#include "nimble_net/config.h"
 #include "nlohmann/json.hpp"
 #include "single_variable.hpp"
 #include "tensor_data_variable.hpp"
@@ -112,9 +113,10 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"decode", MemberFuncType::TOKENIZERS_DECODE},
     {"get_vocab_size", MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE},
     {"get_hardware_info", MemberFuncType::GET_HARDWARE_INFO},
-#ifdef IOS
+    {"set_xnnpack_num_threads", MemberFuncType::SET_XNNPACK_NUM_THREADS},
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
     {"convert_text_to_phonemes", MemberFuncType::CONVERT_TEXT_TO_PHONEMES},
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 };
 
 std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
@@ -212,9 +214,10 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::TOKENIZERS_DECODE, "decode"},
     {MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE, "get_vocab_size"},
     {MemberFuncType::GET_HARDWARE_INFO, "get_hardware_info"},
-#ifdef IOS
+    {MemberFuncType::SET_XNNPACK_NUM_THREADS, "set_xnnpack_num_threads"},
+#if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
     {MemberFuncType::CONVERT_TEXT_TO_PHONEMES, "convert_text_to_phonemes"},
-#endif  // IOS
+#endif  // DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
 };
 
 int DataVariable::add_and_get_member_func_index(const std::string& memberFuncString) {
@@ -497,17 +500,17 @@ OpReturnType DataVariable::create_tensor(const CTensor& c, CreateTensorType type
 OpReturnType DataVariable::create_single_variable(const CTensor& c) {
   switch (c.dataType) {
     case DATATYPE::FLOAT:
-      return OpReturnType(new SingleVariable<float>(c.data));
+      return OpReturnType(new SingleVariable<float>(c_tensor_get_float_data(c.data)));
     case DATATYPE::DOUBLE:
-      return OpReturnType(new SingleVariable<double>(c.data));
+      return OpReturnType(new SingleVariable<double>(c_tensor_get_double_data(c.data)));
     case DATATYPE::INT32:
-      return OpReturnType(new SingleVariable<int32_t>(c.data));
+      return OpReturnType(new SingleVariable<int32_t>(c_tensor_get_int32_data(c.data)));
     case DATATYPE::INT64:
-      return OpReturnType(new SingleVariable<int64_t>(c.data));
+      return OpReturnType(new SingleVariable<int64_t>(c_tensor_get_int64_data(c.data)));
     case DATATYPE::BOOLEAN:
-      return OpReturnType(new SingleVariable<bool>(c.data));
+      return OpReturnType(new SingleVariable<bool>(c_tensor_get_boolean_data(c.data)));
     case DATATYPE::STRING:
-      return OpReturnType(new SingleVariable<std::string>(((char**)c.data)[0]));
+      return OpReturnType(new SingleVariable<std::string>(c_tensor_get_string_data(c.data)));
     case DATATYPE::JSON:
     case DATATYPE::FUNCTION:
       return *(static_cast<OpReturnType*>(c.data));
