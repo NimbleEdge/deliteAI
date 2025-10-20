@@ -1,6 +1,29 @@
 ## Build Dependencies
 Executors used in the SDK are downloaded from S3(Bucket: **deliteai**). Following are the steps that were used to create them.
 
+## Tokenizers-cpp
+
+The project uses [mlc-ai/tokenizers-cpp](https://github.com/mlc-ai/tokenizers-cpp) as a git submodule for cross-platform tokenizer support.
+
+### Prerequisites
+- Rust toolchain (install from [rustup.rs](https://rustup.rs/))
+- Cargo (comes with Rust)
+- For cross-compilation, install appropriate Rust targets:
+  - iOS: `rustup target add aarch64-apple-ios aarch64-apple-ios-sim`
+  - Android: `rustup target add aarch64-linux-android armv7-linux-androideabi`
+
+### Integration
+The tokenizers-cpp library is automatically built as part of the main CMake build process. It provides:
+- **libtokenizers_c.a**: C bindings to tokenizers Rust library
+- **libsentencepiece.a**: SentencePiece static library  
+- **libtokenizers_cpp.a**: C++ binding implementation
+
+The library supports:
+- HuggingFace tokenizers (JSON format)
+- SentencePiece tokenizers (.model format)
+- RWKV World tokenizers
+- Cross-platform deployment (iOS, Android, Windows, Linux, macOS)
+
 ## Onnxruntime
 
 ### Android

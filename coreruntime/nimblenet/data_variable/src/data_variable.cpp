@@ -105,6 +105,13 @@ std::map<std::string, int> DataVariable::_memberFuncMap = {
     {"clear_context", MemberFuncType::CLEAR_CONTEXT},
     {"add_context", MemberFuncType::ADD_CONTEXT},
     {"list_compatible_llms", MemberFuncType::LIST_COMPATIBLE_LLMS},
+    {"from_pretrained", MemberFuncType::TOKENIZERS_FROM_PRETRAINED},
+    {"from_file", MemberFuncType::TOKENIZERS_FROM_FILE},
+    {"from_json", MemberFuncType::TOKENIZERS_FROM_JSON},
+    {"from_sentencepiece", MemberFuncType::TOKENIZERS_FROM_SENTENCEPIECE},
+    {"encode", MemberFuncType::TOKENIZERS_ENCODE},
+    {"decode", MemberFuncType::TOKENIZERS_DECODE},
+    {"get_vocab_size", MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE},
     {"get_hardware_info", MemberFuncType::GET_HARDWARE_INFO},
     {"set_xnnpack_num_threads", MemberFuncType::SET_XNNPACK_NUM_THREADS},
 #if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
@@ -187,7 +194,7 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::RETRIEVER, "Retriever"},
     {MemberFuncType::POP, "pop"},
     {MemberFuncType::KEYS, "keys"},
-    {MemberFuncType::JSON_DOCUMENT, "jsonDocument"},
+    {MemberFuncType::JSON_DOCUMENT, "JsonDocument"},
     {MemberFuncType::MAX_INPUT_NUM_TOKENS, "max_input_num_tokens"},
     {MemberFuncType::CONSTRUCTOR, "__init__"},
     {MemberFuncType::UNICODE, "unicode"},
@@ -199,6 +206,13 @@ std::map<int, std::string> DataVariable::_inverseMemberFuncMap = {
     {MemberFuncType::CLEAR_CONTEXT, "clear_context"},
     {MemberFuncType::ADD_CONTEXT, "add_context"},
     {MemberFuncType::LIST_COMPATIBLE_LLMS, "list_compatible_llms"},
+    {MemberFuncType::TOKENIZERS_FROM_PRETRAINED, "from_pretrained"},
+    {MemberFuncType::TOKENIZERS_FROM_FILE, "from_file"},
+    {MemberFuncType::TOKENIZERS_FROM_JSON, "from_json"},
+    {MemberFuncType::TOKENIZERS_FROM_SENTENCEPIECE, "from_sentencepiece"},
+    {MemberFuncType::TOKENIZERS_ENCODE, "encode"},
+    {MemberFuncType::TOKENIZERS_DECODE, "decode"},
+    {MemberFuncType::TOKENIZERS_GET_VOCAB_SIZE, "get_vocab_size"},
     {MemberFuncType::GET_HARDWARE_INFO, "get_hardware_info"},
     {MemberFuncType::SET_XNNPACK_NUM_THREADS, "set_xnnpack_num_threads"},
 #if DELITEAI_TARGET_OS_ANDROID || DELITEAI_TARGET_OS_IOS
@@ -517,6 +531,7 @@ OpReturnType DataVariable::create_tensor(int dType, const std::vector<int64_t>& 
 
   switch (dType) {
     case DATATYPE::FLOAT:
+    case DATATYPE::FLOAT16:
     case DATATYPE::DOUBLE:
     case DATATYPE::INT32:
     case DATATYPE::INT64:

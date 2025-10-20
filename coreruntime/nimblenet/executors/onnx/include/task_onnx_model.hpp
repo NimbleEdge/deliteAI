@@ -7,49 +7,39 @@
 #pragma once
 
 #include "data_variable.hpp"
+#include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
 #include "task_base_model.hpp"
 #include "tensor_data_variable.hpp"
 
-/**
- * @brief TaskONNXModel is a specialized implementation of TaskBaseModel
- *        that supports running ONNX models using ONNX Runtime when invoked from delitepy script.
- */
+// Forward declarations for ONNX runtime
+namespace Ort {
+class Env;
+class Session;
+class SessionOptions;
+class Value;
+class AllocatorWithDefaultOptions;
+class MemoryInfo;
+}  // namespace Ort
+
 class TaskONNXModel : public TaskBaseModel {
- private:
-  OrtAllocator* _allocator = nullptr;    /**< Allocator used by ONNX Runtime */
-  Ort::SessionOptions _sessionOptions;   /**< Options to configure ONNX session */
-  Ort::MemoryInfo _memoryInfo;           /**< Memory info for tensor allocations */
-  static Ort::Env _myEnv;                /**< Static environment shared by all sessions */
-  static Ort::ThreadingOptions tp;       /**< Threading configuration */
-  Ort::Session* _session = nullptr;      /**< ONNX session handle */
-  std::vector<const char*> _inputNames;  /**< Cached input names */
-  std::vector<const char*> _outputNames; /**< Cached output names */
+  static Ort::Env _myEnv; /**< Global ONNX Runtime environment */
+  Ort::Session* _session = nullptr; /**< ONNX Runtime session instance */
+  Ort::SessionOptions _sessionOptions{}; /**< Session configuration options */
+  std::vector<const char*> _inputNames; /**< Model input tensor names */
+  std::vector<const char*> _outputNames; /**< Model output tensor names */
+  OrtAllocator* _allocator = nullptr; /**< ONNX Runtime memory allocator */
+  Ort::MemoryInfo _memoryInfo; /**< Memory information for tensor creation */
 
   /**
-   * @brief Loads model metadata such as input/output names.
-   */
-  void load_model_meta_data();
-
-  /**
-   * @brief Loads the model from the internal buffer.
+   * @brief Loads the model from the buffer into ONNX Runtime session.
    */
   void load_model_from_buffer() override final;
 
   /**
-   * @brief Invokes inference using a vector of ONNX input tensors.
-   *
-   * @param ret Output structure to populate.
-   * @param inputTensors Prepared input tensors.
-   * @return status
+   * @brief Loads model metadata including input/output names.
    */
-  int invoke_inference(OpReturnType& ret,
-                       const std::vector<Ort::Value>& inputTensors) override final;
-
-  int invoke_inference(InferenceReturn* ret) override final {
-    throw std::runtime_error(
-        "Invoke inference with InferenceReturn struct in model run from task is not implemented.");
-  }
+  void load_model_meta_data();
 
   /**
    * @brief Creates an ONNX input tensor and sets the data pointer.
@@ -116,6 +106,38 @@ class TaskONNXModel : public TaskBaseModel {
                 CommandCenter* commandCenter, bool runDummyInference);
 
   /**
+   * @brief Invokes inference using a vector of ONNX input tensors.
+   *
+   * @param ret Output structure to populate.
+   * @param inputTensors Prepared input tensors.
+   * @return status
+   */
+  int invoke_inference(OpReturnType& ret,
+                       const std::vector<Ort::Value>& inputTensors) override final;
+
+  /**
+   * @brief Invokes inference using dictionary-based input/output (MapDataVariable interface).
+   *
+   * @param output_dict Dictionary to populate with named outputs.
+   * @param input_dict Dictionary containing named inputs.
+   * @return status
+   */
+  int invoke_inference_dict(OpReturnType& output_dict, const OpReturnType& input_dict);
+
+  /**
+   * @brief Converts tuple result to MapDataVariable format for named outputs.
+   *
+   * @param tuple_result Tuple result from standard inference.
+   * @return OpReturnType containing MapDataVariable with named outputs
+   */
+  OpReturnType convert_tuple_to_dict(const OpReturnType& tuple_result);
+
+  int invoke_inference(InferenceReturn* ret) override final {
+    throw std::runtime_error(
+        "Invoke inference with InferenceReturn struct in model run from task is not implemented.");
+  }
+
+  /**
    * @brief Returns input tensor names from the ONNX model.
    */
   std::vector<const char*> get_input_names() override { return _inputNames; }
@@ -124,6 +146,30 @@ class TaskONNXModel : public TaskBaseModel {
    * @brief Returns output tensor names from the ONNX model.
    */
   std::vector<const char*> get_output_names() override { return _outputNames; }
+
+  /**
+   * @brief Returns input tensor names as string vector for dictionary usage.
+   */
+  std::vector<std::string> get_input_names_string() {
+    std::vector<std::string> names;
+    names.reserve(_inputNames.size());
+    for (const char* name : _inputNames) {
+      names.emplace_back(name);
+    }
+    return names;
+  }
+
+  /**
+   * @brief Returns output tensor names as string vector for dictionary usage.
+   */
+  std::vector<std::string> get_output_names_string() {
+    std::vector<std::string> names;
+    names.reserve(_outputNames.size());
+    for (const char* name : _outputNames) {
+      names.emplace_back(name);
+    }
+    return names;
+  }
 
   /**
    * @brief Destructor for TaskONNXModel. Cleans up session.

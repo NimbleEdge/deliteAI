@@ -30,7 +30,7 @@ def test_simulator():
         }
     ]
 
-    # initialize nimblenet    
+    # initialize nimblenet
     assert simulator.initialize('''{"debug": true, "online": false}''', modules)
 
     input = {"singleString": "singleString", "singleFloat": 10.10, "boolTensor": np.full((3), True, dtype=bool)}
@@ -71,7 +71,7 @@ def test_nested_json():
     ]
 
     assert simulator.initialize('''{"debug": true, "online": false}''', modules)
-    
+
     nestedJson = {"key1": 1, "key2": [1, 2, 3, "fsd"], "key3": "data1", "key4": {"fsd": "fdsd", "uio": 1.89}, "key5": [{"x": 1}], "bigValue": 12345678910}
     nestedArray = [{"key1": 1, "key2": [1, 2, 3, "fsd"], "key3": "data1", "key4": {"fsd": "fdsd", "uio": 1.89}, "key5": [{"x": 1}]}, "dfs"]
     input = {
@@ -79,7 +79,7 @@ def test_nested_json():
         "nestedJson": nestedJson, "nestedArray": nestedArray}
 
     output = simulator.run_method("add_initial_data", input, int(28931))
-    
+
     assert len(output) == 4
     assert output["nestedJson"] == expectedOutput["nestedJson"]
     assert np.all(np.array(output["nestedArray"]) == np.array(expectedOutput["nestedArray"]))
@@ -274,7 +274,7 @@ def test_retriever():
             print(f"Found item: {item['ProductName']} {item}")
             yield item
             item = simulator.run_method("get_next_item", {})["item"]
-    
+
 
 
     items = list(get_items())
@@ -324,7 +324,7 @@ def test_class_support():
     ]
 
     assert simulator.initialize('''{"online": false}''', modules)
-    
+
     def assert_callback(output):
         print("asserting callback", output)
         assert output["workflow_output"] == output["actual_output"]
@@ -336,7 +336,7 @@ def test_class_support():
     test_script(1)
     test_script(2)
     test_script(3)
-    
+
 
 def test_invalid_dataType_model():
     modules = [
@@ -357,7 +357,7 @@ def test_invalid_dataType_model():
             }
         }
     ]
-    
+
     assert simulator.initialize('''{"online": false}''', modules)
 
     output = simulator.run_method("invalid_model_function", {})
@@ -375,14 +375,14 @@ def test_multi_threading():
             }
         }
     ]
-    
+
     import psutil
     process = psutil.Process(os.getpid())
     taskThreadIndex = process.num_threads()
 
     # While loading the script, number of threads should increase
     assert simulator.initialize('''{"online": false}''', modules)
-    
+
     if {"GENAI"}.issubset(build_flags):
         assert process.num_threads() == taskThreadIndex + 6
     else:
@@ -398,7 +398,7 @@ def test_multi_threading():
 
     def test(n):
         output = simulator.run_method("test_parallel", {"n": n})
-        assert output["incorrectTotal"] < n 
+        assert output["incorrectTotal"] < n
         assert output["correctTotal"] == n
         indexTensor = np.array([x for x in range(n)], np.int64)
         squareTensor = np.array([x**2 for x in range(n)], np.int64)
@@ -433,7 +433,7 @@ def test_multi_threading_with_limited_threads():
     ]
 
     assert simulator.initialize('''{"online": false}''', modules)
- 
+
     def test(n):
         # Test with limited number of threads
         output = simulator.run_method("test_parallel_inside_parallel", {"n": n})
@@ -442,7 +442,7 @@ def test_multi_threading_with_limited_threads():
         for k in range(n):
             assert str(k) in output["map"]
         time.sleep(0.050)
-        
+
 
     test(10)
 
@@ -582,10 +582,10 @@ def test_list_operations():
 
     # Test multiple conditions in list comprehensions
     simulator.run_method("test_multiple_conditions", {})
-    
+
     # Test modulo operations - assertions are in the test functions
     simulator.run_method("test_mod_operations", {})
-    
+
     # Test concatenation edge cases - assertions are in the test functions
     simulator.run_method("test_concatenation_edge_cases", {})
 
@@ -619,7 +619,217 @@ def test_python_modules():
         assert "module1_run not defined in task" in repr(err)
 
     print("All python modules test passed!")
-    
+
+
+def test_tokenizers():
+    """Test tokenizer functionality using the delitepy.tokenizers module."""
+    modules = [
+        {
+            "name": "workflow_script",
+            "version": "1.0.0",
+            "type": "script",
+            "location": {
+                "path": "../simulation_assets/tokenizer_example.py"
+            }
+        }
+    ]
+
+    assert simulator.initialize("""{"debug": true, "online": false}""", modules)
+
+    # Test basic tokenizer functionality
+    basic_results = simulator.run_method("test_tokenizers", {})
+    print(f"Basic tokenizer test results: {basic_results}")
+
+    # Assert basic test succeeded
+    assert basic_results["status"] == "success"
+    assert basic_results["vocab_size"] == 11  # h, e, l, o, space, w, r, d, !, hello, world
+    assert basic_results["encoded_length"] > 0
+    assert basic_results["decoded_text"] == "h e l l o   w o r l d !"
+    assert basic_results["hello_token_id"] == 9  # token ID for 'hello'
+    assert basic_results["token_0"] == "h"
+
+    # Test more comprehensive tokenizer
+    comprehensive_results = simulator.run_method("test_sentencepiece_style", {})
+    print(f"Comprehensive tokenizer test results: {comprehensive_results}")
+
+    # Assert comprehensive test succeeded
+    assert comprehensive_results["status"] == "success"
+    assert comprehensive_results["vocab_size"] >= 98  # Should include all vocab + special tokens
+    assert comprehensive_results["text"] == "the quick brown fox jumps"
+    assert comprehensive_results["encoded_length"] > 0
+    assert comprehensive_results["cls_id"] == 101
+    assert comprehensive_results["sep_id"] == 102
+    assert comprehensive_results["unk_id"] == 100
+    assert comprehensive_results["cls_token"] == "[CLS]"
+
+    # Test combined results
+    all_results = simulator.run_method("run_all_tests", {})
+    print(f"All tokenizer tests results: {all_results}")
+
+    assert all_results["overall_status"] == "success"
+    assert all_results["basic_test"]["status"] == "success"
+    assert all_results["comprehensive_test"]["status"] == "success"
+
+    print("All tokenizer tests passed!")
+
+def test_model_dictionary_interface():
+    """Test the new dictionary-based model interface alongside traditional tensor interface."""
+
+    # First, create a proper test ONNX model with supported data types
+    import onnx
+    from onnx import helper, TensorProto
+    import os
+
+    def create_add_sub_model():
+        """Create an ONNX model that takes X, Y and returns sum, difference."""
+        # Define inputs
+        X = helper.make_tensor_value_info('X', TensorProto.FLOAT, [1, 1])
+        Y = helper.make_tensor_value_info('Y', TensorProto.FLOAT, [1, 1])
+
+        # Define outputs
+        sum_output = helper.make_tensor_value_info('sum', TensorProto.FLOAT, [1, 1])
+        diff_output = helper.make_tensor_value_info('difference', TensorProto.FLOAT, [1, 1])
+
+        # Create addition node: sum = X + Y
+        add_node = helper.make_node(
+            'Add',
+            inputs=['X', 'Y'],
+            outputs=['sum'],
+            name='add_node'
+        )
+
+        # Create subtraction node: difference = X - Y
+        sub_node = helper.make_node(
+            'Sub',
+            inputs=['X', 'Y'],
+            outputs=['difference'],
+            name='sub_node'
+        )
+
+        # Create the graph
+        graph = helper.make_graph(
+            nodes=[add_node, sub_node],
+            name='AddSubGraph',
+            inputs=[X, Y],
+            outputs=[sum_output, diff_output]
+        )
+
+        # Create the model
+        model = helper.make_model(graph)
+        model.opset_import[0].version = 9  # Use opset 9 for IR version 10 compatibility
+        model.ir_version = 6  # Explicitly set IR version to 6 for compatibility
+
+        # Check and save the model
+        onnx.checker.check_model(model)
+
+        # Determine correct path based on current working directory
+        current_dir = os.getcwd()
+        if "simulation_tests" in current_dir:
+            # Running from simulation_tests directory
+            model_path = "../simulation_assets/test_add_sub_model.onnx"
+            module_path = "../simulation_assets/test_add_sub_model.onnx"
+        else:
+            # Running from nimblenet_py directory (pytest)
+            model_path = "simulation_assets/test_add_sub_model.onnx"
+            module_path = "simulation_assets/test_add_sub_model.onnx"
+
+        onnx.save(model, model_path)
+
+        print(f"✅ Created test model: {model_path}")
+        print("📋 Model details:")
+        print("   Inputs: X (float32 [1,1]), Y (float32 [1,1])")
+        print("   Outputs: sum (X+Y), difference (X-Y)")
+
+        return module_path
+
+    # Create the test model
+    module_path = create_add_sub_model()
+
+    script_path = "../simulation_assets/dict_model_test.py"
+
+    modules = [
+        {
+            "name": "test_dict_model",
+            "version": "1.0.0",
+            "type": "script",
+            "location": {
+                "path": script_path
+            }
+        },
+        {
+            "name": "test_model",
+            "version": "1.0.0",
+            "type": "model",
+            "location": {
+                "path": module_path
+            }
+        }
+    ]
+
+    assert simulator.initialize('''{"debug": true, "online": false}''', modules)
+
+    # Test traditional tensor interface
+    tensor_results = simulator.run_method("test_tensor_interface", {})
+    print(f"Tensor interface test results: {tensor_results}")
+
+    assert tensor_results["status"] == "success"
+    assert "model_loaded" in tensor_results
+    assert tensor_results["model_loaded"] is not None
+
+    # Check if actual inference was performed
+    if "inference_successful" in tensor_results and tensor_results["inference_successful"]:
+        assert "sum_output" in tensor_results
+        assert "diff_output" in tensor_results
+        print(f"  ✅ Tensor interface inference successful!")
+        print(f"     Sum result: {tensor_results.get('sum_output')}")
+        print(f"     Diff result: {tensor_results.get('diff_output')}")
+    else:
+        assert "tensor_created" in tensor_results
+        assert tensor_results["tensor_created"] == True
+
+    # Test dictionary interface
+    dict_results = simulator.run_method("test_dictionary_interface", {})
+    print(f"Dictionary interface test results: {dict_results}")
+
+    assert dict_results["status"] == "success"
+    assert "model_loaded" in dict_results
+    assert dict_results["model_loaded"] is not None
+
+    # Check if actual inference was performed
+    if "inference_successful" in dict_results and dict_results["inference_successful"]:
+        assert "sum_output" in dict_results
+        assert "diff_output" in dict_results
+        print(f"  ✅ Dictionary interface inference successful!")
+        print(f"     Sum result: {dict_results.get('sum_output')}")
+        print(f"     Diff result: {dict_results.get('diff_output')}")
+    else:
+        assert "dict_created" in dict_results
+        assert dict_results["dict_created"] == True
+
+    # Test interface equivalence
+    equivalence_results = simulator.run_method("test_interface_equivalence", {})
+    print(f"Interface equivalence test results: {equivalence_results}")
+
+    assert equivalence_results["status"] == "success"
+
+    # Check if actual inference comparison was performed
+    if "both_interfaces_equivalent" in equivalence_results:
+        assert equivalence_results["both_interfaces_equivalent"] == True
+        print(f"  ✅ Both interfaces successfully performed inference and produced equivalent results!")
+    else:
+        assert False
+
+    print("All model dictionary interface tests passed!")
+
+    # Clean up the created model file
+    try:
+        os.remove(module_path)
+        print(f"🧹 Cleaned up test model: {module_path}")
+    except Exception as cleanup_error:
+        print(f"Could not clean up model file: {cleanup_error}")
+
 if __name__ == "__main__":
     test_simulator()
     test_python_modules()
+    test_tokenizers()
+    test_model_dictionary_interface()

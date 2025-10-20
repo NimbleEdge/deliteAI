@@ -92,11 +92,10 @@ enum class DATATYPE(val value: Int) {
     COMPLEX128(15),
     BFLOAT16(16),
     JSON(670),
-    JSON_ARRAY(681),
-    FUNCTION(682),
+    JSON_ARRAY(682),
+    FUNCTION(683),
     FE_OBJ(700),
     NONE(667);
-
     companion object {
         private val map = values().associateBy(DATATYPE::value)
 

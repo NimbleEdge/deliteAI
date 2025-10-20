@@ -31,6 +31,8 @@ std::string Asset::get_file_name_on_device() const {
     case AssetType::LLM:
       return name + version + rmconstants::LLMFolderName;
 #endif  // GENAI
+    default:
+      return name + version;
   }
 }
 
@@ -96,6 +98,8 @@ std::string get_string_from_asset_type(const AssetType& assetType) {
     case AssetType::LLM:
       return "llm";
 #endif  // GENAI
+    default:
+      return "unknown";
   }
 }
 

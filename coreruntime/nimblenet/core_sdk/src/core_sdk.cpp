@@ -392,6 +392,8 @@ std::pair<CloudConfigResponse, Deployment> CoreSDK::get_cloud_config_and_update_
     }
     case CloudConfigState::Unmodified:
       return {cloudConfig, deployment};
+    default:
+      return {cloudConfig, deployment};
   }
 }
 

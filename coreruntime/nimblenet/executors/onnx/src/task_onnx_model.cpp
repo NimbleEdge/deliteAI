@@ -4,13 +4,56 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * Dictionary-based interface usage examples using MapDataVariable:
+ *
+ * // Example 1: Using MapDataVariable interface for inference
+ * OpReturnType inputs = OpReturnType(new MapDataVariable());
+ * OpReturnType outputs;
+ * auto input_map = std::dynamic_pointer_cast<MapDataVariable>(inputs);
+ *
+ * // Prepare inputs
+ * input_map->set_value_in_map("input_ids", input_ids_tensor);
+ * input_map->set_value_in_map("attention_mask", attention_mask_tensor);
+ * input_map->set_value_in_map("position_ids", position_ids_tensor);
+ *
+ * // Add cache inputs
+ * for (int i = 0; i < num_layers; i++) {
+ *   input_map->set_value_in_map("past_key_values." + std::to_string(i) + ".key", past_key_tensor);
+ *   input_map->set_value_in_map("past_key_values." + std::to_string(i) + ".value", past_value_tensor);
+ * }
+ *
+ * // Run inference
+ * int result = model->invoke_inference_dict(outputs, inputs);
+ * auto output_map = std::dynamic_pointer_cast<MapDataVariable>(outputs);
+ *
+ * // Access outputs by name
+ * auto logits = output_map->get_string_subscript("logits");
+ * auto next_token = output_map->get_string_subscript("next_token_id");
+ * auto is_eos = output_map->get_string_subscript("is_eos");
+ * auto updated_attention = output_map->get_string_subscript("updated_attention_mask");
+ *
+ * // Example 2: Converting from tuple result to MapDataVariable
+ * OpReturnType tuple_result;
+ * model->invoke_inference(tuple_result, input_tensors);
+ *
+ * OpReturnType output_dict = model->convert_tuple_to_dict(tuple_result);
+ * auto output_map = std::dynamic_pointer_cast<MapDataVariable>(output_dict);
+ *
+ * // Now access outputs by name instead of position
+ * auto logits = output_map->get_string_subscript("logits");
+ */
+
 #include "task_onnx_model.hpp"
 
+#include <unordered_map>
 #include "data_variable.hpp"
+#include "map_data_variable.hpp"
 #include "nimble_net_util.hpp"
 #include "nimble_net/config.h"
 #include "onnx_operators.hpp"
 #include "tensor_data_variable.hpp"
+#include "tuple_data_variable.hpp"
 
 #ifdef ORT_EXTENSIONS
 DELITEAI_EXTERN_C_BEGIN
@@ -73,10 +116,37 @@ int TaskONNXModel::create_input_tensor_and_set_data_ptr(const OpReturnType req, 
       delete[] strings;
     } else {
       int fieldSize = util::get_field_size_from_data_type(req->get_dataType_enum());
+
+      // Map DeliteAI DATATYPE to ONNX tensor element data type
+      ONNXTensorElementDataType onnxDataType;
+      switch (req->get_dataType_enum()) {
+        case DATATYPE::FLOAT:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT;
+          break;
+        case DATATYPE::FLOAT16:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT16;
+          break;
+        case DATATYPE::DOUBLE:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_DOUBLE;
+          break;
+        case DATATYPE::INT32:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_INT32;
+          break;
+        case DATATYPE::INT64:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_INT64;
+          break;
+        case DATATYPE::BOOLEAN:
+          onnxDataType = ONNX_TENSOR_ELEMENT_DATA_TYPE_BOOL;
+          break;
+        default:
+          LOG_TO_CLIENT_ERROR("Unsupported data type %d for ONNX tensor creation", req->get_dataType_enum());
+          return TERMINAL_ERROR;
+      }
+
       inputTensor = Ort::Value::CreateTensor(_memoryInfo, req->get_raw_ptr(),
                                              fieldSize * req->get_numElements(),
                                              req->get_shape().data(), req->get_shape().size(),
-                                             (ONNXTensorElementDataType)req->get_dataType_enum());
+                                             onnxDataType);
     }
     returnedInputTensor = std::move(inputTensor);
     return SUCCESS;
@@ -123,16 +193,116 @@ int TaskONNXModel::invoke_inference(OpReturnType& ret,
   return SUCCESS;
 }
 
+int TaskONNXModel::invoke_inference_dict(OpReturnType& output_dict, const OpReturnType& input_dict) {
+  try {
+    // Convert input MapDataVariable to vector format for existing inference
+    auto input_map = std::dynamic_pointer_cast<MapDataVariable>(input_dict);
+    if (!input_map) {
+      LOG_TO_CLIENT_ERROR("Input is not a MapDataVariable for modelId=%s", _modelId.c_str());
+      return TERMINAL_ERROR;
+    }
+
+    std::vector<Ort::Value> inputTensors;
+    inputTensors.reserve(_inputNames.size());
+
+    for (size_t i = 0; i < _inputNames.size(); i++) {
+      std::string inputName(_inputNames[i]);
+
+      try {
+        OpReturnType input_tensor = input_map->get_string_subscript(inputName);
+        Ort::Value inputTensor = Ort::Value{nullptr};
+        int result = create_input_tensor_and_set_data_ptr(input_tensor, i, std::move(inputTensor));
+        if (result != SUCCESS) {
+          return result;
+        }
+        inputTensors.push_back(std::move(inputTensor));
+      } catch (...) {
+        LOG_TO_CLIENT_ERROR("Missing input tensor '%s' for modelId=%s", inputName.c_str(), _modelId.c_str());
+        return TERMINAL_ERROR;
+      }
+    }
+
+    // Run inference using existing method
+    std::vector<Ort::Value> output_onnx_tensors =
+        _session->Run(Ort::RunOptions{nullptr}, _inputNames.data(), inputTensors.data(),
+                      _inputNames.size(), _outputNames.data(), _outputNames.size());
+
+    // Create output MapDataVariable
+    output_dict = OpReturnType(new MapDataVariable());
+    auto output_map = std::dynamic_pointer_cast<MapDataVariable>(output_dict);
+
+    for (size_t i = 0; i < output_onnx_tensors.size(); i++) {
+      std::string outputName(_outputNames[i]);
+      OpReturnType tensor_var = get_tensor_variable_from_onnx_tensor(std::move(output_onnx_tensors[i]));
+      output_map->set_value_in_map(outputName, tensor_var);
+    }
+
+    return SUCCESS;
+  }
+  catch (Ort::Exception& e) {
+    LOG_TO_CLIENT_ERROR("Exception in invoke_inference_dict:%s with errorCode:%d, for modelId=%s",
+                        e.what(), e.GetOrtErrorCode(), _modelId.c_str());
+    return TERMINAL_ERROR;
+  }
+  catch (...) {
+    LOG_TO_CLIENT_ERROR("Exception in invoke_inference_dict ONNXSessionRun for modelId=%s",
+                        _modelId.c_str());
+    return TERMINAL_ERROR;
+  }
+}
+
+OpReturnType TaskONNXModel::convert_tuple_to_dict(const OpReturnType& tuple_result) {
+  try {
+    // Check if result is a TupleDataVariable
+    auto tuple_var = std::dynamic_pointer_cast<TupleDataVariable>(tuple_result);
+    if (!tuple_var) {
+      LOG_TO_CLIENT_ERROR("Result is not a TupleDataVariable for modelId=%s", _modelId.c_str());
+      return OpReturnType(new NoneVariable());
+    }
+
+    // Convert tuple elements to MapDataVariable using output names
+    auto tuple_elements = tuple_var->get_members();
+    if (tuple_elements.size() != _outputNames.size()) {
+      LOG_TO_CLIENT_ERROR("Mismatch between output count (%zu) and expected names (%zu) for modelId=%s",
+                          tuple_elements.size(), _outputNames.size(), _modelId.c_str());
+      return OpReturnType(new NoneVariable());
+    }
+
+    OpReturnType output_dict = OpReturnType(new MapDataVariable());
+    auto output_map = std::dynamic_pointer_cast<MapDataVariable>(output_dict);
+
+    for (size_t i = 0; i < tuple_elements.size(); i++) {
+      std::string outputName(_outputNames[i]);
+      output_map->set_value_in_map(outputName, tuple_elements[i]);
+    }
+
+    return output_dict;
+  }
+  catch (...) {
+    LOG_TO_CLIENT_ERROR("Exception in convert_tuple_to_dict for modelId=%s", _modelId.c_str());
+    return OpReturnType(new NoneVariable());
+  }
+}
+
 OpReturnType TaskONNXModel::get_tensor_variable_from_onnx_tensor(Ort::Value onnx_tensor) {
   Ort::TensorTypeAndShapeInfo tensor_info = onnx_tensor.GetTensorTypeAndShapeInfo();
-  auto dataType = (DATATYPE)tensor_info.GetElementType();
-  switch (dataType) {
-    case DATATYPE::FLOAT:
-    case DATATYPE::DOUBLE:
-    case DATATYPE::INT32:
-    case DATATYPE::INT64:
-      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), dataType));
-    case DATATYPE::STRING: {
+      ONNXTensorElementDataType onnxType = tensor_info.GetElementType();
+
+  // Handle ONNX data type to DATATYPE mapping
+  switch (onnxType) {
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT:
+      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::FLOAT));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_DOUBLE:
+      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::DOUBLE));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_INT32:
+      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::INT32));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_INT64:
+      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::INT64));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_BOOL:
+      return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::BOOLEAN));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT16:
+        return OpReturnType(new OrtTensorVariable(std::move(onnx_tensor), DATATYPE::FLOAT16));
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_STRING: {
       std::vector<std::string> strings;
       for (int i = 0; i < tensor_info.GetElementCount(); i++) {
         strings.push_back(onnx_tensor.GetStringTensorElement(i));
@@ -144,7 +314,7 @@ OpReturnType TaskONNXModel::get_tensor_variable_from_onnx_tensor(Ort::Value onnx
     default:
       LOG_TO_ERROR(
           "Requested data type = %d not supported when converting ONNX tensor to DataVariable.",
-          tensor_info.GetElementType());
+          onnxType);
       THROW("%s", "Unsupported dataType returned from model.");
   }
   THROW("%s", "Unsupported dataType returned from model.");
@@ -284,9 +454,9 @@ TaskONNXModel::TaskONNXModel(const std::string& plan, const std::string& version
   Ort::ThrowOnError(ortApi.GetAllocatorWithDefaultOptions(&_allocator));
 
   initialize_model();
-  if (_runDummyInference) {
-    run_dummy_inference();
-  }
+  // if (_runDummyInference) {
+  //   run_dummy_inference();
+  // }
 }
 
 void TaskONNXModel::run_dummy_inference() {
@@ -311,7 +481,8 @@ void TaskONNXModel::run_dummy_inference() {
       case DATATYPE::FLOAT:
       case DATATYPE::DOUBLE:
       case DATATYPE::INT32:
-      case DATATYPE::INT64: {
+      case DATATYPE::INT64:
+      case DATATYPE::FLOAT16: {
         OpReturnType req =
             OpReturnType(new TensorVariable(shape, static_cast<DATATYPE>(data_type)));
         create_input_tensor_and_set_data_ptr(req, i, std::move(inputTensor));

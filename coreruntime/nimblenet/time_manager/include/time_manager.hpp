@@ -326,7 +326,7 @@ class PeggedDeviceTime {
   /**
    * @brief Default constructor (null base device time).
    */
-  constexpr PeggedDeviceTime() : _baseDeviceTime(DeviceTime::null) {}
+  PeggedDeviceTime() : _baseDeviceTime(DeviceTime::null) {}
 
   /**
    * @brief Compare for equality with another PeggedDeviceTime.

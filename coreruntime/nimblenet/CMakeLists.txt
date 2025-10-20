@@ -35,6 +35,7 @@ set(BASE
 	data_variable/src/pre_processor_nimble_net_variable.cpp
 	data_variable/src/raw_event_store_data_variable.cpp
 	data_variable/src/regex_data_variable.cpp
+	data_variable/src/tokenizers_data_variable.cpp
 	data_variable/src/single_variable.cpp
 	data_variable/src/tensor_data_variable.cpp
 	job_scheduler/src/base_job.cpp

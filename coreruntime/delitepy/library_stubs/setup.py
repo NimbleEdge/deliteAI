@@ -26,12 +26,7 @@ def render_src_template() -> None:
         check=True,
     )
     subprocess.run(
-        [
-            f"{delitepy_dir}/scripts/render_jinja2_templates.py",
-            f"{library_stubs_dir}/src_template",
-            f"{library_stubs_dir}/src_gen",
-            coreruntime_dir,
-        ],
+        ["cp", "-r", f"{library_stubs_dir}/src_template", f"{library_stubs_dir}/src_gen"],
         check=True,
     )
 

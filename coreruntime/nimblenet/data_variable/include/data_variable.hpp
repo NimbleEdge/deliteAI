@@ -269,6 +269,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
 
   virtual uint8_t cast_uint8() { return get_uint8(); }
 
+  virtual uint16_t cast_uint16() { return get_uint16(); }
+
   virtual int8_t cast_int8() { return get_int8(); }
 
   virtual int32_t get_int32() { THROW_UNSUPPORTED("get_int32"); }
@@ -282,6 +284,8 @@ class DataVariable : public std::enable_shared_from_this<DataVariable> {
   virtual int8_t get_int8() { THROW_UNSUPPORTED("get_int8"); }
 
   virtual uint8_t get_uint8() { THROW_UNSUPPORTED("get_uint8"); }
+
+  virtual uint16_t get_uint16() { THROW_UNSUPPORTED("get_uint16"); }
 
   virtual std::string get_string() const { THROW_UNSUPPORTED("get_string"); }
 

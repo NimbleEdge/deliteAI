@@ -107,5 +107,7 @@ typename Job<T>::Status InternetJob<T>::process() {
     case Status::COMPLETE:
       // Task completed successfully
       return Job<T>::Status::COMPLETE;
+    default:
+      return Job<T>::Status::RETRY;
   }
 }

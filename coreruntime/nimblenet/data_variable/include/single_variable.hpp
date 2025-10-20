@@ -54,6 +54,8 @@ class SingleVariable final : public BaseSingleVariable {
 
   uint8_t get_uint8() override { return uint8_t(val); }
 
+  uint16_t get_uint16() override { return uint16_t(val); }
+
   int8_t get_int8() override { return int8_t(val); }
 
   bool get_bool() override { return val; }

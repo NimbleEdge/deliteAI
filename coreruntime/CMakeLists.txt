@@ -38,7 +38,7 @@ endif()
 
 # set(DEBUGFLAGS " -Werror -Wno-write-strings  -Weffc++ -Wall -Wuninitialized -Wnon-virtual-dtor -Wshadow -Werror=format-security -Wunused-member-function -Wunused-function ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=switch -Werror=return-type -Werror=implicit-fallthrough \
-	-Werror=non-virtual-dtor -Werror=format -Werror=format-security -Werror=unused-member-function -Werror=unused-function -Werror=writable-strings")
+	-Werror=non-virtual-dtor -Werror=format -Werror=format-security -Werror=unused-function -Werror=write-strings")
 
 # string(CONCAT RELEASEFLAGS ${DEBUGFLAGS} " -fstack-protector-strong -ffunction-sections -fdata-sections ")
 # #
@@ -84,6 +84,7 @@ add_subdirectory(nimblenet)
 add_subdirectory(delitepy)
 add_subdirectory("../third_party/json" "${CMAKE_BINARY_DIR}/third_party/json")
 add_subdirectory("../third_party/SPSCQueue" "${CMAKE_BINARY_DIR}/third_party/SPSCQueue")
+add_subdirectory("../third_party/tokenizers-cpp" "${CMAKE_BINARY_DIR}/third_party/tokenizers-cpp")
 if (GENAI)
 	add_subdirectory("../third_party/miniz" "${CMAKE_BINARY_DIR}/third_party/miniz")
 endif()
@@ -182,6 +183,7 @@ else()
 	target_compile_definitions(nimblenet PUBLIC -DIOS_PLATFORM="mac")
 	add_subdirectory(platform/unix) # produces ${CLIENT_INCLUDES}
 	add_subdirectory("../third_party/runtime" "${CMAKE_BINARY_DIR}/third_party/runtime") # -> produces ${BACKEND_LIBS} ${BACKEND_DIR} ${BACKED_INCLUDES}
+	# Use system curl library instead of conda environment
 	target_link_libraries(nimblenet ${VISIBILITY} curl)
 
 	# target_link_libraries(nimblenet ${VISIBILITY} clientlib)
@@ -194,7 +196,7 @@ if(NOT ANDROID_ABI)
 	list(APPEND ADDITIONAL_LIBS ZLIB::ZLIB)
 endif()
 
-target_link_libraries(nimblenet PRIVATE nlohmann_json::nlohmann_json ${VISIBILITY} SPSCQueue ${VISIBILITY} ${BACKEND_LIBS} ${VISIBILITY} ${ADDITIONAL_LIBS})
+target_link_libraries(nimblenet PRIVATE nlohmann_json::nlohmann_json ${VISIBILITY} SPSCQueue ${VISIBILITY} tokenizers_cpp ${VISIBILITY} ${BACKEND_LIBS} ${VISIBILITY} ${ADDITIONAL_LIBS})
 if (GENAI)
 	target_link_libraries(nimblenet PRIVATE miniz)
 endif()

@@ -1,0 +1,4 @@
+[submodule "third_party/tokenizers-cpp"]
+	path = third_party/tokenizers-cpp
+	url = https://github.com/NimbleEdge/tokenizers-cpp.git
+
