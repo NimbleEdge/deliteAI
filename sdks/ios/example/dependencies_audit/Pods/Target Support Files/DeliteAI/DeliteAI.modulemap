@@ -1,0 +1,6 @@
+framework module DeliteAI {
+  umbrella header "DeliteAI-umbrella.h"
+
+  export *
+  module * { export * }
+}

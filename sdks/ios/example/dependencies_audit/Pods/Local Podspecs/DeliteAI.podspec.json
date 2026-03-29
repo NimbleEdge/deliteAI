@@ -1,0 +1,60 @@
+{
+  "name": "DeliteAI",
+  "version": "0.0.1-local",
+  "summary": "On-Device AI platform for creating delightful experiences with agentic workflows.",
+  "description": "**DeliteAI** is a powerful **on-device AI platform** designed for developers to build\n**agentic workflows**. It empowers you to deliver secure, privacy-aware, and\nhigh-performance AI-native experiences and applications across various\nplatforms and devices, leveraging the power of local AI inference.",
+  "homepage": "https://github.com/NimbleEdge/deliteAI",
+  "license": {
+    "type": "Apache-2.0",
+    "file": "../../LICENSE"
+  },
+  "authors": {
+    "DeliteAI": "team-opensource@nimbleedgehq.ai"
+  },
+  "source": {
+    "git": "https://github.com/NimbleEdge/deliteAI-iOS.git",
+    "tag": "0.0.1-local"
+  },
+  "swift_versions": "5.0",
+  "platforms": {
+    "ios": "12.0"
+  },
+  "pod_target_xcconfig": {
+    "OTHER_CFLAGS": "-Oz -fdata-sections -ffunction-sections -flto",
+    "OTHER_LDFLAGS": "-Wl,--gc-sections -flto",
+    "DEAD_CODE_STRIPPING": "YES",
+    "ENABLE_BITCODE": "YES",
+    "STRIP_INSTALLED_PRODUCT": "YES",
+    "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
+    "SWIFT_OPTIMIZATION_LEVEL": "-Osize",
+    "SWIFT_COMPILATION_MODE": "wholemodule"
+  },
+  "static_framework": true,
+  "source_files": "deliteAI/Classes/**/*.{h,m,swift}",
+  "public_header_files": [
+    "deliteAI/Classes/sources/**/*.h",
+    "deliteAI/Classes/deliteAI.h"
+  ],
+  "ios": {
+    "preserve_paths": "deliteAI/Assets/*.xcframework",
+    "vendored_frameworks": [
+      "deliteAI/Assets/onnxruntime.xcframework",
+      "deliteAI/Assets/nimblenet.xcframework",
+      "deliteAI/Assets/onnxruntime-genai.xcframework",
+      "deliteAI/Assets/onnxruntime_extensions.xcframework",
+      "deliteAI/Assets/LLaMARunner.xcframework"
+    ]
+  },
+  "dependencies": {
+    "Alamofire": [
+      "~> 5.0"
+    ],
+    "SwiftProtobuf": [
+      "~> 1.18"
+    ],
+    "PLCrashReporter": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}

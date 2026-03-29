@@ -1,0 +1,6 @@
+framework module Pods_DeliteAIExample {
+  umbrella header "Pods-DeliteAIExample-umbrella.h"
+
+  export *
+  module * { export * }
+}
